@@ -1,16 +1,38 @@
 # Site content (CV-derived)
 
-Source of truth for any copy that goes on the site. Distilled from the German CV (`MohanadZahed_Frontend_Entwickler_Lebenslauf.pdf`). When the CV updates, update this file.
+Source of truth for any copy that goes on the site. Distilled from the CV at [`docs/cv.md`](cv.md). When the CV updates, update this file.
+
+## Colour palette
+
+| Token       | Hex       | Usage                                      |
+| ----------- | --------- | ------------------------------------------ |
+| Primary     | `#00416D` | Brand navy — headings, key UI elements     |
+| Secondary   | `#F8BD7F` | Warm amber — accents, highlights, CTAs     |
+| Tertiary    | `#F5F1DA` | Off-white cream — light backgrounds, cards |
+| Quaternary  | `#E3DFC8` | Warm grey-beige — borders, subtle surfaces |
+
+CSS custom properties: `--color-primary`, `--color-secondary`, `--color-tertiary`, `--color-quaternary`.
+Tailwind aliases: `text-primary`, `bg-secondary`, `border-tertiary`, `bg-quaternary`, etc.
+
+## Typography
+
+| Role           | Family      | Token         | Tailwind    |
+| -------------- | ----------- | ------------- | ----------- |
+| Global / body  | Roboto Mono | `--font-mono` | `font-mono` |
+
+Single font loaded from Google Fonts in `index.html` (`display=swap`).
+Roboto Mono supports full variable weight range (`100–700`), italic included.
+Set as the default `font-family` on `html` in `index.css`.
+
+---
 
 ## Identity
 
 - **Name**: Mohanad Zahed, B.Sc.
 - **Role**: Software Architect Frontend / Senior Frontend Engineer
-- **Location**: Hamburg, Germany
+- **Location**: Germany
 - **Email**: mzahed-p@outlook.com
-- **LinkedIn**: (link to be confirmed)
-- **Year of birth**: 1991
-- **Nationality**: German / Syrian
+- **LinkedIn**: https://www.linkedin.com/in/m-zahed/
 
 ## Headline (Hero/About)
 
@@ -19,8 +41,8 @@ Source of truth for any copy that goes on the site. Distilled from the German CV
 ## Languages
 
 - Arabic — native
-- English — C2 (negotiation level)
-- German — C2 (negotiation level)
+- English — negotiation level
+- German — negotiation level
 
 ## Education
 
@@ -38,22 +60,24 @@ These are the ones that get the floating-logo treatment in the orbit. Pick 10–
 
 ## Certifications (timeline section)
 
-| Date | Certification |
-|---|---|
+| Date    | Certification                                                       |
+| ------- | ------------------------------------------------------------------- |
 | 02/2026 | iSAQB Certified Professional for Software Architecture — Foundation |
-| 09/2025 | ITIL 4 Foundation |
-| 08/2025 | ISTQB Certified Tester — Foundation |
-| 08/2025 | PRINCE2 Foundation Agile |
-| 02/2017 | telc Deutsch B1 |
+| 09/2025 | ITIL 4 Foundation                                                   |
+| 08/2025 | ISTQB Certified Tester — Foundation                                 |
+| 08/2025 | PRINCE2 Foundation Agile                                            |
+| 02/2017 | telc Deutsch B1                                                     |
 
 ## Experience (reverse chronological — feeds Projects + Experience sections)
 
 ### ISO-Gruppe — Senior Consultant (Software Engineer)
+
 **Nürnberg · Jul 2025 – present**
 
 - **STEP — Bundesagentur für Arbeit** (11/2025–02/2026, public sector). Fullstack on the federal employment agency's central master-data system. Stack: Angular 20, NgRx, Spring Boot, Java, Maven, Kafka, Oracle SQL, Docker, OpenAPI, GitLab CI/CD, Jasmine/Karma, Selenium. Team 12/80. Implemented REST endpoints + Kafka event flows, evolved GUI components, code reviews, accessibility.
 
 ### Medienwerft GmbH — Senior Frontend Engineer
+
 **Hamburg · Aug 2019 – Jun 2025**
 
 - **SVLFG B2B Insurance Portal Modernization** (03/2024–06/2025, insurance, team 8/14). Headless rebuild of a SAP Hybris portal in Angular 19 + Nx, OpenAPI-driven REST, GitLab CI/CD. Established frontend best practices, mentored team, drove migration toward JHipster.
@@ -67,6 +91,7 @@ These are the ones that get the floating-logo treatment in the orbit. Pick 10–
 - **Dachdecker-Einkauf Süd — B2B Shop** (08/2019–01/2020, trade & construction, team 5/8). SAP Hybris / JSP frontend features for the roofing trade.
 
 ### MERENTIS GmbH — Full Stack Engineer
+
 **Bremen · Jul 2017 – Jul 2019**
 
 - **FRoSTA — Digital Work Instructions** (01–08/2019, food). Native Android app + Angular 6 CMS + JAX-RS REST + MS SQL Server. Videos, images, PDFs, text — work-instruction content for shop-floor staff.

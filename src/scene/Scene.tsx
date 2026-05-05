@@ -8,8 +8,10 @@ import { useScrollStore } from '../store/useScrollStore'
 import { smoothstep } from './lib/math'
 
 const ANCHOR_LEFT_X = -2.6
-const HORIZ_START = 0.1
+const HORIZ_START = 0.10
+const HORIZ_END = 0.20
 const ABOUT_CENTER_PROGRESS = 0.25
+const HERO_Y_OFFSET = -1.6
 
 export function Scene() {
   const anchorRef = useRef<Group>(null)
@@ -20,7 +22,7 @@ export function Scene() {
     if (!anchor) return
     const progress = useScrollStore.getState().progress
 
-    const tHoriz = smoothstep(HORIZ_START, ABOUT_CENTER_PROGRESS, progress)
+    const tHoriz = smoothstep(HORIZ_START, HORIZ_END, progress)
     const targetX = tHoriz * ANCHOR_LEFT_X
     anchor.position.x = MathUtils.damp(anchor.position.x, targetX, 4, delta)
 
@@ -30,7 +32,8 @@ export function Scene() {
     )
     const pxPastAboutCenter =
       Math.max(0, progress - ABOUT_CENTER_PROGRESS) * totalScrollPx
-    const targetY = (pxPastAboutCenter / window.innerHeight) * viewport.height
+    const heroOffset = HERO_Y_OFFSET * (1 - smoothstep(0, HORIZ_START, progress))
+    const targetY = heroOffset + (pxPastAboutCenter / window.innerHeight) * viewport.height
     anchor.position.y = MathUtils.damp(anchor.position.y, targetY, 6, delta)
   })
 

@@ -36,7 +36,7 @@ export function Avatar() {
     const t = state.clock.elapsedTime
     group.position.y = Math.sin(t * 0.6) * 0.05
     const progress = useScrollStore.getState().progress
-    const yawTarget = smoothstep(0.1, 0.25, progress) * ABOUT_YAW
+    const yawTarget = smoothstep(0.10, 0.20, progress) * ABOUT_YAW
     group.rotation.y = MathUtils.damp(group.rotation.y, yawTarget, 4, delta)
   })
 

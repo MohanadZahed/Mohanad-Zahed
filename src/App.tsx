@@ -8,6 +8,7 @@ import { About } from './sections/About'
 import { Projects } from './sections/Projects'
 import { Experience } from './sections/Experience'
 import { Contact } from './sections/Contact'
+import { ScrollLogger } from './debug/ScrollLogger'
 
 function App() {
   useLenis()
@@ -34,6 +35,8 @@ function App() {
         <Experience />
         <Contact />
       </main>
+
+      {import.meta.env.DEV && <ScrollLogger />}
     </>
   )
 }
