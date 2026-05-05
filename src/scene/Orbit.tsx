@@ -1,9 +1,9 @@
-import { Suspense } from 'react'
-import { techStack } from '../data/techStack'
-import { LogoPlane } from './LogoPlane'
+import { Suspense } from 'react';
+import { techStack } from '../data/techStack';
+import { LogoPlane } from './LogoPlane';
 
 export function Orbit() {
-  const total = techStack.length
+  const total = techStack.length;
   return (
     <Suspense fallback={null}>
       {techStack.map((item, index) => (
@@ -16,5 +16,5 @@ export function Orbit() {
         />
       ))}
     </Suspense>
-  )
+  );
 }
