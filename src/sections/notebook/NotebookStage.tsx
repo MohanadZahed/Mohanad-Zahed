@@ -57,11 +57,11 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const initialOffsetY = initialNotebookTopPx - viewport.h / 2 + currentHeight / 2;
   const notebookEntryOffsetY = (1 - notebookEntryT) * initialOffsetY;
 
-  const finderT = smoothstep(PHASE.PIN_START, PHASE.PIN_END, progress);
+  const finderT = smoothstep(0, PHASE.PIN_START + 0.06, progress);
   const finderTopPx = viewport.h + 80 - finderT * (viewport.h + FINDER_BOX_HEIGHT_PX + 160);
 
   const finderColumnGapPx = SMALL_NOTEBOOK_WIDTH_PX + 80;
-  const showFinder = progress > 0.04 && progress < PHASE.PIN_END + 0.05;
+  const showFinder = progress > 0 && progress < PHASE.PIN_END + 0.05;
 
   const titleWrapperStyle: CSSProperties = {
     position: 'absolute',
