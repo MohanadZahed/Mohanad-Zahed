@@ -4,6 +4,7 @@ import { Typewriter } from '../../components/Typewriter';
 import { useScrollStore } from '../../store/useScrollStore';
 import {
   FINDER_BOX_HEIGHT_PX,
+  FINDER_TYPING_START,
   FULL_NOTEBOOK_MAX_WIDTH_PX,
   PHASE,
   SMALL_NOTEBOOK_WIDTH_PX,
@@ -21,6 +22,17 @@ const NOTEBOOK_ASPECT = 16 / 10;
 const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.131;
 const TITLE_BOTTOM_APPROX_PX = 180;
 const NOTEBOOK_INITIAL_GAP_PX = 250;
+
+const LEFT_FINDER_LINES = [
+  '_Modular design',
+  '_Value-focused delivery',
+  '_Stakeholder alignment',
+] as const;
+const RIGHT_FINDER_LINES = [
+  '_Rapid delivery',
+  '_High-quality output',
+  '_Scalable solutions',
+] as const;
 
 export function NotebookStage({ progress }: NotebookStageProps) {
   const globalProgress = useScrollStore((s) => s.progress);
@@ -132,8 +144,16 @@ export function NotebookStage({ progress }: NotebookStageProps) {
       </div>
 
       <div style={finderRowStyle}>
-        <FinderBox title='context.md' />
-        <FinderBox title='notes.md' />
+        <FinderBox
+          title='context.md'
+          lines={LEFT_FINDER_LINES}
+          start={progress >= FINDER_TYPING_START}
+        />
+        <FinderBox
+          title='notes.md'
+          lines={RIGHT_FINDER_LINES}
+          start={progress >= FINDER_TYPING_START}
+        />
       </div>
 
       <div style={notebookWrapperStyle}>

@@ -1,15 +1,24 @@
 import type { CSSProperties } from 'react';
-import { FINDER_BOX_HEIGHT_PX, FINDER_BOX_WIDTH_PX } from './notebook.constants';
+import { Typewriter } from '../../components/Typewriter';
+import {
+  FINDER_BOX_HEIGHT_PX,
+  FINDER_BOX_WIDTH_PX,
+  FINDER_LINE_BASE_DELAY_MS,
+  FINDER_LINE_STAGGER_MS,
+} from './notebook.constants';
 
 interface FinderBoxProps {
   title?: string;
+  lines?: readonly string[];
+  start?: boolean;
   style?: CSSProperties;
 }
 
-export function FinderBox({ title = '', style }: FinderBoxProps) {
+export function FinderBox({ title = '', lines, start = false, style }: FinderBoxProps) {
+  const hasLines = lines && lines.length > 0;
   return (
     <div
-      aria-hidden='true'
+      aria-hidden={hasLines ? undefined : 'true'}
       style={{
         width: FINDER_BOX_WIDTH_PX,
         height: FINDER_BOX_HEIGHT_PX,
@@ -52,7 +61,37 @@ export function FinderBox({ title = '', style }: FinderBoxProps) {
           {title}
         </span>
       </div>
-      <div style={{ flex: 1, background: '#000' }} />
+      <div
+        style={{
+          flex: 1,
+          background: '#000',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          gap: 14,
+          padding: '20px 24px',
+        }}
+      >
+        {hasLines &&
+          lines!.map((line, i) => (
+            <Typewriter
+              key={line}
+              as='div'
+              text={line}
+              start={start}
+              speed={45}
+              startDelay={FINDER_LINE_BASE_DELAY_MS + i * FINDER_LINE_STAGGER_MS}
+              cursorMode='blink'
+              style={{
+                color: '#e5e5e5',
+                fontSize: 16,
+                fontWeight: 500,
+                lineHeight: 1.3,
+                letterSpacing: '-0.01em',
+              }}
+            />
+          ))}
+      </div>
     </div>
   );
 }

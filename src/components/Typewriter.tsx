@@ -87,7 +87,7 @@ export function Typewriter({
   const cursorStyle: CSSProperties = {
     display: 'inline-block',
     width: '0.6ch',
-    transform: 'translate(5px, -17px)',
+    /* transform: 'translate(5px, -17px)', */
     transition: `opacity ${FADE_MS}ms linear`,
     opacity: showCursor ? 1 : 0,
   };

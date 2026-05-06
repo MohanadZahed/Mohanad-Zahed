@@ -72,7 +72,13 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
               textTransform: 'lowercase',
             }}
           >
-            <Typewriter text={w.text} start={active} cursorMode='hide' speed={70} startDelay={60} />
+            <Typewriter
+              text={w.text}
+              start={active}
+              cursorMode='blink'
+              speed={70}
+              startDelay={60}
+            />
           </div>
         );
       })}
