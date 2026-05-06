@@ -7,9 +7,9 @@ import { useScrollStore } from '../store/useScrollStore';
 import { smoothstep } from './lib/math';
 
 const ABOUT_YAW = Math.PI / 5;
-// Hero text finishes at ~1.7 s; avatar fades in just after
-const FADE_START = 1.6;
-const FADE_END = 2.4;
+// Avatar fades in just before text starts (text begins at 0.5 s)
+const FADE_START = 0.2;
+const FADE_END = 1.0;
 
 export function Avatar() {
   const groupRef = useRef<Group>(null);
