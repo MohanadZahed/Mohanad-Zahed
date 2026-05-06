@@ -3,7 +3,7 @@ import { useScrollStore } from '../store/useScrollStore';
 const SECTIONS = [
   { label: 'Hero', start: 0.0 },
   { label: 'About', start: 0.25 },
-  { label: 'Projects', start: 0.5 },
+  { label: 'Skills', start: 0.5 },
   { label: 'Experience', start: 0.75 },
   { label: 'Contact', start: 1.0 },
 ];

@@ -20,7 +20,7 @@ Sections are pure HTML/Tailwind that scrolls *over* the persistent 3D canvas. Th
 
 Same numbers as `docs/vision.md`. If they ever drift, treat `docs/vision.md` as source of truth.
 
-Section heights in viewport-units: Hero=1, About=1, **Notebook=6**, Projects=1, Experience=1, Contact=1 → 11vh total page, scroll range = 10vh.
+Section heights in viewport-units: Hero=1, About=1, **Notebook=6**, Skills=1, Experience=1, Contact=1 → 11vh total page, scroll range = 10vh.
 
 | Range | Section | What happens in 3D |
 |---|---|---|
@@ -29,7 +29,7 @@ Section heights in viewport-units: Hero=1, About=1, **Notebook=6**, Projects=1, 
 | 0.07 | About pin engages | Anchor's world-Y begins tracking scroll so the avatar appears glued to About in document space |
 | 0.07–0.20 | About → Notebook | Avatar scrolls off-screen above with About; orbit fades / silences |
 | 0.20–0.80 | Notebook | 3D canvas is silent. The Notebook section is fully HTML/CSS and uses `useScrollStore.notebookProgress` (section-local, 0..1) for its own choreography — see `docs/vision.md` |
-| 0.80–0.90 | Projects | Avatar still pinned (off-screen above); logos detach one-by-one into project-card corners |
+| 0.80–0.90 | Skills | 3D canvas idle. Section is HTML/CSS only: `CircuitBackground` PCB pattern + scattered `Microchip` cards (per-skill glowing progress bar). Avatar stays pinned off-screen above. |
 | 0.90–0.95 | Experience | Logos return to slow ambient orbit r=6 around the pinned avatar (off-screen) |
 | 0.95–1.00 | Contact | Camera pulls back, gentle drift, footer fades in |
 
@@ -41,11 +41,11 @@ Sections that span more than one viewport-height (currently just Notebook) must 
 
 - Wire a per-section ScrollTrigger (`trigger: sectionRef.current, start: 'top top', end: 'bottom bottom'`) and write `self.progress` into a dedicated store field (e.g. `notebookProgress`).
 - Components inside that section subscribe to the section-local field, not the global one.
-- Sibling sections that need to coordinate (e.g. Projects sliding over the notebook) read a derived store field (e.g. `notebookHandoff`).
+- Sibling sections that need to coordinate (e.g. Skills sliding over the notebook) read a derived store field (e.g. `notebookHandoff`).
 
 ## Content data
 
-- Project entries: `src/data/projects.ts` (typed array). Don't hard-code in JSX.
+- Skill chip roster: `src/sections/skills/skills.data.ts` (typed array — id, label, category, level, size). Don't hard-code in JSX.
 - Experience timeline: `src/data/experience.ts`.
 - Tech stack list (logo orbit): `src/data/techStack.ts`. Each entry: `{ id, label, texturePath, yearsExperience }`.
 - All site copy comes from `docs/content.md` (CV-derived).

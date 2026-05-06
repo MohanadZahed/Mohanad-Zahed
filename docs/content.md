@@ -58,6 +58,20 @@ These are the ones that get the floating-logo treatment in the orbit. Pick 10–
 
 **AI**: Claude Code, prompt engineering, LLM integration, token management.
 
+## Skills board — microchip section
+
+Roster lives in [`src/sections/skills/skills.data.ts`](../src/sections/skills/skills.data.ts). Categories: `frontend`, `backend`, `ai`, `devops`. General-purpose tooling (ESLint / StyleLint / Prettier / Husky / NPM / IDE / OS / collaboration apps) is intentionally excluded — the section showcases technical depth, not tool inventory.
+
+Per-chip `level` is a self-rated 0–100 placeholder; tweak in the data file. Bar colour is derived in `Microchip.tsx` and follows:
+
+| Level   | Colour | Token     |
+| ------- | ------ | --------- |
+| 0–30    | Red    | `#ef4444` |
+| 31–60   | Amber  | `#fbbf24` |
+| 61–100  | Green  | `#22c55e` |
+
+Per-category accent dot: frontend `#38bdf8` · backend `#a78bfa` · ai `#34d399` · devops `#f59e0b`.
+
 ## Certifications (timeline section)
 
 | Date    | Certification                                                       |

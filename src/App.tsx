@@ -7,7 +7,7 @@ import { Hero } from './sections/Hero';
 import { HeroBackground } from './sections/HeroBackground';
 import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
-import { Projects } from './sections/Projects';
+import { Skills } from './sections/Skills';
 import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
@@ -31,7 +31,7 @@ function App() {
         <Hero />
         <About />
         <Notebook />
-        <Projects />
+        <Skills />
         <Experience />
         <Contact />
       </main>
