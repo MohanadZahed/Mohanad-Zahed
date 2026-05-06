@@ -20,16 +20,28 @@ Sections are pure HTML/Tailwind that scrolls *over* the persistent 3D canvas. Th
 
 Same numbers as `docs/vision.md`. If they ever drift, treat `docs/vision.md` as source of truth.
 
+Section heights in viewport-units: Hero=1, About=1, **Notebook=6**, Projects=1, Experience=1, Contact=1 → 11vh total page, scroll range = 10vh.
+
 | Range | Section | What happens in 3D |
 |---|---|---|
-| 0.00–0.20 | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered + idle breathing, per-logo colored point lights tint the avatar as they pass |
-| 0.20–0.35 | Hero → About | Avatar + orbit anchor drifts left toward x ≈ −2.6, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5, scroll layers velocity on top of the idle drift |
-| 0.35–0.50 | About | Logos snap to flat grid behind avatar; avatar settled at left, yaw ~36° (3/4 view) |
-| 0.50–0.70 | Projects | Avatar **pinned** at left (no longer scrolls with viewport); logos detach one-by-one into project-card corners |
-| 0.70–0.85 | Experience | Avatar still pinned at left, fades to ~30% opacity; logos return to slow ambient orbit r=6 around the pinned avatar |
-| 0.85–1.00 | Contact | Avatar pinned at left, full opacity; camera pulls back, gentle drift, footer fades in |
+| 0.00–0.04 | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered + idle breathing, per-logo colored point lights tint the avatar as they pass |
+| 0.04–0.08 | Hero → About | Avatar + orbit anchor drifts left toward x ≈ −2.6, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5, scroll layers velocity on top of the idle drift |
+| 0.07 | About pin engages | Anchor's world-Y begins tracking scroll so the avatar appears glued to About in document space |
+| 0.07–0.20 | About → Notebook | Avatar scrolls off-screen above with About; orbit fades / silences |
+| 0.20–0.80 | Notebook | 3D canvas is silent. The Notebook section is fully HTML/CSS and uses `useScrollStore.notebookProgress` (section-local, 0..1) for its own choreography — see `docs/vision.md` |
+| 0.80–0.90 | Projects | Avatar still pinned (off-screen above); logos detach one-by-one into project-card corners |
+| 0.90–0.95 | Experience | Logos return to slow ambient orbit r=6 around the pinned avatar (off-screen) |
+| 0.95–1.00 | Contact | Camera pulls back, gentle drift, footer fades in |
 
-The pin is implicit: a single `smoothstep(0.20, 0.50, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so progress ≥ 0.50 leaves the anchor at its settled position with no extra logic.
+The pin is implicit: a single `smoothstep(0.04, 0.08, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so progress ≥ 0.08 leaves the anchor at its settled position with no extra logic.
+
+## Section-local progress
+
+Sections that span more than one viewport-height (currently just Notebook) must NOT drive their internal phases from the global `progress` field — adding/removing such a section would drag every other section through its phases. Pattern:
+
+- Wire a per-section ScrollTrigger (`trigger: sectionRef.current, start: 'top top', end: 'bottom bottom'`) and write `self.progress` into a dedicated store field (e.g. `notebookProgress`).
+- Components inside that section subscribe to the section-local field, not the global one.
+- Sibling sections that need to coordinate (e.g. Projects sliding over the notebook) read a derived store field (e.g. `notebookHandoff`).
 
 ## Content data
 

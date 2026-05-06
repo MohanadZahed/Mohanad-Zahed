@@ -6,7 +6,7 @@ import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { Hero } from './sections/Hero';
 import { HeroBackground } from './sections/HeroBackground';
 import { About } from './sections/About';
-import { Notebook } from './sections/Notebook';
+import { Notebook } from './sections/notebook/Notebook';
 import { Projects } from './sections/Projects';
 import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
