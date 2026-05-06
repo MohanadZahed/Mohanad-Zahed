@@ -33,8 +33,10 @@ function span(skill: Skill): { col: number; row: number } {
 export function ChipScatter() {
   return (
     <div
-      className='relative z-10 grid gap-3 px-6 sm:px-12 pt-28 pb-12 mx-auto max-w-7xl'
+      className='relative z-10 grid px-6 sm:px-12 pt-28 pb-12 mx-auto'
       style={{
+        gap: 'calc(var(--spacing) * 13)',
+        maxWidth: '125rem',
         gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
         gridAutoRows: '64px',
         gridAutoFlow: 'dense',

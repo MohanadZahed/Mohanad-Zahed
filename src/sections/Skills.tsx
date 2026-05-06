@@ -10,34 +10,61 @@ export function Skills() {
   const handoff = useScrollStore((s) => s.notebookHandoff);
   const translateY = -handoff * HANDOFF_DISTANCE_VH;
   const rootRef = useRef<HTMLElement>(null);
+  const circuitRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
+    const section = rootRef.current;
+    const target = circuitRef.current;
+    if (!section || !target) return;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
-      const rect = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${rect.width / 2}px`);
-      el.style.setProperty('--my', `${rect.height / 2}px`);
+      const rect = section.getBoundingClientRect();
+      target.style.setProperty('--mx', `${rect.width / 2}px`);
+      target.style.setProperty('--my', `${rect.height / 2}px`);
       return;
     }
 
-    const onMove = (e: PointerEvent) => {
-      const rect = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-      el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    let raf = 0;
+    let nextX = -9999;
+    let nextY = -9999;
+    let rectLeft = 0;
+    let rectTop = 0;
+
+    const refreshRect = () => {
+      const r = section.getBoundingClientRect();
+      rectLeft = r.left;
+      rectTop = r.top;
     };
-    const onLeave = () => {
-      el.style.setProperty('--mx', `-9999px`);
-      el.style.setProperty('--my', `-9999px`);
+    refreshRect();
+
+    const flush = () => {
+      raf = 0;
+      target.style.setProperty('--mx', `${nextX}px`);
+      target.style.setProperty('--my', `${nextY}px`);
     };
 
-    el.addEventListener('pointermove', onMove);
-    el.addEventListener('pointerleave', onLeave);
+    const onMove = (e: PointerEvent) => {
+      nextX = e.clientX - rectLeft;
+      nextY = e.clientY - rectTop;
+      if (!raf) raf = requestAnimationFrame(flush);
+    };
+    const onLeave = () => {
+      nextX = -9999;
+      nextY = -9999;
+      if (!raf) raf = requestAnimationFrame(flush);
+    };
+
+    section.addEventListener('pointermove', onMove, { passive: true });
+    section.addEventListener('pointerleave', onLeave);
+    window.addEventListener('scroll', refreshRect, { passive: true });
+    window.addEventListener('resize', refreshRect, { passive: true });
     return () => {
-      el.removeEventListener('pointermove', onMove);
-      el.removeEventListener('pointerleave', onLeave);
+      section.removeEventListener('pointermove', onMove);
+      section.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('scroll', refreshRect);
+      window.removeEventListener('resize', refreshRect);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -51,13 +78,11 @@ export function Skills() {
           transform: `translateY(${translateY}vh)`,
           zIndex: 20,
           willChange: 'transform',
-          '--mx': '-9999px',
-          '--my': '-9999px',
           '--spot-r': `${SPOTLIGHT_RADIUS}px`,
         } as CSSProperties
       }
     >
-      <CircuitBackground />
+      <CircuitBackground ref={circuitRef} />
       <header className='relative z-20 px-8 sm:px-16 pt-12 pointer-events-none'>
         <h2
           id='skills-h2'

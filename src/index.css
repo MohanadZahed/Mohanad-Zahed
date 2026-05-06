@@ -110,12 +110,12 @@
   border-radius: 6px;
   box-shadow:
     0 2px 0 rgb(0 0 0 / 0.6),
-    0 8px 22px rgb(0 0 0 / 0.45),
     inset 0 1px 0 rgb(255 255 255 / 0.06);
   color: rgb(228 228 231);
   user-select: none;
   padding: 12px 14px;
   font-size: 11px;
+  contain: layout style;
 }
 
 .chip--md {
@@ -139,7 +139,6 @@
     transparent 6px,
     transparent 12px
   );
-  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.6));
 }
 .chip__pins--top {
   top: -5px;
@@ -182,7 +181,5 @@
   height: 100%;
   background: var(--bar-color);
   border-radius: 3px;
-  box-shadow:
-    0 0 8px var(--bar-color),
-    0 0 18px color-mix(in srgb, var(--bar-color) 55%, transparent);
+  box-shadow: 0 0 6px var(--bar-color);
 }

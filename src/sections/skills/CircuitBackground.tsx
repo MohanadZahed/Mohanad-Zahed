@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 const TILE = 160;
 export const SPOTLIGHT_RADIUS = 220;
 
@@ -26,17 +28,12 @@ const vias: Array<[number, number]> = [
   [140, 140],
 ];
 
-export function CircuitBackground() {
+export const CircuitBackground = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div aria-hidden='true' className='absolute inset-0 overflow-hidden'>
+    <div ref={ref} aria-hidden='true' className='absolute inset-0 overflow-hidden'>
       <svg className='absolute inset-0 h-full w-full' aria-hidden='true'>
         <defs>
-          <pattern
-            id='circuit-tile'
-            width={TILE}
-            height={TILE}
-            patternUnits='userSpaceOnUse'
-          >
+          <pattern id='circuit-tile' width={TILE} height={TILE} patternUnits='userSpaceOnUse'>
             <g fill='none' stroke='currentColor' strokeWidth='1.25' strokeLinecap='round'>
               {tracePaths.map((d, i) => (
                 <path key={i} d={d} />
@@ -60,7 +57,10 @@ export function CircuitBackground() {
         />
 
         {/* Layer B — highlight, masked by spotlight (vars come from section root) */}
-        <g className='circuit-mask' style={{ filter: 'drop-shadow(0 0 4px rgb(56 189 248 / 0.7))' }}>
+        <g
+          className='circuit-mask'
+          style={{ filter: 'drop-shadow(0 0 4px rgb(56 189 248 / 0.7))' }}
+        >
           <rect
             width='100%'
             height='100%'
@@ -72,4 +72,6 @@ export function CircuitBackground() {
       </svg>
     </div>
   );
-}
+});
+
+CircuitBackground.displayName = 'CircuitBackground';
