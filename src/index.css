@@ -37,3 +37,24 @@
 @utility bg-canvas-gradient {
   background: linear-gradient(135deg, var(--color-canvas-from) 0%, var(--color-canvas-to) 100%);
 }
+
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+  }
+}

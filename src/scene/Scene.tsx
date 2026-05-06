@@ -10,7 +10,7 @@ import { smoothstep } from './lib/math';
 const ANCHOR_LEFT_X = -2.6;
 const HORIZ_START = 0.1;
 const HORIZ_END = 0.2;
-const ABOUT_CENTER_PROGRESS = 0.22;
+const ABOUT_CENTER_PROGRESS = 0.18;
 const HERO_Y_OFFSET = -1;
 
 export function Scene() {

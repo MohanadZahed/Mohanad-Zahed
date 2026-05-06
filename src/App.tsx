@@ -6,6 +6,7 @@ import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { Hero } from './sections/Hero';
 import { HeroBackground } from './sections/HeroBackground';
 import { About } from './sections/About';
+import { Notebook } from './sections/Notebook';
 import { Projects } from './sections/Projects';
 import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
@@ -29,6 +30,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Notebook />
         <Projects />
         <Experience />
         <Contact />
