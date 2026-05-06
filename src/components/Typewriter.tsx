@@ -1,4 +1,11 @@
-import { createElement, useEffect, useState, type CSSProperties, type ElementType } from 'react';
+import {
+  createElement,
+  useEffect,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactNode,
+} from 'react';
 import { useTypewriter } from '../hooks/useTypewriter';
 
 export type CursorMode = 'blink' | 'hide' | 'beat-then-hide' | 'none';
@@ -18,6 +25,28 @@ export interface TypewriterProps {
 
 const BEAT_HOLD_MS = 1500;
 const FADE_MS = 200;
+
+function renderAnimatedChars(displayed: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let i = 0;
+  for (const chunk of displayed.split(/(\s+)/)) {
+    if (!chunk) continue;
+    if (/^\s+$/.test(chunk)) {
+      out.push(chunk);
+      i += chunk.length;
+      continue;
+    }
+    for (const ch of chunk) {
+      out.push(
+        <span key={i} className='char-in'>
+          {ch}
+        </span>,
+      );
+      i++;
+    }
+  }
+  return out;
+}
 
 export function Typewriter({
   text,
@@ -66,7 +95,9 @@ export function Typewriter({
   return createElement(
     As,
     { id, className, style, 'aria-label': text },
-    <span aria-hidden='true'>{displayed}</span>,
+    <span aria-hidden='true' style={{ whiteSpace: 'pre-wrap' }}>
+      {renderAnimatedChars(displayed)}
+    </span>,
     cursorMode !== 'none' && (
       <span
         key='cursor'
