@@ -1,13 +1,16 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { useScrollStore } from '../store/useScrollStore';
-import { PHASE, SECTION_VH } from './notebook/notebook.constants';
+import { smoothstep } from '../scene/lib/math';
 import { CircuitBackground, SPOTLIGHT_RADIUS } from './skills/CircuitBackground';
 import { ChipScatter } from './skills/ChipScatter';
 
-const HANDOFF_DISTANCE_VH = (1 - PHASE.HANDOFF_START) * SECTION_VH;
+const SKILLS_ENTER_START = 0.05;
+const SKILLS_ENTER_END = 0.85;
+const HANDOFF_DISTANCE_VH = 320;
 
 export function Skills() {
-  const handoff = useScrollStore((s) => s.notebookHandoff);
+  const notebookProgress = useScrollStore((s) => s.notebookProgress);
+  const handoff = smoothstep(SKILLS_ENTER_START, SKILLS_ENTER_END, notebookProgress);
   const translateY = -handoff * HANDOFF_DISTANCE_VH;
   const rootRef = useRef<HTMLElement>(null);
   const circuitRef = useRef<HTMLDivElement>(null);
