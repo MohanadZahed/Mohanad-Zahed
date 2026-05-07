@@ -1,4 +1,4 @@
-export const SECTION_VH = 600;
+export const SECTION_VH = 700;
 
 export const SMALL_NOTEBOOK_WIDTH_PX = 480;
 export const FULL_NOTEBOOK_MAX_WIDTH_PX = 2000;
@@ -28,7 +28,7 @@ export const PHASE = {
   IMPROVE_HOLD_END: 0.6,
   IMPROVE_FADE_END: 0.64,
 
-  HANDOFF_START: 0.825,
+  HANDOFF_START: 0.65,
   HANDOFF_END: 1.0,
 } as const;
 

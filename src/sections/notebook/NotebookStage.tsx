@@ -69,6 +69,9 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const initialOffsetY = initialNotebookTopPx - viewport.h / 2 + currentHeight / 2;
   const notebookEntryOffsetY = (1 - notebookEntryT) * initialOffsetY;
 
+  const handoff = smoothstep(PHASE.HANDOFF_START, PHASE.HANDOFF_END, progress);
+  const handoffExitPx = handoff * viewport.h;
+
   const finderT = smoothstep(0, PHASE.PIN_START + 0.06, progress);
   const finderTopPx = viewport.h + 80 - finderT * (viewport.h + FINDER_BOX_HEIGHT_PX + 160);
 
@@ -96,7 +99,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     position: 'absolute',
     left: '50%',
     top: '50%',
-    transform: `translate(-50%, calc(-50% + ${notebookEntryOffsetY}px))`,
+    transform: `translate(-50%, calc(-50% + ${notebookEntryOffsetY}px - ${handoffExitPx}px))`,
     width: currentWidth,
     height: currentHeight,
     willChange: 'width, height, transform',
