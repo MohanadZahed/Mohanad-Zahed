@@ -1,10 +1,10 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { useScrollStore } from '../store/useScrollStore';
-import { SECTION_VH } from './notebook/notebook.constants';
+import { PHASE, SECTION_VH } from './notebook/notebook.constants';
 import { CircuitBackground, SPOTLIGHT_RADIUS } from './skills/CircuitBackground';
 import { ChipScatter } from './skills/ChipScatter';
 
-const HANDOFF_DISTANCE_VH = (1 - 0.82) * SECTION_VH;
+const HANDOFF_DISTANCE_VH = (1 - PHASE.HANDOFF_START) * SECTION_VH;
 
 export function Skills() {
   const handoff = useScrollStore((s) => s.notebookHandoff);

@@ -28,7 +28,7 @@ export const PHASE = {
   IMPROVE_HOLD_END: 0.6,
   IMPROVE_FADE_END: 0.64,
 
-  HANDOFF_START: 0.82,
+  HANDOFF_START: 0.4,
   HANDOFF_END: 1.0,
 } as const;
 
