@@ -8,7 +8,7 @@ It must feel calm and hypnotic, never aggressive. Soft rim lighting on the avata
 
 ## Scroll timeline (0.00 → 1.00, normalised)
 
-Section heights in viewport-units: Hero=1, About=1, **Notebook=7** (long pinned interlude), Skills=1, Experience=1, Contact=1 → 12 viewport-heights total, scroll range = 11vh. Section TOPS in global progress: Hero=0.00, About=0.0909, Notebook=0.1818, Skills=0.8182, Experience=0.9091, Contact=1.00. About is centred in the viewport at progress ≈ 0.0909.
+Section heights in viewport-units: Hero=1, About=1, **Notebook=7** (long pinned interlude), Skills=1, **Knowledge=3** (pinned interlude), Experience=1, Contact=1 → 15 viewport-heights total, scroll range = 14vh. Section TOPS in global progress: Hero=0.00, About=0.0714, Notebook=0.1429, Skills=0.6429, Knowledge=0.7143, Experience=0.9286, Contact=1.00. About is centred in the viewport at progress ≈ 0.0714.
 
 Because Notebook (7vh) spans more than one viewport, it drives its internal choreography from a section-local progress value in `useScrollStore.notebookProgress`. Skills uses its own section-local `skillsCover`, written by a Skills-specific ScrollTrigger that starts before Skills' natural top and ends at it (so the slide-in begins while the user is still scrolling through Notebook's tail). Global progress thresholds in scene/avatar code shift when section heights change — see "Reference scene constants" below.
 
@@ -19,8 +19,9 @@ Because Notebook (7vh) spans more than one viewport, it drives its internal chor
 | 0.083           | About pin             | 1.5                               | normal                                    | **pinned to About** in document space — the anchor's world-Y now tracks scroll so the avatar appears glued to that document position                                    | static                          |
 | 0.083–0.1818    | About → Notebook      | 1.5                               | normal                                    | anchor translates up in world-Y at the same rate as page scroll; avatar scrolls off-screen above with the About section                                                 | static                          |
 | 0.1818–0.8182   | **Notebook**          | n/a (avatar gone, orbit silent)   | n/a                                       | off-screen above; the pinned-to-About anchor keeps it there                                                                                                             | static — section is self-contained, see Notebook storyboard |
-| 0.8182–0.9091   | Skills                | n/a (3D canvas idle)              | n/a                                       | off-screen above; pin holds                                                                                                                                             | static — section is HTML/CSS, slides over the laptop with its own section-local progress |
-| 0.9091–1.00     | Experience → Contact  | 6.0, slow drift                   | idle                                      | off-screen above (pinned to About)                                                                                                                                      | pulls back                      |
+| 0.6429–0.7143   | Skills                | n/a (3D canvas idle)              | n/a                                       | off-screen above; pin holds                                                                                                                                             | static — section is HTML/CSS, slides over the laptop with its own section-local progress |
+| 0.7143–0.9286   | **Knowledge**         | n/a (orbit silent)                | n/a                                       | yoga avatar fades in at world origin, spins from back-facing (π) to face-camera (0) with continuous gentle float                                                        | static — section drives its own choreography via `knowledgeProgress` |
+| 0.9286–1.00     | Experience → Contact  | 6.0, slow drift                   | idle                                      | off-screen above (pinned to About)                                                                                                                                      | pulls back                      |
 
 Implementation note: the leftward translate + yaw are driven by `smoothstep(0.04, 0.08, progress)` (clamped at 1.0). The vertical pin is `anchor.position.y = max(0, progress − 0.083) × totalScrollPx / windowHeight × viewportWorldHeight` — i.e. the anchor matches scroll velocity in world units once About is centered, so the avatar appears stationary in document space. Together these signals leave the avatar settled at the left side of the About section, and it leaves the viewport upward as the user scrolls into Notebook.
 
@@ -86,7 +87,16 @@ The visual: same dark canvas, floor is now a circuit board — faint cyan PCB tr
 
 **Chip grouping.** Chips are not a single uniform scatter. The roster is split by category into four separate grid blocks rendered in this order — **Frontend → Backend → DevOps → AI** — stacked vertically with `gap-16` between groups. Each block is its own `repeat(8, minmax(0, 1fr))` grid with a tighter inner `gap` (≈ 6 spacing units) and `gridAutoFlow: 'dense'`, so chips of the same category visually cluster together while keeping the scattered, varied-size feel within a group. Category render order lives in `CATEGORY_ORDER` inside `src/sections/skills/ChipScatter.tsx`.
 
-**Experience (0.9167–0.96)** — unknowen yet
+**Knowledge (global 0.7143–0.9286, section-local `knowledgeProgress` 0.00–1.00)** — A 3×viewport-tall pinned interlude that complements Skills. Skills shows the *stack*; Knowledge shows the *practice* — methodologies, architectural concepts, and soft skills that don't fit a tech chip. The 3D canvas hosts a second avatar (`/models/avatar-yoga.glb`) sitting in an om pose at world origin; the orbit is silent here. Section-local sub-phases (constants in [src/sections/knowledge/knowledge.constants.ts](../src/sections/knowledge/knowledge.constants.ts)):
+
+| Sub-progress | What happens |
+| --- | --- |
+| 0.00–0.10 | Title `Knowledge` types in via scroll-driven `Typewriter`. Yoga avatar fades in (driven by global progress crossing into the Knowledge band) showing his back (`rotation.y = π`). Bubbles hidden. |
+| 0.10–0.40 | Avatar rotates `π → 0` via `smoothstep(0.10, 0.40, p)` (damped); he ends facing the camera. Continuous gentle float on `position.y` (`sin(t·0.5)·0.04`). |
+| 0.40–0.85 | 22 glassy HTML knowledge bubbles emerge from viewport centre and travel outward to a soft ring (radius 220–320 px) around the avatar. Per-bubble window: `start = lerp(0.40, 0.65, i/(total−1))`, `end = start + 0.20` — staggered cascade. |
+| 0.85–1.00 | Hold fully composed; section unpins and Experience scrolls in below. |
+
+**Experience (0.9286–0.96)** — unknowen yet
 
 **Contact (0.96–1.00)** — Camera pulls back; full scene visible, gently drifting. CTA + email + LinkedIn link. Footer fades in.
 

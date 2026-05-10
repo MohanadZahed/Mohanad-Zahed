@@ -72,6 +72,12 @@ Per-chip `level` is a self-rated 0–100 placeholder; tweak in the data file. Ba
 
 Per-category accent dot: frontend `#38bdf8` · backend `#a78bfa` · ai `#34d399` · devops `#f59e0b`.
 
+## Knowledge bubbles — pinned interlude
+
+Roster lives in [`src/sections/knowledge/knowledge.data.ts`](../src/sections/knowledge/knowledge.data.ts). Categories: `methodology`, `architecture`, `process`, `soft`. This section captures the practice (Agile, micro-frontends, mentoring, etc.) that doesn't fit on a Skills chip — they're working concepts, not tools.
+
+Per-category accent dot: methodology `#a78bfa` · architecture `#38bdf8` · process `#34d399` · soft `#f59e0b`.
+
 ## Certifications (timeline section)
 
 | Date    | Certification                                                       |

@@ -8,6 +8,7 @@ import { HeroBackground } from './sections/HeroBackground';
 import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
 import { Skills } from './sections/Skills';
+import { Knowledge } from './sections/knowledge/Knowledge';
 import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
@@ -32,6 +33,7 @@ function App() {
         <About />
         <Notebook />
         <Skills />
+        <Knowledge />
         <Experience />
         <Contact />
       </main>
