@@ -1,34 +1,59 @@
 import type { ExperienceProject } from '../../data/experience';
-import { PIN_TOP_PX } from './experience.constants';
+import { PIN_TOP_PX, type TagPosition } from './experience.constants';
 
 interface Props {
   project: ExperienceProject;
   index: number;
   total: number;
-  tagOffsetPx: number;
+  tagPosition: TagPosition;
+  tagRegionHeightPx: number;
+  contentRef?: (el: HTMLDivElement | null) => void;
+  minContentHeight?: number;
 }
 
-export function ProjectCard({ project, index, total, tagOffsetPx }: Props) {
+export function ProjectCard({
+  project,
+  index,
+  total,
+  tagPosition,
+  tagRegionHeightPx,
+  contentRef,
+  minContentHeight,
+}: Props) {
   const number = String(index + 1).padStart(2, '0');
-  const tagPaddingLeft = index * tagOffsetPx;
+  const isCompactRow = tagPosition.rowIndex >= 1;
 
   return (
     <article
       className='experience-card relative md:sticky'
       style={{ top: `${PIN_TOP_PX}px`, zIndex: index + 1 }}
     >
-      <div className='flex' style={{ paddingLeft: `${tagPaddingLeft}px` }}>
+      <div className='relative w-full' style={{ height: `${tagRegionHeightPx}px` }}>
         <div
-          className='experience-card__tag flex items-center gap-3 rounded-t-md bg-white/95 px-4 py-2 font-mono text-xs uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
+          className='experience-card__tag absolute flex items-start overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
+          style={{
+            top: `${tagPosition.topPx}px`,
+            left: `${tagPosition.leftPx}px`,
+            width: `${tagPosition.widthPx}px`,
+            height: `${tagRegionHeightPx - tagPosition.topPx}px`,
+            fontSize: isCompactRow ? '10px' : '11px',
+            maxWidth: '150px',
+          }}
         >
-          <span className='font-semibold'>{number}</span>
-          <span aria-hidden className='block h-px w-5 bg-zinc-400' />
-          <span className='whitespace-nowrap'>{project.dateLabel}</span>
+          {project.dateLabel}
         </div>
       </div>
 
-      <div className='rounded-b-md rounded-tr-md bg-white/95 text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'>
-        <div className='grid gap-8 px-8 py-8 md:px-12 md:py-10 lg:grid-cols-[1fr_320px]'>
+      <div className='rounded-b-md rounded-tr-md bg-white text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'>
+        <div
+          ref={contentRef}
+          className='grid gap-8 px-8 py-8 md:px-12 md:py-10 lg:grid-cols-[1fr_400px]'
+          style={
+            minContentHeight && minContentHeight > 0
+              ? { minHeight: `${minContentHeight}px` }
+              : undefined
+          }
+        >
           <div className='min-w-0'>
             <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>
               {project.role}
@@ -86,7 +111,10 @@ export function ProjectCard({ project, index, total, tagOffsetPx }: Props) {
             <ul className='mt-3 space-y-2 font-mono text-sm leading-relaxed text-zinc-800'>
               {project.tasks.map((task, i) => (
                 <li key={i} className='flex gap-2'>
-                  <span aria-hidden className='mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-zinc-900' />
+                  <span
+                    aria-hidden
+                    className='mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-zinc-900'
+                  />
                   <span>{task}</span>
                 </li>
               ))}
