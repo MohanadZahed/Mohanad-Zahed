@@ -4,6 +4,7 @@ import { Typewriter } from '../../components/Typewriter';
 import { useScrollStore } from '../../store/useScrollStore';
 import {
   FINDER_BOX_HEIGHT_PX,
+  FINDER_TYPING_END,
   FINDER_TYPING_START,
   FULL_NOTEBOOK_MAX_WIDTH_PX,
   PHASE,
@@ -88,6 +89,15 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const finderColumnGapPx = SMALL_NOTEBOOK_WIDTH_PX + 80;
   const showFinder = progress >= PHASE.FINDER_IN_START && progress <= PHASE.FINDER_OUT_END + 0.01;
 
+  const finderScrollProgress = Math.max(
+    0,
+    Math.min(
+      1,
+      (progress - FINDER_TYPING_START) /
+        Math.max(0.0001, FINDER_TYPING_END - FINDER_TYPING_START),
+    ),
+  );
+
   const titleWrapperStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -160,12 +170,12 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         <FinderBox
           title='context.md'
           lines={LEFT_FINDER_LINES}
-          start={progress >= FINDER_TYPING_START}
+          scrollProgress={finderScrollProgress}
         />
         <FinderBox
           title='notes.md'
           lines={RIGHT_FINDER_LINES}
-          start={progress >= FINDER_TYPING_START}
+          scrollProgress={finderScrollProgress}
         />
       </div>
 

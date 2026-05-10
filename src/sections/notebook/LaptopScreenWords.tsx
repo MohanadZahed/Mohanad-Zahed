@@ -9,6 +9,7 @@ interface LaptopScreenWordsProps {
 interface WordSpec {
   text: string;
   typeStart: number;
+  typeEnd: number;
   holdEnd: number;
   fadeEnd: number;
 }
@@ -17,18 +18,21 @@ const WORDS: WordSpec[] = [
   {
     text: 'plan',
     typeStart: PHASE.PLAN_TYPE_IN[0],
+    typeEnd: PHASE.PLAN_TYPE_IN[1],
     holdEnd: PHASE.PLAN_HOLD_END,
     fadeEnd: PHASE.PLAN_FADE_END,
   },
   {
     text: 'build',
     typeStart: PHASE.BUILD_TYPE_IN[0],
+    typeEnd: PHASE.BUILD_TYPE_IN[1],
     holdEnd: PHASE.BUILD_HOLD_END,
     fadeEnd: PHASE.BUILD_FADE_END,
   },
   {
     text: 'improve',
     typeStart: PHASE.IMPROVE_TYPE_IN[0],
+    typeEnd: PHASE.IMPROVE_TYPE_IN[1],
     holdEnd: PHASE.IMPROVE_HOLD_END,
     fadeEnd: PHASE.IMPROVE_FADE_END,
   },
@@ -50,13 +54,17 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
   return (
     <div style={screenStyle}>
       {WORDS.map((w) => {
-        const active = progress >= w.typeStart && progress < w.fadeEnd;
         const opacity =
           progress < w.typeStart || progress >= w.fadeEnd
             ? 0
             : progress < w.holdEnd
               ? 1
               : 1 - (progress - w.holdEnd) / Math.max(0.0001, w.fadeEnd - w.holdEnd);
+
+        const wordScrollProgress = Math.max(
+          0,
+          Math.min(1, (progress - w.typeStart) / Math.max(0.0001, w.typeEnd - w.typeStart)),
+        );
 
         return (
           <div
@@ -72,13 +80,7 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
               textTransform: 'lowercase',
             }}
           >
-            <Typewriter
-              text={w.text}
-              start={active}
-              cursorMode='blink'
-              speed={70}
-              startDelay={60}
-            />
+            <Typewriter text={w.text} scrollProgress={wordScrollProgress} cursorMode='blink' />
           </div>
         );
       })}

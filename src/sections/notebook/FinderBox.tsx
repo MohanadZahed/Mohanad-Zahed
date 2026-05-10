@@ -11,11 +11,23 @@ interface FinderBoxProps {
   title?: string;
   lines?: readonly string[];
   start?: boolean;
+  /**
+   * When provided, typing across all lines is driven by scroll (0..1):
+   * line `i` sees `clamp01(scrollProgress * lines.length - i)`. Overrides `start`.
+   */
+  scrollProgress?: number;
   style?: CSSProperties;
 }
 
-export function FinderBox({ title = '', lines, start = false, style }: FinderBoxProps) {
+export function FinderBox({
+  title = '',
+  lines,
+  start = false,
+  scrollProgress,
+  style,
+}: FinderBoxProps) {
   const hasLines = lines && lines.length > 0;
+  const lineCount = lines?.length ?? 0;
   return (
     <div
       aria-hidden={hasLines ? undefined : 'true'}
@@ -73,24 +85,31 @@ export function FinderBox({ title = '', lines, start = false, style }: FinderBox
         }}
       >
         {hasLines &&
-          lines!.map((line, i) => (
-            <Typewriter
-              key={line}
-              as='div'
-              text={line}
-              start={start}
-              speed={45}
-              startDelay={FINDER_LINE_BASE_DELAY_MS + i * FINDER_LINE_STAGGER_MS}
-              cursorMode='blink'
-              style={{
-                color: '#e5e5e5',
-                fontSize: 16,
-                fontWeight: 500,
-                lineHeight: 1.3,
-                letterSpacing: '-0.01em',
-              }}
-            />
-          ))}
+          lines!.map((line, i) => {
+            const lineScrollProgress =
+              scrollProgress === undefined
+                ? undefined
+                : Math.max(0, Math.min(1, scrollProgress * lineCount - i));
+            return (
+              <Typewriter
+                key={line}
+                as='div'
+                text={line}
+                start={start}
+                scrollProgress={lineScrollProgress}
+                speed={45}
+                startDelay={FINDER_LINE_BASE_DELAY_MS + i * FINDER_LINE_STAGGER_MS}
+                cursorMode='blink'
+                style={{
+                  color: '#e5e5e5',
+                  fontSize: 16,
+                  fontWeight: 500,
+                  lineHeight: 1.3,
+                  letterSpacing: '-0.01em',
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );

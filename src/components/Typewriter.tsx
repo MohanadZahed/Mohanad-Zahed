@@ -12,7 +12,12 @@ export type CursorMode = 'blink' | 'hide' | 'beat-then-hide' | 'none';
 
 export interface TypewriterProps {
   text: string;
-  start: boolean;
+  start?: boolean;
+  /**
+   * When provided, typing follows scroll position (0..1) instead of running
+   * autonomously. Overrides `start`/`speed`/`startDelay`.
+   */
+  scrollProgress?: number;
   speed?: number;
   startDelay?: number;
   cursorMode?: CursorMode;
@@ -50,7 +55,8 @@ function renderAnimatedChars(displayed: string): ReactNode[] {
 
 export function Typewriter({
   text,
-  start,
+  start = true,
+  scrollProgress,
   speed,
   startDelay,
   cursorMode = 'blink',
@@ -60,13 +66,24 @@ export function Typewriter({
   style,
   id,
 }: TypewriterProps) {
-  const { displayed, done } = useTypewriter(text, { start, speed, startDelay });
+  const { displayed, done } = useTypewriter(text, {
+    start,
+    speed,
+    startDelay,
+    scrollProgress,
+  });
   const [beatHidden, setBeatHidden] = useState(false);
   const [prevStart, setPrevStart] = useState(start);
+  const [prevDone, setPrevDone] = useState(done);
 
   if (start !== prevStart) {
     setPrevStart(start);
     if (!start && beatHidden) setBeatHidden(false);
+  }
+
+  if (done !== prevDone) {
+    setPrevDone(done);
+    if (!done && beatHidden) setBeatHidden(false);
   }
 
   useEffect(() => {

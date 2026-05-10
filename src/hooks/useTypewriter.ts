@@ -4,6 +4,7 @@ export interface UseTypewriterOptions {
   start: boolean;
   speed?: number;
   startDelay?: number;
+  scrollProgress?: number;
 }
 
 export interface UseTypewriterResult {
@@ -17,8 +18,10 @@ const prefersReducedMotion = () =>
 
 export function useTypewriter(
   text: string,
-  { start, speed = 45, startDelay = 120 }: UseTypewriterOptions,
+  { start, speed = 45, startDelay = 120, scrollProgress }: UseTypewriterOptions,
 ): UseTypewriterResult {
+  const isScrollMode = scrollProgress !== undefined;
+
   const [displayed, setDisplayed] = useState('');
   const [done, setDone] = useState(false);
   const [prevText, setPrevText] = useState(text);
@@ -38,7 +41,7 @@ export function useTypewriter(
   }
 
   const reduced = prefersReducedMotion();
-  if (start && reduced && !done) {
+  if (!isScrollMode && start && reduced && !done) {
     setDisplayed(text);
     setDone(true);
   }
@@ -49,6 +52,7 @@ export function useTypewriter(
   const beganRef = useRef(false);
 
   useEffect(() => {
+    if (isScrollMode) return;
     if (!start || reduced || done) return;
 
     indexRef.current = displayed.length;
@@ -84,7 +88,16 @@ export function useTypewriter(
     // displayed is intentionally read once at effect-start to seed indexRef;
     // it must NOT be a dep or every char update would restart the loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [start, text, speed, startDelay, reduced, done]);
+  }, [isScrollMode, start, text, speed, startDelay, reduced, done]);
+
+  if (isScrollMode) {
+    const clamped = Math.max(0, Math.min(1, scrollProgress!));
+    const count = reduced ? text.length : Math.ceil(clamped * text.length);
+    return {
+      displayed: text.slice(0, count),
+      done: clamped >= 1,
+    };
+  }
 
   return { displayed, done };
 }

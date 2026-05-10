@@ -7,6 +7,7 @@ export const FINDER_BOX_WIDTH_PX = 360;
 export const FINDER_BOX_HEIGHT_PX = 260;
 export const FINDER_OFFSET_BELOW_NOTEBOOK_PX = 500;
 export const FINDER_TYPING_START = 0.16;
+export const FINDER_TYPING_END = 0.28;
 export const FINDER_LINE_STAGGER_MS = 1100;
 export const FINDER_LINE_BASE_DELAY_MS = 200;
 

@@ -50,6 +50,17 @@ Sections that span more than one viewport-height (currently just Notebook) must 
 - Tech stack list (logo orbit): `src/data/techStack.ts`. Each entry: `{ id, label, texturePath, yearsExperience }`.
 - All site copy comes from `docs/content.md` (CV-derived).
 
+## Typewriter modes
+
+`src/components/Typewriter.tsx` supports two mutually-exclusive modes — pick per call site, don't mix.
+
+- **Auto mode (default)**: `<Typewriter text="..." start={boolean} speed={45} startDelay={120} />`. Once `start` flips true, the component types itself character-by-character on its own clock. Use this for one-shot reveals where pacing should not depend on scroll velocity (e.g. the notebook section title `"elevate your system"`).
+- **Scroll-driven mode**: pass `scrollProgress` (0..1) and the displayed substring becomes a pure function of that value — `text.slice(0, ⌈p · text.length⌉)`. No internal timer; characters appear and disappear with scroll. Auto-mode props (`start`, `speed`, `startDelay`) are ignored when `scrollProgress` is defined.
+
+Use scroll-driven mode when the typing belongs to a scroll storyboard moment and the user should feel like *they* are driving the keystrokes (current users: the three notebook words `plan` / `build` / `improve`, and both finder box panels). Map a section-local progress range `[start, end]` into `clamp01((p − start) / (end − start))` and pass that. For multi-line containers (`FinderBox`), pass a single `scrollProgress` to the box and let it slice across its lines internally — line `i` of `n` types over `[i/n, (i+1)/n]` of the box's range.
+
+The `beat-then-hide` cursor mode resets when `done` flips back to false, so scrolling backwards out of a fully-typed range correctly re-shows the cursor.
+
 ## Accessibility
 
 - Respect `prefers-reduced-motion`: disable orbital animation, ScrollTrigger pinning, and postprocessing. The site must remain readable as a static page.
