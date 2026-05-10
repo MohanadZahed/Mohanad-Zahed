@@ -116,6 +116,12 @@
   padding: 12px 14px;
   font-size: 11px;
   contain: layout style;
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 220ms ease;
+}
+.chip:hover {
+  border-color: rgb(255 255 255 / 0.12);
 }
 
 .chip--md {
@@ -157,9 +163,20 @@
   height: 6px;
   border-radius: 999px;
   background: var(--cat-color);
-  box-shadow: 0 0 6px var(--cat-color);
+  box-shadow: 0 0 3px color-mix(in srgb, var(--cat-color) 50%, transparent);
+  opacity: 0.55;
   flex: none;
+  transition:
+    opacity 220ms ease,
+    box-shadow 220ms ease;
 }
+.chip:hover .chip__cat-dot {
+  opacity: 1;
+  box-shadow:
+    0 0 6px var(--cat-color),
+    0 0 12px color-mix(in srgb, var(--cat-color) 60%, transparent);
+}
+
 .chip__label {
   font-family: var(--font-mono);
   letter-spacing: 0.04em;
@@ -167,6 +184,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgb(228 228 231 / 0.6);
+  transition: color 220ms ease;
+}
+.chip:hover .chip__label {
+  color: rgb(244 244 245 / 1);
 }
 
 .chip__bar {
@@ -181,5 +203,47 @@
   height: 100%;
   background: var(--bar-color);
   border-radius: 3px;
-  box-shadow: 0 0 6px var(--bar-color);
+  box-shadow: 0 0 3px color-mix(in srgb, var(--bar-color) 40%, transparent);
+  opacity: 0.55;
+  transition:
+    opacity 220ms ease,
+    box-shadow 220ms ease;
+}
+.chip:hover .chip__bar-fill {
+  opacity: 1;
+  box-shadow:
+    0 0 6px var(--bar-color),
+    0 0 14px color-mix(in srgb, var(--bar-color) 55%, transparent);
+}
+
+.skills-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.skills-legend__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cat-color);
+  box-shadow:
+    0 0 6px var(--cat-color),
+    0 0 12px color-mix(in srgb, var(--cat-color) 60%, transparent);
+  flex: none;
+}
+.skills-legend__label {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgb(244 244 245 / 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .chip__cat-dot,
+  .chip__label,
+  .chip__bar-fill {
+    transition: none;
+  }
 }

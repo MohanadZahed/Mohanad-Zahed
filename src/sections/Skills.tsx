@@ -82,6 +82,28 @@ export function Skills() {
         </p>
       </header>
 
+      <ul
+        className='skills-legend relative z-20 px-8 sm:px-16 mt-6 flex flex-col gap-2 pointer-events-none'
+        aria-label='Skill categories'
+      >
+        <li className='skills-legend__item' style={{ '--cat-color': '#38bdf8' } as CSSProperties}>
+          <span className='skills-legend__dot' aria-hidden />
+          <span className='skills-legend__label'>Frontend</span>
+        </li>
+        <li className='skills-legend__item' style={{ '--cat-color': '#a78bfa' } as CSSProperties}>
+          <span className='skills-legend__dot' aria-hidden />
+          <span className='skills-legend__label'>Backend</span>
+        </li>
+        <li className='skills-legend__item' style={{ '--cat-color': '#f59e0b' } as CSSProperties}>
+          <span className='skills-legend__dot' aria-hidden />
+          <span className='skills-legend__label'>DevOps</span>
+        </li>
+        <li className='skills-legend__item' style={{ '--cat-color': '#34d399' } as CSSProperties}>
+          <span className='skills-legend__dot' aria-hidden />
+          <span className='skills-legend__label'>AI</span>
+        </li>
+      </ul>
+
       <ChipScatter />
     </section>
   );

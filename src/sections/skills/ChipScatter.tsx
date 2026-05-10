@@ -1,5 +1,7 @@
 import { Microchip } from './Microchip';
-import { skills, type Skill } from './skills.data';
+import { skills, type Skill, type SkillCategory } from './skills.data';
+
+const CATEGORY_ORDER: SkillCategory[] = ['frontend', 'backend', 'devops', 'ai'];
 
 function fnv(str: string): number {
   let h = 2166136261;
@@ -31,31 +33,40 @@ function span(skill: Skill): { col: number; row: number } {
 }
 
 export function ChipScatter() {
+  const grouped = CATEGORY_ORDER.map((cat) => ({
+    category: cat,
+    items: skills.filter((s) => s.category === cat),
+  }));
+
   return (
-    <div
-      className='relative z-10 grid px-6 sm:px-12 pt-28 pb-12 mx-auto'
-      style={{
-        gap: 'calc(var(--spacing) * 13)',
-        maxWidth: '125rem',
-        gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
-        gridAutoRows: '64px',
-        gridAutoFlow: 'dense',
-      }}
-    >
-      {skills.map((s) => {
-        const sp = span(s);
-        return (
-          <div
-            key={s.id}
-            style={{
-              gridColumn: `span ${sp.col}`,
-              gridRow: `span ${sp.row}`,
-            }}
-          >
-            <Microchip skill={s} />
-          </div>
-        );
-      })}
+    <div className='relative z-10 px-6 sm:px-12 pt-28 pb-12 mx-auto flex flex-col gap-16' style={{ maxWidth: '125rem' }}>
+      {grouped.map(({ category, items }) => (
+        <div
+          key={category}
+          className='grid'
+          style={{
+            gap: 'calc(var(--spacing) * 6)',
+            gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
+            gridAutoRows: '64px',
+            gridAutoFlow: 'dense',
+          }}
+        >
+          {items.map((s) => {
+            const sp = span(s);
+            return (
+              <div
+                key={s.id}
+                style={{
+                  gridColumn: `span ${sp.col}`,
+                  gridRow: `span ${sp.row}`,
+                }}
+              >
+                <Microchip skill={s} />
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }
