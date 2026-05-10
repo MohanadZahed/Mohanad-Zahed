@@ -44,6 +44,8 @@ export function KnowledgeBubble({
 
   const x = Math.cos(restAngle) * restRadius * eased;
   const y = Math.sin(restAngle) * restRadius * eased;
+  const myX = (item.x ?? 0) * eased;
+  const myY = (item.y ?? 0) * eased;
   const scale = lerp(0.4, 1, eased);
   const opacity = eased;
 
@@ -51,7 +53,7 @@ export function KnowledgeBubble({
     position: 'absolute',
     left: '50%',
     top: '50%',
-    transform: `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`,
+    transform: `translate(-50%, -50%) translate(${x + myX}px, ${y + myY}px) scale(${scale})`,
     opacity,
     willChange: 'transform, opacity',
   };

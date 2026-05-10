@@ -4,10 +4,14 @@ export interface KnowledgeItem {
   id: string;
   label: string;
   category: KnowledgeCategory;
+  // Optional per-bubble pixel offsets, added to the auto-computed ring
+  // position. Use to nudge individual bubbles when the layout needs hand-tuning.
+  x?: number;
+  y?: number;
 }
 
 export const KNOWLEDGE: readonly KnowledgeItem[] = [
-  { id: 'agile', label: 'Agile', category: 'methodology' },
+  { id: 'agile', label: 'Agile', category: 'methodology', x: 20, y: 20 },
   { id: 'scrum', label: 'Scrum', category: 'methodology' },
   { id: 'kanban', label: 'Kanban', category: 'methodology' },
   { id: 'bdd', label: 'BDD', category: 'methodology' },
@@ -31,7 +35,6 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
   { id: 'mentoring', label: 'Mentoring', category: 'soft' },
   { id: 'knowledge-transfer', label: 'Knowledge Transfer', category: 'soft' },
   { id: 'ai-augmented', label: 'AI-augmented Dev', category: 'soft' },
-  { id: 'stakeholder-mgmt', label: 'Stakeholder Mgmt', category: 'soft' },
 ] as const;
 
 export const KNOWLEDGE_CATEGORY_COLOR: Record<KnowledgeCategory, string> = {

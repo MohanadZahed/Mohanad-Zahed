@@ -14,9 +14,9 @@ export const PHASE = {
   BUBBLES_HOLD: 0.85,
 } as const;
 
-export const RING_RADIUS_MIN_PX = 200;
-export const RING_RADIUS_MAX_PX = 440;
-export const RING_ANGLE_JITTER_RAD = 0.33;
+export const RING_RADIUS_MIN_PX = 280;
+export const RING_RADIUS_MAX_PX = 320;
+export const RING_ANGLE_JITTER_RAD = 0.06;
 
 // Global progress band where the YogaAvatar is on stage.
 // Page composition: Hero(1) + About(1) + Notebook(6.25) + Skills(1) + Knowledge(3)
@@ -27,5 +27,5 @@ export const RING_ANGLE_JITTER_RAD = 0.33;
 // BOTTOM  = section BOTTOM at viewport TOP (section fully scrolled out).
 export const KNOWLEDGE_TOP_PROGRESS = 8.25 / 13.25;
 export const KNOWLEDGE_CENTER_PROGRESS = 9.25 / 13.25;
-export const KNOWLEDGE_PIN_END_PROGRESS = 11 / 13.25;
+export const KNOWLEDGE_PIN_END_PROGRESS = 10.95 / 13.25;
 export const KNOWLEDGE_BOTTOM_PROGRESS = 12.25 / 13.25;

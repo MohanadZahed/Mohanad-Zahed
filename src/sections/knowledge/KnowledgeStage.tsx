@@ -117,13 +117,12 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
           }}
         >
           {KNOWLEDGE.map((item, i) => {
-            const baseAngle = (i / total) * Math.PI * 2;
+            // Even angular distribution around the avatar with small jitter,
+            // and a tight radius band so the bubbles read as a single ring.
+            const baseAngle = (i / total) * Math.PI * 2 - Math.PI / 2;
             const jitter = (hash01(i) - 0.5) * 2 * RING_ANGLE_JITTER_RAD;
             const restAngle = baseAngle + jitter;
-            // Two-band scatter: alternate inner/outer + per-bubble lerp for variety.
-            const band = i % 2 === 0 ? 0 : 1;
-            const radiusMix = (band * 0.5 + hash01(i + 91) * 0.5) % 1;
-            const restRadius = lerp(RING_RADIUS_MIN_PX, RING_RADIUS_MAX_PX, radiusMix);
+            const restRadius = lerp(RING_RADIUS_MIN_PX, RING_RADIUS_MAX_PX, hash01(i + 91));
             return (
               <KnowledgeBubble
                 key={item.id}
