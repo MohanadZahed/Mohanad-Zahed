@@ -9,11 +9,12 @@ import { useScrollStore } from '../store/useScrollStore';
 import { smoothstep } from './lib/math';
 
 const ANCHOR_LEFT_X = -2.6;
-// Thresholds rebased after inserting the 3vh Knowledge section.
-// Old scroll range = 10.25vh, new = 13.25vh, multiplier ≈ 0.7736.
-const HORIZ_START = 0.0309;
-const HORIZ_END = 0.0619;
-const ABOUT_CENTER_PROGRESS = 0.0642;
+// Thresholds rebased after expanding Experience to ~16vh of stacking-card content.
+// Anchors in vh-from-top: HORIZ_START=0.41, HORIZ_END=0.82, ABOUT_CENTER=0.85.
+// Scroll range ≈ 28.25vh.
+const HORIZ_START = 0.41 / 28.25;
+const HORIZ_END = 0.82 / 28.25;
+const ABOUT_CENTER_PROGRESS = 0.85 / 28.25;
 const HERO_Y_OFFSET = -1;
 
 export function Scene() {

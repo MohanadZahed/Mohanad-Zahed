@@ -20,28 +20,30 @@ Sections are pure HTML/Tailwind that scrolls *over* the persistent 3D canvas. Th
 
 Same numbers as `docs/vision.md`. If they ever drift, treat `docs/vision.md` as source of truth.
 
-Section heights in viewport-units: Hero=1, About=1, **Notebook=6**, Skills=1, Experience=1, Contact=1 → 11vh total page, scroll range = 10vh.
+Section heights in viewport-units: Hero=1, About=1, **Notebook=6.25** (pinned interlude), Skills=1, **Knowledge=3** (pinned interlude), **Experience≈16** (sticky-stacking project cards), Contact=1 ≈ 29.25vh total page, scroll range ≈ 28.25vh. Treat the global-progress numbers below as nominal — Experience's height is content-driven, so for anything that needs precision use `ScrollTrigger.refresh()` measurements.
 
 | Range | Section | What happens in 3D |
 |---|---|---|
-| 0.00–0.04 | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered + idle breathing, per-logo colored point lights tint the avatar as they pass |
-| 0.04–0.08 | Hero → About | Avatar + orbit anchor drifts left toward x ≈ −2.6, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5, scroll layers velocity on top of the idle drift |
-| 0.07 | About pin engages | Anchor's world-Y begins tracking scroll so the avatar appears glued to About in document space |
-| 0.07–0.20 | About → Notebook | Avatar scrolls off-screen above with About; orbit fades / silences |
-| 0.20–0.80 | Notebook | 3D canvas is silent. The Notebook section is fully HTML/CSS and uses `useScrollStore.notebookProgress` (section-local, 0..1) for its own choreography — see `docs/vision.md` |
-| 0.80–0.90 | Skills | 3D canvas idle. Section is HTML/CSS only: `CircuitBackground` PCB pattern + scattered `Microchip` cards (per-skill glowing progress bar). Avatar stays pinned off-screen above. |
-| 0.90–0.95 | Experience | Logos return to slow ambient orbit r=6 around the pinned avatar (off-screen) |
-| 0.95–1.00 | Contact | Camera pulls back, gentle drift, footer fades in |
+| 0.000–0.014 | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered + idle breathing, per-logo colored point lights tint the avatar as they pass |
+| 0.014–0.030 | Hero → About | Avatar + orbit anchor drifts left toward x ≈ −2.6, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5, scroll layers velocity on top of the idle drift |
+| 0.030 | About pin engages | Anchor's world-Y begins tracking scroll so the avatar appears glued to About in document space |
+| 0.030–0.071 | About → Notebook | Avatar scrolls off-screen above with About; orbit fades / silences |
+| 0.071–0.292 | Notebook | 3D canvas is silent. Section is fully HTML/CSS and uses `useScrollStore.notebookProgress` (section-local, 0..1) for its own choreography |
+| 0.292–0.327 | Skills | 3D canvas idle. Section is HTML/CSS only: `CircuitBackground` PCB pattern + scattered `Microchip` cards. Avatar stays pinned off-screen. |
+| 0.327–0.434 | Knowledge | 3D canvas hosts second yoga avatar; section drives its own choreography via `useScrollStore.knowledgeProgress` |
+| 0.434–0.965 | **Experience** | 3D canvas silent. Section is HTML/CSS only — three company wrappers (ISO-Gruppe, Medienwerft, MERENTIS) each containing `position: sticky` project cards that stack on top of each other as the user scrolls. CategoryTags fan out via progressive `padding-left`. No section-local progress field — pure CSS. |
+| 0.965–1.000 | Contact | Camera pulls back, gentle drift, footer fades in |
 
-The pin is implicit: a single `smoothstep(0.04, 0.08, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so progress ≥ 0.08 leaves the anchor at its settled position with no extra logic.
+The pin is implicit: a single `smoothstep(0.41/28.25, 0.82/28.25, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so anchors past About-centre stay at their settled position with no extra logic.
 
 ## Section-local progress
 
-Sections that span more than one viewport-height (currently just Notebook) must NOT drive their internal phases from the global `progress` field — adding/removing such a section would drag every other section through its phases. Pattern:
+Sections that span more than one viewport-height (currently Notebook, Knowledge) must NOT drive their internal phases from the global `progress` field — adding/removing such a section would drag every other section through its phases. Pattern:
 
 - Wire a per-section ScrollTrigger (`trigger: sectionRef.current, start: 'top top', end: 'bottom bottom'`) and write `self.progress` into a dedicated store field (e.g. `notebookProgress`).
 - Components inside that section subscribe to the section-local field, not the global one.
 - Sibling sections that need to coordinate (e.g. Skills sliding over the notebook) read a derived store field (e.g. `notebookHandoff`).
+- Experience is the exception: it's a long section but its choreography is pure CSS sticky-stacking, so it doesn't need a section-local store field. Don't add one unless a future feature actually requires it.
 
 ## Content data
 
