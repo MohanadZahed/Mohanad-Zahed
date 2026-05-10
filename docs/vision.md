@@ -81,6 +81,10 @@ The `0.1` lerp factor is responsible for ~40% of how good the motion feels. Keep
 
 The visual: same dark canvas, floor is now a circuit board — faint cyan PCB traces tile the background, brightening under a pointer-driven spotlight. Scattered across the board sit ~50 microchip-style cards (matte-black DIP packages with silver-pin teeth, varying sizes, slight per-chip rotation). Each chip carries a skill name and a glowing progress bar — red ≤ 30, amber 31–60, green 61+. A small per-category indicator dot (Frontend / Backend / AI / DevOps) sits next to the label. Chips inside the spotlight radius lift slightly and their bar glow intensifies. Below 768 px the scatter collapses into a wrapping flex grid. Source of truth for the roster: `src/sections/skills/skills.data.ts`, derived from `docs/cv.md`.
 
+**Header & legend.** Above the scatter, the section header (`Skills` h2 + tagline) is followed by a vertically-stacked category legend listing **Frontend / Backend / DevOps / AI**. Each legend row is a colored dot (same hex as the chip's `--cat-color`: frontend `#38bdf8`, backend `#a78bfa`, devops `#f59e0b`, ai `#34d399`) followed by an uppercase mono label. The legend dots use the chip dot's lit-state glow (`0 0 6px var(--cat-color), 0 0 12px color-mix(... 60%)`) **at all times** — no hover transition, they stay illuminated as a static key.
+
+**Chip grouping.** Chips are not a single uniform scatter. The roster is split by category into four separate grid blocks rendered in this order — **Frontend → Backend → DevOps → AI** — stacked vertically with `gap-16` between groups. Each block is its own `repeat(8, minmax(0, 1fr))` grid with a tighter inner `gap` (≈ 6 spacing units) and `gridAutoFlow: 'dense'`, so chips of the same category visually cluster together while keeping the scattered, varied-size feel within a group. Category render order lives in `CATEGORY_ORDER` inside `src/sections/skills/ChipScatter.tsx`.
+
 **Experience (0.9167–0.96)** — unknowen yet
 
 **Contact (0.96–1.00)** — Camera pulls back; full scene visible, gently drifting. CTA + email + LinkedIn link. Footer fades in.
