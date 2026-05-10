@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { smoothstep } from '../../scene/lib/math';
+import { lerp, smoothstep } from '../../scene/lib/math';
 import { Typewriter } from '../../components/Typewriter';
 import { useScrollStore } from '../../store/useScrollStore';
 import {
@@ -72,11 +72,21 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const handoff = smoothstep(PHASE.HANDOFF_START, PHASE.HANDOFF_END, progress);
   const handoffExitPx = handoff * viewport.h;
 
-  const finderT = smoothstep(0, PHASE.PIN_START + 0.06, progress);
-  const finderTopPx = viewport.h + 80 - finderT * (viewport.h + FINDER_BOX_HEIGHT_PX + 160);
+  const finderEnterT = smoothstep(PHASE.FINDER_IN_START, PHASE.FINDER_IN_END, progress);
+  const finderExitT = smoothstep(PHASE.FINDER_HOLD_END, PHASE.FINDER_OUT_END, progress);
+
+  const finderStartTopPx = viewport.h + 80;
+  const finderCentreTopPx = viewport.h / 2 - FINDER_BOX_HEIGHT_PX / 2;
+  const finderExitTopPx = -FINDER_BOX_HEIGHT_PX - 80;
+
+  const finderTopPx = lerp(
+    lerp(finderStartTopPx, finderCentreTopPx, finderEnterT),
+    finderExitTopPx,
+    finderExitT,
+  );
 
   const finderColumnGapPx = SMALL_NOTEBOOK_WIDTH_PX + 80;
-  const showFinder = progress > 0 && progress < PHASE.PIN_END + 0.05;
+  const showFinder = progress >= PHASE.FINDER_IN_START && progress <= PHASE.FINDER_OUT_END + 0.01;
 
   const titleWrapperStyle: CSSProperties = {
     position: 'absolute',
