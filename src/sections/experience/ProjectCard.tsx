@@ -1,5 +1,6 @@
+import type { CSSProperties } from 'react';
 import type { ExperienceProject } from '../../data/experience';
-import { PIN_TOP_PX, type TagPosition } from './experience.constants';
+import type { TagPosition } from './experience.constants';
 
 interface Props {
   project: ExperienceProject;
@@ -7,8 +8,10 @@ interface Props {
   total: number;
   tagPosition: TagPosition;
   tagRegionHeightPx: number;
+  cardRef?: (el: HTMLElement | null) => void;
   contentRef?: (el: HTMLDivElement | null) => void;
   minContentHeight?: number;
+  pinned: boolean;
 }
 
 export function ProjectCard({
@@ -17,18 +20,36 @@ export function ProjectCard({
   total,
   tagPosition,
   tagRegionHeightPx,
+  cardRef,
   contentRef,
   minContentHeight,
+  pinned,
 }: Props) {
   const number = String(index + 1).padStart(2, '0');
   const isCompactRow = tagPosition.rowIndex >= 1;
 
+  const articleStyle: CSSProperties = pinned
+    ? ({
+        position: 'absolute',
+        inset: 0,
+        zIndex: index + 1,
+        transform:
+          'translate3d(0, calc((1 - var(--card-progress, 0)) * 100%), 0)',
+        willChange: 'transform',
+        '--card-progress': index === 0 ? '1' : '0',
+      } as CSSProperties)
+    : { zIndex: index + 1 };
+
   return (
     <article
-      className='experience-card relative md:sticky'
-      style={{ top: `${PIN_TOP_PX}px`, zIndex: index + 1 }}
+      ref={cardRef}
+      className='experience-card relative flex flex-col'
+      style={articleStyle}
     >
-      <div className='relative w-full' style={{ height: `${tagRegionHeightPx}px` }}>
+      <div
+        className='relative w-full shrink-0'
+        style={{ height: `${tagRegionHeightPx}px` }}
+      >
         <div
           className='experience-card__tag absolute flex items-start overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
           style={{
@@ -44,12 +65,18 @@ export function ProjectCard({
         </div>
       </div>
 
-      <div className='rounded-b-md rounded-tr-md bg-white text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'>
+      <div
+        className={`rounded-b-md rounded-tr-md bg-white text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)] ${
+          pinned ? 'flex min-h-0 flex-1 flex-col overflow-hidden' : ''
+        }`}
+      >
         <div
           ref={contentRef}
-          className='grid gap-8 px-8 py-8 md:px-12 md:py-10 lg:grid-cols-[1fr_400px]'
+          className={`grid gap-8 px-8 py-8 md:px-12 md:py-10 lg:grid-cols-[1fr_400px] ${
+            pinned ? 'min-h-0 flex-1 overflow-y-auto' : ''
+          }`}
           style={
-            minContentHeight && minContentHeight > 0
+            !pinned && minContentHeight && minContentHeight > 0
               ? { minHeight: `${minContentHeight}px` }
               : undefined
           }
@@ -122,7 +149,7 @@ export function ProjectCard({
           </div>
         </div>
 
-        <div className='border-t border-zinc-200 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 md:px-12'>
+        <div className='shrink-0 border-t border-zinc-200 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 md:px-12'>
           Project {number} of {String(total).padStart(2, '0')}
         </div>
       </div>

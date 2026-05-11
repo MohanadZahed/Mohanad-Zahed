@@ -1,7 +1,12 @@
 export const COMPANY_HEADER_HEIGHT_PX = 72;
-export const PIN_TOP_PX = COMPANY_HEADER_HEIGHT_PX + 16; // cards stick just below the company header
+export const PIN_TOP_PX = 8; // stage pins this many px below the viewport top
 export const CARD_MAX_W_PX = 1472;
 export const STACK_BREAKPOINT_PX = 768;
+
+// Per-card vertical scroll budget while the stage is pinned. A company with N
+// projects gets a section height of (N + 1) * STAGE_SCROLL_UNIT_VH.
+export const STAGE_SCROLL_UNIT_VH = 80;
+export const STAGE_BOTTOM_MARGIN_PX = 16;
 
 // Tag tabs fan out horizontally per index, then wrap to a new row when the row is full.
 // The first row sits flush at the top of the region with the full height; subsequent

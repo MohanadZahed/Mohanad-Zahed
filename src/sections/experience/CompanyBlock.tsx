@@ -1,38 +1,72 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { CSSProperties } from 'react';
 import type { ExperienceCompany } from '../../data/experience';
 import { ProjectCard } from './ProjectCard';
 import {
   CARD_MAX_W_PX,
   COMPANY_HEADER_HEIGHT_PX,
+  PIN_TOP_PX,
+  STACK_BREAKPOINT_PX,
+  STAGE_BOTTOM_MARGIN_PX,
+  STAGE_SCROLL_UNIT_VH,
   deriveTagLayout,
   tagPositionForIndex,
   tagRegionHeight,
 } from './experience.constants';
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface Props {
   company: ExperienceCompany;
 }
 
-export function CompanyBlock({ company }: Props) {
-  const total = company.projects.length;
-  const stackRef = useRef<HTMLDivElement | null>(null);
-  const contentRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [stackWidth, setStackWidth] = useState(0);
-  const [minContentHeight, setMinContentHeight] = useState(0);
+function useIsDesktop(): boolean {
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.matchMedia(`(min-width: ${STACK_BREAKPOINT_PX}px)`).matches;
+  });
 
   useEffect(() => {
-    const el = stackRef.current;
+    const mq = window.matchMedia(`(min-width: ${STACK_BREAKPOINT_PX}px)`);
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return isDesktop;
+}
+
+export function CompanyBlock({ company }: Props) {
+  const total = company.projects.length;
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const cardsRegionRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const contentRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [regionWidth, setRegionWidth] = useState(0);
+  const [minContentHeight, setMinContentHeight] = useState(0);
+  const isDesktop = useIsDesktop();
+
+  useEffect(() => {
+    const el = cardsRegionRef.current;
     if (!el) return;
-    setStackWidth(el.clientWidth);
+    setRegionWidth(el.clientWidth);
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
-      if (entry) setStackWidth(entry.contentRect.width);
+      if (entry) setRegionWidth(entry.contentRect.width);
     });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  // Stable per-index callback refs so React doesn't detach/re-attach each render.
+  const setCardRef = useMemo(
+    () =>
+      Array.from({ length: total }, (_, i) => (el: HTMLElement | null) => {
+        cardRefs.current[i] = el;
+      }),
+    [total],
+  );
   const setContentRef = useMemo(
     () =>
       Array.from({ length: total }, (_, i) => (el: HTMLDivElement | null) => {
@@ -41,9 +75,6 @@ export function CompanyBlock({ company }: Props) {
     [total],
   );
 
-  // Equalise card body heights to the tallest card in the company so every
-  // sticky article has the same height — making them release together when the
-  // wrapper bottom approaches.
   useLayoutEffect(() => {
     const measure = () => {
       const els = contentRefs.current.filter(
@@ -71,53 +102,116 @@ export function CompanyBlock({ company }: Props) {
       document.fonts.ready.then(measure).catch(() => {});
     }
     return () => window.removeEventListener('resize', measure);
-  }, [total, stackWidth]);
+  }, [total, regionWidth]);
 
-  const layout = deriveTagLayout(total, stackWidth);
+  // Per-company ScrollTrigger: drives each card's translate via a CSS variable.
+  // Zero React renders during scroll.
+  useEffect(() => {
+    if (!isDesktop) return;
+    const el = sectionRef.current;
+    if (!el) return;
+
+    // Card 0 starts visible at rest; cards 1..N-1 share the scroll range and
+    // each animate in over their slice. With one card, nothing animates.
+    const applyProgress = (p: number) => {
+      const divisor = Math.max(1, total - 1);
+      cardRefs.current.forEach((cardEl, i) => {
+        if (!cardEl) return;
+        const slice =
+          i === 0 || total <= 1
+            ? 1
+            : Math.max(0, Math.min(1, (p - (i - 1) / divisor) * divisor));
+        cardEl.style.setProperty('--card-progress', slice.toString());
+      });
+    };
+
+    applyProgress(0);
+
+    const trigger = ScrollTrigger.create({
+      trigger: el,
+      start: `top top+=${PIN_TOP_PX}`,
+      end: 'bottom bottom',
+      onUpdate: (self) => applyProgress(self.progress),
+    });
+
+    return () => {
+      trigger.kill();
+    };
+  }, [isDesktop, total]);
+
+  const layout = deriveTagLayout(total, regionWidth);
   const tagRegionHeightPx = tagRegionHeight(layout.rowsUsed);
+
+  const sectionStyle: CSSProperties = {
+    maxWidth: `${CARD_MAX_W_PX + 96}px`,
+    ...(isDesktop
+      ? { height: `${(total + 1) * STAGE_SCROLL_UNIT_VH}vh` }
+      : null),
+  };
+
+  const stageStyle: CSSProperties | undefined = isDesktop
+    ? {
+        top: `${PIN_TOP_PX}px`,
+        height: `calc(100vh - ${PIN_TOP_PX + STAGE_BOTTOM_MARGIN_PX}px)`,
+      }
+    : undefined;
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby={`company-${company.id}`}
       className='experience-company relative mx-auto w-full px-4 md:px-6'
-      style={{ maxWidth: `${CARD_MAX_W_PX + 96}px` }}
+      style={sectionStyle}
     >
-      <div className='relative rounded-xl border-x border-b border-tertiary/40 bg-black/20 backdrop-blur-sm'>
-        <div
-          className='experience-company__header sticky top-2 z-30 -mx-px rounded-t-xl border-t border-tertiary/40 bg-canvas-from px-6 md:px-10'
-          style={{ minHeight: `${COMPANY_HEADER_HEIGHT_PX}px` }}
-        >
+      <div
+        className={`experience-company__stage ${
+          isDesktop ? 'sticky' : 'relative'
+        }`}
+        style={stageStyle}
+      >
+        <div className='relative flex h-full flex-col rounded-xl border border-tertiary/40 bg-black/20 backdrop-blur-sm'>
           <h3
             id={`company-${company.id}`}
-            className='absolute -top-3 left-6 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-secondary md:left-10 md:text-base'
+            className='absolute -top-3 left-6 z-10 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-secondary md:left-10 md:text-base'
           >
             {company.name}
           </h3>
 
-          <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-tertiary md:flex-row md:items-baseline md:justify-between md:gap-6'>
-            <p className='text-base text-tertiary md:text-lg'>{company.role}</p>
-            <p className='text-sm text-tertiary/70'>
-              {company.city} · {company.timeline}
-            </p>
+          <div
+            className='experience-company__header px-6 md:px-10'
+            style={{ minHeight: `${COMPANY_HEADER_HEIGHT_PX}px` }}
+          >
+            <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-tertiary md:flex-row md:items-baseline md:justify-between md:gap-6'>
+              <p className='text-base text-tertiary md:text-lg'>{company.role}</p>
+              <p className='text-sm text-tertiary/70'>
+                {company.city} · {company.timeline}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div
-          ref={stackRef}
-          className='experience-stack flex flex-col gap-y-[4vh] px-6 pb-6 pt-6 md:gap-y-0 md:px-10 md:pb-10'
-        >
-          {company.projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              total={total}
-              tagPosition={tagPositionForIndex(index, layout)}
-              tagRegionHeightPx={tagRegionHeightPx}
-              contentRef={setContentRef[index]}
-              minContentHeight={minContentHeight}
-            />
-          ))}
+          <div
+            ref={cardsRegionRef}
+            className={
+              isDesktop
+                ? 'experience-stack relative min-h-0 flex-1 overflow-hidden rounded-b-xl px-10 pb-10 pt-6'
+                : 'experience-stack flex flex-col gap-y-[4vh] px-6 pb-6 pt-6'
+            }
+          >
+            {company.projects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                total={total}
+                tagPosition={tagPositionForIndex(index, layout)}
+                tagRegionHeightPx={tagRegionHeightPx}
+                cardRef={setCardRef[index]}
+                contentRef={setContentRef[index]}
+                minContentHeight={minContentHeight}
+                pinned={isDesktop}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
