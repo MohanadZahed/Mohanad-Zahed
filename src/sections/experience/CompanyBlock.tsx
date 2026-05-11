@@ -47,6 +47,8 @@ export function CompanyBlock({ company }: Props) {
   const [regionWidth, setRegionWidth] = useState(0);
   const [minContentHeight, setMinContentHeight] = useState(0);
   const isDesktop = useIsDesktop();
+  // Only pin/animate when there's more than one card to choreograph.
+  const pinned = isDesktop && total > 1;
 
   useEffect(() => {
     const el = cardsRegionRef.current;
@@ -107,7 +109,7 @@ export function CompanyBlock({ company }: Props) {
   // Per-company ScrollTrigger: drives each card's translate via a CSS variable.
   // Zero React renders during scroll.
   useEffect(() => {
-    if (!isDesktop) return;
+    if (!pinned) return;
     const el = sectionRef.current;
     if (!el) return;
 
@@ -137,19 +139,17 @@ export function CompanyBlock({ company }: Props) {
     return () => {
       trigger.kill();
     };
-  }, [isDesktop, total]);
+  }, [pinned, total]);
 
   const layout = deriveTagLayout(total, regionWidth);
   const tagRegionHeightPx = tagRegionHeight(layout.rowsUsed);
 
   const sectionStyle: CSSProperties = {
     maxWidth: `${CARD_MAX_W_PX + 96}px`,
-    ...(isDesktop
-      ? { height: `${(total + 1) * STAGE_SCROLL_UNIT_VH}vh` }
-      : null),
+    ...(pinned ? { height: `${(total + 1) * STAGE_SCROLL_UNIT_VH}vh` } : null),
   };
 
-  const stageStyle: CSSProperties | undefined = isDesktop
+  const stageStyle: CSSProperties | undefined = pinned
     ? {
         top: `${PIN_TOP_PX}px`,
         height: `calc(100vh - ${PIN_TOP_PX + STAGE_BOTTOM_MARGIN_PX}px)`,
@@ -165,7 +165,7 @@ export function CompanyBlock({ company }: Props) {
     >
       <div
         className={`experience-company__stage ${
-          isDesktop ? 'sticky' : 'relative'
+          pinned ? 'sticky' : 'relative'
         }`}
         style={stageStyle}
       >
@@ -192,7 +192,7 @@ export function CompanyBlock({ company }: Props) {
           <div
             ref={cardsRegionRef}
             className={
-              isDesktop
+              pinned
                 ? 'experience-stack relative min-h-0 flex-1 overflow-hidden rounded-b-xl px-10 pb-10 pt-6'
                 : 'experience-stack flex flex-col gap-y-[4vh] px-6 pb-6 pt-6'
             }
@@ -208,7 +208,7 @@ export function CompanyBlock({ company }: Props) {
                 cardRef={setCardRef[index]}
                 contentRef={setContentRef[index]}
                 minContentHeight={minContentHeight}
-                pinned={isDesktop}
+                pinned={pinned}
               />
             ))}
           </div>
