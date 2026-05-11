@@ -98,10 +98,10 @@ export function Hero() {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const apply = (progress: number) => {
-      const t = Math.min(Math.max(progress / 0.2, 0), 1);
-      const ty = 20 * t;
-      const s = 1 - 0.2 * t;
-      const rz = 10 * t;
+      const t = Math.min(Math.max(progress / 0.035, 0), 1);
+      const ty = 10 * t;
+      const s = 1 - 0.3 * t;
+      const rz = 15 * t;
       el.style.transform = `translate3d(0, ${ty}vw, 0) scale3d(${s}, ${s}, 1) rotateZ(${rz}deg)`;
     };
 
