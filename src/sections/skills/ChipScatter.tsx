@@ -47,7 +47,7 @@ export function ChipScatter() {
           style={{
             gap: 'calc(var(--spacing) * 6)',
             gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
-            gridAutoRows: '64px',
+            gridAutoRows: '84px',
             gridAutoFlow: 'dense',
           }}
         >

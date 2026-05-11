@@ -113,8 +113,8 @@
     inset 0 1px 0 rgb(255 255 255 / 0.06);
   color: rgb(228 228 231);
   user-select: none;
-  padding: 12px 14px;
-  font-size: 11px;
+  padding: 14px 14px;
+  font-size: 16px;
   contain: layout style;
   transition:
     transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -125,32 +125,30 @@
 }
 
 .chip--md {
-  padding: 14px 16px;
-  font-size: 12.5px;
+  padding: 16px 16px;
 }
 .chip--lg {
-  padding: 16px 18px;
-  font-size: 14px;
+  padding: 18px 18px;
 }
 
 .chip__pins {
   position: absolute;
-  left: 12%;
-  right: 12%;
-  height: 5px;
+  left: 18%;
+  right: 18%;
+  height: 3px;
   background-image: repeating-linear-gradient(
     90deg,
-    rgb(180 184 196 / 0.85) 0,
-    rgb(180 184 196 / 0.85) 6px,
-    transparent 6px,
-    transparent 12px
+    rgb(180 184 196 / 0.7) 0,
+    rgb(180 184 196 / 0.7) 4px,
+    transparent 4px,
+    transparent 16px
   );
 }
 .chip__pins--top {
-  top: -5px;
+  top: -3px;
 }
 .chip__pins--bottom {
-  bottom: -5px;
+  bottom: -3px;
 }
 
 .chip__head {

@@ -20,7 +20,7 @@ interface NotebookStageProps {
 const NOTEBOOK_SRC = '/textures/notebook.png';
 const NOTEBOOK_ASPECT = 16 / 10;
 
-const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.131;
+const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.054;
 const TITLE_BOTTOM_APPROX_PX = 180;
 const NOTEBOOK_INITIAL_GAP_PX = 250;
 

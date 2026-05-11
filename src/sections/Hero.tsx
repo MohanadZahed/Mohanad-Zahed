@@ -110,10 +110,10 @@ export function Hero() {
   }, []);
 
   return (
-    <section aria-labelledby='hero-h1' className='relative min-h-screen overflow-x-hidden'>
+    <section aria-labelledby='hero-h1' className='relative h-screen overflow-hidden'>
       <div
         ref={wrapperRef}
-        className='relative flex flex-col items-center justify-start w-full min-h-screen pt-[12vh]'
+        className='relative flex flex-col items-center justify-start w-full h-full pt-[12vh]'
         style={{ transformOrigin: '50% 50%' }}
       >
         {/* Upper block — cream fill, navy text, rotated +3deg */}
