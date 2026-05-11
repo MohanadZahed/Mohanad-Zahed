@@ -9,6 +9,7 @@ import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
 import { Skills } from './sections/Skills';
 import { Knowledge } from './sections/knowledge/Knowledge';
+import { Certificates } from './sections/certificates/Certificates';
 import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
@@ -34,6 +35,7 @@ function App() {
         <Notebook />
         <Skills />
         <Knowledge />
+        <Certificates />
         <Experience />
         <Contact />
       </main>

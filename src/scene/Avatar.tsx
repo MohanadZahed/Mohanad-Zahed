@@ -51,7 +51,7 @@ export function Avatar() {
 
     group.position.y = Math.sin(t * 0.6) * 0.05;
     const progress = useScrollStore.getState().progress;
-    const yawTarget = smoothstep(0.41 / 28.25, 0.82 / 28.25, progress) * ABOUT_YAW;
+    const yawTarget = smoothstep(0.41 / 31.25, 0.82 / 31.25, progress) * ABOUT_YAW;
     group.rotation.y = MathUtils.damp(group.rotation.y, yawTarget, 4, delta);
   });
 

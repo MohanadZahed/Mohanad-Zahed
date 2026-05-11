@@ -1,0 +1,90 @@
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useScrollStore } from '../../store/useScrollStore';
+import { CertificateStrip } from './CertificateStrip';
+import { CertificateCard } from './CertificateCard';
+import { CERTIFICATES } from './certificates.data';
+import { SECTION_VH, STACK_BREAKPOINT_PX } from './certificates.constants';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function Certificates() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isCompact, setIsCompact] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${STACK_BREAKPOINT_PX - 1}px)`);
+    const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => {
+      setIsCompact(mq.matches);
+      setReduceMotion(rmq.matches);
+    };
+    sync();
+    mq.addEventListener('change', sync);
+    rmq.addEventListener('change', sync);
+    return () => {
+      mq.removeEventListener('change', sync);
+      rmq.removeEventListener('change', sync);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    if (isCompact || reduceMotion) {
+      useScrollStore.getState().setCertificatesProgress(0);
+      return;
+    }
+
+    const trigger = ScrollTrigger.create({
+      trigger: el,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        useScrollStore.getState().setCertificatesProgress(self.progress);
+      },
+    });
+
+    return () => trigger.kill();
+  }, [isCompact, reduceMotion]);
+
+  if (isCompact || reduceMotion) {
+    return (
+      <section
+        ref={sectionRef}
+        id='certificates'
+        aria-labelledby='certificates-h2'
+        className='certificates-section relative'
+      >
+        <div className='certificates-fallback'>
+          <header className='max-w-md text-center'>
+            <span className='certificates-header__eyebrow block'>Zertifikate</span>
+            <h2
+              id='certificates-h2'
+              className='certificates-header__title mt-3 text-balance'
+            >
+              ich habe <em>{CERTIFICATES.length}</em> Zertifikate
+            </h2>
+          </header>
+          {CERTIFICATES.map((cert, i) => (
+            <CertificateCard key={cert.id} cert={cert} index={i} flat />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      ref={sectionRef}
+      id='certificates'
+      aria-labelledby='certificates-h2'
+      className='certificates-section relative'
+      style={{ height: `${SECTION_VH}vh` }}
+    >
+      <CertificateStrip />
+    </section>
+  );
+}

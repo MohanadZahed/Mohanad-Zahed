@@ -6,7 +6,7 @@ export function logoPosition(
   progress: number,
   time: number,
 ): [number, number, number] {
-  const radius = lerp(4, 1.5, smoothstep(0.41 / 28.25, 0.82 / 28.25, progress));
+  const radius = lerp(4, 1.5, smoothstep(0.41 / 31.25, 0.82 / 31.25, progress));
   const idleSpin = time * 0.08;
   const scrollSpin = progress * 2;
   const angle = (index / total) * Math.PI * 2 + idleSpin + scrollSpin;

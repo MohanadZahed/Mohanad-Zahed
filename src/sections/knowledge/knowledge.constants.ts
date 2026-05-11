@@ -20,12 +20,12 @@ export const RING_ANGLE_JITTER_RAD = 0.06;
 
 // Global progress band where the YogaAvatar is on stage.
 // Page composition: Hero(1) + About(1) + Notebook(6.25) + Skills(1) + Knowledge(3)
-// + Experience(~16) + Contact(1) ≈ 29.25vh → scroll range ≈ 28.25vh.
+// + Certificates(3) + Experience(~16) + Contact(1) ≈ 32.25vh → scroll range ≈ 31.25vh.
 // TOP   = section TOP at viewport BOTTOM (avatar starts rising from below).
 // CENTER = section TOP at viewport TOP (sticky pins, avatar at viewport centre).
 // PIN_END = ScrollTrigger end ('bottom bottom'), knowledgeProgress reaches 1.
 // BOTTOM  = section BOTTOM at viewport TOP (section fully scrolled out).
-const SCROLL_RANGE_VH = 28.25;
+const SCROLL_RANGE_VH = 31.25;
 export const KNOWLEDGE_TOP_PROGRESS = 8.6 / SCROLL_RANGE_VH;
 export const KNOWLEDGE_CENTER_PROGRESS = 9.6 / SCROLL_RANGE_VH;
 export const KNOWLEDGE_PIN_END_PROGRESS = 11.65 / SCROLL_RANGE_VH;
