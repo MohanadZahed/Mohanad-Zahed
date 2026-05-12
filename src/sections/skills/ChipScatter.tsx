@@ -1,3 +1,4 @@
+import { CircuitFrame } from './CircuitFrame';
 import { Microchip } from './Microchip';
 import { skills, type Skill, type SkillCategory } from './skills.data';
 
@@ -41,31 +42,32 @@ export function ChipScatter() {
   return (
     <div className='relative z-10 px-6 sm:px-12 pt-28 pb-12 mx-auto flex flex-col gap-16' style={{ maxWidth: '125rem' }}>
       {grouped.map(({ category, items }) => (
-        <div
-          key={category}
-          className='grid'
-          style={{
-            gap: 'calc(var(--spacing) * 6)',
-            gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
-            gridAutoRows: '84px',
-            gridAutoFlow: 'dense',
-          }}
-        >
-          {items.map((s) => {
-            const sp = span(s);
-            return (
-              <div
-                key={s.id}
-                style={{
-                  gridColumn: `span ${sp.col}`,
-                  gridRow: `span ${sp.row}`,
-                }}
-              >
-                <Microchip skill={s} />
-              </div>
-            );
-          })}
-        </div>
+        <CircuitFrame key={category} category={category}>
+          <div
+            className='grid'
+            style={{
+              gap: 'calc(var(--spacing) * 6)',
+              gridTemplateColumns: 'repeat(8, minmax(0, 1fr))',
+              gridAutoRows: '84px',
+              gridAutoFlow: 'dense',
+            }}
+          >
+            {items.map((s) => {
+              const sp = span(s);
+              return (
+                <div
+                  key={s.id}
+                  style={{
+                    gridColumn: `span ${sp.col}`,
+                    gridRow: `span ${sp.row}`,
+                  }}
+                >
+                  <Microchip skill={s} />
+                </div>
+              );
+            })}
+          </div>
+        </CircuitFrame>
       ))}
     </div>
   );
