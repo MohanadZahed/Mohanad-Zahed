@@ -1,3 +1,5 @@
+import { FlipLink } from '../components/FlipLink';
+
 export function Contact() {
   return (
     <section aria-labelledby='contact-h2' className='relative min-h-screen flex items-center'>
@@ -13,6 +15,14 @@ export function Contact() {
             mzahed-p@outlook.com
           </a>
         </p>
+        <div className='mt-8 flex flex-wrap gap-4'>
+          <FlipLink text='Get in touch' href='mailto:mzahed-p@outlook.com' />
+          <FlipLink
+            text='LinkedIn'
+            href='https://www.linkedin.com/in/m-zahed/'
+            external
+          />
+        </div>
       </div>
     </section>
   );
