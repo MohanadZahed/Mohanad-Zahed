@@ -126,7 +126,15 @@ Below the `STACK_BREAKPOINT_PX` (768 px) viewport, sticky positioning is dropped
 
 The 3D anchor stays pinned to About in document space throughout, so no scene work happens here. Global-progress thresholds in [src/scene/Scene.tsx](../src/scene/Scene.tsx), [src/scene/Avatar.tsx](../src/scene/Avatar.tsx), [src/scene/lib/logoPosition.ts](../src/scene/lib/logoPosition.ts), [src/sections/knowledge/knowledge.constants.ts](../src/sections/knowledge/knowledge.constants.ts), and [src/sections/certificates/certificates.constants.ts](../src/sections/certificates/certificates.constants.ts) are rebased against the ~31.25vh scroll range.
 
-**Contact (0.968–1.000)** — Camera pulls back; full scene visible, gently drifting. CTA + email + LinkedIn link. Footer fades in.
+**Contact (0.968–1.000)** — Camera pulls back; full scene visible, gently drifting. Fixed height 750px. Three mini-me character images frame the section:
+
+- **minime-coffee** (`/textures/minime-coffee.png`) — absolute, `top: -192px; left: 1.5rem; z-index: 100`, so it sits above the section edge appearing to "sit on" the top of the footer.
+- **minime-truck** (`/textures/minime-truck.png`) — lives inline in the headline row; scroll-driven (section-local `contactProgress` 0..1, written by a `ScrollTrigger` on the headline row, `start: 'top 90%'`, `end: 'top 35%'`). At p=0 the truck is at x=0 (left edge) and the headline is hidden via `clip-path: inset(0 100% 0 0)`. As p→1 the truck translates rightward to `(rowWidth − truckWidth)` and the clip-path retracts to reveal the headline text, creating a "truck drives across, revealing the text" effect. Reduced motion: apply(1) on mount, skip ScrollTrigger. Size `w-24 sm:w-28 md:w-32`.
+- **minime-programming** (`/textures/minime-programming.png`) — in document flow, centred between the FlipLink CTAs and the `© 2026` footer baseline, horizontally flipped (`-scale-x-100`). Size `w-28 sm:w-32 md:w-36`.
+
+Content layout (centred column): headline (h2 `"Let's build something."`) with inline truck reveal → sub-copy → email link → FlipLink CTAs (`Get in touch` / `LinkedIn`) → programming minime → footer baseline (`© 2026 Mohanad Zahed` / `Built with React · Three.js · GSAP`).
+
+`contactProgress` is written via `useScrollStore.getState().setContactProgress(self.progress)` in the ScrollTrigger `onUpdate` callback and applied via `useScrollStore.subscribe(...)` directly to DOM refs (no React re-renders). See [src/sections/Contact.tsx](../src/sections/Contact.tsx) and [src/store/useScrollStore.ts](../src/store/useScrollStore.ts).
 
 ## Reference scene constants
 

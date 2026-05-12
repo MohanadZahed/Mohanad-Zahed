@@ -33,7 +33,7 @@ Section heights in viewport-units: Hero=1, About=1, **Notebook=6.25** (pinned in
 | 0.296–0.392 | Knowledge | 3D canvas hosts second yoga avatar; section drives its own choreography via `useScrollStore.knowledgeProgress` |
 | 0.392–0.488 | **Certificates** | 3D canvas silent. Section is HTML/CSS only — `position: sticky` stage holds a horizontal strip of 5 paper-look certificate cards. Strip translateX is driven by `useScrollStore.certificatesProgress`. Phase A (sticky engaged, progress 0..⅔) translates the strip until the last card is centred; phase B (sticky released, progress ⅔..1) continues translating left while the section scrolls up out of view in the natural document flow. Cards alternate ±8° rotation. |
 | 0.488–0.968 | **Experience** | 3D canvas silent. Section is HTML/CSS only — three company wrappers (ISO-Gruppe, Medienwerft, MERENTIS) each containing `position: sticky` project cards that stack on top of each other as the user scrolls. CategoryTags fan out via progressive `padding-left`. No section-local progress field — pure CSS. |
-| 0.968–1.000 | Contact | Camera pulls back, gentle drift, footer fades in |
+| 0.968–1.000 | **Contact** | Camera pulls back, gentle drift. Section is HTML/CSS only — fixed 750px height. Scroll-driven truck reveal: `contactProgress` (0..1) drives `clip-path` on the `<h2>` and `translateX` on `minime-truck`. Three mini-me images: coffee (`top: -192px` above section edge), truck (inline in headline row), programming (in-flow between CTAs and footer text, `-scale-x-100`). |
 
 The pin is implicit: a single `smoothstep(0.41/31.25, 0.82/31.25, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so anchors past About-centre stay at their settled position with no extra logic.
 

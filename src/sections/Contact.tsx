@@ -87,7 +87,7 @@ export function Contact() {
                 ref={truckRef}
                 src='/textures/minime-truck.png'
                 alt=''
-                className='absolute left-0 top-1/2 w-24 sm:w-28 md:w-32 pointer-events-none select-none'
+                className='absolute left-0 top-1/2 w-24 sm:w-28 md:w-48 pointer-events-none select-none'
                 style={{ transform: 'translate3d(0, -50%, 0)' }}
               />
             </div>
