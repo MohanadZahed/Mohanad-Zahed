@@ -9,6 +9,7 @@ import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
 import { Skills } from './sections/Skills';
 import { Knowledge } from './sections/knowledge/Knowledge';
+import { KnowledgeBackground } from './sections/knowledge/KnowledgeBackground';
 import { Certificates } from './sections/certificates/Certificates';
 import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <HeroBackground />
+      <KnowledgeBackground />
       <div className='fixed inset-0 -z-10 pointer-events-none'>
         <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>
           <Suspense fallback={null}>
