@@ -16,6 +16,7 @@ const SPIN_START = 0.1;
 const SPIN_END = 0.4;
 const FLOAT_AMPLITUDE = 0.04;
 const FLOAT_SPEED = 0.5;
+const Y_REST = 0;
 
 export function YogaAvatar() {
   const groupRef = useRef<Group>(null);
@@ -53,8 +54,7 @@ export function YogaAvatar() {
     const sectionProgress = store.knowledgeProgress;
 
     const visible =
-      globalProgress >= KNOWLEDGE_TOP_PROGRESS &&
-      globalProgress < KNOWLEDGE_BOTTOM_PROGRESS;
+      globalProgress >= KNOWLEDGE_TOP_PROGRESS && globalProgress < KNOWLEDGE_BOTTOM_PROGRESS;
     const opacity = visible ? 1 : 0;
     const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const m of mats) {
@@ -67,17 +67,14 @@ export function YogaAvatar() {
     // pins. Exit: avatar rides up out of the viewport in lockstep with the
     // sticky container unpinning.
     const totalScrollPx = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const pxBeforeCenter =
-      Math.max(0, KNOWLEDGE_CENTER_PROGRESS - globalProgress) * totalScrollPx;
-    const pxPastPin =
-      Math.max(0, globalProgress - KNOWLEDGE_PIN_END_PROGRESS) * totalScrollPx;
+    const pxBeforeCenter = Math.max(0, KNOWLEDGE_CENTER_PROGRESS - globalProgress) * totalScrollPx;
+    const pxPastPin = Math.max(0, globalProgress - KNOWLEDGE_PIN_END_PROGRESS) * totalScrollPx;
     const entryY = -(pxBeforeCenter / window.innerHeight) * viewport.height;
     const exitY = (pxPastPin / window.innerHeight) * viewport.height;
 
     group.position.x = 0;
     group.position.z = 0;
-    group.position.y =
-      Math.sin(t * FLOAT_SPEED) * FLOAT_AMPLITUDE + entryY + exitY;
+    group.position.y = Y_REST + Math.sin(t * FLOAT_SPEED) * FLOAT_AMPLITUDE + entryY + exitY;
 
     const spin = smoothstep(SPIN_START, SPIN_END, sectionProgress);
     const yawTarget = lerp(Math.PI, 0, spin);
