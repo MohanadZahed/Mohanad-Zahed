@@ -36,4 +36,10 @@ export const CERTIFICATES: readonly Certificate[] = [
     issuer: 'telc gGmbH',
     date: '02/2017',
   },
+  {
+    id: 'Informatik',
+    name: 'B.Sc. Informatik',
+    issuer: 'Al-Ahliyya Amman University',
+    date: '03/2014',
+  },
 ] as const;

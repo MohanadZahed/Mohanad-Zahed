@@ -3,10 +3,7 @@ import { useScrollStore } from '../../store/useScrollStore';
 import { lerp } from '../../scene/lib/math';
 import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
-import {
-  computeCertificatesLayout,
-  PHASE_A_FRACTION,
-} from './certificates.constants';
+import { computeCertificatesLayout, PHASE_A_FRACTION } from './certificates.constants';
 
 export function CertificateStrip() {
   const stripRef = useRef<HTMLDivElement>(null);
@@ -30,19 +27,12 @@ export function CertificateStrip() {
       stage.style.setProperty('--cert-header-w', `${headerW}px`);
       stage.style.setProperty('--cert-pad', `${sidePad}px`);
 
-      const lastCardLeft =
-        sidePad +
-        headerW +
-        gap +
-        (CERTIFICATES.length - 1) * (cardW + gap);
+      const lastCardLeft = sidePad + headerW + gap + (CERTIFICATES.length - 1) * (cardW + gap);
       const lastCardCentre = lastCardLeft + cardW / 2;
       const lastCardRight = lastCardLeft + cardW;
 
       xCentreRef.current = Math.max(0, lastCardCentre - viewportW / 2);
-      xOffscreenRef.current = Math.max(
-        xCentreRef.current,
-        lastCardRight + sidePad,
-      );
+      xOffscreenRef.current = Math.max(xCentreRef.current, lastCardRight + sidePad);
     };
 
     measure();
@@ -84,15 +74,11 @@ export function CertificateStrip() {
     <div ref={stageRef} className='certificates-stage'>
       <div ref={stripRef} className='certificates-strip'>
         <div className='certificates-header'>
-          <span className='certificates-header__eyebrow'>Zertifikate</span>
           <h2 id='certificates-h2' className='certificates-header__title'>
-            ich habe <em>{CERTIFICATES.length}</em>
-            <br />
             Zertifikate
           </h2>
           <p className='certificates-header__sub'>
-            Continuing education in architecture, delivery, testing, and language —
-            scroll left to leaf through them.
+            Continuing education in architecture, delivery, and testing.
           </p>
         </div>
 

@@ -61,10 +61,7 @@ export function Certificates() {
         <div className='certificates-fallback'>
           <header className='max-w-md text-center'>
             <span className='certificates-header__eyebrow block'>Zertifikate</span>
-            <h2
-              id='certificates-h2'
-              className='certificates-header__title mt-3 text-balance'
-            >
+            <h2 id='certificates-h2' className='certificates-header__title mt-3 text-balance'>
               ich habe <em>{CERTIFICATES.length}</em> Zertifikate
             </h2>
           </header>
