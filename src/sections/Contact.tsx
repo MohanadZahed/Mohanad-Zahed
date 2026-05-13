@@ -7,22 +7,24 @@ import { useScrollStore } from '../store/useScrollStore';
 gsap.registerPlugin(ScrollTrigger);
 
 export function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const truckRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
     const row = rowRef.current;
     const headline = headlineRef.current;
     const truck = truckRef.current;
-    if (!row || !headline || !truck) return;
+    if (!section || !row || !headline || !truck) return;
 
     const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const apply = (p: number) => {
       const rowW = row.offsetWidth;
-      const truckW = truck.offsetWidth;
-      const x = Math.max(0, p * (rowW - truckW));
+      // truck ends with its left edge at the right side of the text, fully clearing it
+      const x = p * rowW;
       truck.style.transform = `translate3d(${x}px, -50%, 0)`;
       headline.style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`;
     };
@@ -34,10 +36,11 @@ export function Contact() {
 
     apply(useScrollStore.getState().contactProgress);
 
+    // Use the section as trigger so progress reaches 1 by the time the page ends
     const trigger = ScrollTrigger.create({
-      trigger: row,
-      start: 'top 90%',
-      end: 'top 35%',
+      trigger: section,
+      start: 'top 80%',
+      end: 'bottom bottom',
       onUpdate: (self) => {
         useScrollStore.getState().setContactProgress(self.progress);
       },
@@ -56,6 +59,7 @@ export function Contact() {
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby='contact-h2'
       className='relative flex flex-col'
       style={{
@@ -79,7 +83,7 @@ export function Contact() {
                 ref={headlineRef}
                 id='contact-h2'
                 className='text-4xl sm:text-5xl md:text-6xl font-semibold text-zinc-100 whitespace-nowrap'
-                style={{ clipPath: 'inset(0 100% 0 0)' }}
+                style={{ clipPath: 'inset(0 100% 0 0)', lineHeight: 'normal' }}
               >
                 Let's build something.
               </h2>

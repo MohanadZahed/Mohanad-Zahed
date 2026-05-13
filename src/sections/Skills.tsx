@@ -75,11 +75,9 @@ export function Skills() {
           id='skills-h2'
           className='text-3xl sm:text-4xl font-semibold text-zinc-100 tracking-tight'
         >
-          Skills
+          Tech Skills
         </h2>
-        <p className='mt-2 text-sm text-zinc-400 max-w-md'>
-          The board I build on. Hover to light up the traces.
-        </p>
+        <p className='mt-2 text-sm text-zinc-400 max-w-md'>The board I build on.</p>
       </header>
 
       <ChipScatter />
