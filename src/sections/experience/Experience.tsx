@@ -1,7 +1,9 @@
 import { EXPERIENCE } from '../../data/experience';
 import { CompanyBlock } from './CompanyBlock';
+import { useT } from '../../i18n/useT';
 
 export function Experience() {
+  const { t } = useT();
   return (
     <section
       id='experience'
@@ -10,17 +12,16 @@ export function Experience() {
     >
       <div className='mx-auto max-w-[1472px] px-6 pb-6 pt-24 md:pt-32'>
         <p className='font-mono text-xs uppercase tracking-[0.32em] text-secondary'>
-          Berufserfahrung
+          {t('experience.eyebrow')}
         </p>
         <h2
           id='experience-h2'
           className='mt-3 font-mono text-3xl font-semibold text-tertiary md:text-5xl'
         >
-          Where I&apos;ve shipped.
+          {t('experience.heading')}
         </h2>
         <p className='mt-4 max-w-2xl font-mono text-sm leading-relaxed text-tertiary/70 md:text-base'>
-          Three companies, twelve projects, eight years. Each card stacks as you scroll —
-          the most recent rests on top, the rest fan out as tabs.
+          {t('experience.subhead')}
         </p>
       </div>
 

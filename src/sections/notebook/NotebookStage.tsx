@@ -12,6 +12,7 @@ import {
 } from './notebook.constants';
 import { LaptopScreenWords } from './LaptopScreenWords';
 import { FinderBox } from './FinderBox';
+import { useT } from '../../i18n/useT';
 
 interface NotebookStageProps {
   progress: number;
@@ -24,18 +25,13 @@ const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.054;
 const TITLE_BOTTOM_APPROX_PX = 180;
 const NOTEBOOK_INITIAL_GAP_PX = 250;
 
-const LEFT_FINDER_LINES = [
-  '_Modular design',
-  '_Value-focused delivery',
-  '_Stakeholder alignment',
-] as const;
-const RIGHT_FINDER_LINES = [
-  '_Rapid delivery',
-  '_High-quality output',
-  '_Scalable solutions',
-] as const;
-
 export function NotebookStage({ progress }: NotebookStageProps) {
+  const { t, tArray, locale } = useT();
+  const LEFT_FINDER_LINES = tArray('notebook.leftFinder.lines');
+  const RIGHT_FINDER_LINES = tArray('notebook.rightFinder.lines');
+  const LEFT_FINDER_TITLE = t('notebook.leftFinder.fileName');
+  const RIGHT_FINDER_TITLE = t('notebook.rightFinder.fileName');
+  const TITLE_TEXT = t('notebook.title');
   const globalProgress = useScrollStore((s) => s.progress);
   const titleStarted = globalProgress >= TITLE_TYPEWRITER_GLOBAL_PROGRESS;
 
@@ -151,9 +147,10 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     >
       <div style={titleWrapperStyle}>
         <Typewriter
+          key={locale}
           as='h2'
           id='notebook-h2'
-          text='elevate your system'
+          text={TITLE_TEXT}
           start={titleStarted}
           cursorMode='hide'
           className='text-tertiary font-bold uppercase'
@@ -168,12 +165,12 @@ export function NotebookStage({ progress }: NotebookStageProps) {
 
       <div style={finderRowStyle}>
         <FinderBox
-          title='context.md'
+          title={LEFT_FINDER_TITLE}
           lines={LEFT_FINDER_LINES}
           scrollProgress={finderScrollProgress}
         />
         <FinderBox
-          title='notes.md'
+          title={RIGHT_FINDER_TITLE}
           lines={RIGHT_FINDER_LINES}
           scrollProgress={finderScrollProgress}
         />

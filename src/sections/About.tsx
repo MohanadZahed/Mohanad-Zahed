@@ -1,15 +1,11 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-
-const BODY =
-  'Ich bin Frontend Software-Architekt mit Leidenschaft für saubere Architektur und modernen Code. Seit über 8 Jahren setze ich Angular-Anwendungen für Versicherungen, Telekommunikation, Einzelhandel und den öffentlichen Dienst um. Der Fokus lag hierbei meist auf Modularisierung, Micro-Frontends und der Migration von Legacy-Systemen zu Headless-Plattformen. Dank Fullstack-Kenntnissen kommuniziere ich auf Augenhöhe mit Backend-Teams und gestalte mit dem CI/CD durchgängige Workflows vom Commit bis zum Release. Ergänzt wird mein Profil durch fundierte Kenntnisse in KI-gestützter Entwicklung, mit denen ich die Projektumsetzung effizienter gestalte. Meine langjährige Erfahrung mit agilen Methoden und Scrum bringt zudem ein solides Verständnis für Prozesse, Qualität und agile Lieferung mit sich.';
-
-const FACTS = [
-  'Sprachkenntnisse — Arabisch (muttersprachlich) · Englisch (verhandlungssicher) · Deutsch (verhandlungssicher)',
-  'Abschluss — 03/2014 B.Sc. Informatik, Amman (offiziell anerkannt in Deutschland)',
-];
+import { useT } from '../i18n/useT';
 
 export function About() {
+  const { t, tArray } = useT();
+  const BODY = t('about.body');
+  const FACTS = tArray('about.facts');
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
@@ -83,7 +79,7 @@ export function About() {
               letterSpacing: '-0.05vw',
             }}
           >
-            Über mich
+            {t('about.heading')}
           </h2>
 
           <p

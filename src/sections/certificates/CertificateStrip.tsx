@@ -4,8 +4,10 @@ import { lerp } from '../../scene/lib/math';
 import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
 import { computeCertificatesLayout, PHASE_A_FRACTION } from './certificates.constants';
+import { useT } from '../../i18n/useT';
 
 export function CertificateStrip() {
+  const { t } = useT();
   const stripRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -75,11 +77,9 @@ export function CertificateStrip() {
       <div ref={stripRef} className='certificates-strip'>
         <div className='certificates-header'>
           <h2 id='certificates-h2' className='certificates-header__title'>
-            Zertifikate
+            {t('certificates.heading')}
           </h2>
-          <p className='certificates-header__sub'>
-            Continuing education in architecture, delivery, and testing.
-          </p>
+          <p className='certificates-header__sub'>{t('certificates.subhead')}</p>
         </div>
 
         {CERTIFICATES.map((cert, i) => (

@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "title": "Mohanad Zahed — Frontend-Architekt",
+    "description": "Mohanad Zahed — Software-Architekt Frontend / Senior Frontend Engineer. Angular, React, Micro-Frontends, Headless Commerce."
+  },
+  "hero": {
+    "name": "Mohanad Zahed",
+    "title": "Frontend-Architekt",
+    "tagline": "+8 Jahre Leidenschaft für saubere Architektur, modernen Code und Workflows"
+  },
+  "about": {
+    "heading": "Über mich",
+    "body": "Ich bin Frontend Software-Architekt mit Leidenschaft für saubere Architektur und modernen Code. Seit über 8 Jahren setze ich Angular-Anwendungen für Versicherungen, Telekommunikation, Einzelhandel und den öffentlichen Dienst um. Der Fokus lag hierbei meist auf Modularisierung, Micro-Frontends und der Migration von Legacy-Systemen zu Headless-Plattformen. Dank Fullstack-Kenntnissen kommuniziere ich auf Augenhöhe mit Backend-Teams und gestalte mit dem CI/CD durchgängige Workflows vom Commit bis zum Release. Ergänzt wird mein Profil durch fundierte Kenntnisse in KI-gestützter Entwicklung, mit denen ich die Projektumsetzung effizienter gestalte. Meine langjährige Erfahrung mit agilen Methoden und Scrum bringt zudem ein solides Verständnis für Prozesse, Qualität und agile Lieferung mit sich.",
+    "facts": [
+      "Sprachkenntnisse — Arabisch (muttersprachlich) · Englisch (verhandlungssicher) · Deutsch (verhandlungssicher)",
+      "Abschluss — 03/2014 B.Sc. Informatik, Amman (offiziell anerkannt in Deutschland)"
+    ]
+  },
+  "notebook": {
+    "title": "elevate your system",
+    "leftFinder": {
+      "fileName": "context.md",
+      "lines": ["_Modulares Design", "_Wertorientierte Lieferung", "_Stakeholder-Ausrichtung"]
+    },
+    "rightFinder": {
+      "fileName": "notes.md",
+      "lines": ["_Schnelle Lieferung", "_Hochwertige Ergebnisse", "_Skalierbare Lösungen"]
+    }
+  },
+  "skills": {
+    "heading": "Tech-Skills",
+    "subhead": "Das Board, auf dem ich baue."
+  },
+  "knowledge": {
+    "heading": "Knowledge"
+  },
+  "certificates": {
+    "eyebrow": "Zertifikate",
+    "heading": "Zertifikate",
+    "countTemplate": "ich habe <em>{count}</em> Zertifikate",
+    "subhead": "Weiterbildung in Architektur, Lieferung und Qualitätssicherung.",
+    "card": {
+      "eyebrow": "Zertifikat",
+      "issued": "Ausgestellt"
+    }
+  },
+  "experience": {
+    "eyebrow": "Berufserfahrung",
+    "heading": "Wo ich geliefert habe.",
+    "subhead": "Drei Unternehmen, zwölf Projekte, acht Jahre. Jede Karte stapelt sich beim Scrollen — die aktuellste liegt obenauf, der Rest fächert sich als Reiter auf.",
+    "labels": {
+      "customer": "Kunde",
+      "industry": "Branche",
+      "teamSize": "Team / Projekt",
+      "stack": "Umfeld",
+      "tasks": "Aufgaben im Projekt",
+      "visitLink": "Live-Seite besuchen",
+      "projectCounter": "Projekt {number} von {total}"
+    },
+    "companies": {
+      "iso-gruppe": {
+        "name": "ISO-Gruppe",
+        "role": "Senior Consultant (Software Engineer)",
+        "city": "Nürnberg",
+        "timeline": "Jul 2025 – heute"
+      },
+      "medienwerft": {
+        "name": "Medienwerft GmbH",
+        "role": "Senior Frontend Engineer",
+        "city": "Hamburg",
+        "timeline": "Aug 2019 – Jun 2025"
+      },
+      "merentis": {
+        "name": "MERENTIS GmbH",
+        "role": "Fullstack-Entwickler",
+        "city": "Bremen",
+        "timeline": "Jul 2017 – Jul 2019"
+      }
+    },
+    "projects": {
+      "step": {
+        "role": "Fullstack Entwickler",
+        "name": "STEP — Stammdatenerfassungs- und pflegesystem",
+        "industry": "Öffentlicher Dienst",
+        "description": "STEP ist das zentrale Stammdatensystem der Bundesagentur für Arbeit (BA) — Erfassung und Pflege von Betriebs- und Personendaten. Es fungiert als zentrales System für nahezu alle BA-IT-Verfahren, die Stammdaten benötigen, und stellt diese über REST-Endpunkte, Kafka-Events, Datei-Schnittstellen und Aufrufschnittstellen bereit.\n\nSTEP verantwortet zudem die Verwaltung von Betriebsdaten für das Meldewesen in der Sozialversicherung sowie die MAZ-Komponente (Nachweis und Meldung beitragsfreier Zeiten für die Rentenversicherung). Im Rahmen der Realisierung werden BA-IT-Standards mit Datenschutz-, Datensicherheits- und Barrierefreiheits-Auflagen kombiniert.",
+        "tasks": [
+          "Lokalisieren, Analysieren und Beseitigen von SW-Fehlern",
+          "Unterstützung bei der Erstellung von (Fach-) Konzepten und Lösungsentwürfen",
+          "Sicherstellen von Continuous Integration / Continuous Delivery",
+          "Anwenden der DevSecOps-Vorgehensweise",
+          "Anwenden agiler Praktiken",
+          "Übernahme des 3rd Level-Supports",
+          "Durchführung von Testanalysen sowie Erstellung und Wartung von manuellen Komponententests, System- und End-to-End-Tests",
+          "Implementierung neuer REST-Endpoints sowie Anpassung und Weiterentwicklung bestehender Schnittstellen und Kafka-basierter Event-Prozesse",
+          "Weiterentwicklung von GUI-Komponenten",
+          "Durchführung von Code-Reviews und Refactoring zur Verbesserung der Codequalität",
+          "Sicherstellen der Barrierefreiheit"
+        ]
+      },
+      "svlfg": {
+        "role": "Frontend Berater",
+        "name": "Modernisierung des B2B-Versicherungskundenportals",
+        "industry": "Versicherung",
+        "description": "Modernisierung und Neustrukturierung eines bestehenden B2B-Versicherungskundenportals, das ursprünglich auf SAP Commerce (Hybris) basierte. Die monolithische Architektur wurde durch einen entkoppelten Headless-Ansatz ersetzt, das Frontend in Angular neu implementiert. Backend zunächst in der SAP-Hybris-/Spring-Boot-Umgebung, mit angepassten Controllern für RESTful API-Endpunkte gemäß OpenAPI-Standard. Gearbeitet wurde nach Scrum in einmonatigen Sprints.\n\nLangfristiges Ziel: schrittweise Migration von SAP Commerce auf eine moderne JHipster-basierte Lösung, da SAP Commerce hier primär als technische Basis ohne E-Commerce-Funktionalitäten diente. Damit verbunden eine signifikante Reduzierung der Lizenzkosten sowie verbesserte Wartbarkeit, Frontend/Backend-Unabhängigkeit und Zukunftssicherheit der Plattform.",
+        "tasks": [
+          "Migration der Angular-Anwendung zu einem Monorepo mit Nx zur Strukturierung und Nutzung gemeinsamer Bibliotheken über mehrere Applikationen",
+          "Etablierung und Durchsetzung von Best Practices in der Frontend-Architektur und im Code-Stil",
+          "Unterstützung und fachliche Betreuung des internen Frontend-Teams",
+          "Durchführung von Code-Reviews und technischem Feedback zu Merge Requests im Entwicklungsteam",
+          "Enge Zusammenarbeit mit dem Backend-Team zur Integration und Nutzung von OpenAPI-basierten REST-Schnittstellen",
+          "Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem Design-Team",
+          "Gewährleistung von Barrierefreiheit, Responsive Design und Einhaltung von UX-/UI-Richtlinien",
+          "Durchführung von manuellen Komponententests und Oberflächentests",
+          "Entwicklung von GUI-Komponenten unter besonderer Berücksichtigung von Usability und Performance",
+          "Dokumentation des Quellcodes und der Oberflächenkomponenten",
+          "Aufbau und Konfiguration der Angular-Pipeline zur Unterstützung von Continuous Integration"
+        ]
+      },
+      "mobilcom-ecare": {
+        "role": "Senior Frontend-Entwickler",
+        "name": "mobilcom-debitel eCare-Benutzer-Dashboard Relaunch",
+        "industry": "Telekommunikationsvertrieb",
+        "description": "Umfassender Relaunch der bestehenden eCare Self-Service-Plattform mit dem Ziel einer schnelleren, benutzerfreundlicheren und visuell ansprechenderen Lösung. Im Mittelpunkt: Performance-Optimierung, neues responsives Design und Erweiterung um Funktionen, die Nutzer:innen einen klareren Überblick über Vertragsinformationen, Nutzungsverhalten und Kontodetails geben.\n\nDas Dashboard wurde auf Basis der bestehenden Angular-Architektur vollständig neu entwickelt — als Nx Monorepo mit durchgängiger GraphQL-Backend-Kommunikation. Funktional erweitert um personalisierte Inhalte (Marketingkampagnen, Produktempfehlungen, Sonderaktionen), die dynamisch und nutzerorientiert dargestellt werden. Entwicklung im agilen Scrum-Setup in enger Zusammenarbeit mit UX-Designern und Marketing-Stakeholdern.",
+        "tasks": [
+          "Implementierung der neuen eCare-Dashboard-Seite zur Anzeige von Verträgen, Datenverbrauch, Rechnungen, Marketinginhalten und weiteren Informationen",
+          "Zusammenarbeit mit Designer und Projektmanager zur Umsetzung der gewünschten Benutzeroberfläche",
+          "Erstellung und Pflege von Jira-Tickets zur Planung und Strukturierung der Aufgaben",
+          "Einbindung des neuen Dashboards in die bestehende Angular-Anwendung in Abstimmung mit dem Entwicklungsteam",
+          "Entwicklung mit Angular, TypeScript, HTML und SCSS in einer Nx-Monorepo-Architektur",
+          "Abruf von Backend-Daten über GraphQL mit Fokus auf gute Performance und Wartbarkeit",
+          "Implementierung der neuen Oberflächen gemäß des Styleguides",
+          "Gewährleistung der Prinzipien von Barrierefreiheit, Responsive Design und UX/UI-Richtlinien",
+          "Durchführung von E2E-Tests",
+          "Entwicklung der GUI-Komponenten unter Berücksichtigung der Usability"
+        ]
+      },
+      "emporix": {
+        "role": "Senior Frontend-Entwickler",
+        "name": "Agnostische Integration für Emporix",
+        "industry": "IT-Dienstleistungen",
+        "description": "Entwicklung eines agnostischen Integrations-SDKs, das sich nahtlos in beliebige Frontend-Anwendungen einbinden lässt und eine sofort nutzbare Anbindung an die E-Commerce-Plattform Emporix bietet. Technologieunabhängig konzipiert für maximale Flexibilität und Wiederverwendbarkeit. Als Grundlage diente das offizielle Integrations-Boilerplate von Alokai zur Sicherstellung von Standardisierung und Wartbarkeit.",
+        "tasks": [
+          "Entwicklung von TypeScript-Modulen im Integrations-SDK zur Abwicklung von Login-Prozessen sowie Produkt- und Produktlistenabfragen",
+          "Implementierung und Pflege des SDKs als wiederverwendbare npm-Pakete",
+          "Veröffentlichung und Versionierung der Pakete in der internen GitLab-Registry",
+          "Sicherstellung der Framework-Agnostik und der einfachen Integration in verschiedene Frontend-Anwendungen"
+        ]
+      },
+      "haba": {
+        "role": "Senior Frontend-Entwickler",
+        "name": "Performance-Optimierung des Onlineshops (HABA Play & HABA Pro)",
+        "industry": "Spielwarenhersteller",
+        "description": "Verbesserung der Performance der Onlineshops HABA Play und HABA Pro bei gleichzeitiger Senkung der Wartungs- und Betriebskosten. Die Seiten litten unter langen Ladezeiten und einer komplexen Abhängigkeit vom SAP Composable Storefront. Auf Wunsch des Kunden sollte SAP Composable Storefront entfernt werden, ohne zentrale Funktionalitäten zu verlieren.",
+        "tasks": [
+          "Analyse der bestehenden Shops zur Erkennung von Ladezeit-Problemen und unnötigem JavaScript",
+          "Umsetzung von Optimierungen zur Reduzierung der Ladezeiten, z. B. durch Lazy Loading",
+          "Unterstützung beim Entfernen des SAP Composable Storefronts auf Kundenwunsch",
+          "Übernahme wichtiger Funktionen in eine eigene, wiederverwendbare Bibliothek",
+          "Vereinfachung und Reduzierung der Codebasis zur Senkung von Wartungsaufwand und Dateigröße",
+          "Zusammenarbeit mit dem Entwicklungsteam und Stakeholdern zur Sicherstellung einer reibungslosen Umstellung ohne Funktionsverlust"
+        ]
+      },
+      "ottos-sherpa": {
+        "role": "Frontend-Projektlead",
+        "name": "Entwicklung und Migration moderner Onlineshops mit SAP Commerce Cloud und Composable Storefront",
+        "industry": "Einzelhandel",
+        "description": "Entwicklung moderner Onlineshops für ottos.ch und Sherpa Outdoors auf Basis von SAP Commerce Cloud und SAP Composable Storefront. Migration vom alten SAP-Hybris-System auf eine Headless-Storefront-Architektur. Eine einheitliche Angular-Frontend-Codebasis wurde durch unterschiedliche Themes und Konfigurationen an die jeweiligen Marken angepasst. Gesteuert nach Scrum, in enger Zusammenarbeit mit Valantic (Zürich), Medienwerft (Hamburg), Team Neusta (Bremen) und Maify GmbH (Mühlingen).",
+        "tasks": [
+          "Frontend-Projektleitung und fachliche Unterstützung der Teams von Team Neusta und Medienwerft bei der Nutzung von SAP Composable Storefront",
+          "Erstellung technischer Unteraufgaben und Zuweisung von Jira-Tickets zur Strukturierung und Vereinfachung des Onboardings",
+          "Überprüfung von Code und Merge Requests der Teammitglieder sowie aktive Mitarbeit am Code",
+          "Enge Zusammenarbeit und Koordination mit dem Backend-Team, Product Manager und Product Owner",
+          "Sicherstellung der Einhaltung von Best Practices, Code-Standards und Qualität im Frontend",
+          "Unterstützung bei technischen Entscheidungen und Lösungsfindungen während des Projekts",
+          "Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem Design-Team",
+          "Gewährleistung von Barrierefreiheit, Responsive Design und Einhaltung von UX-/UI-Richtlinien",
+          "Durchführung von manuellen Komponententests und E2E-Tests",
+          "Entwicklung von GUI-Komponenten unter besonderer Berücksichtigung von Usability und Performance",
+          "Aufbau und Konfiguration der Angular-Pipeline zur Unterstützung von Continuous Integration"
+        ]
+      },
+      "landgard": {
+        "role": "Senior Frontend-Entwickler",
+        "name": "B2B Onlineshops für Landgard und Ordertage",
+        "industry": "Gartenbau & Großhandel",
+        "description": "Entwicklung moderner Onlineshops für Landgard und Ordertage auf Basis von SAP Commerce Cloud und SAP Composable Storefront. Eine einheitliche Angular-Frontend-Codebasis wurde durch unterschiedliche Themes und Konfigurationen an die jeweiligen Marken angepasst. Umgesetzt nach Scrum.",
+        "tasks": [
+          "Umsetzung von Komponenten und Funktionalitäten im SAP Composable Storefront",
+          "Anpassung der einheitlichen Angular-Codebasis an die jeweiligen Marken durch Konfiguration und Theming",
+          "Enge Zusammenarbeit mit dem Backend-Team zur Integration von Schnittstellen und Datenflüssen",
+          "Abstimmung mit dem Product Owner zur Umsetzung fachlicher Anforderungen",
+          "Mitwirkung an Sprint-Planungen, Reviews und Daily-Meetings im Scrum-Team",
+          "Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem Design-Team",
+          "Gewährleistung von Barrierefreiheit, Responsive Design und Einhaltung von UX-/UI-Richtlinien",
+          "Entwicklung von GUI-Komponenten unter besonderer Berücksichtigung von Usability und Performance"
+        ]
+      },
+      "spar": {
+        "role": "Senior Frontend-Entwickler",
+        "name": "Barrierefreiheitsoptimierung eines Onlineshops (SPAR Ungarn & Italien)",
+        "industry": "Einzelhandel",
+        "description": "Barrierefreie Gestaltung der Onlineshops von SPAR Ungarn und SPAR Italien. Die bestehenden Shops basierten auf SAP Commerce (Hybris) mit einem JSP-Frontend, das nicht den aktuellen Anforderungen an digitale Barrierefreiheit entsprach. Ein Großteil des bestehenden Codes wurde überarbeitet und refaktoriert, um den geltenden Accessibility-Richtlinien zu entsprechen und eine bessere Nutzererfahrung sicherzustellen. Umgesetzt nach Scrum.",
+        "tasks": [
+          "Analyse des bestehenden JSP-Frontends auf Barrierefreiheitsprobleme",
+          "Refactoring und Anpassung von HTML, CSS und JavaScript zur Einhaltung von Accessibility-Richtlinien",
+          "Durchführung von Accessibility-Tests und Nutzung entsprechender Tools zur Qualitätssicherung",
+          "Unterstützung des Teams bei der Umsetzung barrierefreier Standards im Scrum-Prozess"
+        ]
+      },
+      "daw": {
+        "role": "Frontend-Entwickler",
+        "name": "Entwicklung von 13 Onlineshops für DAW Group",
+        "industry": "Bauchemie / Farben- und Lackindustrie",
+        "description": "Entwicklung eines neuen E-Commerce-Systems auf Basis von SAP Commerce Hybris, das Nutzer:innen die individuelle Farbkonfiguration ermöglicht. Das System wurde als zentrale Lösung für 13 verschiedene Onlineshops konzipiert, die sich durch eigene CMS-Inhalte, Produktsortimente und Themes unterscheiden. Umsetzung im Rahmen eines Scrum-Prozesses.",
+        "tasks": [
+          "Implementierung von Frontend-Features, die in allen 13 Onlineshops einsetzbar sind",
+          "Enge Zusammenarbeit mit dem Backend-Team",
+          "Abstimmung mit dem Product Owner zur Klärung fachlicher Anforderungen",
+          "Anpassung von Komponenten an unterschiedliche CMS-Inhalte, Produktdaten und Themes",
+          "Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem Design-Team"
+        ]
+      },
+      "dachdecker": {
+        "role": "Frontend-Entwickler",
+        "name": "Dachdecker-Onlineshop",
+        "industry": "Handwerk & Baugewerbe",
+        "description": "Entwicklung eines neuen Onlineshops auf Basis von SAP Commerce Hybris, speziell auf Dachdeckerbedarf ausgerichtet. Der Shop wurde individuell konfiguriert und thematisch angepasst — zugeschnitten auf die Anforderungen der Dachdeckerbranche. Umsetzung agil nach Scrum.",
+        "tasks": [
+          "Weiterentwicklung und Umsetzung neuer Features für den bestehenden Onlineshop",
+          "Behebung von Bugs und technischen Problemen im Frontend",
+          "Zusammenarbeit mit dem Backend-Team zur Integration neuer Funktionen",
+          "Abstimmung mit dem Product Owner zur Priorisierung von Anforderungen",
+          "Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem Design-Team"
+        ]
+      },
+      "frosta": {
+        "role": "Junior Fullstack-Entwickler",
+        "name": "FRoSTA Digitale Arbeitsanweisung",
+        "industry": "Lebensmittel & Getränke",
+        "description": "Entwicklung einer mobilen Applikation zur digitalen Darstellung von Arbeits- und Maschinenanweisungen. Inhalte (Videos, Bilder, PDFs, Texte) erklären den Mitarbeitenden Arbeitsschritte visuell und verständlich. Pflege der Inhalte über eine separate Webanwendung mit Rechte-Management. Umfasste eine native Android-App, ein Angular-CMS sowie eine REST-API auf Basis von JAX-RS, angebunden an einen Microsoft SQL Server.",
+        "tasks": [
+          "Frontend: Umsetzung der mobilen App mit Android Native zur Darstellung von Arbeitsanweisungen mit Videos, Bildern, PDFs und Texten",
+          "Frontend: Entwicklung einer CMS-Webanwendung mit Angular 6 zur Verwaltung der Inhalte durch autorisierte Nutzer",
+          "Frontend: Gestaltung einer benutzerfreundlichen UI für die Inhaltsanzeige und -pflege",
+          "Backend: Entwicklung von RESTful Webservices mit JAX-RS zur Bereitstellung von Inhalten für App und CMS",
+          "Backend: Anbindung und Verwaltung der Inhalte über eine Microsoft SQL Server-Datenbank",
+          "Backend: Sicherstellung der Datenkonsistenz und Performance im Zusammenspiel mit Frontend und Datenbank",
+          "Technische Abstimmung mit dem Product Owner zur Umsetzung der Anforderungen"
+        ]
+      },
+      "lsw": {
+        "role": "Junior Fullstack-Entwickler",
+        "name": "LSW Kommissionierung",
+        "industry": "Versorgungswirtschaft",
+        "description": "Entwicklung einer mobilen Applikation für Android- und iOS-Tablets, die von Lager-Mitarbeitenden zur Kommissionierung und Qualitätssicherung eingesetzt wird. Mit der App können Barcodes gescannt, Produktinformationen angezeigt, Qualitätskontrollen durchgeführt und Arbeitsaufträge per digitaler Unterschrift bestätigt werden. Auftragsdaten werden anschließend über den SAP Java Connector (JCo) an das angebundene SAP ERP-System übertragen. Umsetzung mit Ionic im Frontend und JAX-RS Webservices sowie Microsoft SQL Server im Backend.",
+        "tasks": [
+          "Frontend: Entwicklung einer plattformübergreifenden mobilen App mit Ionic für Android und iOS",
+          "Frontend: Integration der Barcode-Scan-Funktion zur Erfassung von Produktdaten im Lager",
+          "Frontend: Darstellung produktrelevanter Informationen",
+          "Frontend: Implementierung der digitalen Unterschrift zur Bestätigung der Aufträge",
+          "Backend: Entwicklung von RESTful Webservices mit JAX-RS zur Anbindung an das SAP ERP-System",
+          "Backend: Anbindung an eine SQL-Server-Datenbank zur Verwaltung und Speicherung der Auftragsdaten",
+          "Backend: Verarbeitung und Weiterleitung abgeschlossener Aufträge an das ERP-System",
+          "Backend: Sicherstellung stabiler Kommunikation zwischen App und Backend-System"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "headline": "Lass uns etwas bauen.",
+    "subhead": "Offen für Senior-Frontend- / Architektur-Rollen und Beratungsmandate in Deutschland und remote.",
+    "getInTouch": "Kontakt aufnehmen",
+    "linkedin": "LinkedIn",
+    "copyright": "© 2026 Mohanad Zahed",
+    "builtWith": "Gebaut mit React · Three.js · GSAP"
+  }
+}

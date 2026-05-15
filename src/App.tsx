@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './scene/Scene';
 import { useLenis } from './hooks/useLenis';
@@ -14,13 +14,23 @@ import { Certificates } from './sections/certificates/Certificates';
 import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { useT } from './i18n/useT';
 
 function App() {
   useLenis();
   useScrollTrigger();
+  const { t, locale } = useT();
+
+  useEffect(() => {
+    document.title = t('meta.title');
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t('meta.description'));
+  }, [t, locale]);
 
   return (
     <>
+      <LanguageSwitcher />
       <HeroBackground />
       <KnowledgeBackground />
       <div className='fixed inset-0 -z-10 pointer-events-none'>

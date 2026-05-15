@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { CSSProperties } from 'react';
 import type { ExperienceCompany } from '../../data/experience';
 import { ProjectCard } from './ProjectCard';
+import { useT } from '../../i18n/useT';
 import {
   CARD_MAX_W_PX,
   COMPANY_HEADER_HEIGHT_PX,
@@ -39,6 +40,11 @@ function useIsDesktop(): boolean {
 }
 
 export function CompanyBlock({ company }: Props) {
+  const { t } = useT();
+  const companyName = t(`experience.companies.${company.id}.name`);
+  const companyRole = t(`experience.companies.${company.id}.role`);
+  const companyCity = t(`experience.companies.${company.id}.city`);
+  const companyTimeline = t(`experience.companies.${company.id}.timeline`);
   const total = company.projects.length;
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardsRegionRef = useRef<HTMLDivElement | null>(null);
@@ -174,7 +180,7 @@ export function CompanyBlock({ company }: Props) {
             id={`company-${company.id}`}
             className='absolute -top-3 left-6 z-10 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-secondary md:left-10 md:text-base'
           >
-            {company.name}
+            {companyName}
           </h3>
 
           <div
@@ -182,9 +188,9 @@ export function CompanyBlock({ company }: Props) {
             style={{ minHeight: `${COMPANY_HEADER_HEIGHT_PX}px` }}
           >
             <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-tertiary md:flex-row md:items-baseline md:justify-between md:gap-6'>
-              <p className='text-base text-tertiary md:text-lg'>{company.role}</p>
+              <p className='text-base text-tertiary md:text-lg'>{companyRole}</p>
               <p className='text-sm text-tertiary/70'>
-                {company.city} · {company.timeline}
+                {companyCity} · {companyTimeline}
               </p>
             </div>
           </div>

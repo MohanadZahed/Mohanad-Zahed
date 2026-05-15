@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { ExperienceProject } from '../../data/experience';
 import type { TagPosition } from './experience.constants';
+import { useT } from '../../i18n/useT';
 
 interface Props {
   project: ExperienceProject;
@@ -25,6 +26,13 @@ export function ProjectCard({
   minContentHeight,
   pinned,
 }: Props) {
+  const { t, tArray } = useT();
+  const projectKey = `experience.projects.${project.id}`;
+  const role = t(`${projectKey}.role`);
+  const name = t(`${projectKey}.name`);
+  const industry = t(`${projectKey}.industry`);
+  const description = t(`${projectKey}.description`);
+  const tasks = tArray(`${projectKey}.tasks`);
   const number = String(index + 1).padStart(2, '0');
   const isCompactRow = tagPosition.rowIndex >= 1;
 
@@ -83,23 +91,25 @@ export function ProjectCard({
         >
           <div className='min-w-0'>
             <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>
-              {project.role}
+              {role}
             </p>
             <h3 className='mt-2 font-mono text-2xl font-semibold leading-tight text-zinc-900 md:text-3xl'>
-              {project.name}
+              {name}
             </h3>
 
             <dl className='mt-6 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 font-mono text-sm'>
-              <dt className='text-zinc-500'>Kunde</dt>
+              <dt className='text-zinc-500'>{t('experience.labels.customer')}</dt>
               <dd className='text-zinc-900'>{project.customer}</dd>
-              <dt className='text-zinc-500'>Branche</dt>
-              <dd className='text-zinc-900'>{project.industry}</dd>
-              <dt className='text-zinc-500'>Team / Projekt</dt>
+              <dt className='text-zinc-500'>{t('experience.labels.industry')}</dt>
+              <dd className='text-zinc-900'>{industry}</dd>
+              <dt className='text-zinc-500'>{t('experience.labels.teamSize')}</dt>
               <dd className='text-zinc-900'>{project.teamSize}</dd>
             </dl>
 
             <div className='mt-6'>
-              <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>Umfeld</p>
+              <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>
+                {t('experience.labels.stack')}
+              </p>
               <ul className='mt-2 flex flex-wrap gap-1.5'>
                 {project.stack.map((tech) => (
                   <li
@@ -113,7 +123,7 @@ export function ProjectCard({
             </div>
 
             <div className='mt-6 space-y-3 font-mono text-sm leading-relaxed text-zinc-700'>
-              {project.description.split('\n\n').map((para, i) => (
+              {description.split('\n\n').map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
@@ -125,7 +135,7 @@ export function ProjectCard({
                 rel='noopener noreferrer'
                 className='experience-card__cta mt-6 inline-flex items-center gap-2 rounded-sm border border-zinc-900 px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-zinc-900 transition-colors hover:bg-zinc-900 hover:text-white'
               >
-                Visit live site
+                {t('experience.labels.visitLink')}
                 <span aria-hidden>→</span>
               </a>
             )}
@@ -133,10 +143,10 @@ export function ProjectCard({
 
           <div className='min-w-0 lg:border-l lg:border-zinc-200 lg:pl-8'>
             <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>
-              Aufgaben im Projekt
+              {t('experience.labels.tasks')}
             </p>
             <ul className='mt-3 space-y-2 font-mono text-sm leading-relaxed text-zinc-800'>
-              {project.tasks.map((task, i) => (
+              {tasks.map((task, i) => (
                 <li key={i} className='flex gap-2'>
                   <span
                     aria-hidden
@@ -150,7 +160,7 @@ export function ProjectCard({
         </div>
 
         <div className='shrink-0 border-t border-zinc-200 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 md:px-12'>
-          Project {number} of {String(total).padStart(2, '0')}
+          {t('experience.labels.projectCounter', { number, total: String(total).padStart(2, '0') })}
         </div>
       </div>
     </article>

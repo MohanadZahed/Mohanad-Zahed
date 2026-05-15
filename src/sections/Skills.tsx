@@ -1,8 +1,10 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { CircuitBackground, SPOTLIGHT_RADIUS } from './skills/CircuitBackground';
 import { ChipScatter } from './skills/ChipScatter';
+import { useT } from '../i18n/useT';
 
 export function Skills() {
+  const { t } = useT();
   const stageRef = useRef<HTMLElement>(null);
   const circuitRef = useRef<HTMLDivElement>(null);
 
@@ -75,9 +77,9 @@ export function Skills() {
           id='skills-h2'
           className='text-3xl sm:text-4xl font-semibold text-zinc-100 tracking-tight'
         >
-          Tech Skills
+          {t('skills.heading')}
         </h2>
-        <p className='mt-2 text-sm text-zinc-400 max-w-md'>The board I build on.</p>
+        <p className='mt-2 text-sm text-zinc-400 max-w-md'>{t('skills.subhead')}</p>
       </header>
 
       <ChipScatter />

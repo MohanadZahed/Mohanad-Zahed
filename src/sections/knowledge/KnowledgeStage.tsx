@@ -9,6 +9,7 @@ import {
   RING_RADIUS_MAX_PX,
   RING_RADIUS_MIN_PX,
 } from './knowledge.constants';
+import { useT } from '../../i18n/useT';
 
 interface KnowledgeStageProps {
   progress: number;
@@ -24,6 +25,7 @@ function hash01(i: number): number {
 }
 
 export function KnowledgeStage({ progress }: KnowledgeStageProps) {
+  const { t } = useT();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
         }}
       >
         <Typewriter
-          text='Knowledge'
+          text={t('knowledge.heading')}
           scrollProgress={titleProgress}
           cursorMode='beat-then-hide'
         />

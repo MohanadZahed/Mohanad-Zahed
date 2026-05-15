@@ -6,10 +6,12 @@ import { CertificateStrip } from './CertificateStrip';
 import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
 import { SECTION_VH, STACK_BREAKPOINT_PX } from './certificates.constants';
+import { useT } from '../../i18n/useT';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Certificates() {
+  const { t } = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const [isCompact, setIsCompact] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -60,10 +62,14 @@ export function Certificates() {
       >
         <div className='certificates-fallback'>
           <header className='max-w-md text-center'>
-            <span className='certificates-header__eyebrow block'>Zertifikate</span>
-            <h2 id='certificates-h2' className='certificates-header__title mt-3 text-balance'>
-              ich habe <em>{CERTIFICATES.length}</em> Zertifikate
-            </h2>
+            <span className='certificates-header__eyebrow block'>{t('certificates.eyebrow')}</span>
+            <h2
+              id='certificates-h2'
+              className='certificates-header__title mt-3 text-balance'
+              dangerouslySetInnerHTML={{
+                __html: t('certificates.countTemplate', { count: CERTIFICATES.length }),
+              }}
+            />
           </header>
           {CERTIFICATES.map((cert, i) => (
             <CertificateCard key={cert.id} cert={cert} index={i} flat />

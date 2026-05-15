@@ -1,10 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useScrollStore } from '../store/useScrollStore';
-
-const NAME = 'Mohanad Zahed';
-const TITLE = 'Frontend Architect';
-const TAGLINE = '+8 Jahre Leidenschaft für saubere Architektur, modernen Code und Workflows';
+import { useT } from '../i18n/useT';
 
 function MaskedChars({ text }: { text: string }) {
   return (
@@ -23,6 +20,10 @@ function MaskedChars({ text }: { text: string }) {
 }
 
 export function Hero() {
+  const { t } = useT();
+  const NAME = t('hero.name');
+  const TITLE = t('hero.title');
+  const TAGLINE = t('hero.tagline');
   const nameRef = useRef<HTMLHeadingElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);

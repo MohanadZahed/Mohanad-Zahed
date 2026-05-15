@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Certificate } from './certificates.data';
 import { rotationForIndex } from './certificates.constants';
+import { useT } from '../../i18n/useT';
 
 interface CertificateCardProps {
   cert: Certificate;
@@ -32,6 +33,7 @@ function formatDate(mmYYYY: string): string {
 }
 
 export function CertificateCard({ cert, index, flat = false }: CertificateCardProps) {
+  const { t } = useT();
   const rotation = flat ? 0 : rotationForIndex(index);
   const style: CSSProperties = { transform: `rotate(${rotation}deg)` };
 
@@ -39,7 +41,7 @@ export function CertificateCard({ cert, index, flat = false }: CertificateCardPr
     <article className='certificate-card' style={style} aria-label={cert.name}>
       <div className='certificate-card__inner'>
         <header className='certificate-card__header'>
-          <span className='certificate-card__eyebrow'>Certificate of Achievement</span>
+          <span className='certificate-card__eyebrow'>{t('certificates.card.eyebrow')}</span>
           <span className='certificate-card__index'>
             {String(index + 1).padStart(2, '0')}
           </span>
@@ -52,7 +54,7 @@ export function CertificateCard({ cert, index, flat = false }: CertificateCardPr
 
         <footer className='certificate-card__footer'>
           <div className='certificate-card__date'>
-            <span className='certificate-card__date-label'>Issued</span>
+            <span className='certificate-card__date-label'>{t('certificates.card.issued')}</span>
             <span className='certificate-card__date-value'>{formatDate(cert.date)}</span>
           </div>
           <div className='certificate-card__seal' aria-hidden />

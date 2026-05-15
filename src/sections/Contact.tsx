@@ -3,10 +3,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FlipLink } from '../components/FlipLink';
 import { useScrollStore } from '../store/useScrollStore';
+import { useT } from '../i18n/useT';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Contact() {
+  const { t } = useT();
   const sectionRef = useRef<HTMLElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -85,7 +87,7 @@ export function Contact() {
                 className='text-4xl sm:text-5xl md:text-6xl font-semibold text-zinc-100 whitespace-nowrap'
                 style={{ clipPath: 'inset(0 100% 0 0)', lineHeight: 'normal' }}
               >
-                Let's build something.
+                {t('contact.headline')}
               </h2>
               <img
                 ref={truckRef}
@@ -98,8 +100,7 @@ export function Contact() {
           </div>
 
           <p className='mt-6 text-lg text-zinc-400 leading-relaxed'>
-            Open to senior frontend / architecture roles and consulting engagements in Germany and
-            remote.
+            {t('contact.subhead')}
           </p>
 
           <p className='mt-8 text-zinc-400'>
@@ -112,8 +113,8 @@ export function Contact() {
           </p>
 
           <div className='mt-6 flex flex-wrap justify-center gap-4'>
-            <FlipLink text='Get in touch' href='mailto:mzahed-p@outlook.com' />
-            <FlipLink text='LinkedIn' href='https://www.linkedin.com/in/m-zahed/' external />
+            <FlipLink text={t('contact.getInTouch')} href='mailto:mzahed-p@outlook.com' />
+            <FlipLink text={t('contact.linkedin')} href='https://www.linkedin.com/in/m-zahed/' external />
           </div>
 
           <img
@@ -125,8 +126,8 @@ export function Contact() {
       </div>
 
       <footer className='relative z-10 pb-6 px-8 sm:px-16 text-center text-xs text-zinc-500'>
-        <p>© 2026 Mohanad Zahed</p>
-        <p className='mt-1'>Built with React · Three.js · GSAP</p>
+        <p>{t('contact.copyright')}</p>
+        <p className='mt-1'>{t('contact.builtWith')}</p>
       </footer>
     </section>
   );
