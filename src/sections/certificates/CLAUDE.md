@@ -21,19 +21,25 @@ A 3×viewport-tall HTML/CSS-only section between Knowledge and Experience. The 3
 
 Outer section is `SECTION_VH = 300vh` so CSS sticky engages from the moment its top reaches the viewport top and releases when its bottom reaches the viewport bottom — i.e. for the first 200vh of scroll inside the section.
 
-## Two phases, one progress field
+## One ramp, one progress field
 
-A single section-local ScrollTrigger writes `useScrollStore.certificatesProgress` 0..1 across the full section. Phase A is `p ≤ PHASE_A_FRACTION` (= 2/3); phase B is the rest.
+A single section-local ScrollTrigger (`start: 'top top', end: 'bottom bottom'`) writes `useScrollStore.certificatesProgress` 0..1 across the sticky-engaged window. The trigger range is `SECTION_VH − STAGE_VH = 200vh` and CSS sticky stays engaged for the entire range — `progress = 1` coincides with the sticky-release boundary (section.bottom = viewport.bottom).
 
-- **Phase A — sticky engaged.** Wheel scroll translates entirely into the strip's horizontal motion. Strip translates from `0` to `−X_centre` (last card's centre lands at viewport centre).
-- **Phase B — sticky released.** As scroll continues, the stage scrolls upward out of viewport in the natural flow *and* the strip keeps translating to `−X_offscreen` (last card fully off-screen left). Experience enters from below at the same time.
+The strip's transform is a single ramp across that range:
 
-The hand-off is the moment sticky releases, which is exactly when the last card is centred. No GSAP `pin: true` needed — CSS sticky expresses the timing for free.
+```
+x = lerp(0, X_visible, p)
+X_visible = max(0, lastCardRight + sidePad − viewportW)
+```
+
+So at `p = 1` the last card's right edge sits `sidePad` in from the viewport right edge (fully visible, symmetric with the left padding) **and** sticky releases — the section then scrolls up naturally for the remaining `STAGE_VH = 100vh` of the section's height with no further horizontal motion. Experience enters from below at the same time.
+
+No GSAP `pin: true` needed — CSS sticky expresses the timing for free. The ramp fills the full sticky-engaged window so there is no frozen-strip dead zone where the user scrolls but nothing on screen moves.
 
 ## Rules
 
 - Card width, height, gap, header width, and side padding are computed at runtime via `computeCertificatesLayout(viewportW)` in [`certificates.constants.ts`](certificates.constants.ts). The strip writes them as CSS custom properties on the stage (`--cert-card-w`, `--cert-card-h`, `--cert-gap`, `--cert-header-w`, `--cert-pad`); `.certificate-card`, `.certificates-strip`, `.certificates-header` in [`src/index.css`](../../index.css) read those vars. Geometry constraint: exactly `VISIBLE_CARDS` (=3) cards + `VISIBLE_CARDS−1` gaps fill `VIEWPORT_FILL` (=86%) of the usable viewport, clamped to [`CARD_MIN_WIDTH_PX`, `CARD_MAX_WIDTH_PX`]. Recompute on `ResizeObserver` and `window.resize`.
-- Width measurements (`X_centre`, `X_offscreen`) are derived from those same runtime layout values (header + 5 cards + gaps + side pads).
+- Width measurement (`X_visible`) is derived from those same runtime layout values (header + 5 cards + gaps + side pads).
 - Don't trigger React re-renders for the strip's transform — subscribe to the store with `useScrollStore.subscribe` and write `element.style.transform` directly inside the subscriber. **No `requestAnimationFrame` wrapper** — ScrollTrigger's `onUpdate` already runs in the GSAP ticker (rAF-synced), so wrapping the DOM write in another rAF schedules it for the next frame and shows up as 1-frame input lag.
 - No global progress reads. The strip uses `certificatesProgress` only; other sections don't read `certificatesProgress`.
 - The card visual is pure CSS (`.certificate-card`, `.certificate-card__*` in [`src/index.css`](../../index.css)) — no SVG, no images, no extra fonts. Faux foil seal is a `radial-gradient` + `repeating-conic-gradient`. Keep it that way.

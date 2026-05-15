@@ -3,7 +3,7 @@ import { useScrollStore } from '../../store/useScrollStore';
 import { lerp } from '../../scene/lib/math';
 import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
-import { computeCertificatesLayout, PHASE_A_FRACTION } from './certificates.constants';
+import { computeCertificatesLayout } from './certificates.constants';
 import { useT } from '../../i18n/useT';
 
 export function CertificateStrip() {
@@ -11,8 +11,7 @@ export function CertificateStrip() {
   const stripRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const xCentreRef = useRef(0);
-  const xOffscreenRef = useRef(0);
+  const xVisibleRef = useRef(0);
 
   useLayoutEffect(() => {
     const stage = stageRef.current;
@@ -30,11 +29,9 @@ export function CertificateStrip() {
       stage.style.setProperty('--cert-pad', `${sidePad}px`);
 
       const lastCardLeft = sidePad + headerW + gap + (CERTIFICATES.length - 1) * (cardW + gap);
-      const lastCardCentre = lastCardLeft + cardW / 2;
       const lastCardRight = lastCardLeft + cardW;
 
-      xCentreRef.current = Math.max(0, lastCardCentre - viewportW / 2);
-      xOffscreenRef.current = Math.max(xCentreRef.current, lastCardRight + sidePad);
+      xVisibleRef.current = Math.max(0, lastCardRight + sidePad - viewportW);
     };
 
     measure();
@@ -52,13 +49,7 @@ export function CertificateStrip() {
     if (!strip) return;
 
     const apply = (p: number) => {
-      const phaseA = PHASE_A_FRACTION;
-      const xCentre = xCentreRef.current;
-      const xOff = xOffscreenRef.current;
-      const x =
-        p <= phaseA
-          ? lerp(0, xCentre, phaseA > 0 ? p / phaseA : 0)
-          : lerp(xCentre, xOff, (p - phaseA) / (1 - phaseA));
+      const x = lerp(0, xVisibleRef.current, p);
       strip.style.transform = `translate3d(${-x}px, 0, 0)`;
     };
 
