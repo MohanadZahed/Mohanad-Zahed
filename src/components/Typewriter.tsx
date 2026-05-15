@@ -109,11 +109,13 @@ export function Typewriter({
     opacity: showCursor ? 1 : 0,
   };
 
+  const isScrollMode = scrollProgress !== undefined;
+
   return createElement(
     As,
     { id, className, style, 'aria-label': text },
     <span aria-hidden='true' style={{ whiteSpace: 'pre-wrap' }}>
-      {renderAnimatedChars(displayed)}
+      {isScrollMode ? displayed : renderAnimatedChars(displayed)}
     </span>,
     cursorMode !== 'none' && (
       <span

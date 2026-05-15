@@ -26,12 +26,19 @@ export function useTypewriter(
   const [done, setDone] = useState(false);
   const [prevText, setPrevText] = useState(text);
   const [prevStart, setPrevStart] = useState(start);
+  const [scrollCount, setScrollCount] = useState(0);
+
+  const rafRef = useRef<number | null>(null);
+  const indexRef = useRef(0);
+  const lastTickRef = useRef(0);
+  const beganRef = useRef(false);
 
   if (text !== prevText) {
     setPrevText(text);
     setPrevStart(start);
     setDisplayed('');
     setDone(false);
+    setScrollCount(0);
   } else if (start !== prevStart) {
     setPrevStart(start);
     if (start && done) {
@@ -45,11 +52,6 @@ export function useTypewriter(
     setDisplayed(text);
     setDone(true);
   }
-
-  const rafRef = useRef<number | null>(null);
-  const indexRef = useRef(0);
-  const lastTickRef = useRef(0);
-  const beganRef = useRef(false);
 
   useEffect(() => {
     if (isScrollMode) return;
@@ -92,10 +94,24 @@ export function useTypewriter(
 
   if (isScrollMode) {
     const clamped = Math.max(0, Math.min(1, scrollProgress!));
-    const count = reduced ? text.length : Math.ceil(clamped * text.length);
+    const exact = clamped * text.length;
+    let count: number;
+    if (reduced) {
+      count = text.length;
+    } else {
+      const MARGIN = 0.25;
+      let next = scrollCount;
+      if (next > text.length) next = text.length;
+      while (next < text.length && exact >= next + 1 - MARGIN) next++;
+      while (next > 0 && exact < next - MARGIN) next--;
+      if (clamped <= 0) next = 0;
+      else if (clamped >= 1) next = text.length;
+      if (next !== scrollCount) setScrollCount(next);
+      count = next;
+    }
     return {
       displayed: text.slice(0, count),
-      done: clamped >= 1,
+      done: count >= text.length,
     };
   }
 

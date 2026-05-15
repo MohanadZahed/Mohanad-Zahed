@@ -50,9 +50,17 @@ Sections that span more than one viewport-height (currently Notebook, Knowledge,
 ## Content data
 
 - Skill chip roster: `src/sections/skills/skills.data.ts` (typed array — id, label, category, level, size). Don't hard-code in JSX.
-- Experience timeline: `src/data/experience.ts`.
+- Experience timeline: `src/data/experience.ts` — language-neutral spine only (`id`, `dateLabel`, `customer`, `teamSize`, `stack`, `link?`). Translated fields live in `src/locales/{en,de}.json`.
 - Tech stack list (logo orbit): `src/data/techStack.ts`. Each entry: `{ id, label, texturePath, yearsExperience }`.
-- All site copy comes from `docs/content.md` (CV-derived).
+- All UI copy comes from `src/locales/en.json` and `src/locales/de.json` via `useT()` — never hardcode strings in JSX. `docs/content.md` remains the CV-derived source of truth for *what* the copy should say; the JSON files are *where* it lives at runtime.
+
+## i18n usage in sections
+
+- Call `const { t, tArray, locale } = useT()` at the top of any component that renders user-visible text.
+- `t('dotted.key')` for single strings; `t('key', { var: value })` for `{var}` interpolation.
+- `tArray('dotted.key')` for array-valued keys (finder lines, About facts, project tasks).
+- Locale-aware Typewriter: scroll-driven Typewriters update automatically when `text` changes. Auto-mode Typewriters (`<Typewriter text={t('...')} start={...} />`) must receive `key={locale}` to force remount on locale switch so the animation replays from char 0.
+- See `src/store/useLocaleStore.ts` and `src/i18n/useT.ts` for the full implementation.
 
 ## Typewriter modes
 
