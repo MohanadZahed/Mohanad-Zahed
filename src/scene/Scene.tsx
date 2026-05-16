@@ -16,6 +16,11 @@ const HORIZ_START = 0.41 / 31.25;
 const HORIZ_END = 0.82 / 31.25;
 const ABOUT_CENTER_PROGRESS = 0.85 / 31.25;
 const HERO_Y_OFFSET = -1;
+// Anchor shrinks on narrow viewports so the avatar + orbit fit. At desktop aspect
+// (≈1.78), viewport.width ≈ 13.3 → ratio clamps to 1. On a phone (≈3.45), the floor
+// keeps the avatar legible.
+const SCALE_REFERENCE_WIDTH = 9;
+const SCALE_MIN = 0.4;
 
 export function Scene() {
   const anchorRef = useRef<Group>(null);
@@ -26,8 +31,12 @@ export function Scene() {
     if (!anchor) return;
     const progress = useScrollStore.getState().progress;
 
+    const targetScale = MathUtils.clamp(viewport.width / SCALE_REFERENCE_WIDTH, SCALE_MIN, 1);
+    const nextScale = MathUtils.damp(anchor.scale.x, targetScale, 4, delta);
+    anchor.scale.setScalar(nextScale);
+
     const tHoriz = smoothstep(HORIZ_START, HORIZ_END, progress);
-    const targetX = tHoriz * ANCHOR_LEFT_X;
+    const targetX = tHoriz * ANCHOR_LEFT_X * nextScale;
     anchor.position.x = MathUtils.damp(anchor.position.x, targetX, 4, delta);
 
     const totalScrollPx = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);

@@ -114,7 +114,7 @@ export function Hero() {
     <section aria-labelledby='hero-h1' className='relative h-screen overflow-hidden'>
       <div
         ref={wrapperRef}
-        className='relative flex flex-col items-center justify-start w-full h-full pt-[12vh]'
+        className='relative flex flex-col items-center justify-start w-full h-full pt-[10vh]'
         style={{ transformOrigin: '50% 50%' }}
       >
         {/* Upper block — cream fill, navy text, rotated +3deg */}
@@ -125,10 +125,10 @@ export function Hero() {
           style={{
             transform: 'rotate(0deg)',
             outlineOffset: 0,
-            padding: '0 1.2vw 0.6vw',
-            fontSize: 'clamp(1.5rem, 6vw, 8rem)',
+            padding: '0 0.6em 0.1em',
+            fontSize: 'clamp(1.5rem, min(6vw, 7vh), 8rem)',
             lineHeight: 1,
-            letterSpacing: '-0.15vw',
+            letterSpacing: '-0.025em',
           }}
         >
           <MaskedChars text={TITLE} />
@@ -142,12 +142,12 @@ export function Hero() {
           className='bg-tertiary text-primary inline-flex items-center justify-center overflow-hidden font-bold uppercase m-0'
           style={{
             transform: 'rotate(-3deg)',
-            outline: '0.5vw solid var(--color-primary)',
+            outline: '0.05em solid var(--color-primary)',
             outlineOffset: 0,
-            padding: '0 1.5vw 0.8vw',
-            fontSize: 'clamp(2.5rem, 9vw, 12rem)',
+            padding: '0 0.15em 0.08em',
+            fontSize: 'clamp(2.5rem, min(9vw, 11vh), 12rem)',
             lineHeight: 1,
-            letterSpacing: '-0.2vw',
+            letterSpacing: '-0.025em',
           }}
         >
           <MaskedChars text={NAME} />
@@ -156,7 +156,7 @@ export function Hero() {
         {/* Tagline */}
         <p
           ref={taglineRef}
-          className='mt-[4vw] max-w-2xl text-center text-base sm:text-lg leading-relaxed px-4'
+          className='mt-[4vh] max-w-2xl text-center text-base sm:text-lg leading-relaxed px-4'
           style={{
             color: 'color-mix(in srgb, var(--color-tertiary) 80%, transparent)',
           }}
