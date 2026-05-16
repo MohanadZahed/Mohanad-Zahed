@@ -10,6 +10,14 @@ const ABOUT_YAW = Math.PI / 5;
 // Avatar fades in just before text starts (text begins at 0.5 s)
 const FADE_START = 0.2;
 const FADE_END = 1.0;
+// Yaw ramp range — viewport-aware so the avatar finishes its turn-in at the
+// same scroll point as the horizontal translation in Scene.tsx. Keep the
+// narrow values in sync with HORIZ_START_NARROW / HORIZ_END_NARROW there.
+const YAW_START = 0.41 / 31.25;
+const YAW_END = 0.82 / 31.25;
+const YAW_START_NARROW = 0;
+const YAW_END_NARROW = 0.01;
+const NARROW_MAX_PX = 900;
 
 export function Avatar() {
   const groupRef = useRef<Group>(null);
@@ -51,7 +59,10 @@ export function Avatar() {
 
     group.position.y = Math.sin(t * 0.6) * 0.05;
     const progress = useScrollStore.getState().progress;
-    const yawTarget = smoothstep(0.41 / 31.25, 0.82 / 31.25, progress) * ABOUT_YAW;
+    const isNarrow = window.innerWidth < NARROW_MAX_PX;
+    const yawStart = isNarrow ? YAW_START_NARROW : YAW_START;
+    const yawEnd = isNarrow ? YAW_END_NARROW : YAW_END;
+    const yawTarget = smoothstep(yawStart, yawEnd, progress) * ABOUT_YAW;
     group.rotation.y = MathUtils.damp(group.rotation.y, yawTarget, 4, delta);
   });
 

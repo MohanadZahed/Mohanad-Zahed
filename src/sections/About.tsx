@@ -52,21 +52,19 @@ export function About() {
     <section
       ref={sectionRef}
       aria-labelledby='about-h2'
-      className='relative h-[800px]'
+      className='relative min-h-200 min-[900px]:h-200'
     >
       {/* Amber background spans the full width; sits behind the canvas so the avatar + orbs stay in front */}
       <div aria-hidden='true' className='bg-quaternary absolute inset-0 -z-20' />
 
-      <div className='relative h-full flex items-center' style={{ zIndex: 1 }}>
+      <div className='relative min-h-full flex items-center' style={{ zIndex: 1 }}>
         <div
-          className='text-primary'
+          className='text-primary w-full max-w-full min-[900px]:ml-[50vw] min-[900px]:max-w-[50vw]'
           style={{
-            marginLeft: '50vw',
             paddingLeft: 'clamp(1.5rem, 3vw, 3rem)',
             paddingRight: 'clamp(1.5rem, 6vw, 6rem)',
             paddingTop: 'clamp(4rem, 10vh, 8rem)',
             paddingBottom: 'clamp(4rem, 10vh, 8rem)',
-            maxWidth: '50vw',
           }}
         >
           <h2

@@ -111,10 +111,13 @@ export function Hero() {
   }, []);
 
   return (
-    <section aria-labelledby='hero-h1' className='relative h-screen overflow-hidden'>
+    <section
+      aria-labelledby='hero-h1'
+      className='relative overflow-hidden h-[70vh] sm:h-[85vh] md:h-screen'
+    >
       <div
         ref={wrapperRef}
-        className='relative flex flex-col items-center justify-start w-full h-full pt-[10vh]'
+        className='relative flex flex-col items-center justify-start w-full h-full pt-[25vh] sm:pt-[18vh] md:pt-[10vh]'
         style={{ transformOrigin: '50% 50%' }}
       >
         {/* Upper block — cream fill, navy text, rotated +3deg */}

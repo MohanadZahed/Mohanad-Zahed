@@ -1,12 +1,26 @@
 import { lerp, smoothstep } from './math';
 
+// Radius ramp range — narrow values must stay in sync with HORIZ_START_NARROW /
+// HORIZ_END_NARROW in Scene.tsx so the orbs settle to their close pose at the
+// same scroll point the avatar reaches the heading.
+const RADIUS_START = 0.41 / 31.25;
+const RADIUS_END = 0.82 / 31.25;
+const RADIUS_START_NARROW = 0;
+const RADIUS_END_NARROW = 0.01;
+const NARROW_MAX_PX = 900;
+const ORBIT_RADIUS_NARROW = 1.3;
+
 export function logoPosition(
   index: number,
   total: number,
   progress: number,
   time: number,
 ): [number, number, number] {
-  const radius = lerp(4, 1.5, smoothstep(0.41 / 31.25, 0.82 / 31.25, progress));
+  const isNarrow = typeof window !== 'undefined' && window.innerWidth < NARROW_MAX_PX;
+  const rStart = isNarrow ? RADIUS_START_NARROW : RADIUS_START;
+  const rEnd = isNarrow ? RADIUS_END_NARROW : RADIUS_END;
+  const minRadius = isNarrow ? ORBIT_RADIUS_NARROW : 1.5;
+  const radius = lerp(4, minRadius, smoothstep(rStart, rEnd, progress));
   const idleSpin = time * 0.08;
   const scrollSpin = progress * 2;
   const angle = (index / total) * Math.PI * 2 + idleSpin + scrollSpin;
