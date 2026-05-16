@@ -113,11 +113,16 @@ export function Hero() {
   return (
     <section
       aria-labelledby='hero-h1'
-      className='relative overflow-hidden h-[70vh] sm:h-[85vh] md:h-screen'
+      className='relative overflow-hidden h-[82vh] sm:h-[85vh] md:h-screen'
     >
       <div
+        data-avatar-anchor='hero'
+        aria-hidden='true'
+        className='pointer-events-none absolute left-1/2 top-[33vh] md:top-1/2 size-0'
+      />
+      <div
         ref={wrapperRef}
-        className='relative flex flex-col items-center justify-start w-full h-full pt-[25vh] sm:pt-[18vh] md:pt-[10vh]'
+        className='relative flex flex-col items-center justify-start w-full h-full pt-[20vh] sm:pt-[18vh] md:pt-[10vh]'
         style={{ transformOrigin: '50% 50%' }}
       >
         {/* Upper block — cream fill, navy text, rotated +3deg */}

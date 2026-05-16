@@ -4,20 +4,16 @@ import { useGLTF } from '@react-three/drei';
 import { Color, MathUtils, MeshStandardMaterial } from 'three';
 import type { Group, Material, Mesh } from 'three';
 import { useScrollStore } from '../store/useScrollStore';
-import { smoothstep } from './lib/math';
 
 const ABOUT_YAW = Math.PI / 5;
+// The GLB's origin sits near the avatar's feet. Shift the mesh down so its
+// visual centre (torso) aligns with the parent group's origin — then the
+// scene anchor positions the visible avatar, not a point below it. Exported
+// so the Orbit can apply the same offset and stay co-centred with the avatar.
+export const VISUAL_CENTER_OFFSET_Y = -0.9;
 // Avatar fades in just before text starts (text begins at 0.5 s)
 const FADE_START = 0.2;
 const FADE_END = 1.0;
-// Yaw ramp range — viewport-aware so the avatar finishes its turn-in at the
-// same scroll point as the horizontal translation in Scene.tsx. Keep the
-// narrow values in sync with HORIZ_START_NARROW / HORIZ_END_NARROW there.
-const YAW_START = 0.41 / 31.25;
-const YAW_END = 0.82 / 31.25;
-const YAW_START_NARROW = 0;
-const YAW_END_NARROW = 0.01;
-const NARROW_MAX_PX = 900;
 
 export function Avatar() {
   const groupRef = useRef<Group>(null);
@@ -58,11 +54,7 @@ export function Avatar() {
     }
 
     group.position.y = Math.sin(t * 0.6) * 0.05;
-    const progress = useScrollStore.getState().progress;
-    const isNarrow = window.innerWidth < NARROW_MAX_PX;
-    const yawStart = isNarrow ? YAW_START_NARROW : YAW_START;
-    const yawEnd = isNarrow ? YAW_END_NARROW : YAW_END;
-    const yawTarget = smoothstep(yawStart, yawEnd, progress) * ABOUT_YAW;
+    const yawTarget = useScrollStore.getState().avatarBlend * ABOUT_YAW;
     group.rotation.y = MathUtils.damp(group.rotation.y, yawTarget, 4, delta);
   });
 
@@ -70,6 +62,7 @@ export function Avatar() {
     <group ref={groupRef} dispose={null}>
       <mesh
         ref={meshRef}
+        position={[0, VISUAL_CENTER_OFFSET_Y, 0]}
         castShadow
         receiveShadow
         geometry={nodes.mesh_0.geometry}

@@ -24,10 +24,10 @@ Section heights in viewport-units: Hero=1, About=1, **Notebook=6.25** (pinned in
 
 | Range | Section | What happens in 3D |
 |---|---|---|
-| 0.000–0.013 | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered + idle breathing, per-logo colored point lights tint the avatar as they pass |
-| 0.013–0.026 | Hero → About | Avatar + orbit anchor drifts left toward x ≈ −2.6, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5, scroll layers velocity on top of the idle drift |
-| 0.027 | About pin engages | Anchor's world-Y begins tracking scroll so the avatar appears glued to About in document space |
-| 0.027–0.064 | About → Notebook | Avatar scrolls off-screen above with About; orbit fades / silences |
+| Hero state | Hero | Orbit r=4 with autonomous slow drift (~80s/rev), avatar centered on `[data-avatar-anchor="hero"]` div + idle breathing, per-logo colored point lights tint the avatar as they pass |
+| Hero → About | Hero → About | Avatar + orbit anchor lerps from the hero anchor div to the about anchor div, avatar yaws 0 → ~36°, orbit shrinks 4 → 1.5. Blend `t` is driven by the about div's on-screen Y, **not** global scroll — published to `useScrollStore.avatarBlend` |
+| About settled | About | Anchor follows `[data-avatar-anchor="about"]` div in document space — the avatar tracks its bounding rect so it scrolls off-screen upward with About automatically |
+| 0.064–0.264 | About → Notebook (continued) | About div scrolls upward out of viewport; avatar follows it off-screen for free (no special pin math) |
 | 0.064–0.264 | Notebook | 3D canvas is silent. Section is fully HTML/CSS and uses `useScrollStore.notebookProgress` (section-local, 0..1) for its own choreography |
 | 0.264–0.296 | Skills | 3D canvas idle. Section is HTML/CSS only: `CircuitBackground` PCB pattern + scattered `Microchip` cards. Avatar stays pinned off-screen. |
 | 0.296–0.392 | Knowledge | 3D canvas hosts second yoga avatar; section drives its own choreography via `useScrollStore.knowledgeProgress` |
@@ -35,7 +35,7 @@ Section heights in viewport-units: Hero=1, About=1, **Notebook=6.25** (pinned in
 | 0.488–0.968 | **Experience** | 3D canvas silent. Section is HTML/CSS only — three company wrappers (ISO-Gruppe, Medienwerft, MERENTIS) each containing `position: sticky` project cards that stack on top of each other as the user scrolls. CategoryTags fan out via progressive `padding-left`. No section-local progress field — pure CSS. |
 | 0.968–1.000 | **Contact** | Camera pulls back, gentle drift. Section is HTML/CSS only — fixed 750px height. Scroll-driven truck reveal: `contactProgress` (0..1) drives `clip-path` on the `<h2>` and `translateX` on `minime-truck`. Three mini-me images: coffee (`top: -192px` above section edge), truck (inline in headline row), programming (in-flow between CTAs and footer text, `-scale-x-100`). |
 
-The pin is implicit: a single `smoothstep(0.41/31.25, 0.82/31.25, progress)` drives both the leftward translate and the yaw. Smoothstep clamps at 1.0, so anchors past About-centre stay at their settled position with no extra logic.
+Avatar position is **DOM-anchor-driven**, not global-progress-driven. Two zero-size hidden `<div data-avatar-anchor="hero"|"about">` markers are placed by CSS in [Hero.tsx](Hero.tsx) and [About.tsx](About.tsx). Each frame [Scene.tsx](../scene/Scene.tsx) measures both rects, projects them via `rectToWorld()` ([../scene/lib/projectAnchor.ts](../scene/lib/projectAnchor.ts)), and lerps the avatar's world position between them. The blend `t = smoothstep(vh, vh × 0.3, aboutCenterFromTop)` is derived from the About anchor's on-screen Y — the avatar reaches its final pose when that div has scrolled to 30% from the viewport bottom. `t` is published to `useScrollStore.avatarBlend` so [Avatar.tsx](../scene/Avatar.tsx) can drive yaw from the same signal. Past `t = 1` the avatar tracks the about div directly; because the div is in document flow, it scrolls upward with the page and the avatar leaves the viewport automatically — no `pxPastAboutCenter` pin math required. **Tuning the avatar landing spot on a new screen size = editing the about anchor div's Tailwind classes, not Scene.tsx.**
 
 ## Section-local progress
 
