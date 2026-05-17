@@ -15,6 +15,7 @@ import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { ViewportIndicator } from './components/ViewportIndicator';
 import { useT } from './i18n/useT';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
       </main>
 
       {import.meta.env.DEV && <ScrollLogger />}
+      <ViewportIndicator />
     </>
   );
 }
