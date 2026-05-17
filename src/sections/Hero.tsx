@@ -107,7 +107,9 @@ export function Hero() {
     };
 
     apply(useScrollStore.getState().progress);
-    return useScrollStore.subscribe((state) => apply(state.progress));
+    return useScrollStore.subscribe((state) => {
+      apply(state.progress);
+    });
   }, []);
 
   return (
@@ -118,7 +120,7 @@ export function Hero() {
       <div
         data-avatar-anchor='hero'
         aria-hidden='true'
-        className='pointer-events-none absolute left-1/2 top-[33dvh] md:top-1/2 size-0'
+        className='pointer-events-none absolute left-1/2 top-[38dvh] md:top-1/2 size-0'
       />
       <div
         ref={wrapperRef}

@@ -22,6 +22,9 @@ export const PHASE = {
   FINDER_HOLD_END: 0.3,
   FINDER_OUT_END: 0.36,
 
+  TERMINAL_OPEN_START: 0.32,
+  TERMINAL_OPEN_END: 0.36,
+
   SCALE_START: 0.36,
   SCALE_END: 0.46,
 
@@ -46,4 +49,11 @@ export const SCREEN_RECT = {
   topPct: 8,
   widthPct: 64,
   heightPct: 48,
+} as const;
+
+export const MEDIA_SCREEN_RECT = {
+  leftPct: 16,
+  topPct: 7,
+  widthPct: 68,
+  heightPct: 70,
 } as const;

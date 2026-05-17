@@ -13,6 +13,13 @@ export function Skills() {
     const target = circuitRef.current;
     if (!stage || !target) return;
 
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    if (coarse) {
+      target.style.setProperty('--mx', '-9999px');
+      target.style.setProperty('--my', '-9999px');
+      return;
+    }
+
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
       const rect = stage.getBoundingClientRect();

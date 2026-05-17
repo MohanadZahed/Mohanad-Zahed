@@ -12,6 +12,7 @@ import {
   SMALL_NOTEBOOK_WIDTH_PX,
 } from './notebook.constants';
 import { LaptopScreenWords } from './LaptopScreenWords';
+import { LaptopScreenMedia } from './LaptopScreenMedia';
 import { FinderBox } from './FinderBox';
 import { useT } from '../../i18n/useT';
 
@@ -194,6 +195,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
       </div>
 
       <div style={notebookWrapperStyle}>
+        <LaptopScreenMedia progress={progress} />
         <img
           src={NOTEBOOK_SRC}
           alt=''
@@ -205,6 +207,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
             objectFit: 'contain',
             display: 'block',
             userSelect: 'none',
+            position: 'relative',
           }}
         />
         {scaleT > 0.6 && <LaptopScreenWords progress={progress} />}

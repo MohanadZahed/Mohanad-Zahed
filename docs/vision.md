@@ -70,13 +70,14 @@ The `0.1` lerp factor is responsible for ~40% of how good the motion feels. Keep
 
 | Sub-progress | What happens |
 | --- | --- |
-| 0.00–0.10 | Title `elevate your system` and notebook image enter the viewport together; both translate upward as the user scrolls. By 0.10 the notebook reaches the vertical centre of the viewport and pins. |
+| 0.00–0.10 | Title `elevate your system` and notebook image enter the viewport together; both translate upward as the user scrolls. By 0.10 the notebook reaches the vertical centre of the viewport and pins. A muted, looping `<video>` (`/videos/notebook-video.{webm,mp4}`) sits *behind* the laptop image inside `SCREEN_RECT` and plays through the transparent screen cut-out — so the laptop feels alive the moment it lands. |
 | 0.12–0.18 | Two macOS-Finder-style window boxes (red/yellow/green dots, black body) ease up from below the viewport to flank the notebook on the left and right. |
 | 0.16–0.28 | `Typewriter` fills the finder box lines (`context.md` / `notes.md`) **scroll-driven**: each box maps `[FINDER_TYPING_START=0.16, FINDER_TYPING_END=0.28]` to 0..1 and slices that across its `n` lines (line `i` types over `[i/n, (i+1)/n]`). Characters appear and disappear in lockstep with scroll — typing starts while the boxes are still sliding in (0.12–0.18) and finishes while they hold. |
 | 0.28–0.30 | Finder boxes hold fully typed. |
 | 0.30–0.36 | Finder boxes ease out off the top of the viewport. |
-| 0.36–0.46 | Notebook **scales** from small → fills the viewport (`width: min(100vw, 2000px)`, height keeps aspect, centred). Feels like the user's screen has been replaced by the laptop's screen. |
-| 0.46–0.55 | "**plan**" types into the laptop screen — `Typewriter` in scroll-driven mode over `PLAN_TYPE_IN = [0.46, 0.49]`, then holds to `0.53`, fades to `0.55`. |
+| 0.32–0.36 | A black "terminal" rectangle scales `0 → 1` out of the screen's bottom-right corner (`transformOrigin: bottom right`, driven by `smoothstep(TERMINAL_OPEN_START=0.32, TERMINAL_OPEN_END=0.36, p)`), covering the looping video by the time scaling begins. Once fully covered, the video element is `pause()`d. The rectangle lives inside the notebook wrapper sized in `%` of `SCREEN_RECT`, so it scales with the laptop image for free in the next phase. |
+| 0.36–0.46 | Notebook **scales** from small → fills the viewport (`width: min(100vw, 2000px)`, height keeps aspect, centred). Feels like the user's screen has been replaced by the laptop's screen. The black terminal rectangle is now full-size and scales up with the wrapper. |
+| 0.46–0.55 | "**plan**" types into the laptop screen — `Typewriter` in scroll-driven mode over `PLAN_TYPE_IN = [0.46, 0.49]`, then holds to `0.53`, fades to `0.55`. Now reads as text typed into the black terminal. |
 | 0.55–0.64 | "**build**" — same pattern, types over `[0.55, 0.58]`, holds to `0.62`, fades to `0.64`. |
 | 0.64–0.73 | "**improve**" — types over `[0.64, 0.67]`, holds to `0.71`, fades to `0.73`. |
 | 0.73–0.83 | Notebook image lifts off the top of the viewport in ~1 viewport of scroll. |

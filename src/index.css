@@ -243,17 +243,10 @@
 }
 .circuit-frame__trace {
   fill: none;
-  stroke: rgb(255 255 255 / 0.5);
+  stroke: var(--cat-color);
   stroke-width: 1;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition:
-    stroke 320ms ease,
-    filter 320ms ease;
-}
-.circuit-frame:hover .circuit-frame__trace,
-.circuit-frame:focus-within .circuit-frame__trace {
-  stroke: var(--cat-color);
   filter: drop-shadow(0 0 4px var(--cat-color))
     drop-shadow(0 0 10px color-mix(in srgb, var(--cat-color) 50%, transparent));
 }
@@ -263,22 +256,10 @@
   stroke-width: 1;
   stroke-linecap: round;
   stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  filter: drop-shadow(0 0 4px var(--cat-color));
-  transition: stroke-dashoffset 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.circuit-frame:hover .circuit-frame__spark,
-.circuit-frame:focus-within .circuit-frame__spark {
   stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 4px var(--cat-color));
 }
 .circuit-frame__via {
-  fill: rgb(255 255 255 / 0.2);
-  transition:
-    fill 320ms ease,
-    filter 320ms ease;
-}
-.circuit-frame:hover .circuit-frame__via,
-.circuit-frame:focus-within .circuit-frame__via {
   fill: var(--cat-color);
   filter: drop-shadow(0 0 4px var(--cat-color));
 }
@@ -297,30 +278,16 @@
   height: 7px;
   border-radius: 999px;
   background: var(--cat-color);
-  box-shadow: 0 0 3px color-mix(in srgb, var(--cat-color) 50%, transparent);
-  opacity: 0.6;
-  flex: none;
-  transition:
-    opacity 320ms ease,
-    box-shadow 320ms ease;
-}
-.circuit-frame:hover .circuit-frame__dot,
-.circuit-frame:focus-within .circuit-frame__dot {
-  opacity: 1;
   box-shadow:
     0 0 6px var(--cat-color),
     0 0 12px color-mix(in srgb, var(--cat-color) 60%, transparent);
+  flex: none;
 }
 .circuit-frame__label {
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 12px;
-  color: rgb(244 244 245 / 0.65);
-  transition: color 320ms ease;
-}
-.circuit-frame:hover .circuit-frame__label,
-.circuit-frame:focus-within .circuit-frame__label {
   color: rgb(244 244 245 / 1);
 }
 
@@ -328,12 +295,7 @@
   .chip,
   .chip__cat-dot,
   .chip__label,
-  .chip__bar-fill,
-  .circuit-frame__trace,
-  .circuit-frame__spark,
-  .circuit-frame__via,
-  .circuit-frame__dot,
-  .circuit-frame__label {
+  .chip__bar-fill {
     transition: none;
   }
 }
