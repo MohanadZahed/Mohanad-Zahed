@@ -4,9 +4,8 @@ import { Typewriter } from '../../components/Typewriter';
 import { useScrollStore } from '../../store/useScrollStore';
 import {
   FINDER_BOX_HEIGHT_PX,
+  FINDER_BOX_RANGES,
   FINDER_BOX_WIDTH_PX,
-  FINDER_TYPING_END,
-  FINDER_TYPING_START,
   FULL_NOTEBOOK_MAX_WIDTH_PX,
   PHASE,
   SMALL_NOTEBOOK_WIDTH_PX,
@@ -27,12 +26,16 @@ const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.054;
 const TITLE_BOTTOM_APPROX_PX = 180;
 const NOTEBOOK_INITIAL_GAP_PX = 250;
 
+const MOBILE_BREAKPOINT_PX = 768;
+const EDGE_MARGIN_PX = 12;
+const DESKTOP_EDGE_MARGIN_PX = 24;
+
+function clamp01(n: number) {
+  return Math.max(0, Math.min(1, n));
+}
+
 export function NotebookStage({ progress }: NotebookStageProps) {
   const { t, tArray, locale } = useT();
-  const LEFT_FINDER_LINES = tArray('notebook.leftFinder.lines');
-  const RIGHT_FINDER_LINES = tArray('notebook.rightFinder.lines');
-  const LEFT_FINDER_TITLE = t('notebook.leftFinder.fileName');
-  const RIGHT_FINDER_TITLE = t('notebook.rightFinder.fileName');
   const TITLE_TEXT = t('notebook.title');
   const globalProgress = useScrollStore((s) => s.progress);
   const titleStarted = globalProgress >= TITLE_TYPEWRITER_GLOBAL_PROGRESS;
@@ -60,7 +63,6 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const finalWidth =
     fullHeightForWidth > viewport.h ? Math.min(widthIfHeightCapped, fullWidth) : fullWidth;
 
-  // Shrink the "small" notebook on narrow viewports so it doesn't crowd the finder boxes.
   const smallNotebookWidth = Math.min(SMALL_NOTEBOOK_WIDTH_PX, viewport.w * 0.72);
   const scaleT = smoothstep(PHASE.SCALE_START, PHASE.SCALE_END, progress);
   const currentWidth = smallNotebookWidth + (finalWidth - smallNotebookWidth) * scaleT;
@@ -73,39 +75,25 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const handoff = smoothstep(PHASE.HANDOFF_START, PHASE.HANDOFF_END, progress);
   const handoffExitPx = handoff * viewport.h;
 
-  const finderEnterT = smoothstep(PHASE.FINDER_IN_START, PHASE.FINDER_IN_END, progress);
-  const finderExitT = smoothstep(PHASE.FINDER_HOLD_END, PHASE.FINDER_OUT_END, progress);
-
-  // Responsive finder box dimensions: shrink below ~900px viewport.
-  const finderBoxWidth = Math.min(
-    FINDER_BOX_WIDTH_PX,
-    Math.max(180, (viewport.w - smallNotebookWidth - 48) / 2),
-  );
-  const finderBoxHeight =
-    finderBoxWidth < FINDER_BOX_WIDTH_PX
+  const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
+  const finderBoxWidth = isMobile
+    ? Math.min(268, viewport.w - 32)
+    : Math.min(
+        FINDER_BOX_WIDTH_PX,
+        Math.max(220, (viewport.w - smallNotebookWidth - 48) / 2),
+      );
+  const finderBoxHeight = isMobile
+    ? finderBoxWidth * 0.55
+    : finderBoxWidth < FINDER_BOX_WIDTH_PX
       ? FINDER_BOX_HEIGHT_PX * (finderBoxWidth / FINDER_BOX_WIDTH_PX) + 40
       : FINDER_BOX_HEIGHT_PX;
 
-  const finderStartTopPx = viewport.h + 80;
-  const finderCentreTopPx = viewport.h / 2 - finderBoxHeight / 2;
-  const finderExitTopPx = -finderBoxHeight - 80;
+  const finderStartTopPx = viewport.h + finderBoxHeight / 2 + 40;
+  const finderExitTopPx = -finderBoxHeight - 40;
 
-  const finderTopPx = lerp(
-    lerp(finderStartTopPx, finderCentreTopPx, finderEnterT),
-    finderExitTopPx,
-    finderExitT,
-  );
-
-  const finderColumnGapPx = Math.max(16, smallNotebookWidth + 24);
-  const showFinder = progress >= PHASE.FINDER_IN_START && progress <= PHASE.FINDER_OUT_END + 0.01;
-
-  const finderScrollProgress = Math.max(
-    0,
-    Math.min(
-      1,
-      (progress - FINDER_TYPING_START) /
-        Math.max(0.0001, FINDER_TYPING_END - FINDER_TYPING_START),
-    ),
+  const desktopSideOffsetPx = Math.max(
+    DESKTOP_EDGE_MARGIN_PX,
+    viewport.w / 2 - smallNotebookWidth / 2 - finderBoxWidth - DESKTOP_EDGE_MARGIN_PX,
   );
 
   const titleWrapperStyle: CSSProperties = {
@@ -133,19 +121,6 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     width: currentWidth,
     height: currentHeight,
     willChange: 'width, height, transform',
-  };
-
-  const finderRowStyle: CSSProperties = {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: finderTopPx,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: finderColumnGapPx,
-    pointerEvents: 'none',
-    visibility: showFinder ? 'visible' : 'hidden',
   };
 
   return (
@@ -177,22 +152,43 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         />
       </div>
 
-      <div style={finderRowStyle}>
-        <FinderBox
-          title={LEFT_FINDER_TITLE}
-          lines={LEFT_FINDER_LINES}
-          width={finderBoxWidth}
-          height={finderBoxHeight}
-          scrollProgress={finderScrollProgress}
-        />
-        <FinderBox
-          title={RIGHT_FINDER_TITLE}
-          lines={RIGHT_FINDER_LINES}
-          width={finderBoxWidth}
-          height={finderBoxHeight}
-          scrollProgress={finderScrollProgress}
-        />
-      </div>
+      {FINDER_BOX_RANGES.map(([rangeStart, rangeEnd], i) => {
+        const span = Math.max(0.0001, rangeEnd - rangeStart);
+        const travelT = clamp01((progress - rangeStart) / span);
+        const topPx = lerp(finderStartTopPx, finderExitTopPx, travelT);
+        // Typing completes at the window midpoint (vertical centre of viewport).
+        const typingScrollProgress = clamp01((progress - rangeStart) / (span * 0.5));
+        const visible = progress >= rangeStart - 0.01 && progress <= rangeEnd + 0.01;
+        const sideIsLeft = i % 2 === 0;
+
+        const wrapperStyle: CSSProperties = {
+          position: 'absolute',
+          top: topPx - finderBoxHeight / 2,
+          width: finderBoxWidth,
+          height: finderBoxHeight,
+          pointerEvents: 'none',
+          visibility: visible ? 'visible' : 'hidden',
+          zIndex: 30,
+          ...(sideIsLeft
+            ? { left: isMobile ? EDGE_MARGIN_PX : desktopSideOffsetPx }
+            : { right: isMobile ? EDGE_MARGIN_PX : desktopSideOffsetPx }),
+        };
+
+        const fileName = t(`notebook.finderBoxes.${i}.fileName`);
+        const lines = tArray(`notebook.finderBoxes.${i}.lines`);
+
+        return (
+          <div key={i} style={wrapperStyle}>
+            <FinderBox
+              title={fileName}
+              lines={lines}
+              width={finderBoxWidth}
+              height={finderBoxHeight}
+              scrollProgress={typingScrollProgress}
+            />
+          </div>
+        );
+      })}
 
       <div style={notebookWrapperStyle}>
         <LaptopScreenMedia progress={progress} />

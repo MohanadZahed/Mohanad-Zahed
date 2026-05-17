@@ -18,14 +18,20 @@
   },
   "notebook": {
     "title": "elevate your system",
-    "leftFinder": {
-      "fileName": "context.md",
-      "lines": ["_Modular design", "_Value-focused delivery", "_Stakeholder alignment"]
-    },
-    "rightFinder": {
-      "fileName": "notes.md",
-      "lines": ["_Rapid delivery", "_High-quality output", "_Scalable solutions"]
-    }
+    "finderBoxes": [
+      {
+        "fileName": "architecture.md",
+        "lines": ["_Modular design", "_Clean architecture", "_Scalable solutions"]
+      },
+      {
+        "fileName": "delivery.md",
+        "lines": ["_Rapid delivery", "_Value-focused delivery", "_Stakeholder alignment"]
+      },
+      {
+        "fileName": "quality.md",
+        "lines": ["_High-quality output", "_Best practices driven", "_Performance optimization"]
+      }
+    ]
   },
   "skills": {
     "heading": "Tech Skills",

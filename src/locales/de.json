@@ -18,14 +18,20 @@
   },
   "notebook": {
     "title": "elevate your system",
-    "leftFinder": {
-      "fileName": "context.md",
-      "lines": ["_Modulares Design", "_Wertorientierte Lieferung", "_Stakeholder-Ausrichtung"]
-    },
-    "rightFinder": {
-      "fileName": "notes.md",
-      "lines": ["_Schnelle Lieferung", "_Hochwertige Ergebnisse", "_Skalierbare Lösungen"]
-    }
+    "finderBoxes": [
+      {
+        "fileName": "architecture.md",
+        "lines": ["_Modulares Design", "_Saubere Architektur", "_Skalierbare Lösungen"]
+      },
+      {
+        "fileName": "delivery.md",
+        "lines": ["_Schnelle Lieferung", "_Wertorientierte Lieferung", "_Stakeholder-Ausrichtung"]
+      },
+      {
+        "fileName": "quality.md",
+        "lines": ["_Hochwertige Ergebnisse", "_Best-Practice-orientiert", "_Performance-Optimierung"]
+      }
+    ]
   },
   "skills": {
     "heading": "Tech-Skills",

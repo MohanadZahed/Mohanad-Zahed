@@ -1,9 +1,5 @@
 import type { CSSProperties } from 'react';
 import { Typewriter } from '../../components/Typewriter';
-import {
-  FINDER_LINE_BASE_DELAY_MS,
-  FINDER_LINE_STAGGER_MS,
-} from './notebook.constants';
 
 interface FinderBoxProps {
   title?: string;
@@ -101,7 +97,6 @@ export function FinderBox({
                 start={start}
                 scrollProgress={lineScrollProgress}
                 speed={45}
-                startDelay={FINDER_LINE_BASE_DELAY_MS + i * FINDER_LINE_STAGGER_MS}
                 cursorMode='blink'
                 style={{
                   color: '#e5e5e5',

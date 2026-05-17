@@ -58,6 +58,16 @@ These are the ones that get the floating-logo treatment in the orbit. Pick 10–
 
 **AI**: Claude Code, prompt engineering, LLM integration, token management.
 
+## Notebook finder boxes
+
+Three Finder-style boxes rise sequentially through the notebook interlude. Copy lives in `src/locales/{en,de}.json` under `notebook.finderBoxes[]`. File-name window titles stay verbatim across locales.
+
+| # | Side | File name | Lines (EN) |
+| --- | --- | --- | --- |
+| 0 | left | `architecture.md` | `_Modular design` · `_Clean architecture` · `_Scalable solutions` |
+| 1 | right | `delivery.md` | `_Rapid delivery` · `_Value-focused delivery` · `_Stakeholder alignment` |
+| 2 | left | `quality.md` | `_High-quality output` · `_Best practices driven` · `_Performance optimization` |
+
 ## Skills board — microchip section
 
 Roster lives in [`src/sections/skills/skills.data.ts`](../src/sections/skills/skills.data.ts). Categories: `frontend`, `backend`, `ai`, `devops`. General-purpose tooling (ESLint / StyleLint / Prettier / Husky / NPM / IDE / OS / collaboration apps) is intentionally excluded — the section showcases technical depth, not tool inventory.
