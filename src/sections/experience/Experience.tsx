@@ -10,7 +10,7 @@ export function Experience() {
       aria-labelledby='experience-h2'
       className='experience-section relative'
     >
-      <div className='mx-auto max-w-[1472px] px-6 pb-6 pt-24 md:pt-32'>
+      <div className='mx-auto max-w-[1472px] px-4 pb-6 pt-20 sm:px-6 sm:pt-24 md:pt-32'>
         <p className='font-mono text-xs uppercase tracking-[0.32em] text-secondary'>
           {t('experience.eyebrow')}
         </p>

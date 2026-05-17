@@ -64,7 +64,7 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
           top: '12vh',
           left: '50%',
           transform: 'translateX(-50%)',
-          fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+          fontSize: 'clamp(1.75rem, 6vw, 3.5rem)',
           fontWeight: 600,
           color: 'var(--knowledge-ink, rgba(244, 244, 245, 0.95))',
           letterSpacing: '-0.02em',

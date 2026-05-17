@@ -1,8 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Typewriter } from '../../components/Typewriter';
 import {
-  FINDER_BOX_HEIGHT_PX,
-  FINDER_BOX_WIDTH_PX,
   FINDER_LINE_BASE_DELAY_MS,
   FINDER_LINE_STAGGER_MS,
 } from './notebook.constants';
@@ -11,6 +9,8 @@ interface FinderBoxProps {
   title?: string;
   lines?: readonly string[];
   start?: boolean;
+  width?: number;
+  height?: number;
   /**
    * When provided, typing across all lines is driven by scroll (0..1):
    * line `i` sees `clamp01(scrollProgress * lines.length - i)`. Overrides `start`.
@@ -23,17 +23,20 @@ export function FinderBox({
   title = '',
   lines,
   start = false,
+  width = 360,
+  height = 260,
   scrollProgress,
   style,
 }: FinderBoxProps) {
   const hasLines = lines && lines.length > 0;
   const lineCount = lines?.length ?? 0;
+  const compact = width < 280;
   return (
     <div
       aria-hidden={hasLines ? undefined : 'true'}
       style={{
-        width: FINDER_BOX_WIDTH_PX,
-        height: FINDER_BOX_HEIGHT_PX,
+        width,
+        height,
         background: '#000',
         borderRadius: 10,
         boxShadow: '0 18px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset',
@@ -80,8 +83,8 @@ export function FinderBox({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          gap: 14,
-          padding: '20px 24px',
+          gap: compact ? 10 : 14,
+          padding: compact ? '14px 16px' : '20px 24px',
         }}
       >
         {hasLines &&
@@ -102,7 +105,7 @@ export function FinderBox({
                 cursorMode='blink'
                 style={{
                   color: '#e5e5e5',
-                  fontSize: 16,
+                  fontSize: compact ? 12 : 16,
                   fontWeight: 500,
                   lineHeight: 1.3,
                   letterSpacing: '-0.01em',

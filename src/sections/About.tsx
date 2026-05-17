@@ -71,10 +71,10 @@ export function About() {
         <div
           className='text-primary w-full max-w-full min-[900px]:ml-[50vw] min-[900px]:max-w-[50vw]'
           style={{
-            paddingLeft: 'clamp(1.5rem, 3vw, 3rem)',
-            paddingRight: 'clamp(1.5rem, 6vw, 6rem)',
-            paddingTop: 'clamp(4rem, 10vh, 8rem)',
-            paddingBottom: 'clamp(4rem, 10vh, 8rem)',
+            paddingLeft: 'clamp(1.25rem, 5vw, 3rem)',
+            paddingRight: 'clamp(1.25rem, 5vw, 6rem)',
+            paddingTop: 'clamp(3rem, 10vh, 8rem)',
+            paddingBottom: 'clamp(3rem, 10vh, 8rem)',
           }}
         >
           <h2
@@ -82,7 +82,7 @@ export function About() {
             ref={headlineRef}
             className='font-bold uppercase'
             style={{
-              fontSize: 'clamp(2rem, 5vw, 4.5rem)',
+              fontSize: 'clamp(1.75rem, 7vw, 4.5rem)',
               lineHeight: 1.05,
               letterSpacing: '-0.05vw',
             }}
@@ -92,18 +92,18 @@ export function About() {
 
           <p
             ref={bodyRef}
-            className='mt-8 leading-relaxed'
+            className='mt-6 leading-relaxed sm:mt-8'
             style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.125rem)' }}
           >
             {BODY}
           </p>
 
-          <ul ref={factsRef} className='mt-8 space-y-3'>
+          <ul ref={factsRef} className='mt-6 space-y-3 sm:mt-8'>
             {FACTS.map((fact) => (
               <li
                 key={fact}
                 className='flex gap-3 leading-relaxed'
-                style={{ fontSize: 'clamp(0.85rem, 0.95vw, 1rem)' }}
+                style={{ fontSize: 'clamp(0.9rem, 0.95vw, 1rem)' }}
               >
                 <span aria-hidden='true' className='select-none font-bold'>
                   ›

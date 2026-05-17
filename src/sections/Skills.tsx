@@ -72,10 +72,10 @@ export function Skills() {
       style={{ '--spot-r': `${SPOTLIGHT_RADIUS}px`, marginTop: '-2000px' } as CSSProperties}
     >
       <CircuitBackground ref={circuitRef} />
-      <header className='relative z-20 px-8 sm:px-16 pt-12 pointer-events-none'>
+      <header className='relative z-20 px-5 sm:px-10 md:px-16 pt-12 pointer-events-none'>
         <h2
           id='skills-h2'
-          className='text-3xl sm:text-4xl font-semibold text-zinc-100 tracking-tight'
+          className='text-2xl sm:text-3xl md:text-4xl font-semibold text-zinc-100 tracking-tight'
         >
           {t('skills.heading')}
         </h2>

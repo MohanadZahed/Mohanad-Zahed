@@ -34,7 +34,7 @@ export function ProjectCard({
   const description = t(`${projectKey}.description`);
   const tasks = tArray(`${projectKey}.tasks`);
   const number = String(index + 1).padStart(2, '0');
-  const isCompactRow = tagPosition.rowIndex >= 1;
+  const isCompactRow = pinned && tagPosition.rowIndex >= 1;
 
   const articleStyle: CSSProperties = pinned
     ? ({
@@ -48,26 +48,38 @@ export function ProjectCard({
       } as CSSProperties)
     : { zIndex: index + 1 };
 
+  const tagRegionStyle: CSSProperties = pinned
+    ? { height: `${tagRegionHeightPx}px` }
+    : { height: '32px' };
+
+  const tagStyle: CSSProperties = pinned
+    ? {
+        top: `${tagPosition.topPx}px`,
+        left: `${tagPosition.leftPx}px`,
+        width: `${tagPosition.widthPx}px`,
+        height: `${tagRegionHeightPx - tagPosition.topPx}px`,
+        fontSize: isCompactRow ? '10px' : '11px',
+        maxWidth: '150px',
+      }
+    : {
+        top: 0,
+        left: 0,
+        height: '32px',
+        fontSize: '11px',
+        paddingLeft: '0.75rem',
+        paddingRight: '0.75rem',
+      };
+
   return (
     <article
       ref={cardRef}
       className='experience-card relative flex flex-col'
       style={articleStyle}
     >
-      <div
-        className='relative w-full shrink-0'
-        style={{ height: `${tagRegionHeightPx}px` }}
-      >
+      <div className='relative w-full shrink-0' style={tagRegionStyle}>
         <div
-          className='experience-card__tag absolute flex items-start overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
-          style={{
-            top: `${tagPosition.topPx}px`,
-            left: `${tagPosition.leftPx}px`,
-            width: `${tagPosition.widthPx}px`,
-            height: `${tagRegionHeightPx - tagPosition.topPx}px`,
-            fontSize: isCompactRow ? '10px' : '11px',
-            maxWidth: '150px',
-          }}
+          className='experience-card__tag absolute flex items-center overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
+          style={tagStyle}
         >
           {project.dateLabel}
         </div>
@@ -80,7 +92,7 @@ export function ProjectCard({
       >
         <div
           ref={contentRef}
-          className={`grid gap-8 px-8 py-8 md:px-12 md:py-10 lg:grid-cols-[1fr_400px] ${
+          className={`grid gap-6 px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10 md:gap-8 lg:grid-cols-[1fr_400px] ${
             pinned ? 'min-h-0 flex-1 overflow-y-auto' : ''
           }`}
           style={
@@ -159,7 +171,7 @@ export function ProjectCard({
           </div>
         </div>
 
-        <div className='shrink-0 border-t border-zinc-200 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 md:px-12'>
+        <div className='shrink-0 border-t border-zinc-200 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 sm:px-8 md:px-12'>
           {t('experience.labels.projectCounter', { number, total: String(total).padStart(2, '0') })}
         </div>
       </div>

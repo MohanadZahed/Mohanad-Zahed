@@ -63,9 +63,8 @@ export function Contact() {
     <section
       ref={sectionRef}
       aria-labelledby='contact-h2'
-      className='relative flex flex-col'
+      className='relative flex flex-col min-h-150 md:min-h-187.5 md:h-187.5'
       style={{
-        height: '750px',
         background:
           'radial-gradient(ellipse at 50% 110%, rgba(0,65,109,0.45) 0%, transparent 65%), linear-gradient(to bottom, #0d1117 0%, #060d16 100%)',
       }}
@@ -73,12 +72,12 @@ export function Contact() {
       <img
         src='/textures/minime-coffee.png'
         alt=''
-        className='absolute left-6 w-32 sm:w-40 md:w-48 pointer-events-none select-none z-100'
-        style={{ top: '-192px' }}
+        className='absolute left-3 sm:left-6 w-20 sm:w-32 md:w-48 pointer-events-none select-none z-100'
+        style={{ top: 'clamp(-192px, -28vw, -80px)' }}
       />
 
       <div className='flex-1 flex items-center justify-center'>
-        <div className='px-8 sm:px-16 max-w-2xl text-center'>
+        <div className='px-5 sm:px-10 md:px-16 max-w-2xl text-center'>
           <div className='flex justify-center'>
             <div ref={rowRef} className='relative inline-block'>
               <h2
@@ -125,7 +124,7 @@ export function Contact() {
         </div>
       </div>
 
-      <footer className='relative z-10 pb-6 px-8 sm:px-16 text-center text-xs text-zinc-500'>
+      <footer className='relative z-10 pb-6 px-5 sm:px-10 md:px-16 text-center text-xs text-zinc-500'>
         <p>{t('contact.copyright')}</p>
         <p className='mt-1'>{t('contact.builtWith')}</p>
       </footer>

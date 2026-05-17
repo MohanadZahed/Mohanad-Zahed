@@ -166,7 +166,7 @@ export function CompanyBlock({ company }: Props) {
     <section
       ref={sectionRef}
       aria-labelledby={`company-${company.id}`}
-      className='experience-company relative mx-auto w-full px-4 md:px-6'
+      className='experience-company relative mx-auto w-full px-3 sm:px-4 md:px-6'
       style={sectionStyle}
     >
       <div
@@ -184,7 +184,7 @@ export function CompanyBlock({ company }: Props) {
           </h3>
 
           <div
-            className='experience-company__header px-6 md:px-10'
+            className='experience-company__header px-4 sm:px-6 md:px-10'
             style={{ minHeight: `${COMPANY_HEADER_HEIGHT_PX}px` }}
           >
             <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-tertiary md:flex-row md:items-baseline md:justify-between md:gap-6'>
@@ -200,7 +200,7 @@ export function CompanyBlock({ company }: Props) {
             className={
               pinned
                 ? 'experience-stack relative min-h-0 flex-1 overflow-hidden rounded-b-xl px-10 pb-10 pt-6'
-                : 'experience-stack flex flex-col gap-y-[4vh] px-6 pb-6 pt-6'
+                : 'experience-stack flex flex-col gap-y-[4vh] px-3 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6'
             }
           >
             {company.projects.map((project, index) => (

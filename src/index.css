@@ -133,6 +133,19 @@
   padding: 18px 18px;
 }
 
+@media (max-width: 639px) {
+  .chip {
+    padding: 10px 10px;
+    font-size: 12px;
+  }
+  .chip--md {
+    padding: 11px 11px;
+  }
+  .chip--lg {
+    padding: 12px 12px;
+  }
+}
+
 .chip__pins {
   position: absolute;
   left: 18%;

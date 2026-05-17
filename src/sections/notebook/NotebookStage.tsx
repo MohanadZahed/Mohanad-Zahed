@@ -4,6 +4,7 @@ import { Typewriter } from '../../components/Typewriter';
 import { useScrollStore } from '../../store/useScrollStore';
 import {
   FINDER_BOX_HEIGHT_PX,
+  FINDER_BOX_WIDTH_PX,
   FINDER_TYPING_END,
   FINDER_TYPING_START,
   FULL_NOTEBOOK_MAX_WIDTH_PX,
@@ -58,8 +59,10 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const finalWidth =
     fullHeightForWidth > viewport.h ? Math.min(widthIfHeightCapped, fullWidth) : fullWidth;
 
+  // Shrink the "small" notebook on narrow viewports so it doesn't crowd the finder boxes.
+  const smallNotebookWidth = Math.min(SMALL_NOTEBOOK_WIDTH_PX, viewport.w * 0.72);
   const scaleT = smoothstep(PHASE.SCALE_START, PHASE.SCALE_END, progress);
-  const currentWidth = SMALL_NOTEBOOK_WIDTH_PX + (finalWidth - SMALL_NOTEBOOK_WIDTH_PX) * scaleT;
+  const currentWidth = smallNotebookWidth + (finalWidth - smallNotebookWidth) * scaleT;
   const currentHeight = currentWidth / NOTEBOOK_ASPECT;
 
   const initialNotebookTopPx = TITLE_BOTTOM_APPROX_PX + NOTEBOOK_INITIAL_GAP_PX;
@@ -72,9 +75,19 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const finderEnterT = smoothstep(PHASE.FINDER_IN_START, PHASE.FINDER_IN_END, progress);
   const finderExitT = smoothstep(PHASE.FINDER_HOLD_END, PHASE.FINDER_OUT_END, progress);
 
+  // Responsive finder box dimensions: shrink below ~900px viewport.
+  const finderBoxWidth = Math.min(
+    FINDER_BOX_WIDTH_PX,
+    Math.max(180, (viewport.w - smallNotebookWidth - 48) / 2),
+  );
+  const finderBoxHeight =
+    finderBoxWidth < FINDER_BOX_WIDTH_PX
+      ? FINDER_BOX_HEIGHT_PX * (finderBoxWidth / FINDER_BOX_WIDTH_PX) + 40
+      : FINDER_BOX_HEIGHT_PX;
+
   const finderStartTopPx = viewport.h + 80;
-  const finderCentreTopPx = viewport.h / 2 - FINDER_BOX_HEIGHT_PX / 2;
-  const finderExitTopPx = -FINDER_BOX_HEIGHT_PX - 80;
+  const finderCentreTopPx = viewport.h / 2 - finderBoxHeight / 2;
+  const finderExitTopPx = -finderBoxHeight - 80;
 
   const finderTopPx = lerp(
     lerp(finderStartTopPx, finderCentreTopPx, finderEnterT),
@@ -82,7 +95,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     finderExitT,
   );
 
-  const finderColumnGapPx = SMALL_NOTEBOOK_WIDTH_PX + 80;
+  const finderColumnGapPx = Math.max(16, smallNotebookWidth + 24);
   const showFinder = progress >= PHASE.FINDER_IN_START && progress <= PHASE.FINDER_OUT_END + 0.01;
 
   const finderScrollProgress = Math.max(
@@ -155,7 +168,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
           cursorMode='hide'
           className='text-tertiary font-bold uppercase'
           style={{
-            fontSize: 'clamp(2rem, 5vw, 4.5rem)',
+            fontSize: 'clamp(1.75rem, 7vw, 4.5rem)',
             lineHeight: 1.05,
             letterSpacing: '-0.05vw',
             margin: 0,
@@ -167,11 +180,15 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         <FinderBox
           title={LEFT_FINDER_TITLE}
           lines={LEFT_FINDER_LINES}
+          width={finderBoxWidth}
+          height={finderBoxHeight}
           scrollProgress={finderScrollProgress}
         />
         <FinderBox
           title={RIGHT_FINDER_TITLE}
           lines={RIGHT_FINDER_LINES}
+          width={finderBoxWidth}
+          height={finderBoxHeight}
           scrollProgress={finderScrollProgress}
         />
       </div>
