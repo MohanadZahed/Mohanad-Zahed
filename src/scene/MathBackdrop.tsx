@@ -61,8 +61,8 @@ const PROX_NEAR = 0.05;
 const PROX_FAR = 0.9;
 const PUSH_NDC_MAX = 0.06;
 
-const BASE_COLOR = new Color(0.6, 0.6, 0.7);
-const GLOW_COLOR = new Color('#fff1d6');
+const BASE_COLOR = new Color('#38bdf8');
+const GLOW_COLOR = new Color('#bae6fd');
 
 type PointerRef = MutableRefObject<{ x: number; y: number; seen: boolean }>;
 
@@ -123,7 +123,6 @@ function MathSvg({
       transparent: true,
       depthWrite: false,
       toneMapped: false,
-      blending: AdditiveBlending,
       color: BASE_COLOR.clone(),
       opacity: 0,
     });

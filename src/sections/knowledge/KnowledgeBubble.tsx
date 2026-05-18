@@ -89,7 +89,7 @@ function BubbleVisual({
           fontSize: 12,
           letterSpacing: '0.05em',
           textTransform: 'uppercase',
-          color: 'var(--color-primary)',
+          color: 'var(--color-tertiary)',
           lineHeight: 1.2,
         }}
       >
