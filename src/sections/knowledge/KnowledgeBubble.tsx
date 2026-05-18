@@ -74,12 +74,12 @@ function BubbleVisual({
     <div
       style={{
         ...style,
-        borderRadius: 60,
-        backdropFilter: 'blur(12px) saturate(150%)',
-        WebkitBackdropFilter: 'blur(12px) saturate(150%)',
-        background: 'hsla(204, 100%, 21%, 0.55)',
-        border: '1px solid hsla(204, 80%, 45%, 0.35)',
-        boxShadow: `0 0 24px hsla(204, 100%, 21%, 0.20), inset 0 0 14px hsla(204, 100%, 60%, 0.08), 0 0 18px ${tintColor}33`,
+        background: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: 16,
+        boxShadow: `0 4px 30px rgba(0, 0, 0, 0.1), 0 0 18px ${tintColor}33`,
+        backdropFilter: 'blur(5px)',
+        WebkitBackdropFilter: 'blur(5px)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
         padding: '10px 16px',
         whiteSpace: 'nowrap',
       }}
@@ -89,7 +89,7 @@ function BubbleVisual({
           fontSize: 12,
           letterSpacing: '0.05em',
           textTransform: 'uppercase',
-          color: 'var(--color-tertiary)',
+          color: 'var(--color-primary)',
           lineHeight: 1.2,
         }}
       >
