@@ -5,6 +5,7 @@ import type { Group } from 'three';
 import { Avatar, VISUAL_CENTER_OFFSET_Y } from './Avatar';
 import { Orbit } from './Orbit';
 import { YogaAvatar } from './YogaAvatar';
+import { MathBackdrop } from './MathBackdrop';
 import { useScrollStore } from '../store/useScrollStore';
 import { smoothstep } from './lib/math';
 import { rectToWorld } from './lib/projectAnchor';
@@ -78,6 +79,7 @@ export function Scene() {
       </group>
 
       <Suspense fallback={null}>
+        <MathBackdrop />
         <YogaAvatar />
       </Suspense>
     </>
