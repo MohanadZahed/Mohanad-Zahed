@@ -18,6 +18,7 @@ import {
   KNOWLEDGE_CENTER_PROGRESS,
   KNOWLEDGE_PIN_END_PROGRESS,
   KNOWLEDGE_TOP_PROGRESS,
+  PHASE,
 } from '../sections/knowledge/knowledge.constants';
 
 // Five SVGs rendered left-to-right along the upper half of an ellipse behind
@@ -46,9 +47,6 @@ const HALO_SCALE = 1.7;
 const HALO_Z_OFFSET = -0.05;
 const HALO_OPACITY_MAX = 0.35;
 const HALO_COLOR = new Color('#38bdf8');
-
-const OPACITY_DIM = 0.0;
-const OPACITY_BRIGHT = 1.0;
 
 const IDLE_ROT_MAX_RAD = (Math.PI / 180) * 25;
 const IDLE_FLOAT_AMP = 0.22;
@@ -161,6 +159,7 @@ function MathSvg({
     const t = state.clock.elapsedTime;
     const store = useScrollStore.getState();
     const globalProgress = store.progress;
+    const expand = smoothstep(PHASE.BUBBLES_START, PHASE.BUBBLES_HOLD, store.knowledgeProgress);
 
     const visible =
       globalProgress >= KNOWLEDGE_TOP_PROGRESS && globalProgress < KNOWLEDGE_BOTTOM_PROGRESS;
@@ -190,9 +189,11 @@ function MathSvg({
       : 1 + Math.sin(t * IDLE_SCALE_SPEED + phase * 1.3) * IDLE_SCALE_AMP;
 
     // Rest anchor (before cursor push). Proximity is measured against this so
-    // the shape doesn't chase itself.
-    const restX = anchorX;
-    const restY = anchorY + avatarY + idleY;
+    // the shape doesn't chase itself. The arc collapses to (0, ARC_CENTER_Y)
+    // when expand=0 (start of Knowledge) and reaches its full anchor at expand=1
+    // — driven in lockstep with the KnowledgeBackground disc expansion.
+    const restX = anchorX * expand;
+    const restY = MathUtils.lerp(ARC_CENTER_Y, anchorY, expand) + avatarY + idleY;
 
     let prox = 0;
     let pushX = 0;
@@ -214,7 +215,10 @@ function MathSvg({
 
     const targetX = restX + pushX;
     const targetY = restY + pushY;
-    const targetOpacity = MathUtils.lerp(OPACITY_DIM, OPACITY_BRIGHT, prox);
+    // At rest the SVGs sit at 0.3 once fully expanded; cursor proximity
+    // lifts them toward 1.0 while preserving the colour-glow lerp below.
+    const REST_OPACITY = 0.3;
+    const targetOpacity = expand * (REST_OPACITY + (1 - REST_OPACITY) * prox);
 
     mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 4, delta);
     mesh.position.y = MathUtils.damp(mesh.position.y, targetY, 4, delta);
@@ -237,7 +241,7 @@ function MathSvg({
       halo.scale.set(nextScale, nextScale, 1);
       haloMaterial.opacity = MathUtils.damp(
         haloMaterial.opacity,
-        HALO_OPACITY_MAX * prox,
+        HALO_OPACITY_MAX * prox * expand,
         5,
         delta,
       );
