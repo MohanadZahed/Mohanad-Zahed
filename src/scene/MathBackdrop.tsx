@@ -21,14 +21,16 @@ import {
   PHASE,
 } from '../sections/knowledge/knowledge.constants';
 
-// Five SVGs rendered left-to-right along the upper half of an ellipse behind
+// Seven SVGs rendered left-to-right along the upper half of an ellipse behind
 // the yoga avatar. Pixel dimensions drive plane aspect-correction only.
 const SVG_ENTRIES = [
   { url: '/textures/math1.svg', w: 832, h: 1280 },
   { url: '/textures/math2.svg', w: 1536, h: 1024 },
   { url: '/textures/math3.svg', w: 1024, h: 1024 },
   { url: '/textures/math4.svg', w: 1024, h: 1024 },
-  { url: '/textures/math5.svg', w: 1280, h: 832 },
+  { url: '/textures/math5.svg', w: 1024, h: 1024 },
+  { url: '/textures/math6.svg', w: 1024, h: 1024 },
+  { url: '/textures/math7.svg', w: 1280, h: 832 },
 ] as const;
 const TOTAL = SVG_ENTRIES.length;
 const URLS = SVG_ENTRIES.map((e) => e.url);
@@ -39,8 +41,7 @@ const ARC_RADIUS_Y = 1.6;
 const ARC_CENTER_Y = 0.4;
 const ARC_Z = -0.6;
 
-// Each plane's longest edge in world units. Five at 1.7u spread along
-// a 6u-wide arc without overlapping at the apex.
+// Each plane's longest edge in world units. Seven planes along a 6u-wide arc.
 const MAX_DIM_U = 1.7;
 
 const HALO_SCALE = 1.7;

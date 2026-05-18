@@ -23,8 +23,8 @@ assets/source/        # originals (svg, raw glb) — keep for re-export
 
 ## Math constellations (Knowledge backdrop)
 
-- `public/textures/math1.svg` … `math5.svg` — five procedural artworks (PCB-style traced paths, fill-only grayscale). Used by [src/scene/MathBackdrop.tsx](../src/scene/MathBackdrop.tsx) as cursor-reactive planes arranged in an upper-ellipse arc behind the yoga avatar in the Knowledge section.
-- Load order is the filename order (math1 left-most, math5 right-most). To swap or add a constellation, edit the `SVG_ENTRIES` array at the top of `MathBackdrop.tsx`; per-SVG plane size is auto-derived from the entry's `w / h` (pixels) so any aspect ratio is fine.
+- `public/textures/math1.svg` … `math7.svg` — seven procedural artworks (PCB-style traced paths, fill-only grayscale). Used by [src/scene/MathBackdrop.tsx](../src/scene/MathBackdrop.tsx) as cursor-reactive planes arranged in an upper-ellipse arc behind the yoga avatar in the Knowledge section.
+- Load order is the filename order (math1 left-most, math7 right-most). To swap or add a constellation, edit the `SVG_ENTRIES` array at the top of `MathBackdrop.tsx`; per-SVG plane size is auto-derived from the entry's `w / h` (pixels) so any aspect ratio is fine.
 - SVGs are loaded via `useTexture` (drei) — browsers rasterize SVG-as-`HTMLImageElement` and Three's `TextureLoader` consumes the result. No KTX2 / WebP conversion needed; the source SVGs ship as-is.
 - Naming: `math{n}.svg` lowercase. No external license — generated artwork.
 
