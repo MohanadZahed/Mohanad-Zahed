@@ -259,7 +259,9 @@
   stroke-linejoin: round;
   filter: drop-shadow(0 0 4px var(--cat-color))
     drop-shadow(0 0 10px color-mix(in srgb, var(--cat-color) 50%, transparent));
-  transition: opacity 220ms ease, filter 220ms ease;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
 }
 .circuit-frame__spark {
   fill: none;
@@ -269,12 +271,16 @@
   stroke-dasharray: 1;
   stroke-dashoffset: 0;
   filter: drop-shadow(0 0 4px var(--cat-color));
-  transition: opacity 220ms ease, filter 220ms ease;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
 }
 .circuit-frame__via {
   fill: var(--cat-color);
   filter: drop-shadow(0 0 4px var(--cat-color));
-  transition: opacity 220ms ease, filter 220ms ease;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
 }
 @media (hover: hover) {
   .circuit-frame__trace,
@@ -631,7 +637,7 @@
   border-radius: 999px;
   border: 2px solid var(--glow-color);
   background: var(--color-primary);
-  color: var(--color-tertiary);
+  color: var(--color-secondary);
   font-family: var(--font-mono);
   font-weight: 500;
   font-size: 14px;

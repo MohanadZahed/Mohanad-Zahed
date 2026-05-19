@@ -63,7 +63,7 @@ export function Contact() {
     <section
       ref={sectionRef}
       aria-labelledby='contact-h2'
-      className='relative flex flex-col min-h-150 md:min-h-187.5 md:h-187.5'
+      className='relative flex flex-col min-h-150 md:min-h-170.5 md:h-170.5'
       style={{
         background:
           'radial-gradient(ellipse at 50% 110%, rgba(0,65,109,0.45) 0%, transparent 65%), linear-gradient(to bottom, #0d1117 0%, #060d16 100%)',
@@ -72,8 +72,7 @@ export function Contact() {
       <img
         src='/textures/minime-coffee.png'
         alt=''
-        className='absolute left-3 sm:left-6 w-20 sm:w-32 md:w-48 pointer-events-none select-none z-100'
-        style={{ top: 'clamp(-192px, -28vw, -80px)' }}
+        className='absolute left-3 sm:left-6 w-20 sm:w-32 md:w-48 pointer-events-none select-none z-100 bottom-[93%] sm:bottom-[86%]'
       />
 
       <div className='flex-1 flex items-center justify-center'>
@@ -83,7 +82,7 @@ export function Contact() {
               <h2
                 ref={headlineRef}
                 id='contact-h2'
-                className='text-4xl sm:text-5xl md:text-6xl font-semibold text-zinc-100 whitespace-nowrap'
+                className='font-semibold text-zinc-100 whitespace-nowrap text-[clamp(1.5rem,7vw,2.25rem)] sm:text-5xl md:text-6xl'
                 style={{ clipPath: 'inset(0 100% 0 0)', lineHeight: 'normal' }}
               >
                 {t('contact.headline')}
@@ -92,17 +91,18 @@ export function Contact() {
                 ref={truckRef}
                 src='/textures/minime-truck.png'
                 alt=''
-                className='absolute left-0 top-1/2 w-24 sm:w-28 md:w-48 pointer-events-none select-none'
+                className='absolute left-0 top-1/2 w-16 sm:w-28 md:w-48 pointer-events-none select-none'
                 style={{ transform: 'translate3d(0, -50%, 0)' }}
               />
             </div>
           </div>
 
-          <p className='mt-6 text-lg text-zinc-400 leading-relaxed'>
+          <p className='mt-6 text-sm sm:text-lg text-zinc-400 leading-relaxed'>
             {t('contact.subhead')}
           </p>
 
           <p className='mt-8 text-zinc-400'>
+            Email:&nbsp;
             <a
               href='mailto:mzahed-p@outlook.com'
               className='text-[var(--color-accent-sky)] underline-offset-4 hover:underline'
@@ -113,13 +113,22 @@ export function Contact() {
 
           <div className='mt-6 flex flex-wrap justify-center gap-4'>
             <FlipLink text={t('contact.getInTouch')} href='mailto:mzahed-p@outlook.com' />
-            <FlipLink text={t('contact.linkedin')} href='https://www.linkedin.com/in/m-zahed/' external />
+            <FlipLink
+              text={t('contact.linkedin')}
+              href='https://www.linkedin.com/in/m-zahed/'
+              external
+            />
+            <FlipLink
+              text={t('contact.xing')}
+              href='https://www.xing.com/profile/Mohanad_Zahed'
+              external
+            />
           </div>
 
           <img
             src='/textures/minime-programming.png'
             alt=''
-            className='mx-auto mt-8 w-28 sm:w-32 md:w-36 pointer-events-none select-none -scale-x-100'
+            className='mx-auto w-28 sm:w-32 md:w-36 pointer-events-none select-none -scale-x-100'
           />
         </div>
       </div>
