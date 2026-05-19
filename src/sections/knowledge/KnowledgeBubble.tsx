@@ -8,8 +8,8 @@ interface KnowledgeBubbleProps {
   item: KnowledgeItem;
   index: number;
   total: number;
-  restAngle: number;
-  restRadius: number;
+  restX: number;
+  restY: number;
   knowledgeProgress: number;
   bubbleScale: number;
 }
@@ -18,8 +18,8 @@ export function KnowledgeBubble({
   item,
   index,
   total,
-  restAngle,
-  restRadius,
+  restX,
+  restY,
   knowledgeProgress,
   bubbleScale,
 }: KnowledgeBubbleProps) {
@@ -34,10 +34,8 @@ export function KnowledgeBubble({
   const raw = (knowledgeProgress - start) / (end - start);
   const eased = smoothstep(0, 1, clamp(raw, 0, 1));
 
-  const x = Math.cos(restAngle) * restRadius * eased;
-  const y = Math.sin(restAngle) * restRadius * eased;
-  const myX = (item.x ?? 0) * eased;
-  const myY = (item.y ?? 0) * eased;
+  const x = restX * eased;
+  const y = restY * eased;
   const scale = lerp(0.4, bubbleScale, eased);
   const opacity = eased;
 
@@ -45,7 +43,7 @@ export function KnowledgeBubble({
     position: 'absolute',
     left: '50%',
     top: '50%',
-    transform: `translate(-50%, -50%) translate(${x + myX}px, ${y + myY}px) scale(${scale})`,
+    transform: `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`,
     opacity,
     willChange: 'transform, opacity',
   };

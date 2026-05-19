@@ -28,6 +28,15 @@ export function getRingGeometry(viewportW: number, viewportH: number): {
   maxPx: number;
   centerOffsetY: number;
   bubbleScale: number;
+  // Horizontal stretch factor. The envelope is a superellipse with
+  // rx = radius * aspectX and ry = radius. > 1 widens it so top/bottom
+  // bubbles fan out along X.
+  aspectX: number;
+  // 'ellipse' = bubbles distributed by angle around an oval (desktop).
+  // 'square'  = bubbles distributed by arc length along a rectangle perimeter
+  //             (phones), so each edge fills evenly instead of clustering
+  //             bubbles in the corners.
+  layoutMode: 'ellipse' | 'square';
 } {
   // Smoothstep helpers inlined to avoid importing src/scene/* into a section file.
   const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
@@ -38,26 +47,38 @@ export function getRingGeometry(viewportW: number, viewportH: number): {
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
   if (viewportW < MOBILE_BREAKPOINT_PX) {
-    // Phones: tight ring around the yoga avatar. 21 bubbles still fit because
-    // each bubble shrinks via bubbleScale, and the ring radius is small enough
-    // to keep the whole spread inside a 360px-wide viewport.
+    // Phones: tight ring around the yoga avatar. The envelope is stretched
+    // horizontally (aspectX > 1) so the top/bottom bubbles fan out along X
+    // instead of stacking on each other — the result reads more like a
+    // rounded rectangle than a circle, which is fine here.
     const k = smoothstep(360, 768, viewportW); // 0 at 360, 1 at 768
     return {
-      minPx: lerp(130, 200, k),
-      maxPx: lerp(160, 230, k),
+      // Y radius — kept compact so the ring stays close to the avatar.
+      minPx: lerp(105, 170, k),
+      maxPx: lerp(130, 200, k),
       centerOffsetY: 0,
       bubbleScale: lerp(0.7, 0.85, k),
+      // Stretch X by ~1.45x on the narrowest phones, easing back toward 1.25x
+      // by the tablet breakpoint. Bubble half-width on phones (~60px at
+      // scale 0.7) plus 1.45 * 130 = ~250px → fits a 360px viewport.
+      aspectX: lerp(1.45, 1.25, k),
+      // Real rectangle perimeter on phones — bubbles walk the four edges so
+      // each edge fills evenly. Reads as a square frame around the avatar.
+      layoutMode: 'square',
     };
   }
 
   // Desktop / tablet wide. Shrink and drop the ring centre on short heights so
-  // the topmost bubble keeps clearance under the title.
+  // the topmost bubble keeps clearance under the title. A small horizontal
+  // stretch helps even at full size where bubbles are widest.
   const kH = smoothstep(800, 1000, viewportH);
   return {
     minPx: lerp(220, RING_RADIUS_MIN_PX, kH),
     maxPx: lerp(250, RING_RADIUS_MAX_PX, kH),
     centerOffsetY: lerp(40, 0, kH),
     bubbleScale: 1,
+    aspectX: lerp(1.15, 1.05, kH),
+    layoutMode: 'ellipse',
   };
 }
 

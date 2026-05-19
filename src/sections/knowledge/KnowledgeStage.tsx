@@ -21,24 +21,18 @@ function hash01(i: number): number {
 const BUBBLE_HEIGHT_PX = 36;
 const BUBBLE_PX_PER_CHAR = 7;
 const BUBBLE_PADDING_PX = 32;
+const widthOf = (label: string) => label.length * BUBBLE_PX_PER_CHAR + BUBBLE_PADDING_PX;
 
-// Distribute bubble centre angles around the ring so each bubble gets an
-// angular slot proportional to how much it actually projects onto the ring's
-// tangent at its angle. A wide label near the top/bottom of the ring (where
-// the tangent is horizontal) projects its full width onto the tangent and
-// therefore claims a larger slot; the same label near the left/right (tangent
-// vertical) only needs the bubble's height. This stops top/bottom bubbles from
-// crowding while the sides keep their natural spacing.
+// Distribute bubble centre angles around an ellipse so each bubble gets an
+// angular slot proportional to how much it projects onto the tangent at its
+// angle. Wide labels near the top/bottom (tangent horizontal) get bigger
+// slots; the same labels on the sides (tangent vertical) get narrow slots.
 function computeRingAngles(items: readonly KnowledgeItem[]): number[] {
   const n = items.length;
   if (n === 0) return [];
-  // Seed with uniform angles so we can evaluate the tangent projection at a
-  // reasonable starting point. One pass is enough — the weights converge.
   const seedAngle = (i: number) => (i / n) * Math.PI * 2 - Math.PI / 2;
-  const widthOf = (label: string) => label.length * BUBBLE_PX_PER_CHAR + BUBBLE_PADDING_PX;
   const weights = items.map((it, i) => {
     const a = seedAngle(i);
-    // Tangential extent of an axis-aligned rectangle at angle `a`.
     return (
       Math.abs(widthOf(it.label) * Math.sin(a)) +
       Math.abs(BUBBLE_HEIGHT_PX * Math.cos(a)) +
@@ -52,6 +46,73 @@ function computeRingAngles(items: readonly KnowledgeItem[]): number[] {
     const center = -Math.PI / 2 + cum + slot / 2;
     cum += slot;
     return center;
+  });
+}
+
+interface Pos {
+  x: number;
+  y: number;
+}
+
+// Distribute bubbles by arc length along a rectangle perimeter of half-width
+// rx and half-height ry. Each bubble's slot is proportional to its tangential
+// footprint at its position — on the horizontal edges (top/bottom) that's the
+// label width; on the vertical edges (left/right) it's the bubble height.
+// Starts at the top-middle going clockwise.
+function computeSquarePositions(items: readonly KnowledgeItem[], rx: number, ry: number): Pos[] {
+  const n = items.length;
+  if (n === 0) return [];
+  const perimeter = 4 * rx + 4 * ry;
+
+  // Map a distance d along the perimeter (mod perimeter) to (x, y).
+  // Perimeter walk starts at top middle (0, -ry) going clockwise:
+  //   1. top-middle → top-right corner: length rx
+  //   2. top-right → bottom-right:      length 2·ry
+  //   3. bottom-right → bottom-left:    length 2·rx
+  //   4. bottom-left → top-left:        length 2·ry
+  //   5. top-left → top-middle:         length rx
+  const posAt = (d: number): Pos => {
+    let p = ((d % perimeter) + perimeter) % perimeter;
+    if (p < rx) return { x: p, y: -ry };
+    p -= rx;
+    if (p < 2 * ry) return { x: rx, y: -ry + p };
+    p -= 2 * ry;
+    if (p < 2 * rx) return { x: rx - p, y: ry };
+    p -= 2 * rx;
+    if (p < 2 * ry) return { x: -rx, y: ry - p };
+    p -= 2 * ry;
+    return { x: -rx + p, y: -ry };
+  };
+
+  // Tangent direction at distance d — used to pick the right footprint
+  // component for the weight.
+  const isHorizontalEdge = (d: number): boolean => {
+    let p = ((d % perimeter) + perimeter) % perimeter;
+    if (p < rx) return true; // top → right
+    p -= rx;
+    if (p < 2 * ry) return false; // right edge
+    p -= 2 * ry;
+    if (p < 2 * rx) return true; // bottom edge
+    p -= 2 * rx;
+    if (p < 2 * ry) return false; // left edge
+    return true; // top → left
+  };
+
+  // Seed with uniform-perimeter positions to pick a footprint per bubble.
+  const weights = items.map((it, i) => {
+    const seedD = (i / n) * perimeter;
+    return isHorizontalEdge(seedD)
+      ? widthOf(it.label) + BUBBLE_PADDING_PX
+      : BUBBLE_HEIGHT_PX + BUBBLE_PADDING_PX;
+  });
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
+
+  let cum = 0;
+  return items.map((_, i) => {
+    const slot = (weights[i] / totalWeight) * perimeter;
+    const center = cum + slot / 2;
+    cum += slot;
+    return posAt(center);
   });
 }
 
@@ -75,9 +136,46 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
     1,
   );
 
-  const { minPx, maxPx, centerOffsetY, bubbleScale } = getRingGeometry(viewport.w, viewport.h);
+  const { minPx, maxPx, centerOffsetY, bubbleScale, aspectX, layoutMode } = getRingGeometry(
+    viewport.w,
+    viewport.h,
+  );
   const total = KNOWLEDGE.length;
   const baseAngles = useMemo(() => computeRingAngles(KNOWLEDGE), []);
+
+  // Pre-resolve per-bubble (restX, restY). Two layout modes:
+  //   - 'ellipse': angle around an oval, with width-aware angular slots
+  //   - 'square':  arc-length walk around a rectangle perimeter
+  // Per-bubble hand-tuning offsets are folded in here:
+  //   - desktop ellipse uses `item.x` / `item.y`
+  //   - mobile square uses `item.mobileOffsets.x` / `item.mobileOffsets.y`
+  const positions: Pos[] = useMemo(() => {
+    const offsetFor = (item: KnowledgeItem): Pos =>
+      layoutMode === 'square'
+        ? { x: item.mobileOffsets?.x ?? 0, y: item.mobileOffsets?.y ?? 0 }
+        : { x: item.x ?? 0, y: item.y ?? 0 };
+
+    if (layoutMode === 'square') {
+      const rectR = (minPx + maxPx) / 2;
+      const rx = rectR * aspectX;
+      const ry = rectR;
+      const base = computeSquarePositions(KNOWLEDGE, rx, ry);
+      return KNOWLEDGE.map((item, i) => {
+        const off = offsetFor(item);
+        return { x: base[i].x + off.x, y: base[i].y + off.y };
+      });
+    }
+    return KNOWLEDGE.map((item, i) => {
+      const jitter = (hash01(i) - 0.5) * 2 * RING_ANGLE_JITTER_RAD;
+      const restAngle = baseAngles[i] + jitter;
+      const restRadius = lerp(minPx, maxPx, hash01(i + 91));
+      const off = offsetFor(item);
+      return {
+        x: Math.cos(restAngle) * restRadius * aspectX + off.x,
+        y: Math.sin(restAngle) * restRadius + off.y,
+      };
+    });
+  }, [layoutMode, minPx, maxPx, aspectX, baseAngles]);
 
   return (
     <div
@@ -124,25 +222,18 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
           pointerEvents: 'none',
         }}
       >
-        {KNOWLEDGE.map((item, i) => {
-          // Width-aware angular slots (see computeRingAngles), tiny jitter for
-          // organic feel, and a small radius band so the ring stays a ring.
-          const jitter = (hash01(i) - 0.5) * 2 * RING_ANGLE_JITTER_RAD;
-          const restAngle = baseAngles[i] + jitter;
-          const restRadius = lerp(minPx, maxPx, hash01(i + 91));
-          return (
-            <KnowledgeBubble
-              key={item.id}
-              item={item}
-              index={i}
-              total={total}
-              restAngle={restAngle}
-              restRadius={restRadius}
-              knowledgeProgress={progress}
-              bubbleScale={bubbleScale}
-            />
-          );
-        })}
+        {KNOWLEDGE.map((item, i) => (
+          <KnowledgeBubble
+            key={item.id}
+            item={item}
+            index={i}
+            total={total}
+            restX={positions[i].x}
+            restY={positions[i].y}
+            knowledgeProgress={progress}
+            bubbleScale={bubbleScale}
+          />
+        ))}
       </div>
     </div>
   );
