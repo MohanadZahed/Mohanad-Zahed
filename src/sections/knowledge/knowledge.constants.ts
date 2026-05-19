@@ -18,6 +18,49 @@ export const RING_RADIUS_MIN_PX = 280;
 export const RING_RADIUS_MAX_PX = 320;
 export const RING_ANGLE_JITTER_RAD = 0.06;
 
+const MOBILE_BREAKPOINT_PX = 768;
+
+// Ring geometry adapts to viewport size so the topmost bubbles never collide
+// with the `Knowledge` title (pinned at top: 12vh) on short viewports, and the
+// ring stays a ring (not a long stacked list) on narrow phones.
+export function getRingGeometry(viewportW: number, viewportH: number): {
+  minPx: number;
+  maxPx: number;
+  centerOffsetY: number;
+  bubbleScale: number;
+} {
+  // Smoothstep helpers inlined to avoid importing src/scene/* into a section file.
+  const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
+  const smoothstep = (edge0: number, edge1: number, x: number) => {
+    const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+    return t * t * (3 - 2 * t);
+  };
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  if (viewportW < MOBILE_BREAKPOINT_PX) {
+    // Phones: tight ring around the yoga avatar. 21 bubbles still fit because
+    // each bubble shrinks via bubbleScale, and the ring radius is small enough
+    // to keep the whole spread inside a 360px-wide viewport.
+    const k = smoothstep(360, 768, viewportW); // 0 at 360, 1 at 768
+    return {
+      minPx: lerp(130, 200, k),
+      maxPx: lerp(160, 230, k),
+      centerOffsetY: 0,
+      bubbleScale: lerp(0.7, 0.85, k),
+    };
+  }
+
+  // Desktop / tablet wide. Shrink and drop the ring centre on short heights so
+  // the topmost bubble keeps clearance under the title.
+  const kH = smoothstep(800, 1000, viewportH);
+  return {
+    minPx: lerp(220, RING_RADIUS_MIN_PX, kH),
+    maxPx: lerp(250, RING_RADIUS_MAX_PX, kH),
+    centerOffsetY: lerp(40, 0, kH),
+    bubbleScale: 1,
+  };
+}
+
 // Global progress band where the YogaAvatar is on stage.
 // Page composition: Hero(1) + About(1) + Notebook(6.25) + Skills(1) + Knowledge(3)
 // + Certificates(3) + Experience(~16) + Contact(1) ≈ 32.25vh → scroll range ≈ 31.25vh.

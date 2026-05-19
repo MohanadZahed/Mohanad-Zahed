@@ -11,7 +11,7 @@ interface KnowledgeBubbleProps {
   restAngle: number;
   restRadius: number;
   knowledgeProgress: number;
-  layout: 'ring' | 'grid';
+  bubbleScale: number;
 }
 
 export function KnowledgeBubble({
@@ -21,17 +21,9 @@ export function KnowledgeBubble({
   restAngle,
   restRadius,
   knowledgeProgress,
-  layout,
+  bubbleScale,
 }: KnowledgeBubbleProps) {
   const tintColor = KNOWLEDGE_CATEGORY_COLOR[item.category];
-
-  if (layout === 'grid') {
-    const gridProgress = clamp((knowledgeProgress - PHASE.BUBBLES_START) / 0.4, 0, 1);
-    const style: CSSProperties = {
-      opacity: gridProgress,
-    };
-    return <BubbleVisual style={style} label={item.label} tintColor={tintColor} />;
-  }
 
   const start = lerp(
     PHASE.BUBBLES_START,
@@ -46,7 +38,7 @@ export function KnowledgeBubble({
   const y = Math.sin(restAngle) * restRadius * eased;
   const myX = (item.x ?? 0) * eased;
   const myY = (item.y ?? 0) * eased;
-  const scale = lerp(0.4, 1, eased);
+  const scale = lerp(0.4, bubbleScale, eased);
   const opacity = eased;
 
   const style: CSSProperties = {
