@@ -62,6 +62,7 @@ export function Contact() {
   return (
     <section
       ref={sectionRef}
+      id='contact'
       aria-labelledby='contact-h2'
       className='relative flex flex-col min-h-150 md:min-h-170.5 md:h-170.5'
       style={{

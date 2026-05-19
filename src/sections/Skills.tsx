@@ -74,6 +74,7 @@ export function Skills() {
   return (
     <section
       ref={stageRef}
+      id='skills'
       aria-labelledby='skills-h2'
       className='relative min-h-screen overflow-hidden bg-canvas-gradient'
       style={{ '--spot-r': `${SPOTLIGHT_RADIUS}px`, marginTop: '-2000px' } as CSSProperties}

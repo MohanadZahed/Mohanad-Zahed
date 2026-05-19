@@ -117,6 +117,7 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
+      id='hero'
       aria-labelledby='hero-h1'
       className='relative overflow-hidden h-[82svh] sm:h-[85svh] md:h-[100svh]'
     >

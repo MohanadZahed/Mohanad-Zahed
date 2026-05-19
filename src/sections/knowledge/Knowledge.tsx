@@ -54,6 +54,7 @@ export function Knowledge() {
   return (
     <section
       ref={sectionRef}
+      id='knowledge'
       aria-labelledby='knowledge-h2'
       className='relative'
       style={{ height: `${SECTION_VH}svh` }}

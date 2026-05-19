@@ -36,6 +36,7 @@ export function Notebook() {
   return (
     <section
       ref={sectionRef}
+      id='notebook'
       aria-labelledby='notebook-h2'
       className='relative'
       style={{ height: `${SECTION_VH}svh` }}

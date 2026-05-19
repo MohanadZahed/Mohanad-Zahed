@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Scene } from './scene/Scene';
 import { useLenis } from './hooks/useLenis';
 import { useScrollTrigger } from './hooks/useScrollTrigger';
+import { useSectionHash } from './hooks/useSectionHash';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
@@ -20,6 +21,7 @@ import { useT } from './i18n/useT';
 function App() {
   useLenis();
   useScrollTrigger();
+  useSectionHash();
   const { t, locale } = useT();
 
   useEffect(() => {
