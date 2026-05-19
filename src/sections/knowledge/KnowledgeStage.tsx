@@ -149,33 +149,59 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
   // Per-bubble hand-tuning offsets are folded in here:
   //   - desktop ellipse uses `item.x` / `item.y`
   //   - mobile square uses `item.mobileOffsets.x` / `item.mobileOffsets.y`
+  // Final positions are clamped to the viewport so no bubble can render
+  // partially off-screen, even after offsets push it past the layout envelope.
   const positions: Pos[] = useMemo(() => {
     const offsetFor = (item: KnowledgeItem): Pos =>
       layoutMode === 'square'
         ? { x: item.mobileOffsets?.x ?? 0, y: item.mobileOffsets?.y ?? 0 }
         : { x: item.x ?? 0, y: item.y ?? 0 };
 
+    let raw: Pos[];
     if (layoutMode === 'square') {
       const rectR = (minPx + maxPx) / 2;
       const rx = rectR * aspectX;
       const ry = rectR;
       const base = computeSquarePositions(KNOWLEDGE, rx, ry);
-      return KNOWLEDGE.map((item, i) => {
+      raw = KNOWLEDGE.map((item, i) => {
         const off = offsetFor(item);
         return { x: base[i].x + off.x, y: base[i].y + off.y };
       });
+    } else {
+      raw = KNOWLEDGE.map((item, i) => {
+        const jitter = (hash01(i) - 0.5) * 2 * RING_ANGLE_JITTER_RAD;
+        const restAngle = baseAngles[i] + jitter;
+        const restRadius = lerp(minPx, maxPx, hash01(i + 91));
+        const off = offsetFor(item);
+        return {
+          x: Math.cos(restAngle) * restRadius * aspectX + off.x,
+          y: Math.sin(restAngle) * restRadius + off.y,
+        };
+      });
     }
-    return KNOWLEDGE.map((item, i) => {
-      const jitter = (hash01(i) - 0.5) * 2 * RING_ANGLE_JITTER_RAD;
-      const restAngle = baseAngles[i] + jitter;
-      const restRadius = lerp(minPx, maxPx, hash01(i + 91));
-      const off = offsetFor(item);
+
+    // Viewport-edge clamp. The wrapper centres the bubble field at viewport
+    // centre + centerOffsetY, so a bubble at relative (x, y) lands at
+    // (vw/2 + x, vh/2 + centerOffsetY + y). Half-extents come from the label
+    // length estimate × the active bubbleScale.
+    const SAFE_PADDING_PX = 8;
+    // Reserve the top band so bubbles never crowd the `Knowledge` title
+    // (anchored at top: 12vh + its own height).
+    const TITLE_RESERVED_VH = 0.2;
+    return raw.map((p, i) => {
+      const item = KNOWLEDGE[i];
+      const halfW = (widthOf(item.label) / 2) * bubbleScale;
+      const halfH = (BUBBLE_HEIGHT_PX / 2) * bubbleScale;
+      const maxX = viewport.w / 2 - halfW - SAFE_PADDING_PX;
+      const yMin =
+        TITLE_RESERVED_VH * viewport.h - viewport.h / 2 - centerOffsetY + halfH;
+      const yMax = viewport.h / 2 - centerOffsetY - halfH - SAFE_PADDING_PX;
       return {
-        x: Math.cos(restAngle) * restRadius * aspectX + off.x,
-        y: Math.sin(restAngle) * restRadius + off.y,
+        x: clamp(p.x, -maxX, maxX),
+        y: clamp(p.y, yMin, yMax),
       };
     });
-  }, [layoutMode, minPx, maxPx, aspectX, baseAngles]);
+  }, [layoutMode, minPx, maxPx, aspectX, baseAngles, bubbleScale, centerOffsetY, viewport.w, viewport.h]);
 
   return (
     <div
