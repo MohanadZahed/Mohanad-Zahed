@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useScrollStore } from '../../store/useScrollStore';
-import { lerp, smoothstep } from '../../scene/lib/math';
+import { clamp, lerp, smoothstep } from '../../scene/lib/math';
 import { PHASE } from './knowledge.constants';
 
 const INK_START = { r: 0, g: 65, b: 109, a: 1 };
@@ -12,8 +12,6 @@ const FADE_IN_END = 0.13;
 
 // Initial bright cream "moon" diameter while falling.
 const DISC_BOX_PX = 80;
-// Final halo diameter relative to viewport's longest side (covers the screen).
-const DISC_PEAK_FACTOR = 2.6;
 const DISC_FALL_FROM_VH = -120;
 
 export function KnowledgeBackground() {
@@ -47,10 +45,18 @@ export function KnowledgeBackground() {
       const vh = window.innerHeight;
       const ty = lerp((DISC_FALL_FROM_VH * vh) / 100, 0, fall);
 
-      const vmax = Math.max(window.innerWidth, window.innerHeight);
-      const peakPx = vmax * DISC_PEAK_FACTOR;
-      const size = lerp(DISC_BOX_PX, peakPx, expand);
-      const radiusPct = lerp(50, 0, smoothstep(0.6, 1.0, expand));
+      const vw = window.innerWidth;
+      const vmin = Math.min(vw, vh);
+      const diagonal = Math.sqrt(vw * vw + vh * vh);
+      const size = lerp(DISC_BOX_PX, diagonal, expand);
+      // The border-radius starts collapsing the moment the disc's diameter
+      // reaches the SHORT viewport axis (so on portrait phones it starts
+      // morphing as soon as the circle touches left/right edges). Beyond that
+      // point the shape grows toward the screen diagonal as a progressively
+      // squared rectangle — corners fill in without the circle bulging
+      // off-screen and reading as an ellipse.
+      const circleEnd = clamp((vmin - DISC_BOX_PX) / (diagonal - DISC_BOX_PX), 0, 1);
+      const radiusPct = lerp(50, 0, smoothstep(circleEnd, 1.0, expand));
 
       wrapper.style.backgroundColor = `color-mix(in srgb, var(--color-quaternary) ${beigeAlpha * 100}%, transparent)`;
       disc.style.width = `${size}px`;
