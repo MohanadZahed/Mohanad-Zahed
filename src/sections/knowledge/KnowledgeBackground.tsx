@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useScrollStore } from '../../store/useScrollStore';
 import { lerp, smoothstep } from '../../scene/lib/math';
-import { KNOWLEDGE_TOP_PROGRESS, PHASE } from './knowledge.constants';
+import { PHASE } from './knowledge.constants';
 
 const INK_START = { r: 0, g: 65, b: 109, a: 1 };
 const INK_END = { r: 245, g: 241, b: 218, a: 0.95 };
@@ -9,11 +9,6 @@ const INK_END = { r: 245, g: 241, b: 218, a: 0.95 };
 const INK_SHIFT_START = 0.45;
 const INK_SHIFT_END = 0.6;
 const FADE_IN_END = 0.13;
-
-// Beige wrapper fade-in (global-progress driven, so it only paints once the
-// Skills section is on stage — not the entire page from load).
-const BEIGE_FADE_IN_START = 0.245;
-const BEIGE_FADE_IN_END = KNOWLEDGE_TOP_PROGRESS;
 
 // Initial bright cream "moon" diameter while falling.
 const DISC_BOX_PX = 80;
@@ -39,14 +34,15 @@ export function KnowledgeBackground() {
       return;
     }
 
-    const apply = (p: number, gp: number) => {
+    const apply = (p: number, approach: number) => {
       const fall = smoothstep(PHASE.AVATAR_SPIN_START, PHASE.AVATAR_SPIN_END, p);
       const expand = smoothstep(PHASE.BUBBLES_START, PHASE.BUBBLES_HOLD, p);
       const fadeIn = smoothstep(PHASE.AVATAR_SPIN_START, FADE_IN_END, p);
-      // Beige wrapper bg fades in once Skills is on stage and stays past
-      // Knowledge — hidden behind the opaque disc for the rest of the page,
-      // and reversible when scrolling back up.
-      const beigeAlpha = smoothstep(BEIGE_FADE_IN_START, BEIGE_FADE_IN_END, gp);
+      // Beige wrapper bg fades in as the Knowledge section approaches from
+      // below the viewport and is fully painted by the time it pins. Driven
+      // by a section-local trigger so it works regardless of total page
+      // height (mobile sections stack much taller than desktop).
+      const beigeAlpha = smoothstep(0, 1, approach);
 
       const vh = window.innerHeight;
       const ty = lerp((DISC_FALL_FROM_VH * vh) / 100, 0, fall);
@@ -75,16 +71,16 @@ export function KnowledgeBackground() {
     };
 
     const initial = useScrollStore.getState();
-    apply(initial.knowledgeProgress, initial.progress);
+    apply(initial.knowledgeProgress, initial.knowledgeApproach);
 
     const unsubscribe = useScrollStore.subscribe((state, prev) => {
       if (
         state.knowledgeProgress === prev.knowledgeProgress &&
-        state.progress === prev.progress
+        state.knowledgeApproach === prev.knowledgeApproach
       ) {
         return;
       }
-      apply(state.knowledgeProgress, state.progress);
+      apply(state.knowledgeProgress, state.knowledgeApproach);
     });
 
     return () => unsubscribe();

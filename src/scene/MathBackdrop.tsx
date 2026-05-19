@@ -1,4 +1,4 @@
-import { type MutableRefObject, useEffect, useMemo, useRef } from 'react';
+import { type MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import {
@@ -13,13 +13,7 @@ import {
 import type { Mesh, Texture } from 'three';
 import { useScrollStore } from '../store/useScrollStore';
 import { smoothstep } from './lib/math';
-import {
-  KNOWLEDGE_BOTTOM_PROGRESS,
-  KNOWLEDGE_CENTER_PROGRESS,
-  KNOWLEDGE_PIN_END_PROGRESS,
-  KNOWLEDGE_TOP_PROGRESS,
-  PHASE,
-} from '../sections/knowledge/knowledge.constants';
+import { PHASE } from '../sections/knowledge/knowledge.constants';
 
 // Seven SVGs rendered left-to-right along the upper half of an ellipse behind
 // the yoga avatar. Pixel dimensions drive plane aspect-correction only.
@@ -38,11 +32,23 @@ const URLS = SVG_ENTRIES.map((e) => e.url);
 // Upper-ellipse arc, centred a bit above the yogi's torso.
 const ARC_RADIUS_X = 3.0;
 const ARC_RADIUS_Y = 1.6;
+// Narrow viewports collapse the arc tighter around the yogi so the SVGs
+// stay near the title instead of spilling off the edges of a phone screen.
+const ARC_RADIUS_X_NARROW = 1.6;
+const ARC_RADIUS_Y_NARROW = 0.95;
 const ARC_CENTER_Y = 0.4;
 const ARC_Z = -0.6;
 
 // Each plane's longest edge in world units. Seven planes along a 6u-wide arc.
 const MAX_DIM_U = 1.7;
+const MAX_DIM_U_NARROW = 1.1;
+
+// Rest opacity at the end of the burst (cursor proximity lifts toward 1.0).
+// Lifted on narrow viewports where there's no hover pointer to brighten them.
+const REST_OPACITY = 0.15;
+const REST_OPACITY_NARROW = 0.32;
+
+const NARROW_MAX_PX = 767;
 
 const HALO_SCALE = 1.7;
 const HALO_Z_OFFSET = -0.05;
@@ -93,6 +99,7 @@ interface MathSvgProps {
   anchorY: number;
   worldW: number;
   worldH: number;
+  restOpacity: number;
   pointerRef: PointerRef;
   isCoarse: boolean;
   isReducedMotion: boolean;
@@ -106,6 +113,7 @@ function MathSvg({
   anchorY,
   worldW,
   worldH,
+  restOpacity,
   pointerRef,
   isCoarse,
   isReducedMotion,
@@ -148,11 +156,11 @@ function MathSvg({
 
     const t = state.clock.elapsedTime;
     const store = useScrollStore.getState();
-    const globalProgress = store.progress;
+    const approach = store.knowledgeApproach;
+    const exit = store.knowledgeExit;
     const expand = smoothstep(PHASE.BUBBLES_START, PHASE.BUBBLES_HOLD, store.knowledgeProgress);
 
-    const visible =
-      globalProgress >= KNOWLEDGE_TOP_PROGRESS && globalProgress < KNOWLEDGE_BOTTOM_PROGRESS;
+    const visible = approach > 0 && exit < 1;
     mesh.visible = visible;
     if (halo) halo.visible = visible;
     if (!visible) {
@@ -162,11 +170,8 @@ function MathSvg({
     }
 
     // Mirror YogaAvatar's Y through entry/exit so the arc tracks the yogi.
-    const totalScrollPx = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const pxBeforeCenter = Math.max(0, KNOWLEDGE_CENTER_PROGRESS - globalProgress) * totalScrollPx;
-    const pxPastPin = Math.max(0, globalProgress - KNOWLEDGE_PIN_END_PROGRESS) * totalScrollPx;
-    const entryY = -(pxBeforeCenter / window.innerHeight) * viewport.height;
-    const exitY = (pxPastPin / window.innerHeight) * viewport.height;
+    const entryY = -(1 - approach) * viewport.height;
+    const exitY = exit * viewport.height;
     const avatarY = entryY + exitY;
 
     const { phase } = refs;
@@ -205,10 +210,9 @@ function MathSvg({
 
     const targetX = restX + pushX;
     const targetY = restY + pushY;
-    // At rest the SVGs sit at 0.15 once fully expanded; cursor proximity
-    // lifts them toward 1.0 while preserving the colour-glow lerp below.
-    const REST_OPACITY = 0.15;
-    const targetOpacity = expand * (REST_OPACITY + (1 - REST_OPACITY) * prox);
+    // Cursor proximity lifts opacity from `restOpacity` toward 1.0 while
+    // preserving the colour-glow lerp below.
+    const targetOpacity = expand * (restOpacity + (1 - restOpacity) * prox);
 
     mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 4, delta);
     mesh.position.y = MathUtils.damp(mesh.position.y, targetY, 4, delta);
@@ -303,6 +307,23 @@ export function MathBackdrop() {
     };
   }, []);
 
+  const [isNarrow, setIsNarrow] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia(`(max-width: ${NARROW_MAX_PX}px)`).matches;
+  });
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia(`(max-width: ${NARROW_MAX_PX}px)`);
+    const onChange = (e: MediaQueryListEvent) => setIsNarrow(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  const radiusX = isNarrow ? ARC_RADIUS_X_NARROW : ARC_RADIUS_X;
+  const radiusY = isNarrow ? ARC_RADIUS_Y_NARROW : ARC_RADIUS_Y;
+  const maxDim = isNarrow ? MAX_DIM_U_NARROW : MAX_DIM_U;
+  const restOpacity = isNarrow ? REST_OPACITY_NARROW : REST_OPACITY;
+
   const textures = useTexture(URLS) as Texture[];
   const haloTexture = useMemo(() => makeHaloTexture(), []);
 
@@ -310,11 +331,11 @@ export function MathBackdrop() {
     <>
       {SVG_ENTRIES.map((entry, i) => {
         const theta = Math.PI * (1 - i / (TOTAL - 1));
-        const anchorX = ARC_RADIUS_X * Math.cos(theta);
-        const anchorY = ARC_CENTER_Y + ARC_RADIUS_Y * Math.sin(theta);
+        const anchorX = radiusX * Math.cos(theta);
+        const anchorY = ARC_CENTER_Y + radiusY * Math.sin(theta);
         const maxPx = Math.max(entry.w, entry.h);
-        const worldW = MAX_DIM_U * (entry.w / maxPx);
-        const worldH = MAX_DIM_U * (entry.h / maxPx);
+        const worldW = maxDim * (entry.w / maxPx);
+        const worldH = maxDim * (entry.h / maxPx);
         return (
           <MathSvg
             key={entry.url}
@@ -325,6 +346,7 @@ export function MathBackdrop() {
             anchorY={anchorY}
             worldW={worldW}
             worldH={worldH}
+            restOpacity={restOpacity}
             pointerRef={pointerRef}
             isCoarse={isCoarse}
             isReducedMotion={isReducedMotion}

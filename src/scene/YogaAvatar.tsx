@@ -5,12 +5,6 @@ import { Color, MathUtils, MeshStandardMaterial } from 'three';
 import type { Group, Material, Mesh } from 'three';
 import { useScrollStore } from '../store/useScrollStore';
 import { lerp, smoothstep } from './lib/math';
-import {
-  KNOWLEDGE_BOTTOM_PROGRESS,
-  KNOWLEDGE_CENTER_PROGRESS,
-  KNOWLEDGE_PIN_END_PROGRESS,
-  KNOWLEDGE_TOP_PROGRESS,
-} from '../sections/knowledge/knowledge.constants';
 
 const SPIN_START = 0.1;
 const SPIN_END = 0.4;
@@ -50,11 +44,11 @@ export function YogaAvatar() {
 
     const t = state.clock.elapsedTime;
     const store = useScrollStore.getState();
-    const globalProgress = store.progress;
     const sectionProgress = store.knowledgeProgress;
+    const approach = store.knowledgeApproach;
+    const exit = store.knowledgeExit;
 
-    const visible =
-      globalProgress >= KNOWLEDGE_TOP_PROGRESS && globalProgress < KNOWLEDGE_BOTTOM_PROGRESS;
+    const visible = approach > 0 && exit < 1;
     const opacity = visible ? 1 : 0;
     const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const m of mats) {
@@ -62,15 +56,12 @@ export function YogaAvatar() {
     }
     group.visible = visible;
 
-    // Entry: avatar rides up from below the viewport in lockstep with the
-    // sticky bubbles container, arriving at viewport centre when the section
-    // pins. Exit: avatar rides up out of the viewport in lockstep with the
-    // sticky container unpinning.
-    const totalScrollPx = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const pxBeforeCenter = Math.max(0, KNOWLEDGE_CENTER_PROGRESS - globalProgress) * totalScrollPx;
-    const pxPastPin = Math.max(0, globalProgress - KNOWLEDGE_PIN_END_PROGRESS) * totalScrollPx;
-    const entryY = -(pxBeforeCenter / window.innerHeight) * viewport.height;
-    const exitY = (pxPastPin / window.innerHeight) * viewport.height;
+    // Entry: avatar rides up from below as the section approaches viewport top
+    // (approach 0→1). Exit: avatar rides up out as the section bottom passes
+    // viewport top (exit 0→1). Section-local triggers so the choreography
+    // works on any page height.
+    const entryY = -(1 - approach) * viewport.height;
+    const exitY = exit * viewport.height;
 
     group.position.x = 0;
     group.position.z = 0;

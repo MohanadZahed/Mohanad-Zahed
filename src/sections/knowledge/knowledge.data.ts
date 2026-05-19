@@ -22,7 +22,7 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
     id: 'shift-left',
     label: 'Shift-left Testing',
     category: 'methodology',
-    mobileOffsets: { x: 20, y: -30 },
+    mobileOffsets: { x: 35, y: -30 },
   },
   {
     id: 'trunk-based',
@@ -50,13 +50,13 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
     id: 'knowledge-transfer',
     label: 'Knowledge Transfer',
     category: 'soft',
-    mobileOffsets: { x: -10, y: 25 },
+    mobileOffsets: { x: -20, y: 25 },
   },
   {
     id: 'monorepos',
     label: 'Monorepos',
     category: 'architecture',
-    mobileOffsets: { x: -25, y: 25 },
+    mobileOffsets: { x: -40, y: 25 },
   },
   {
     id: 'design-systems',
@@ -77,7 +77,7 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
     category: 'soft',
     mobileOffsets: { x: -10, y: -25 },
   },
-  { id: 'mentoring', label: 'Mentoring', category: 'soft', mobileOffsets: { x: 5, y: -30 } },
+  { id: 'mentoring', label: 'Mentoring', category: 'soft', mobileOffsets: { x: 15, y: -30 } },
 ] as const;
 
 export const KNOWLEDGE_CATEGORY_COLOR: Record<KnowledgeCategory, string> = {

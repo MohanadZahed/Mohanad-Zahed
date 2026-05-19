@@ -15,7 +15,7 @@ export function Knowledge() {
     const el = sectionRef.current;
     if (!el) return;
 
-    const trigger = ScrollTrigger.create({
+    const pinTrigger = ScrollTrigger.create({
       trigger: el,
       start: 'top top',
       end: 'bottom bottom',
@@ -26,7 +26,29 @@ export function Knowledge() {
       },
     });
 
-    return () => trigger.kill();
+    const approachTrigger = ScrollTrigger.create({
+      trigger: el,
+      start: 'top bottom',
+      end: 'top top',
+      onUpdate: (self) => {
+        useScrollStore.getState().setKnowledgeApproach(self.progress);
+      },
+    });
+
+    const exitTrigger = ScrollTrigger.create({
+      trigger: el,
+      start: 'bottom bottom',
+      end: 'bottom top',
+      onUpdate: (self) => {
+        useScrollStore.getState().setKnowledgeExit(self.progress);
+      },
+    });
+
+    return () => {
+      pinTrigger.kill();
+      approachTrigger.kill();
+      exitTrigger.kill();
+    };
   }, []);
 
   return (
