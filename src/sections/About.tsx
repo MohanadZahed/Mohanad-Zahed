@@ -55,7 +55,7 @@ export function About() {
       className='relative min-h-200 min-[900px]:h-200'
     >
       {/* Amber background spans the full width; sits behind the canvas so the avatar + orbs stay in front */}
-      <div aria-hidden='true' className='bg-quaternary absolute inset-0 -z-20' />
+      <div aria-hidden='true' className='absolute inset-0 -z-20' />
 
       {/* Avatar landing spot: the 3D scene measures this element's bounding rect
           and projects it into world space. Position it with CSS — no per-breakpoint
@@ -67,7 +67,7 @@ export function About() {
         className='pointer-events-none absolute size-0  right-[26%] min-[900px]:top-1/2 min-[900px]:left-1/4 min-[900px]:right-auto'
       />
 
-      <div className='bg-quaternary relative min-h-full flex items-center' style={{ zIndex: -11 }}>
+      <div className='bg-secondary relative min-h-full flex items-center' style={{ zIndex: -11 }}>
         <div
           className='text-primary w-full max-w-full min-[900px]:ml-[50vw] min-[900px]:max-w-[50vw]'
           style={{

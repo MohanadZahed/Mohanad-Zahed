@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useScrollStore } from '../store/useScrollStore';
 import { useT } from '../i18n/useT';
+import { HeroBackground } from './HeroBackground';
 
 function MaskedChars({ text }: { text: string }) {
   return (
@@ -28,6 +29,7 @@ export function Hero() {
   const titleRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const nameEl = nameRef.current;
@@ -114,9 +116,11 @@ export function Hero() {
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby='hero-h1'
       className='relative overflow-hidden h-[82dvh] sm:h-[85dvh] md:h-[100dvh]'
     >
+      <HeroBackground triggerRef={sectionRef} />
       <div
         data-avatar-anchor='hero'
         aria-hidden='true'
@@ -131,7 +135,7 @@ export function Hero() {
         <div
           ref={titleRef}
           aria-label={TITLE}
-          className='text-secondary inline-flex items-center justify-center overflow-hidden font-bold uppercase'
+          className='text-quaternary inline-flex items-center justify-center overflow-hidden font-bold uppercase'
           style={{
             transform: 'rotate(0deg)',
             outlineOffset: 0,
@@ -149,7 +153,7 @@ export function Hero() {
           id='hero-h1'
           ref={nameRef}
           aria-label={NAME}
-          className='bg-tertiary text-primary inline-flex items-center justify-center overflow-hidden font-bold uppercase m-0'
+          className='bg-secondary text-primary inline-flex items-center justify-center overflow-hidden font-bold uppercase m-0'
           style={{
             transform: 'rotate(-3deg)',
             outline: '0.05em solid var(--color-primary)',

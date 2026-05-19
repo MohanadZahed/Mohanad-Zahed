@@ -16,21 +16,21 @@ interface WordSpec {
 
 const WORDS: WordSpec[] = [
   {
-    text: 'plan',
+    text: '_plan',
     typeStart: PHASE.PLAN_TYPE_IN[0],
     typeEnd: PHASE.PLAN_TYPE_IN[1],
     holdEnd: PHASE.PLAN_HOLD_END,
     fadeEnd: PHASE.PLAN_FADE_END,
   },
   {
-    text: 'build',
+    text: '_build',
     typeStart: PHASE.BUILD_TYPE_IN[0],
     typeEnd: PHASE.BUILD_TYPE_IN[1],
     holdEnd: PHASE.BUILD_HOLD_END,
     fadeEnd: PHASE.BUILD_FADE_END,
   },
   {
-    text: 'improve',
+    text: '_improve',
     typeStart: PHASE.IMPROVE_TYPE_IN[0],
     typeEnd: PHASE.IMPROVE_TYPE_IN[1],
     holdEnd: PHASE.IMPROVE_HOLD_END,

@@ -4,7 +4,6 @@ import { Scene } from './scene/Scene';
 import { useLenis } from './hooks/useLenis';
 import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { Hero } from './sections/Hero';
-import { HeroBackground } from './sections/HeroBackground';
 import { About } from './sections/About';
 import { Notebook } from './sections/notebook/Notebook';
 import { Skills } from './sections/Skills';
@@ -32,7 +31,6 @@ function App() {
   return (
     <>
       <LanguageSwitcher />
-      <HeroBackground />
       <KnowledgeBackground />
       <div className='fixed inset-0 -z-10 pointer-events-none'>
         <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>

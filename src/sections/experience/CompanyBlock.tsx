@@ -85,9 +85,7 @@ export function CompanyBlock({ company }: Props) {
 
   useLayoutEffect(() => {
     const measure = () => {
-      const els = contentRefs.current.filter(
-        (el): el is HTMLDivElement => Boolean(el),
-      );
+      const els = contentRefs.current.filter((el): el is HTMLDivElement => Boolean(el));
       if (els.length === 0) return;
       const previous = els.map((el) => el.style.minHeight);
       els.forEach((el) => {
@@ -126,9 +124,7 @@ export function CompanyBlock({ company }: Props) {
       cardRefs.current.forEach((cardEl, i) => {
         if (!cardEl) return;
         const slice =
-          i === 0 || total <= 1
-            ? 1
-            : Math.max(0, Math.min(1, (p - (i - 1) / divisor) * divisor));
+          i === 0 || total <= 1 ? 1 : Math.max(0, Math.min(1, (p - (i - 1) / divisor) * divisor));
         cardEl.style.setProperty('--card-progress', slice.toString());
       });
     };
@@ -170,15 +166,13 @@ export function CompanyBlock({ company }: Props) {
       style={sectionStyle}
     >
       <div
-        className={`experience-company__stage ${
-          pinned ? 'sticky' : 'relative'
-        }`}
+        className={`experience-company__stage ${pinned ? 'sticky' : 'relative'}`}
         style={stageStyle}
       >
         <div className='relative flex h-full flex-col rounded-xl border border-tertiary/40 bg-black/20 backdrop-blur-sm'>
           <h3
             id={`company-${company.id}`}
-            className='absolute -top-3 left-6 z-10 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-secondary md:left-10 md:text-base'
+            className='absolute -top-3 left-6 z-10 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-quaternary md:left-10 md:text-base'
           >
             {companyName}
           </h3>
@@ -187,9 +181,9 @@ export function CompanyBlock({ company }: Props) {
             className='experience-company__header px-4 sm:px-6 md:px-10'
             style={{ minHeight: `${COMPANY_HEADER_HEIGHT_PX}px` }}
           >
-            <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-tertiary md:flex-row md:items-baseline md:justify-between md:gap-6'>
-              <p className='text-base text-tertiary md:text-lg'>{companyRole}</p>
-              <p className='text-sm text-tertiary/70'>
+            <div className='flex h-full flex-col justify-center gap-2 py-4 font-mono text-secondary md:flex-row md:items-baseline md:justify-between md:gap-6'>
+              <p className='text-base text-secondary md:text-lg'>{companyRole}</p>
+              <p className='text-sm text-secondary/70'>
                 {companyCity} · {companyTimeline}
               </p>
             </div>

@@ -78,10 +78,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
   const finderBoxWidth = isMobile
     ? Math.min(268, viewport.w - 32)
-    : Math.min(
-        FINDER_BOX_WIDTH_PX,
-        Math.max(220, (viewport.w - smallNotebookWidth - 48) / 2),
-      );
+    : Math.min(FINDER_BOX_WIDTH_PX, Math.max(220, (viewport.w - smallNotebookWidth - 48) / 2));
   const finderBoxHeight = isMobile
     ? finderBoxWidth * 0.55
     : finderBoxWidth < FINDER_BOX_WIDTH_PX
@@ -142,7 +139,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
           text={TITLE_TEXT}
           start={titleStarted}
           cursorMode='hide'
-          className='text-tertiary font-bold uppercase'
+          className='text-secondary font-bold uppercase'
           style={{
             fontSize: 'clamp(1.75rem, 7vw, 4.5rem)',
             lineHeight: 1.05,

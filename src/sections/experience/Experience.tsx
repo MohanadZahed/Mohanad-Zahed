@@ -10,13 +10,13 @@ export function Experience() {
       aria-labelledby='experience-h2'
       className='experience-section relative'
     >
-      <div className='mx-auto max-w-[1472px] px-4 pb-6 pt-20 sm:px-6 sm:pt-24 md:pt-32'>
-        <p className='font-mono text-xs uppercase tracking-[0.32em] text-secondary'>
+      <div className='mx-auto max-w-[1472px] px-4 pb-6 pt-20 sm:px-6 sm:pt-24 md:pt-32  mb-7'>
+        <p className='font-mono text-xs uppercase tracking-[0.32em] text-quaternary'>
           {t('experience.eyebrow')}
         </p>
         <h2
           id='experience-h2'
-          className='mt-3 font-mono text-3xl font-semibold text-tertiary md:text-5xl'
+          className='mt-3 font-mono text-3xl font-semibold text-secondary md:text-5xl'
         >
           {t('experience.heading')}
         </h2>

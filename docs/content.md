@@ -6,10 +6,10 @@ Source of truth for any copy that goes on the site. Distilled from the CV at [`d
 
 | Token       | Hex       | Usage                                      |
 | ----------- | --------- | ------------------------------------------ |
-| Primary     | `#00416D` | Brand navy — headings, key UI elements     |
-| Secondary   | `#F8BD7F` | Warm amber — accents, highlights, CTAs     |
-| Tertiary    | `#F5F1DA` | Off-white cream — light backgrounds, cards |
-| Quaternary  | `#E3DFC8` | Warm grey-beige — borders, subtle surfaces |
+| Primary     | `#000000` | Pure black — headings, key UI elements     |
+| Secondary   | `#F3EED6` | Warm cream — accents, highlights, CTAs     |
+| Tertiary    | `#38BDF8` | Sky blue — highlights, interactive accents |
+| Quaternary  | `#E8C999` | Warm sand — borders, subtle surfaces       |
 
 CSS custom properties: `--color-primary`, `--color-secondary`, `--color-tertiary`, `--color-quaternary`.
 Tailwind aliases: `text-primary`, `bg-secondary`, `border-tertiary`, `bg-quaternary`, etc.

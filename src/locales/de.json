@@ -29,7 +29,11 @@
       },
       {
         "fileName": "quality.md",
-        "lines": ["_Hochwertige Ergebnisse", "_Best-Practice-orientiert", "_Performance-Optimierung"]
+        "lines": [
+          "_Hochwertige Ergebnisse",
+          "_Best-Practice-orientiert",
+          "_Performance-Optimierung"
+        ]
       }
     ]
   },
@@ -52,7 +56,7 @@
   "experience": {
     "eyebrow": "Berufserfahrung",
     "heading": "Wo ich geliefert habe.",
-    "subhead": "Drei Unternehmen, zwölf Projekte, acht Jahre. Jede Karte stapelt sich beim Scrollen — die aktuellste liegt obenauf, der Rest fächert sich als Reiter auf.",
+    "subhead": "Drei Unternehmen, zwölf Projekte, acht Jahre.",
     "labels": {
       "customer": "Kunde",
       "industry": "Branche",

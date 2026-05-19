@@ -3,8 +3,8 @@ import { useScrollStore } from '../../store/useScrollStore';
 import { clamp, lerp, smoothstep } from '../../scene/lib/math';
 import { PHASE } from './knowledge.constants';
 
-const INK_START = { r: 0, g: 65, b: 109, a: 1 };
-const INK_END = { r: 245, g: 241, b: 218, a: 0.95 };
+const INK_START = { r: 0, g: 0, b: 0, a: 1 };
+const INK_END = { r: 243, g: 238, b: 214, a: 0.95 };
 
 const INK_SHIFT_START = 0.45;
 const INK_SHIFT_END = 0.6;
