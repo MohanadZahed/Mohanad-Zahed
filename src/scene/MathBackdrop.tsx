@@ -115,31 +115,18 @@ function MathSvg({
   const viewport = useThree((s) => s.viewport);
   const camera = useThree((s) => s.camera);
 
-  const material = useMemo(() => {
-    texture.colorSpace = SRGBColorSpace;
-    return new MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      depthWrite: false,
-      toneMapped: false,
-      color: BASE_COLOR.clone(),
-      opacity: 0,
-    });
-  }, [texture]);
+  // Materials are declared as JSX below and accessed via refs in useFrame.
+  // useFrame mutates material.opacity / color per scene rules; the JSX-ref
+  // pattern is what the React Compiler accepts as a mutable handle.
+  const materialRef = useRef<MeshBasicMaterial>(null);
+  const haloMaterialRef = useRef<MeshBasicMaterial>(null);
 
-  const haloMaterial = useMemo(
-    () =>
-      new MeshBasicMaterial({
-        map: haloTexture,
-        transparent: true,
-        depthWrite: false,
-        toneMapped: false,
-        blending: AdditiveBlending,
-        color: HALO_COLOR.clone(),
-        opacity: 0,
-      }),
-    [haloTexture],
-  );
+  useEffect(() => {
+    const mat = materialRef.current;
+    if (!mat?.map) return;
+    mat.map.colorSpace = SRGBColorSpace;
+    mat.map.needsUpdate = true;
+  }, [texture]);
 
   // Scratch allocations + per-instance phase offset (so the five SVGs don't
   // bob/rotate/breathe in unison).
@@ -155,7 +142,9 @@ function MathSvg({
   useFrame((state, delta) => {
     const mesh = meshRef.current;
     const halo = haloRef.current;
-    if (!mesh) return;
+    const material = materialRef.current;
+    const haloMaterial = haloMaterialRef.current;
+    if (!mesh || !material || !haloMaterial) return;
 
     const t = state.clock.elapsedTime;
     const store = useScrollStore.getState();
@@ -251,11 +240,30 @@ function MathSvg({
 
   return (
     <>
-      <mesh ref={haloRef} material={haloMaterial} visible={false} renderOrder={-2}>
+      <mesh ref={haloRef} visible={false} renderOrder={-2}>
         <planeGeometry args={[worldW * HALO_SCALE, worldH * HALO_SCALE]} />
+        <meshBasicMaterial
+          ref={haloMaterialRef}
+          map={haloTexture}
+          transparent
+          depthWrite={false}
+          toneMapped={false}
+          blending={AdditiveBlending}
+          color={HALO_COLOR}
+          opacity={0}
+        />
       </mesh>
-      <mesh ref={meshRef} material={material} visible={false} renderOrder={-1}>
+      <mesh ref={meshRef} visible={false} renderOrder={-1}>
         <planeGeometry args={[worldW, worldH]} />
+        <meshBasicMaterial
+          ref={materialRef}
+          map={texture}
+          transparent
+          depthWrite={false}
+          toneMapped={false}
+          color={BASE_COLOR}
+          opacity={0}
+        />
       </mesh>
     </>
   );
