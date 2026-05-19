@@ -84,6 +84,7 @@ export function CompanyBlock({ company }: Props) {
   );
 
   useLayoutEffect(() => {
+    if (!isDesktop) return;
     const measure = () => {
       const els = contentRefs.current.filter((el): el is HTMLDivElement => Boolean(el));
       if (els.length === 0) return;
@@ -108,7 +109,7 @@ export function CompanyBlock({ company }: Props) {
       document.fonts.ready.then(measure).catch(() => {});
     }
     return () => window.removeEventListener('resize', measure);
-  }, [total, regionWidth]);
+  }, [total, regionWidth, isDesktop]);
 
   // Per-company ScrollTrigger: drives each card's translate via a CSS variable.
   // Zero React renders during scroll.
@@ -207,7 +208,7 @@ export function CompanyBlock({ company }: Props) {
                 tagRegionHeightPx={tagRegionHeightPx}
                 cardRef={setCardRef[index]}
                 contentRef={setContentRef[index]}
-                minContentHeight={minContentHeight}
+                minContentHeight={isDesktop ? minContentHeight : 0}
                 pinned={pinned}
               />
             ))}

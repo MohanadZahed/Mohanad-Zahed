@@ -27,7 +27,7 @@ export function LanguageSwitcher() {
             aria-label={l === 'en' ? 'Switch to English' : 'Switch to German'}
             className='uppercase tracking-wider transition-colors px-1 cursor-pointer'
             style={{
-              color: locale === l ? 'var(--color-secondary)' : 'rgba(245, 241, 218, 0.55)',
+              color: locale === l ? 'var(--color-tertiary)' : 'rgba(245, 241, 218, 0.55)',
               fontWeight: locale === l ? 700 : 500,
             }}
           >
