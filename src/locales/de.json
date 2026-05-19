@@ -43,7 +43,6 @@
   "certificates": {
     "eyebrow": "Zertifikate",
     "heading": "Zertifikate",
-    "countTemplate": "ich habe <em>{count}</em> Zertifikate",
     "subhead": "Weiterbildung in Architektur, Lieferung und Qualitätssicherung.",
     "card": {
       "eyebrow": "Zertifikat",

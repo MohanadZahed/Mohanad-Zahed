@@ -63,13 +63,9 @@ export function Certificates() {
         <div className='certificates-fallback'>
           <header className='max-w-md text-center'>
             <span className='certificates-header__eyebrow block'>{t('certificates.eyebrow')}</span>
-            <h2
-              id='certificates-h2'
-              className='certificates-header__title mt-3 text-balance'
-              dangerouslySetInnerHTML={{
-                __html: t('certificates.countTemplate', { count: CERTIFICATES.length }),
-              }}
-            />
+            <h2 id='certificates-h2' className='certificates-header__title mt-3 text-balance'>
+              {t('certificates.heading')}
+            </h2>
           </header>
           {CERTIFICATES.map((cert, i) => (
             <CertificateCard key={cert.id} cert={cert} index={i} flat />

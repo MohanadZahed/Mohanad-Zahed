@@ -43,7 +43,6 @@
   "certificates": {
     "eyebrow": "Certificates",
     "heading": "Certificates",
-    "countTemplate": "I hold <em>{count}</em> certifications",
     "subhead": "Continuing education in architecture, delivery, and testing.",
     "card": {
       "eyebrow": "Certificate of Achievement",
