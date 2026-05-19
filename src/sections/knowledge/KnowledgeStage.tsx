@@ -119,12 +119,16 @@ function computeSquarePositions(items: readonly KnowledgeItem[], rx: number, ry:
 export function KnowledgeStage({ progress }: KnowledgeStageProps) {
   const { t } = useT();
   const [viewport, setViewport] = useState(() => ({
-    w: typeof window === 'undefined' ? 1280 : window.innerWidth,
-    h: typeof window === 'undefined' ? 800 : window.innerHeight,
+    w: typeof window === 'undefined' ? 1280 : document.documentElement.clientWidth,
+    h: typeof window === 'undefined' ? 800 : document.documentElement.clientHeight,
   }));
 
   useEffect(() => {
-    const update = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
+    const update = () =>
+      setViewport({
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight,
+      });
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
@@ -208,7 +212,7 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
       style={{
         position: 'sticky',
         top: 0,
-        height: '100vh',
+        height: '100svh',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
@@ -220,7 +224,7 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
         id='knowledge-h2'
         style={{
           position: 'absolute',
-          top: '12vh',
+          top: '12svh',
           left: '50%',
           transform: 'translateX(-50%)',
           fontSize: 'clamp(1.75rem, 6vw, 3.5rem)',

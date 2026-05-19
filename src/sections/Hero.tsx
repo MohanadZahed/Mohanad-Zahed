@@ -118,17 +118,17 @@ export function Hero() {
     <section
       ref={sectionRef}
       aria-labelledby='hero-h1'
-      className='relative overflow-hidden h-[82dvh] sm:h-[85dvh] md:h-[100dvh]'
+      className='relative overflow-hidden h-[82svh] sm:h-[85svh] md:h-[100svh]'
     >
       <HeroBackground triggerRef={sectionRef} />
       <div
         data-avatar-anchor='hero'
         aria-hidden='true'
-        className='pointer-events-none absolute left-1/2 top-[38dvh] md:top-1/2 size-0'
+        className='pointer-events-none absolute left-1/2 top-[38svh] md:top-1/2 size-0'
       />
       <div
         ref={wrapperRef}
-        className='relative flex flex-col items-center justify-start w-full h-full pt-[20dvh] sm:pt-[18dvh] md:pt-[10dvh]'
+        className='relative flex flex-col items-center justify-start w-full h-full pt-[20svh] sm:pt-[18svh] md:pt-[10svh]'
         style={{ transformOrigin: '50% 50%' }}
       >
         {/* Upper block — cream fill, navy text, rotated +3deg */}
@@ -140,7 +140,7 @@ export function Hero() {
             transform: 'rotate(0deg)',
             outlineOffset: 0,
             padding: '0 0.6em 0.1em',
-            fontSize: 'clamp(1.75rem, min(7vw, 7dvh), 8rem)',
+            fontSize: 'clamp(1.75rem, min(7vw, 7svh), 8rem)',
             lineHeight: 1,
             letterSpacing: '-0.025em',
           }}
@@ -159,7 +159,7 @@ export function Hero() {
             outline: '0.05em solid var(--color-primary)',
             outlineOffset: 0,
             padding: '0 0.15em 0.08em',
-            fontSize: 'clamp(3rem, min(11vw, 11dvh), 12rem)',
+            fontSize: 'clamp(3rem, min(11vw, 11svh), 12rem)',
             lineHeight: 1,
             letterSpacing: '-0.025em',
           }}
@@ -170,7 +170,7 @@ export function Hero() {
         {/* Tagline */}
         <p
           ref={taglineRef}
-          className='mt-[4dvh] max-w-2xl text-center text-base sm:text-lg leading-relaxed px-4'
+          className='mt-[4svh] max-w-2xl text-center text-base sm:text-lg leading-relaxed px-4'
           style={{
             color: 'color-mix(in srgb, var(--color-tertiary) 80%, transparent)',
           }}

@@ -73,8 +73,8 @@ export function About() {
           style={{
             paddingLeft: 'clamp(1.25rem, 5vw, 3rem)',
             paddingRight: 'clamp(1.25rem, 5vw, 6rem)',
-            paddingTop: 'clamp(3rem, 10dvh, 8rem)',
-            paddingBottom: 'clamp(3rem, 10dvh, 8rem)',
+            paddingTop: 'clamp(3rem, 10svh, 8rem)',
+            paddingBottom: 'clamp(3rem, 10svh, 8rem)',
           }}
         >
           <h2

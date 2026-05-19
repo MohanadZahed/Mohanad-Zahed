@@ -81,7 +81,7 @@ export function Certificates() {
       id='certificates'
       aria-labelledby='certificates-h2'
       className='certificates-section relative'
-      style={{ height: `${SECTION_VH}vh` }}
+      style={{ height: `${SECTION_VH}svh` }}
     >
       <CertificateStrip />
     </section>

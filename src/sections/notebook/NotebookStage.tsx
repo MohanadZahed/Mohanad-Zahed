@@ -41,12 +41,16 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const titleStarted = globalProgress >= TITLE_TYPEWRITER_GLOBAL_PROGRESS;
 
   const [viewport, setViewport] = useState(() => ({
-    w: typeof window === 'undefined' ? 1920 : window.innerWidth,
-    h: typeof window === 'undefined' ? 1080 : window.innerHeight,
+    w: typeof window === 'undefined' ? 1920 : document.documentElement.clientWidth,
+    h: typeof window === 'undefined' ? 1080 : document.documentElement.clientHeight,
   }));
 
   useEffect(() => {
-    const onResize = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
+    const onResize = () =>
+      setViewport({
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight,
+      });
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
@@ -106,8 +110,8 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     justifyContent: 'center',
     paddingLeft: 'clamp(1.5rem, 6vw, 6rem)',
     paddingRight: 'clamp(1.5rem, 6vw, 6rem)',
-    paddingTop: 'clamp(4rem, 10vh, 8rem)',
-    paddingBottom: 'clamp(4rem, 10vh, 8rem)',
+    paddingTop: 'clamp(4rem, 10svh, 8rem)',
+    paddingBottom: 'clamp(4rem, 10svh, 8rem)',
   };
 
   const notebookWrapperStyle: CSSProperties = {
@@ -125,7 +129,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
       style={{
         position: 'sticky',
         top: 0,
-        height: '100vh',
+        height: '100svh',
         width: '100%',
         overflow: 'hidden',
         pointerEvents: 'none',

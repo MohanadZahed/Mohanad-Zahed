@@ -25,20 +25,8 @@ export function useScrollTrigger() {
       },
     });
 
-    // iOS Chrome/Safari fire visualViewport.resize when the URL bar slides in/out,
-    // changing dvh-based section heights. Refresh so ScrollTrigger remeasures.
-    let rafId = 0;
-    const onVVResize = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
-    };
-    const vv = window.visualViewport;
-    vv?.addEventListener('resize', onVVResize);
-
     return () => {
       trigger.kill();
-      vv?.removeEventListener('resize', onVVResize);
-      cancelAnimationFrame(rafId);
     };
   }, []);
 }

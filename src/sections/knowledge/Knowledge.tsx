@@ -56,7 +56,7 @@ export function Knowledge() {
       ref={sectionRef}
       aria-labelledby='knowledge-h2'
       className='relative'
-      style={{ height: `${SECTION_VH}vh` }}
+      style={{ height: `${SECTION_VH}svh` }}
     >
       <KnowledgeStage progress={progress} />
     </section>

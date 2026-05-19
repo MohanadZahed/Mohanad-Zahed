@@ -149,13 +149,13 @@ export function CompanyBlock({ company }: Props) {
 
   const sectionStyle: CSSProperties = {
     maxWidth: `${CARD_MAX_W_PX + 96}px`,
-    ...(pinned ? { height: `${(total + 1) * STAGE_SCROLL_UNIT_VH}vh` } : null),
+    ...(pinned ? { height: `${(total + 1) * STAGE_SCROLL_UNIT_VH}svh` } : null),
   };
 
   const stageStyle: CSSProperties | undefined = pinned
     ? {
         top: `${PIN_TOP_PX}px`,
-        height: `calc(100vh - ${PIN_TOP_PX + STAGE_BOTTOM_MARGIN_PX}px)`,
+        height: `calc(100svh - ${PIN_TOP_PX + STAGE_BOTTOM_MARGIN_PX}px)`,
       }
     : undefined;
 

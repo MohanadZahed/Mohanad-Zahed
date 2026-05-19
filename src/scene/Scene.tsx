@@ -49,7 +49,7 @@ export function Scene() {
 
     // Blend driven by where the About anchor sits on screen. smoothstep clamps,
     // so the avatar holds at the About pose once the anchor passes the threshold.
-    const vh = window.visualViewport?.height ?? window.innerHeight;
+    const vh = document.documentElement.clientHeight;
     const aboutCenterFromTop = aboutRect.top + aboutRect.height / 2;
     const t = smoothstep(vh * BLEND_START_FROM_BOTTOM, vh * BLEND_END_FROM_BOTTOM, aboutCenterFromTop);
     useScrollStore.getState().setAvatarBlend(t);

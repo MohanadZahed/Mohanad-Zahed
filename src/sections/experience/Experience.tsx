@@ -25,7 +25,7 @@ export function Experience() {
         </p>
       </div>
 
-      <div className='space-y-[6vh] pb-[10vh]'>
+      <div className='space-y-[6svh] pb-[10svh]'>
         {EXPERIENCE.map((company) => (
           <CompanyBlock key={company.id} company={company} />
         ))}

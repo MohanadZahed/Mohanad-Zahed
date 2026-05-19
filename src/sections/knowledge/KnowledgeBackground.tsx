@@ -42,10 +42,10 @@ export function KnowledgeBackground() {
       // height (mobile sections stack much taller than desktop).
       const beigeAlpha = smoothstep(0, 1, approach);
 
-      const vh = window.innerHeight;
+      const vh = document.documentElement.clientHeight;
       const ty = lerp((DISC_FALL_FROM_VH * vh) / 100, 0, fall);
 
-      const vw = window.innerWidth;
+      const vw = document.documentElement.clientWidth;
       const vmin = Math.min(vw, vh);
       const diagonal = Math.sqrt(vw * vw + vh * vh);
       const size = lerp(DISC_BOX_PX, diagonal, expand);

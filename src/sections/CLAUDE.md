@@ -15,6 +15,7 @@ Sections are pure HTML/Tailwind that scrolls *over* the persistent 3D canvas. Th
 - Each section: `min-h-screen`, `position: relative`. Pad with section-specific Tailwind, but don't fight the screen height.
 - Canvas mount: `fixed inset-0 -z-10 pointer-events-none` in the root layout.
 - Lenis owns smooth scroll. Do not also enable `scroll-behavior: smooth` in CSS.
+- **Viewport-height unit: always `svh`, never `dvh` or plain `vh`.** Mobile browsers (iOS Safari, Chrome Android) show/hide the URL bar on scroll-direction reversal. `dvh` tracks that live and causes vertical jiggle as the page reflows; `vh` resolves to the *large* viewport so it disagrees with `dvh` neighbours. `svh` (small viewport — URL-bar-visible state) is stable across URL-bar toggles in every browser that supports `dvh`, so the layout never reflows. Applies to: section heights, sticky-stage heights, paddings, anchor `top`s, font-size `clamp()` fallbacks — anywhere you'd reach for a viewport-height unit. The numeric constants (`SECTION_VH`, `STAGE_SCROLL_UNIT_VH`, etc.) keep their `_VH` names; only the *unit string* appended at the call site is `svh`. For JS that needs the live viewport height, read `document.documentElement.clientHeight` (the svh-equivalent layout viewport — stable across URL-bar toggles), not `window.innerHeight` or `visualViewport.height`.
 
 ## Choreography (canonical timeline)
 
@@ -45,7 +46,7 @@ Sections that span more than one viewport-height (currently Notebook, Knowledge,
 - Components inside that section subscribe to the section-local field, not the global one. Subscribe via `useScrollStore.subscribe(...)` and write to refs/`style.transform` directly when you need 60fps motion without re-renders (see `CertificateStrip`).
 - Sibling sections that need to coordinate (e.g. Skills sliding over the notebook) read a derived store field (e.g. `notebookHandoff`).
 - Experience is the exception: it's a long section but its choreography is pure CSS sticky-stacking, so it doesn't need a section-local store field. Don't add one unless a future feature actually requires it.
-- Certificates is the first horizontal-scroll section. It still uses CSS `position: sticky` on a 100vh inner stage (no GSAP `pin: true`) — the sticky-release moment at section.bottom = viewport.bottom is exactly the "last card centred" hand-off where the strip continues translating during the natural-flow tail.
+- Certificates is the first horizontal-scroll section. It still uses CSS `position: sticky` on a 100svh inner stage (no GSAP `pin: true`) — the sticky-release moment at section.bottom = viewport.bottom is exactly the "last card centred" hand-off where the strip continues translating during the natural-flow tail.
 
 ## Content data
 

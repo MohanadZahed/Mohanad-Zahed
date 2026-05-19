@@ -38,7 +38,7 @@ export function Notebook() {
       ref={sectionRef}
       aria-labelledby='notebook-h2'
       className='relative'
-      style={{ height: `${SECTION_VH}vh` }}
+      style={{ height: `${SECTION_VH}svh` }}
     >
       <NotebookStage progress={progress} />
     </section>
