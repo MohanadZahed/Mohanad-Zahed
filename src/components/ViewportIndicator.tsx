@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Set to false to hide the viewport indicator
-const ENABLED = true;
+// Dev-only: hidden in production builds
+const ENABLED = import.meta.env.DEV;
 
 type Dims = {
   innerW: number;
