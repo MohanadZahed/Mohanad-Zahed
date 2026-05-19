@@ -216,9 +216,9 @@ function MathSvg({
 
     const targetX = restX + pushX;
     const targetY = restY + pushY;
-    // At rest the SVGs sit at 0.3 once fully expanded; cursor proximity
+    // At rest the SVGs sit at 0.15 once fully expanded; cursor proximity
     // lifts them toward 1.0 while preserving the colour-glow lerp below.
-    const REST_OPACITY = 0.3;
+    const REST_OPACITY = 0.15;
     const targetOpacity = expand * (REST_OPACITY + (1 - REST_OPACITY) * prox);
 
     mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 4, delta);
