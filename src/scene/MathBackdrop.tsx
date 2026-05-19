@@ -57,7 +57,7 @@ const IDLE_SCALE_AMP = 0.06;
 const IDLE_SCALE_SPEED = 0.28;
 
 const PROX_NEAR = 0.05;
-const PROX_FAR = 0.9;
+const PROX_FAR = 0.6;
 const PUSH_NDC_MAX = 0.06;
 
 const BASE_COLOR = new Color('#38bdf8');
