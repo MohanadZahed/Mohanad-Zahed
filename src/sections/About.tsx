@@ -65,7 +65,7 @@ export function About() {
       <div
         data-avatar-anchor='about'
         aria-hidden='true'
-        className='pointer-events-none absolute size-0  right-[26%] min-[900px]:top-1/2 min-[900px]:left-1/4 min-[900px]:right-auto'
+        className='pointer-events-none absolute size-0  right-[26%] min-[900px]:top-1/3 min-[900px]:left-1/4 min-[900px]:right-auto'
       />
 
       <div className='bg-secondary relative min-h-full flex items-center' style={{ zIndex: -11 }}>
