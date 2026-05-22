@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 250" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Short floating trace upper-right with end ring -->
+  <path d="M195 145 L245 145"/>
+  <circle cx="250" cy="145" r="5"/>
+
+  <!-- Main zigzag along the bottom -->
+  <path d="M0 200 L50 200"/>
+  <circle cx="50" cy="200" r="5"/>
+  <path d="M55 200 L75 200 L100 225 L140 225"/>
+  <circle cx="140" cy="225" r="3" fill="#ffffff"/>
+  <path d="M140 225 L155 225"/>
+  <circle cx="160" cy="225" r="3" fill="#ffffff"/>
+  <path d="M160 225 L185 225 L205 205"/>
+  <circle cx="205" cy="200" r="5"/>
+  <path d="M205 225 L240 225"/>
+  <circle cx="245" cy="225" r="5"/>
+  <path d="M250 225 L260 225 L280 205 L320 205"/>
+</svg>

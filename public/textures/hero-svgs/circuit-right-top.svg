@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 445 322" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Trace 1: upper-left ring → right → 45° down to lower ring on the left -->
+  <circle cx="124" cy="22" r="5"/>
+  <path d="M129 22 L185 22"/>
+  <circle cx="185" cy="22" r="3" fill="#ffffff"/>
+  <path d="M185 22 L155 52 L100 52"/>
+  <circle cx="95" cy="52" r="5"/>
+
+  <!-- Trace 2: top middle ring with small node, horizontal across, then down-right step to lower-right ring -->
+  <circle cx="232" cy="22" r="5"/>
+  <path d="M237 22 L262 22"/>
+  <circle cx="262" cy="22" r="3" fill="#ffffff"/>
+  <path d="M262 22 L300 22 L320 42 L335 42"/>
+  <circle cx="340" cy="42" r="5"/>
+
+  <!-- Trace 3: small ring lower-left of the right cluster → up-right step → small node → down-right step → right ring -->
+  <circle cx="225" cy="62" r="5"/>
+  <path d="M230 62 L255 62 L275 42 L300 42"/>
+  <circle cx="300" cy="42" r="3" fill="#ffffff"/>
+  <path d="M300 42 L320 62 L375 62"/>
+  <circle cx="380" cy="62" r="5"/>
+</svg>

@@ -1,15 +1,314 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import { useEffect, useRef, type CSSProperties, type RefObject } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useScrollStore } from '../store/useScrollStore';
 
 type Props = {
   triggerRef: RefObject<HTMLElement | null>;
 };
 
-export function HeroBackground({ triggerRef }: Props) {
-  const imgRef = useRef<HTMLImageElement>(null);
+type IconSpec = {
+  src: string;
+  className: string;
+  restOpacity: number;
+  style?: CSSProperties;
+};
 
+const ICONS: IconSpec[] = [
+  // — corner circuits (filename = position)
+  {
+    src: 'circuit-left-top.svg',
+    className: 'absolute top-[15svh] left-0 w-[34vw] max-w-[520px] aspect-[565/425]',
+    restOpacity: 0.3,
+  },
+
+  // — top-left cluster
+  {
+    src: 'javascript.svg',
+    className: 'absolute top-[9svh] left-[5vw] w-12 sm:w-16 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[4svh] left-[3vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[11svh] left-[2vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'code_tag_icon.svg',
+    className: 'absolute top-[3svh] left-[8vw] w-14 sm:w-50 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'brackets-curly-svgrepo-com.svg',
+    className: 'absolute top-[15svh] left-[15vw] w-10 sm:w-14 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'binary_two_rows_mono.svg',
+    className: 'absolute top-[2svh] left-[17vw] w-28 sm:w-40 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'cloud-upload-svgrepo-com.svg',
+    className: 'absolute top-[3svh] left-[26vw] w-10 sm:w-14 aspect-square',
+    restOpacity: 0.3,
+  },
+
+  // — top-right cluster
+  {
+    src: 'circuit-right-top.svg',
+    className: 'absolute top-0 right-[3vw] w-[34vw] max-w-[520px] aspect-[565/425]',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'git.svg',
+    className: 'absolute top-[3svh] right-[1vw] w-10 sm:w-20 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'brackets-curly-svgrepo-com.svg',
+    className: 'absolute top-[12svh] right-[8vw] w-10 sm:w-14 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'terminal_prompt_boxed.svg',
+    className: 'absolute top-[14svh] right-[0vw] w-16 sm:w-45 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[10svh] right-[19vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[15svh] right-[1vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[2svh] right-[0.5vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[28svh] right-[6vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute top-[24svh] right-[0.5vw] w-6 sm:w-7 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute top-[2svh] right-[23vw] w-6 sm:w-6 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'cloud-upload-svgrepo-com.svg',
+    className: 'absolute top-[30svh] right-[1vw] w-10 sm:w-17 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'semicolon_icon.svg',
+    className: 'absolute top-[34svh] right-[-0.5vw] w-6 sm:w-30 aspect-square',
+    restOpacity: 0.45,
+  },
+  {
+    src: 'code-code-tags-html-inline-editor-svgrepo-com.svg',
+    className: 'absolute top-[42svh] right-[2vw] w-12 sm:w-16 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'hash.svg',
+    className: 'absolute top-[48svh] right-[2vw] w-10 sm:w-14 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[52svh] right-[1vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[53svh] right-[6vw] w-4 aspect-square',
+    restOpacity: 0.5,
+  },
+
+  // — middle edges
+  {
+    src: 'globe-1-svgrepo-com.svg',
+    className: 'absolute top-[25svh] left-[2vw] w-10 sm:w-19 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute top-[25svh] left-[8vw] w-6 sm:w-8 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'terminal_prompt_icon.svg',
+    className: 'absolute top-[38svh] left-[-1vw] w-10 sm:w-42 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'semicolon_icon.svg',
+    className: 'absolute top-[32svh] left-[1vw] w-6 sm:w-30 aspect-square',
+    restOpacity: 0.45,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute top-[51svh] left-[1vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+
+  // — bottom-left cluster (React atom, code tag, binary, big circle)
+  {
+    src: 'git.svg',
+    className: 'absolute bottom-[40svh] left-[2vw] w-10 sm:w-18 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute bottom-[41svh] left-[7.5vw] w-5 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circuit-left-bottom.svg',
+    className: 'absolute bottom-43 left-0 w-[30vw] max-w-[350px] aspect-[565/425]',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'circuit-left-bottom2.svg',
+    className: 'absolute bottom-[5svh] left-0 w-[26vw] max-w-[400px] aspect-[565/425]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'react_dark.svg',
+    className: 'absolute bottom-[15svh] left-[3vw] w-14 sm:w-35 aspect-square',
+    restOpacity: 0.35,
+  },
+  {
+    src: 'code_tag_icon.svg',
+    className: 'absolute bottom-[17svh] left-[15vw] w-12 sm:w-40 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'binary_two_rows_mono.svg',
+    className: 'absolute bottom-[7svh] left-[20vw] w-28 sm:w-35 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute bottom-[26svh] left-[2vw] w-6 sm:w-7 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute bottom-[22svh] left-[1vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute bottom-[15svh] left-[2vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+
+  // — bottom-right cluster (globe, hash, Angular, git diamond)
+
+  {
+    src: 'angular.svg',
+    className: 'absolute bottom-[30svh] right-[3vw] w-12 sm:w-24 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute bottom-[28svh] right-[1vw] w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute bottom-[36svh] right-[1vw]  w-6 sm:w-7 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circuit-right-bottom.svg',
+    className: 'absolute bottom-0 right-[-1vw] w-[34vw] max-w-[520px] aspect-[565/425]',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'code_tag_icon.svg',
+    className: 'absolute bottom-[5svh] right-[13vw] w-14 sm:w-50 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute bottom-[5svh] right-[13vw]  w-6 sm:w-7 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute bottom-[3svh] right-[20vw]  w-6 sm:w-7 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'plus.svg',
+    className: 'absolute bottom-[14svh] right-[21vw]  w-6 sm:w-7 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'circle.svg',
+    className: 'absolute bottom-[15svh] right-[15vw]  w-4 aspect-square',
+    restOpacity: 0.4,
+  },
+  {
+    src: 'globe-1-svgrepo-com.svg',
+    className: 'absolute bottom-[6svh] right-[23vw] w-10 sm:w-20 aspect-square',
+    restOpacity: 0.3,
+  },
+  {
+    src: 'binary_two_rows_mono.svg',
+    className: 'absolute bottom-[4svh] right-[27vw] w-28 sm:w-40 aspect-[680/400]',
+    restOpacity: 0.25,
+  },
+  // — scattered dots
+  {
+    src: 'circle-svgrepo-com.svg',
+    className: 'absolute top-[20svh] left-[36vw] w-2 aspect-square',
+    restOpacity: 0.5,
+  },
+  {
+    src: 'circle-svgrepo-com.svg',
+    className: 'absolute top-[12svh] right-[36vw] w-2 aspect-square',
+    restOpacity: 0.5,
+  },
+];
+
+const PROX_NEAR_PX = 60;
+const PROX_FAR_PX = 280;
+const DAMP = 0.15;
+// BASE = white (255,255,255), GLOW = sky cyan #38bdf8 (56,189,248)
+const GLOW_R = 56;
+const GLOW_G = 189;
+const GLOW_B = 248;
+
+const smoothstep = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
+export function HeroBackground({ triggerRef }: Props) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Parallax — unchanged behaviour from previous implementation
   useEffect(() => {
-    const el = imgRef.current;
+    const el = wrapperRef.current;
     const trigger = triggerRef.current;
     if (!el || !trigger) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -26,22 +325,125 @@ export function HeroBackground({ triggerRef }: Props) {
     return () => st.kill();
   }, [triggerRef]);
 
+  // Cursor-proximity tinting (MathBackdrop parity, HTML side)
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (matchMedia('(pointer: coarse)').matches) return;
+
+    const total = ICONS.length;
+    // Cached rect centres (recomputed on resize/scroll, not every frame)
+    const centres = new Float32Array(total * 2);
+    // Current displayed proximity per icon (damped toward target each frame)
+    const current = new Float32Array(total);
+
+    const measure = () => {
+      for (let i = 0; i < total; i++) {
+        const el = iconRefs.current[i];
+        if (!el) {
+          centres[i * 2] = -9999;
+          centres[i * 2 + 1] = -9999;
+          continue;
+        }
+        const r = el.getBoundingClientRect();
+        centres[i * 2] = r.left + r.width / 2;
+        centres[i * 2 + 1] = r.top + r.height / 2;
+      }
+    };
+
+    let pointerX = -9999;
+    let pointerY = -9999;
+    let isInside = false;
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      isInside = true;
+    };
+    const onPointerLeave = () => {
+      isInside = false;
+    };
+
+    let rafId = 0;
+    const tick = () => {
+      const subscribers = useScrollStore;
+      // Tiny optimisation: pause loop when hero isn't on screen (progress > 0.05)
+      // Hero range ends at ~0.032 global progress, so > 0.05 means scrolled past.
+      const p = subscribers.getState().progress;
+      const heroVisible = p < 0.06;
+
+      for (let i = 0; i < total; i++) {
+        const el = iconRefs.current[i];
+        if (!el) continue;
+
+        let target = 0;
+        if (heroVisible && isInside) {
+          const dx = pointerX - centres[i * 2];
+          const dy = pointerY - centres[i * 2 + 1];
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          target = 1 - smoothstep(PROX_NEAR_PX, PROX_FAR_PX, dist);
+        }
+
+        // Damp current toward target
+        const cur = current[i] + (target - current[i]) * DAMP;
+        current[i] = cur;
+
+        const rest = ICONS[i].restOpacity;
+        const opacity = rest + (1 - rest) * cur;
+        // RGB lerp white → cyan
+        const r = Math.round(255 + (GLOW_R - 255) * cur);
+        const g = Math.round(255 + (GLOW_G - 255) * cur);
+        const b = Math.round(255 + (GLOW_B - 255) * cur);
+
+        el.style.opacity = opacity.toFixed(3);
+        el.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    };
+
+    measure();
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerleave', onPointerLeave);
+    window.addEventListener('resize', measure);
+    window.addEventListener('scroll', measure, { passive: true });
+    rafId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('scroll', measure);
+    };
+  }, []);
+
   return (
-    <picture>
-      <source media='(max-width: 767px)' srcSet='/hero-bg-sm.png' />
-      {/* TODO: drop in when files land
-      <source media='(max-width: 1279px)' srcSet='/hero-bg-md.png' />
-      <source media='(max-width: 1919px)' srcSet='/hero-bg-lg.png' />
-      */}
-      <img
-        ref={imgRef}
-        src='/hero-bg-xl.png'
-        alt=''
-        aria-hidden='true'
-        decoding='async'
-        fetchPriority='high'
-        className='absolute inset-x-0 top-[-10%] w-full h-[120%] object-cover object-center will-change-transform pointer-events-none select-none -z-20'
-      />
-    </picture>
+    <div
+      ref={wrapperRef}
+      aria-hidden='true'
+      className='absolute inset-0 -z-20 bg-primary overflow-hidden pointer-events-none will-change-transform'
+    >
+      {ICONS.map((icon, i) => {
+        const url = `/textures/hero-svgs/${encodeURI(icon.src)}`;
+        const maskStyle: CSSProperties = {
+          WebkitMaskImage: `url(${url})`,
+          maskImage: `url(${url})`,
+          opacity: icon.restOpacity,
+          backgroundColor: '#ffffff',
+          ...icon.style,
+        };
+        return (
+          <div
+            key={i}
+            ref={(el) => {
+              iconRefs.current[i] = el;
+            }}
+            className={`hero-bg-icon ${icon.className}`}
+            style={maskStyle}
+          />
+        );
+      })}
+    </div>
   );
 }
