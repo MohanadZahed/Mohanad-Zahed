@@ -57,9 +57,11 @@ function clamp(min: number, v: number, max: number): number {
 }
 
 // Global progress band where the Certificates section is on stage.
-// Page composition: Hero(1) + About(1) + Notebook(6.25) + Skills(1) + Knowledge(3)
-// + Certificates(3) + Experience(~16) + Contact(1) ≈ 32.25vh → scroll range ≈ 31.25vh.
-const SCROLL_RANGE_VH = 31.25;
-export const CERTIFICATES_TOP_PROGRESS = 12.25 / SCROLL_RANGE_VH;
-export const CERTIFICATES_PIN_END_PROGRESS = 14.25 / SCROLL_RANGE_VH;
-export const CERTIFICATES_BOTTOM_PROGRESS = 15.25 / SCROLL_RANGE_VH;
+// Page composition: Hero(1) + About(1) + Notebook(6.9) + Skills(2.2 box, −2.18 overlap)
+// + Knowledge(3) + Certificates(3) + Experience(~16) + Contact(1) → scroll range ≈ 32.77vh.
+// NOTE: these derived markers are nominal and currently unused in code (Certificates
+// runs off section-local certificatesProgress). Kept directionally correct only.
+const SCROLL_RANGE_VH = 32.77;
+export const CERTIFICATES_TOP_PROGRESS = 13.77 / SCROLL_RANGE_VH;
+export const CERTIFICATES_PIN_END_PROGRESS = 15.77 / SCROLL_RANGE_VH;
+export const CERTIFICATES_BOTTOM_PROGRESS = 16.77 / SCROLL_RANGE_VH;

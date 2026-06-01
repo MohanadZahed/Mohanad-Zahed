@@ -38,7 +38,7 @@
 }
 
 @utility bg-canvas-gradient {
-  background: linear-gradient(135deg, var(--color-canvas-from) 0%, var(--color-canvas-to) 100%);
+  background: linear-gradient(134deg, #000000 0%, #131313 100%);
 }
 
 @keyframes cursor-blink {

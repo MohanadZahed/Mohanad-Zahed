@@ -21,11 +21,18 @@ export function LaptopScreenMedia({ progress }: LaptopScreenMediaProps) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    // playbackRate resets when a source (re)loads, so reassert it on metadata.
+    const setRate = () => {
+      v.playbackRate = 2;
+    };
+    setRate();
+    v.addEventListener('loadedmetadata', setRate);
     if (prefersReducedMotion || videoCovered) {
       v.pause();
     } else {
       void v.play().catch(() => {});
     }
+    return () => v.removeEventListener('loadedmetadata', setRate);
   }, [prefersReducedMotion, videoCovered]);
 
   const screenStyle: CSSProperties = {

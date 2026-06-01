@@ -83,14 +83,16 @@ export function getRingGeometry(viewportW: number, viewportH: number): {
 }
 
 // Global progress band where the YogaAvatar is on stage.
-// Page composition: Hero(1) + About(1) + Notebook(6.25) + Skills(1) + Knowledge(3)
-// + Certificates(3) + Experience(~16) + Contact(1) ≈ 32.25vh → scroll range ≈ 31.25vh.
+// Page composition: Hero(1) + About(1) + Notebook(6.9) + Skills(2.2 box, −2.18 overlap)
+// + Knowledge(3) + Certificates(3) + Experience(~16) + Contact(1) → scroll range ≈ 32.77vh.
+// NOTE: these derived markers are nominal and currently unused in code (Knowledge runs
+// off section-local knowledgeProgress/knowledgeApproach). Kept directionally correct only.
 // TOP   = section TOP at viewport BOTTOM (avatar starts rising from below).
 // CENTER = section TOP at viewport TOP (sticky pins, avatar at viewport centre).
 // PIN_END = ScrollTrigger end ('bottom bottom'), knowledgeProgress reaches 1.
 // BOTTOM  = section BOTTOM at viewport TOP (section fully scrolled out).
-const SCROLL_RANGE_VH = 31.25;
-export const KNOWLEDGE_TOP_PROGRESS = 8.6 / SCROLL_RANGE_VH;
-export const KNOWLEDGE_CENTER_PROGRESS = 9.6 / SCROLL_RANGE_VH;
-export const KNOWLEDGE_PIN_END_PROGRESS = 12.26 / SCROLL_RANGE_VH;
-export const KNOWLEDGE_BOTTOM_PROGRESS = 12.95 / SCROLL_RANGE_VH;
+const SCROLL_RANGE_VH = 32.77;
+export const KNOWLEDGE_TOP_PROGRESS = 10.12 / SCROLL_RANGE_VH;
+export const KNOWLEDGE_CENTER_PROGRESS = 11.12 / SCROLL_RANGE_VH;
+export const KNOWLEDGE_PIN_END_PROGRESS = 13.78 / SCROLL_RANGE_VH;
+export const KNOWLEDGE_BOTTOM_PROGRESS = 14.47 / SCROLL_RANGE_VH;

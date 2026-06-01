@@ -1,7 +1,9 @@
-export const SECTION_VH = 625;
+export const SECTION_VH = 690;
 
 export const SMALL_NOTEBOOK_WIDTH_PX = 480;
 export const FULL_NOTEBOOK_MAX_WIDTH_PX = 2000;
+
+export const NOTEBOOK_ASPECT = 16 / 10;
 
 export const FINDER_BOX_WIDTH_PX = 360;
 export const FINDER_BOX_HEIGHT_PX = 260;
@@ -39,9 +41,6 @@ export const PHASE = {
   IMPROVE_TYPE_IN: [0.65, 0.68] as const,
   IMPROVE_HOLD_END: 0.72,
   IMPROVE_FADE_END: 0.74,
-
-  HANDOFF_START: 0.8,
-  HANDOFF_END: 0.87,
 } as const;
 
 export const SCREEN_RECT = {
@@ -57,3 +56,51 @@ export const MEDIA_SCREEN_RECT = {
   widthPct: 68,
   heightPct: 70,
 } as const;
+
+// Rectangle (in % of the notebook image) that the Skills section fills as it
+// emerges from / scales out of the laptop screen. Independent of the video so
+// you can tune it freely. All four are percentages of the notebook image:
+//   leftPct / topPct  → top-left corner of the rect
+//   widthPct / heightPct → its size
+// Lower topPct or larger heightPct = taller (reaches further down the screen).
+export const SKILLS_SCREEN_RECT = {
+  leftPct: 16.38,
+  topPct: 7,
+  widthPct: 67.7,
+  heightPct: 70,
+} as const;
+
+/**
+ * The notebook's final (fully scaled-up) box in viewport pixels. Past
+ * PHASE.SCALE_END the wrapper is viewport-centered with this size, so the box
+ * is deterministic and can be reproduced anywhere that needs the on-screen
+ * geometry (e.g. the Skills section emerging from the laptop screen).
+ */
+export function computeNotebookBoxPx(vw: number, vh: number) {
+  const fullWidth = Math.min(vw, FULL_NOTEBOOK_MAX_WIDTH_PX);
+  const fullHeightForWidth = fullWidth / NOTEBOOK_ASPECT;
+  const widthIfHeightCapped = vh * NOTEBOOK_ASPECT;
+  const finalWidth = fullHeightForWidth > vh ? Math.min(widthIfHeightCapped, fullWidth) : fullWidth;
+  const finalHeight = finalWidth / NOTEBOOK_ASPECT;
+  return {
+    finalWidth,
+    finalHeight,
+    boxLeft: (vw - finalWidth) / 2,
+    boxTop: (vh - finalHeight) / 2,
+  };
+}
+
+/**
+ * The on-screen rectangle (in viewport pixels) that the Skills section fills as
+ * it emerges from the laptop screen. Driven by SKILLS_SCREEN_RECT — tune that
+ * constant to resize/reposition the Skills view inside the notebook.
+ */
+export function computeScreenRectPx(vw: number, vh: number) {
+  const { finalWidth, finalHeight, boxLeft, boxTop } = computeNotebookBoxPx(vw, vh);
+  return {
+    rectX: boxLeft + (SKILLS_SCREEN_RECT.leftPct / 100) * finalWidth,
+    rectY: boxTop + (SKILLS_SCREEN_RECT.topPct / 100) * finalHeight,
+    rectW: (SKILLS_SCREEN_RECT.widthPct / 100) * finalWidth,
+    rectH: (SKILLS_SCREEN_RECT.heightPct / 100) * finalHeight,
+  };
+}

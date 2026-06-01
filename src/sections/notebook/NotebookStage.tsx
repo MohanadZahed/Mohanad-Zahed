@@ -1,12 +1,12 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { lerp, smoothstep } from '../../scene/lib/math';
 import { Typewriter } from '../../components/Typewriter';
-import { useScrollStore } from '../../store/useScrollStore';
 import {
+  computeNotebookBoxPx,
   FINDER_BOX_HEIGHT_PX,
   FINDER_BOX_RANGES,
   FINDER_BOX_WIDTH_PX,
-  FULL_NOTEBOOK_MAX_WIDTH_PX,
+  NOTEBOOK_ASPECT,
   PHASE,
   SMALL_NOTEBOOK_WIDTH_PX,
 } from './notebook.constants';
@@ -20,9 +20,10 @@ interface NotebookStageProps {
 }
 
 const NOTEBOOK_SRC = '/textures/notebook.png';
-const NOTEBOOK_ASPECT = 16 / 10;
 
-const TITLE_TYPEWRITER_GLOBAL_PROGRESS = 0.054;
+// The title types in over this section-local window, then holds fully typed
+// until it begins exiting at PHASE.PIN_START.
+const TITLE_TYPE_END = 0.045;
 const TITLE_BOTTOM_APPROX_PX = 180;
 const NOTEBOOK_INITIAL_GAP_PX = 250;
 
@@ -37,8 +38,6 @@ function clamp01(n: number) {
 export function NotebookStage({ progress }: NotebookStageProps) {
   const { t, tArray, locale } = useT();
   const TITLE_TEXT = t('notebook.title');
-  const globalProgress = useScrollStore((s) => s.progress);
-  const titleStarted = globalProgress >= TITLE_TYPEWRITER_GLOBAL_PROGRESS;
 
   const [viewport, setViewport] = useState(() => ({
     w: typeof window === 'undefined' ? 1920 : document.documentElement.clientWidth,
@@ -55,17 +54,15 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const titleProgress = smoothstep(0, PHASE.PIN_START, progress);
-  const titleTranslateY = -titleProgress * (viewport.h * 0.6);
-  const titleOpacity = 1 - titleProgress;
+  // Title types in over [0, TITLE_TYPE_END] (scroll-driven), holds, then exits.
+  const titleType = clamp01(progress / TITLE_TYPE_END);
+  const titleExit = smoothstep(TITLE_TYPE_END, PHASE.PIN_START, progress);
+  const titleTranslateY = -titleExit * (viewport.h * 0.6);
+  const titleOpacity = 1 - titleExit;
 
   const notebookEntryT = smoothstep(0, PHASE.PIN_START, progress);
 
-  const fullWidth = Math.min(viewport.w, FULL_NOTEBOOK_MAX_WIDTH_PX);
-  const fullHeightForWidth = fullWidth / NOTEBOOK_ASPECT;
-  const widthIfHeightCapped = viewport.h * NOTEBOOK_ASPECT;
-  const finalWidth =
-    fullHeightForWidth > viewport.h ? Math.min(widthIfHeightCapped, fullWidth) : fullWidth;
+  const { finalWidth } = computeNotebookBoxPx(viewport.w, viewport.h);
 
   const smallNotebookWidth = Math.min(SMALL_NOTEBOOK_WIDTH_PX, viewport.w * 0.72);
   const scaleT = smoothstep(PHASE.SCALE_START, PHASE.SCALE_END, progress);
@@ -75,9 +72,6 @@ export function NotebookStage({ progress }: NotebookStageProps) {
   const initialNotebookTopPx = TITLE_BOTTOM_APPROX_PX + NOTEBOOK_INITIAL_GAP_PX;
   const initialOffsetY = initialNotebookTopPx - viewport.h / 2 + currentHeight / 2;
   const notebookEntryOffsetY = (1 - notebookEntryT) * initialOffsetY;
-
-  const handoff = smoothstep(PHASE.HANDOFF_START, PHASE.HANDOFF_END, progress);
-  const handoffExitPx = handoff * viewport.h;
 
   const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
   const finderBoxWidth = isMobile
@@ -118,7 +112,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
     position: 'absolute',
     left: '50%',
     top: '50%',
-    transform: `translate(-50%, calc(-50% + ${notebookEntryOffsetY}px - ${handoffExitPx}px))`,
+    transform: `translate(-50%, calc(-50% + ${notebookEntryOffsetY}px))`,
     width: currentWidth,
     height: currentHeight,
     willChange: 'width, height, transform',
@@ -141,7 +135,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
           as='h2'
           id='notebook-h2'
           text={TITLE_TEXT}
-          start={titleStarted}
+          scrollProgress={titleType}
           cursorMode='hide'
           className='text-secondary font-bold uppercase'
           style={{

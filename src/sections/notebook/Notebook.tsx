@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useScrollStore } from '../../store/useScrollStore';
-import { smoothstep } from '../../scene/lib/math';
 import { NotebookStage } from './NotebookStage';
-import { PHASE, SECTION_VH } from './notebook.constants';
+import { SECTION_VH } from './notebook.constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,12 +19,7 @@ export function Notebook() {
       start: 'top top',
       end: 'bottom bottom',
       onUpdate: (self) => {
-        const p = self.progress;
-        setProgress(p);
-        const store = useScrollStore.getState();
-        store.setNotebookProgress(p);
-        const handoff = smoothstep(PHASE.HANDOFF_START, PHASE.HANDOFF_END, p);
-        store.setNotebookHandoff(handoff);
+        setProgress(self.progress);
       },
     });
 

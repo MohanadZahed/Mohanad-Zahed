@@ -56,4 +56,4 @@ No GSAP `pin: true` needed — CSS sticky expresses the timing for free. The ram
 
 - `SECTION_VH`, `STAGE_VH`, `PHASE_A_FRACTION` — scroll budget.
 - `VISIBLE_CARDS`, `CARD_MIN_WIDTH_PX`, `CARD_MAX_WIDTH_PX`, `CARD_ASPECT`, `CARD_MAX_HEIGHT_PX`, `GAP_RATIO`, `HEADER_MIN_WIDTH_PX`, `HEADER_MAX_WIDTH_PX`, `VIEWPORT_FILL`, `SIDE_PAD_*` — responsive geometry inputs consumed by `computeCertificatesLayout(viewportW)`.
-- `CERTIFICATES_TOP_PROGRESS` / `_PIN_END_PROGRESS` / `_BOTTOM_PROGRESS` — derived global progress markers for anyone who needs to know where Certificates sits in the global timeline (e.g. future scene work). Recompute against the page's scroll range (currently 31.25vh) if section heights change.
+- `CERTIFICATES_TOP_PROGRESS` / `_PIN_END_PROGRESS` / `_BOTTOM_PROGRESS` — derived global progress markers for anyone who needs to know where Certificates sits in the global timeline (e.g. future scene work). Recompute against the page's scroll range (currently ≈32.77vh) if section heights change. (These markers are currently unused in code — Certificates runs off section-local `certificatesProgress`.)

@@ -3,8 +3,12 @@ import { lerp, smoothstep } from './math';
 // Radius ramp range — narrow values must stay in sync with HORIZ_START_NARROW /
 // HORIZ_END_NARROW in Scene.tsx so the orbs settle to their close pose at the
 // same scroll point the avatar reaches the heading.
-const RADIUS_START = 0.41 / 31.25;
-const RADIUS_END = 0.82 / 31.25;
+// Numerators are vh-offsets into the page; denominator is the total scroll range
+// (≈ 32.77vh after the Notebook→Skills rework) so the ramp fires at a fixed
+// document position. This band sits deep in the Hero — the denominator shift is
+// imperceptible, but kept in sync for correctness.
+const RADIUS_START = 0.41 / 32.77;
+const RADIUS_END = 0.82 / 32.77;
 const RADIUS_START_NARROW = 0;
 const RADIUS_END_NARROW = 0.01;
 const NARROW_MAX_PX = 900;
