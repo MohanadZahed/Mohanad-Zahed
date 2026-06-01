@@ -13,6 +13,7 @@ import {
 import { LaptopScreenWords } from './LaptopScreenWords';
 import { LaptopScreenMedia } from './LaptopScreenMedia';
 import { FinderBox } from './FinderBox';
+import { NotebookCircuit } from './NotebookCircuit';
 import { useT } from '../../i18n/useT';
 
 interface NotebookStageProps {
@@ -129,6 +130,8 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         pointerEvents: 'none',
       }}
     >
+      <NotebookCircuit progress={progress} />
+
       <div style={titleWrapperStyle}>
         <Typewriter
           key={locale}

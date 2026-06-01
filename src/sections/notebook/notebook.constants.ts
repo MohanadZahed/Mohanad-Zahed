@@ -43,6 +43,12 @@ export const PHASE = {
   IMPROVE_FADE_END: 0.74,
 } as const;
 
+// Circuit-tree backdrop draws on over this section-local window:
+// starts when the title finishes typing (= TITLE_TYPE_END in NotebookStage),
+// finishes exactly when the notebook image begins scaling up.
+export const CIRCUIT_PAINT_START = 0.045;
+export const CIRCUIT_PAINT_END = PHASE.SCALE_START; // 0.37
+
 export const SCREEN_RECT = {
   leftPct: 18,
   topPct: 8,
