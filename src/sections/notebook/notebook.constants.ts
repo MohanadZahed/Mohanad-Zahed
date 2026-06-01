@@ -60,7 +60,7 @@ export const MEDIA_SCREEN_RECT = {
   leftPct: 16,
   topPct: 7,
   widthPct: 68,
-  heightPct: 70,
+  heightPct: 71,
 } as const;
 
 // Rectangle (in % of the notebook image) that the Skills section fills as it

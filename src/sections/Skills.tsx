@@ -19,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const clamp01 = (n: number) => clamp(n, 0, 1);
 // Fully-clipped initial state so the content is invisible until the intro drives it.
-const HIDDEN_CLIP = 'inset(0 0 100% 0)';
+const HIDDEN_CLIP = 'inset(0 0 101% 0)';
 
 export function Skills() {
   const { t } = useT();
@@ -48,6 +48,16 @@ export function Skills() {
     if (!section || !pin || !content) return;
 
     const apply = (sp: number) => {
+      // Before the intro starts there is nothing to reveal. Hide it outright —
+      // a zero-area clip-path antialiases to a 1px line, which leaked the
+      // content's pure-black top edge over the notebook base while the user was
+      // still scrolling the notebook (before this ScrollTrigger engaged).
+      if (sp <= 0) {
+        content.style.visibility = 'hidden';
+        return;
+      }
+      content.style.visibility = 'visible';
+
       // Past the end the content is at identity and flows normally — no clip.
       if (sp >= 0.999) {
         content.style.transform = 'none';
@@ -219,15 +229,22 @@ export function Skills() {
       aria-labelledby='skills-h2'
       className='relative'
       style={
-        { '--spot-r': `${SPOTLIGHT_RADIUS}px`, marginTop: `-${SKILLS_OVERLAP_VH}svh`, borderBottom: '2px solid white' } as CSSProperties
+        {
+          '--spot-r': `${SPOTLIGHT_RADIUS}px`,
+          marginTop: `-${SKILLS_OVERLAP_VH}svh`,
+          borderBottom: '2px solid white',
+        } as CSSProperties
       }
     >
       <div ref={pinRef}>
         <div
           ref={contentRef}
-          className='relative min-h-screen overflow-hidden bg-canvas-gradient'
+          className='relative min-h-screen overflow-hidden bg-canvas-gradient myDiv'
           style={{
             transformOrigin: '50% 0',
+            // Hidden until the intro's first frame makes it visible — see apply().
+            // Don't use a zero-area clip-path here: it antialiases to a 1px line.
+            visibility: 'hidden',
             clipPath: HIDDEN_CLIP,
             willChange: 'transform, clip-path',
           }}
