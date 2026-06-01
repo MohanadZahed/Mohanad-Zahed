@@ -130,7 +130,7 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         pointerEvents: 'none',
       }}
     >
-      <NotebookCircuit progress={progress} />
+      <NotebookCircuit progress={progress} color='var(--color-secondary)' />
 
       <div style={titleWrapperStyle}>
         <Typewriter

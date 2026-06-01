@@ -64,7 +64,6 @@ function buildCircuit(): { segments: Segment[]; nodes: Node[] } {
   const segments: Segment[] = [];
   const nodes: Node[] = [];
 
-  const ROOT_Y = 64;
   const LEAD_Y = 220;
   const A_Y = 470;
   const B_Y = 808;
@@ -84,10 +83,9 @@ function buildCircuit(): { segments: Segment[]; nodes: Node[] } {
   roots.forEach((rx, ri) => {
     const b = bias[ri];
 
-    // root ring + vertical lead to its junction
-    nodes.push({ cx: rx, cy: ROOT_Y, r: 13, filled: false });
-    segments.push({ d: `M ${rx} ${ROOT_Y} L ${rx} ${LEAD_Y}`, yTop: ROOT_Y, yBottom: LEAD_Y });
-    nodes.push({ cx: rx, cy: LEAD_Y, r: 5, filled: true });
+    // vertical lead from the very top down to its junction
+    segments.push({ d: `M ${rx} 0 L ${rx} ${LEAD_Y}`, yTop: 0, yBottom: LEAD_Y });
+    nodes.push({ cx: rx, cy: LEAD_Y, r: 3, filled: true });
 
     // level A: two children fanning toward this root's side
     const aXs = [rx + b * S_A - s_A, rx + b * S_A + s_A];
@@ -101,7 +99,7 @@ function buildCircuit(): { segments: Segment[]; nodes: Node[] } {
       const stubY = A_Y + 150 + jit(seed++) * 30;
       segments.push(connector(ax, A_Y, stubX, stubY, variant));
       flip();
-      nodes.push({ cx: stubX, cy: stubY, r: 9, filled: false });
+      nodes.push({ cx: stubX, cy: stubY, r: 5, filled: true });
 
       // level B: two children
       const bXs = [ax + b * S_B - s_B, ax + b * S_B + s_B];
@@ -115,7 +113,7 @@ function buildCircuit(): { segments: Segment[]; nodes: Node[] } {
         const termY = 1110 + ((ri * 2 + bi) % 4) * 92 + jit(seed++) * 40;
         segments.push(connector(bx, B_Y, termX, termY, variant));
         flip();
-        nodes.push({ cx: termX, cy: termY, r: 10, filled: false });
+        nodes.push({ cx: termX, cy: termY, r: 5, filled: true });
       });
     });
   });
