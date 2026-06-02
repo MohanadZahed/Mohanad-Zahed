@@ -4,6 +4,7 @@ import { useGLTF } from '@react-three/drei';
 import { Color, MathUtils, MeshStandardMaterial } from 'three';
 import type { Group, Material, Mesh } from 'three';
 import { useScrollStore } from '../store/useScrollStore';
+import { AVATAR_FADE_START, AVATAR_FADE_END } from '../sections/hero.constants';
 
 const ABOUT_YAW = Math.PI / 5;
 // The GLB's origin sits near the avatar's feet. Shift the mesh down so its
@@ -11,9 +12,10 @@ const ABOUT_YAW = Math.PI / 5;
 // scene anchor positions the visible avatar, not a point below it. Exported
 // so the Orbit can apply the same offset and stay co-centred with the avatar.
 export const VISUAL_CENTER_OFFSET_Y = -0.9;
-// Avatar fades in just before text starts (text begins at 0.5 s)
-const FADE_START = 0.2;
-const FADE_END = 1.0;
+// Avatar fades in last — after the hero name, SVGs, title, and tagline have
+// all resolved. Window lives in hero.constants so the whole intro tunes together.
+const FADE_START = AVATAR_FADE_START;
+const FADE_END = AVATAR_FADE_END;
 
 export function Avatar() {
   const groupRef = useRef<Group>(null);

@@ -1,6 +1,8 @@
-import { useEffect, useRef, type CSSProperties, type RefObject } from 'react';
+import { useEffect, useLayoutEffect, useRef, type CSSProperties, type RefObject } from 'react';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useScrollStore } from '../store/useScrollStore';
+import { HERO_SVG_DELAY, HERO_SVG_DUR, HERO_SVG_STAGGER } from './hero.constants';
 
 type Props = {
   triggerRef: RefObject<HTMLElement | null>;
@@ -289,6 +291,9 @@ const ICONS: IconSpec[] = [
   },
 ];
 
+// Extra distance past the screen edge so fly-in start points sit fully off-screen.
+const ENTRY_BUFFER_PX = 80;
+
 const PROX_NEAR_PX = 60;
 const PROX_FAR_PX = 280;
 const DAMP = 0.15;
@@ -305,6 +310,64 @@ const smoothstep = (a: number, b: number, x: number) => {
 export function HeroBackground({ triggerRef }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Entry fly-in — non-circuit SVGs collapse radially inward from off-screen,
+  // circuit SVGs slide in horizontally per side. Runs once after the hero name
+  // lands (HERO_SVG_DELAY). useLayoutEffect so the off-screen start transforms
+  // are applied before first paint (no flash at rest).
+  useLayoutEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const els = iconRefs.current.filter((el): el is HTMLDivElement => el !== null);
+    if (els.length === 0) return;
+
+    const docEl = document.documentElement;
+    const vw = docEl.clientWidth;
+    const vh = docEl.clientHeight;
+    const cxView = vw / 2;
+    const cyView = vh / 2;
+    const ringRadius = 0.5 * Math.hypot(vw, vh) + ENTRY_BUFFER_PX;
+
+    // Place every icon at its off-screen start before paint.
+    for (const el of els) {
+      const rect = el.getBoundingClientRect();
+      const isCircuit = el.dataset.heroCircuit === '1';
+      const side = el.dataset.heroSide;
+
+      if (isCircuit) {
+        const startX =
+          side === 'right' ? vw - rect.left + ENTRY_BUFFER_PX : -(rect.right + ENTRY_BUFFER_PX);
+        gsap.set(el, { x: startX, y: 0 });
+      } else {
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = cx - cxView;
+        const dy = cy - cyView;
+        const len = Math.hypot(dx, dy) || 1;
+        const r = ringRadius + Math.max(rect.width, rect.height);
+        const startX = cxView + (dx / len) * r - cx;
+        const startY = cyView + (dy / len) * r - cy;
+        gsap.set(el, { x: startX, y: startY });
+      }
+    }
+
+    const tween = gsap.to(els, {
+      x: 0,
+      y: 0,
+      duration: HERO_SVG_DUR,
+      ease: 'power3.out',
+      stagger: HERO_SVG_STAGGER,
+      delay: HERO_SVG_DELAY,
+      // Icons started off-screen, so the proximity effect cached stale centres.
+      // Re-measure once they've settled (the effect listens for 'resize').
+      onComplete: () => window.dispatchEvent(new Event('resize')),
+    });
+
+    return () => {
+      tween.kill();
+      gsap.set(els, { clearProps: 'transform' });
+    };
+  }, []);
 
   // Parallax — unchanged behaviour from previous implementation
   useEffect(() => {
@@ -433,12 +496,18 @@ export function HeroBackground({ triggerRef }: Props) {
           backgroundColor: '#ffffff',
           ...icon.style,
         };
+        // Classification for the entry fly-in: circuit pieces slide horizontally,
+        // everything else collapses radially inward; side picks the start edge.
+        const isCircuit = icon.src.startsWith('circuit');
+        const side = icon.className.includes('right-') ? 'right' : 'left';
         return (
           <div
             key={i}
             ref={(el) => {
               iconRefs.current[i] = el;
             }}
+            data-hero-circuit={isCircuit ? '1' : '0'}
+            data-hero-side={side}
             className={`hero-bg-icon ${icon.className}`}
             style={maskStyle}
           />

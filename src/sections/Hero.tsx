@@ -3,6 +3,12 @@ import gsap from 'gsap';
 import { useScrollStore } from '../store/useScrollStore';
 import { useT } from '../i18n/useT';
 import { HeroBackground } from './HeroBackground';
+import {
+  HERO_NAME_DELAY,
+  HERO_NAME_DUR,
+  HERO_TITLE_DELAY,
+  HERO_TAGLINE_DELAY,
+} from './hero.constants';
 
 function MaskedChars({ text }: { text: string }) {
   return (
@@ -61,13 +67,14 @@ export function Hero() {
       {
         width: naturalWidth,
         opacity: 1,
-        duration: 1.1,
+        duration: HERO_NAME_DUR,
         ease: 'power4.out',
         onComplete: () => gsap.set(nameEl, { width: 'auto' }),
       },
-      0.5,
+      HERO_NAME_DELAY,
     );
 
+    // Title and tagline wait for the background SVGs to fly in and settle.
     tl.to(
       titleChars,
       {
@@ -76,7 +83,7 @@ export function Hero() {
         stagger: 0.03,
         ease: 'power3.out',
       },
-      0.8,
+      HERO_TITLE_DELAY,
     );
 
     tl.to(
@@ -87,7 +94,7 @@ export function Hero() {
         duration: 0.8,
         ease: 'power2.out',
       },
-      1.4,
+      HERO_TAGLINE_DELAY,
     );
 
     return () => {
