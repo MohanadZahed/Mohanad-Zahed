@@ -5,7 +5,7 @@ import {
   TERMINAL_COMMANDS,
   TERMINAL_PROMPT_PATH,
   TERMINAL_PROMPT_USER,
-} from './notebook.constants';
+} from './manifesto.constants';
 
 interface LaptopScreenWordsProps {
   progress: number;

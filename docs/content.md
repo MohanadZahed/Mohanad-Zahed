@@ -58,9 +58,9 @@ These are the ones that get the floating-logo treatment in the ring. Pick 10–1
 
 **AI**: Claude Code, prompt engineering, LLM integration, token management.
 
-## Notebook finder boxes
+## Manifesto finder boxes
 
-Three Finder-style boxes rise sequentially through the notebook interlude. Copy lives in `src/locales/{en,de}.json` under `notebook.finderBoxes[]`. File-name window titles stay verbatim across locales.
+Three Finder-style boxes rise sequentially through the manifesto interlude. Copy lives in `src/locales/{en,de}.json` under `manifesto.finderBoxes[]`. File-name window titles stay verbatim across locales.
 
 | # | Side | File name | Lines (EN) |
 | --- | --- | --- | --- |

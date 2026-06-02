@@ -1,9 +1,9 @@
 import { useMemo, type CSSProperties } from 'react';
 import { clamp, smoothstep } from '../../scene/lib/math';
-import { CIRCUIT_PAINT_END, CIRCUIT_PAINT_START } from './notebook.constants';
+import { CIRCUIT_PAINT_END, CIRCUIT_PAINT_START } from './manifesto.constants';
 
 /**
- * Glowing circuit-tree backdrop for the Notebook section. Four top nodes send
+ * Glowing circuit-tree backdrop for the Manifesto section. Four top nodes send
  * leads down that branch (orthogonal runs + 45° elbows) into a fan of terminal
  * ring-nodes — modelled on the reference art.
  *
@@ -12,7 +12,7 @@ import { CIRCUIT_PAINT_END, CIRCUIT_PAINT_START } from './notebook.constants';
  * white. Each trace draws on per-path, but the reveal is driven by a virtual
  * horizontal sweep line falling top→bottom, so the whole tree paints downward.
  *
- * Reveal is a pure function of the notebook section-local `progress`, computed
+ * Reveal is a pure function of the manifesto section-local `progress`, computed
  * in render (the stage already re-renders every scroll tick) — no store field,
  * no useFrame, no refs.
  */
@@ -121,14 +121,14 @@ function buildCircuit(): { segments: Segment[]; nodes: Node[] } {
   return { segments, nodes };
 }
 
-interface NotebookCircuitProps {
+interface ManifestoCircuitProps {
   progress: number;
   color?: string;
 }
 
 const STROKE_WIDTH = 3.4;
 
-export function NotebookCircuit({ progress, color = '#ffffff' }: NotebookCircuitProps) {
+export function ManifestoCircuit({ progress, color = '#ffffff' }: ManifestoCircuitProps) {
   const { segments, nodes } = useMemo(() => buildCircuit(), []);
 
   const reduced =

@@ -4,7 +4,7 @@ import { lerp, smoothstep } from './math';
 // HORIZ_END_NARROW in Scene.tsx so the orbs settle to their close pose at the
 // same scroll point the avatar reaches the heading.
 // Numerators are vh-offsets into the page; denominator is the total scroll range
-// (≈ 32.77vh after the Notebook→Skills rework) so the ramp fires at a fixed
+// (≈ 32.77vh after the Manifesto→Skills rework) so the ramp fires at a fixed
 // document position. This band sits deep in the Hero — the denominator shift is
 // imperceptible, but kept in sync for correctness.
 const RADIUS_START = 0.41 / 32.77;

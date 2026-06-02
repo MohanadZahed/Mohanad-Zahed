@@ -4,7 +4,7 @@ import { getLenis } from './useLenis';
 const SECTION_IDS = [
   'hero',
   'about',
-  'notebook',
+  'manifesto',
   'skills',
   'knowledge',
   'certificates',
@@ -45,7 +45,7 @@ export function useSectionHash() {
       }
 
       // Prefer the latest section in document order when overlap occurs
-      // (e.g. Skills' negative margin makes it overlap Notebook on entry).
+      // (e.g. Skills' negative margin makes it overlap Manifesto on entry).
       let next: SectionId | '' = '';
       for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
         if (intersecting.has(SECTION_IDS[i])) {

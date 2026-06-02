@@ -6,7 +6,7 @@ import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { useSectionHash } from './hooks/useSectionHash';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
-import { Notebook } from './sections/notebook/Notebook';
+import { Manifesto } from './sections/manifesto/Manifesto';
 import { Skills } from './sections/Skills';
 import { Knowledge } from './sections/knowledge/Knowledge';
 import { KnowledgeBackground } from './sections/knowledge/KnowledgeBackground';
@@ -45,7 +45,7 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Notebook />
+        <Manifesto />
         <Skills />
         <Knowledge />
         <Certificates />

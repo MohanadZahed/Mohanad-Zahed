@@ -1,6 +1,6 @@
 # Mohanad Zahed — Portfolio
 
-A scroll-driven 3D portfolio site. The visitor sees a 3D avatar at the center of the screen with tech-stack logos circling around. As they scroll, the ring choreographs through eight sections: **Hero → About → Notebook → Skills → Knowledge → Certificates → Experience → Contact**. One persistent `<Canvas>` lives behind the page; HTML sections scroll on top.
+A scroll-driven 3D portfolio site. The visitor sees a 3D avatar at the center of the screen with tech-stack logos circling around. As they scroll, the ring choreographs through eight sections: **Hero → About → Manifesto → Skills → Knowledge → Certificates → Experience → Contact**. One persistent `<Canvas>` lives behind the page; HTML sections scroll on top.
 
 Inspiration: activetheory.net — calm, hypnotic, cinematic motion.
 
@@ -48,7 +48,7 @@ The site supports English and German via a custom Zustand + hook system — no t
 | `src/store/useLocaleStore.ts` | Zustand store: `{ locale: 'en' \| 'de', setLocale }`. Reads `localStorage.locale` on init, else detects from `navigator.language`, else defaults to `'en'`. `setLocale` writes localStorage + sets `document.documentElement.lang`. |
 | `src/i18n/dictionaries.ts` | Imports `en.json` and `de.json` and exports `DICTIONARIES: Record<Locale, unknown>`. |
 | `src/i18n/useT.ts` | `useT()` hook — returns `{ t, tArray, locale }`. `t(key, vars?)` resolves dotted keys and substitutes `{var}` tokens. `tArray(key)` returns `readonly string[]` for array-valued keys. Missing keys log `console.warn` in DEV and return the key itself. |
-| `src/locales/en.json` | English source strings — nested under `meta`, `hero`, `about`, `notebook`, `skills`, `knowledge`, `certificates`, `experience`, `contact`. |
+| `src/locales/en.json` | English source strings — nested under `meta`, `hero`, `about`, `manifesto`, `skills`, `knowledge`, `certificates`, `experience`, `contact`. |
 | `src/locales/de.json` | German source strings — same structure as `en.json`. |
 | `src/components/LanguageSwitcher.tsx` | Fixed `top-4 right-4 z-50` toggle (`EN \| DE`). Active locale highlighted with `--color-secondary`. `aria-pressed` on each button. |
 

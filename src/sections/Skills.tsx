@@ -5,7 +5,7 @@ import { CircuitBackground, SPOTLIGHT_RADIUS } from './skills/CircuitBackground'
 import { ChipScatter } from './skills/ChipScatter';
 import { useScrollStore } from '../store/useScrollStore';
 import { clamp, lerp, smoothstep } from '../scene/lib/math';
-import { computeScreenRectPx } from './notebook/notebook.constants';
+import { computeScreenRectPx } from './manifesto/manifesto.constants';
 import {
   EMERGE_END,
   INTRO_SCROLL_VH,

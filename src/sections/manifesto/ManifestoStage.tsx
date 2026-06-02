@@ -9,14 +9,14 @@ import {
   NOTEBOOK_ASPECT,
   PHASE,
   SMALL_NOTEBOOK_WIDTH_PX,
-} from './notebook.constants';
+} from './manifesto.constants';
 import { LaptopScreenWords } from './LaptopScreenWords';
 import { LaptopScreenMedia } from './LaptopScreenMedia';
 import { FinderBox } from './FinderBox';
-import { NotebookCircuit } from './NotebookCircuit';
+import { ManifestoCircuit } from './ManifestoCircuit';
 import { useT } from '../../i18n/useT';
 
-interface NotebookStageProps {
+interface ManifestoStageProps {
   progress: number;
 }
 
@@ -36,9 +36,9 @@ function clamp01(n: number) {
   return Math.max(0, Math.min(1, n));
 }
 
-export function NotebookStage({ progress }: NotebookStageProps) {
+export function ManifestoStage({ progress }: ManifestoStageProps) {
   const { t, tArray, locale } = useT();
-  const TITLE_TEXT = t('notebook.title');
+  const TITLE_TEXT = t('manifesto.title');
 
   const [viewport, setViewport] = useState(() => ({
     w: typeof window === 'undefined' ? 1920 : document.documentElement.clientWidth,
@@ -130,13 +130,13 @@ export function NotebookStage({ progress }: NotebookStageProps) {
         pointerEvents: 'none',
       }}
     >
-      <NotebookCircuit progress={progress} color='var(--color-secondary)' />
+      <ManifestoCircuit progress={progress} color='var(--color-secondary)' />
 
       <div style={titleWrapperStyle}>
         <Typewriter
           key={locale}
           as='h2'
-          id='notebook-h2'
+          id='manifesto-h2'
           text={TITLE_TEXT}
           scrollProgress={titleType}
           cursorMode='hide'
@@ -172,8 +172,8 @@ export function NotebookStage({ progress }: NotebookStageProps) {
             : { right: isMobile ? EDGE_MARGIN_PX : desktopSideOffsetPx }),
         };
 
-        const fileName = t(`notebook.finderBoxes.${i}.fileName`);
-        const lines = tArray(`notebook.finderBoxes.${i}.lines`);
+        const fileName = t(`manifesto.finderBoxes.${i}.fileName`);
+        const lines = tArray(`manifesto.finderBoxes.${i}.lines`);
 
         return (
           <div key={i} style={wrapperStyle}>

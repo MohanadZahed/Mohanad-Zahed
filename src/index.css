@@ -154,7 +154,7 @@
 @media (max-width: 639px) {
   /* Section titles: fixed mobile size (overrides inline-style + Tailwind sizes). */
   #about-h2,
-  #notebook-h2,
+  #manifesto-h2,
   #skills-h2,
   #knowledge-h2,
   #certificates-h2,

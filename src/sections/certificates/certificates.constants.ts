@@ -57,7 +57,7 @@ function clamp(min: number, v: number, max: number): number {
 }
 
 // Global progress band where the Certificates section is on stage.
-// Page composition: Hero(1) + About(1) + Notebook(6.9) + Skills(2.2 box, −2.18 overlap)
+// Page composition: Hero(1) + About(1) + Manifesto(6.9) + Skills(2.2 box, −2.18 overlap)
 // + Knowledge(3) + Certificates(3) + Experience(~16) + Contact(1) → scroll range ≈ 32.77vh.
 // NOTE: these derived markers are nominal and currently unused in code (Certificates
 // runs off section-local certificatesProgress). Kept directionally correct only.

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
 import { smoothstep } from '../../scene/lib/math';
-import { MEDIA_SCREEN_RECT, PHASE } from './notebook.constants';
+import { MEDIA_SCREEN_RECT, PHASE } from './manifesto.constants';
 
 interface LaptopScreenMediaProps {
   progress: number;

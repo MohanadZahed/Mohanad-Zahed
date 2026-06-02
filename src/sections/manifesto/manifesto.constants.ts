@@ -49,7 +49,7 @@ export const TERMINAL_PROMPT_USER = 'mohanad@zahed';
 export const TERMINAL_PROMPT_PATH = '~';
 
 // Circuit-tree backdrop draws on over this section-local window:
-// starts when the title finishes typing (= TITLE_TYPE_END in NotebookStage),
+// starts when the title finishes typing (= TITLE_TYPE_END in ManifestoStage),
 // finishes exactly when the notebook image begins scaling up.
 export const CIRCUIT_PAINT_START = 0.045;
 export const CIRCUIT_PAINT_END = PHASE.SCALE_START; // 0.37
