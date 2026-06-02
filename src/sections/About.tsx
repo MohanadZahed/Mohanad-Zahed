@@ -83,7 +83,7 @@ export function About() {
             ref={headlineRef}
             className='font-bold uppercase'
             style={{
-              fontSize: 'clamp(1.75rem, 7vw, 4.5rem)',
+              fontSize: 'clamp(2.75rem, 7vw, 5.5rem)',
               lineHeight: 1.05,
               letterSpacing: '-0.05vw',
             }}

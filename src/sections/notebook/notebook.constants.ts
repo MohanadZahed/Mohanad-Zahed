@@ -29,19 +29,24 @@ export const PHASE = {
 
   SCALE_START: 0.37,
   SCALE_END: 0.47,
-
-  PLAN_TYPE_IN: [0.47, 0.5] as const,
-  PLAN_HOLD_END: 0.54,
-  PLAN_FADE_END: 0.56,
-
-  BUILD_TYPE_IN: [0.56, 0.59] as const,
-  BUILD_HOLD_END: 0.63,
-  BUILD_FADE_END: 0.65,
-
-  IMPROVE_TYPE_IN: [0.65, 0.68] as const,
-  IMPROVE_HOLD_END: 0.72,
-  IMPROVE_FADE_END: 0.74,
 } as const;
+
+// Terminal session inside the laptop screen. Each command types in sequentially
+// after scale-up and PERSISTS once typed (no hold/fade — they stack like a real
+// shell session). Prompt line i appears at its typeStart (the prior command's
+// "enter"). The final `show skills` finishes at 0.72, leaving 0.72 → ~0.80 (where
+// Skills' overlap pin engages) to hold the fully-composed terminal before Skills
+// emerges from the screen. The prompt + verbs are CLI/code tokens, kept verbatim
+// across locales (same rule as filenames).
+export const TERMINAL_COMMANDS = [
+  { command: 'run plan', typeStart: 0.47, typeEnd: 0.51 },
+  { command: 'run build', typeStart: 0.535, typeEnd: 0.575 },
+  { command: 'run improve', typeStart: 0.6, typeEnd: 0.645 },
+  { command: 'show skills', typeStart: 0.67, typeEnd: 0.72 },
+] as const;
+
+export const TERMINAL_PROMPT_USER = 'mohanad@zahed';
+export const TERMINAL_PROMPT_PATH = '~';
 
 // Circuit-tree backdrop draws on over this section-local window:
 // starts when the title finishes typing (= TITLE_TYPE_END in NotebookStage),

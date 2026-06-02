@@ -198,7 +198,7 @@ export function Skills() {
       <header className='relative z-20 px-5 sm:px-10 md:px-16 pt-12 pointer-events-none'>
         <h2
           id='skills-h2'
-          className='text-2xl sm:text-3xl md:text-4xl font-semibold text-zinc-100 tracking-tight'
+          className='text-[2.5rem] sm:text-[2.875rem] md:text-[3.25rem] font-semibold text-zinc-100 tracking-tight uppercase'
         >
           {t('skills.heading')}
         </h2>

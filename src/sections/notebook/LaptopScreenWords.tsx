@@ -1,42 +1,46 @@
 import type { CSSProperties } from 'react';
 import { Typewriter } from '../../components/Typewriter';
-import { PHASE, SCREEN_RECT } from './notebook.constants';
+import {
+  SCREEN_RECT,
+  TERMINAL_COMMANDS,
+  TERMINAL_PROMPT_PATH,
+  TERMINAL_PROMPT_USER,
+} from './notebook.constants';
 
 interface LaptopScreenWordsProps {
   progress: number;
 }
 
-interface WordSpec {
-  text: string;
-  typeStart: number;
-  typeEnd: number;
-  holdEnd: number;
-  fadeEnd: number;
+function clamp01(n: number) {
+  return Math.max(0, Math.min(1, n));
 }
 
-const WORDS: WordSpec[] = [
-  {
-    text: '_plan',
-    typeStart: PHASE.PLAN_TYPE_IN[0],
-    typeEnd: PHASE.PLAN_TYPE_IN[1],
-    holdEnd: PHASE.PLAN_HOLD_END,
-    fadeEnd: PHASE.PLAN_FADE_END,
-  },
-  {
-    text: '_build',
-    typeStart: PHASE.BUILD_TYPE_IN[0],
-    typeEnd: PHASE.BUILD_TYPE_IN[1],
-    holdEnd: PHASE.BUILD_HOLD_END,
-    fadeEnd: PHASE.BUILD_FADE_END,
-  },
-  {
-    text: '_improve',
-    typeStart: PHASE.IMPROVE_TYPE_IN[0],
-    typeEnd: PHASE.IMPROVE_TYPE_IN[1],
-    holdEnd: PHASE.IMPROVE_HOLD_END,
-    fadeEnd: PHASE.IMPROVE_FADE_END,
-  },
-];
+const PROMPT_USER_COLOR = '#27c93f';
+const PROMPT_PATH_COLOR = '#38bdf8';
+const PROMPT_SIGIL_COLOR = 'rgba(255, 255, 255, 0.45)';
+const COMMAND_COLOR = '#f5f5f5';
+
+function Prompt() {
+  return (
+    <span style={{ whiteSpace: 'pre' }}>
+      <span style={{ color: PROMPT_USER_COLOR }}>{TERMINAL_PROMPT_USER}</span>{' '}
+      <span style={{ color: PROMPT_PATH_COLOR }}>{TERMINAL_PROMPT_PATH}</span>{' '}
+      <span style={{ color: PROMPT_SIGIL_COLOR }}>%</span>{' '}
+    </span>
+  );
+}
+
+function BlinkingCursor() {
+  return (
+    <span
+      aria-hidden='true'
+      className='cursor-blink'
+      style={{ display: 'inline-block', color: COMMAND_COLOR }}
+    >
+      ▌
+    </span>
+  );
+}
 
 export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
   const screenStyle: CSSProperties = {
@@ -46,44 +50,54 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
     width: `${SCREEN_RECT.widthPct}%`,
     height: `${SCREEN_RECT.heightPct}%`,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    gap: '0.35em',
+    padding: '1.2em',
+    fontFamily: 'var(--font-mono)',
+    fontSize: 'clamp(0.85rem, 2vw, 1.7rem)',
+    lineHeight: 1.6,
+    color: COMMAND_COLOR,
     pointerEvents: 'none',
+    overflow: 'hidden',
   };
+
+  // Only revealed commands (prompt shown) render at all. The active line is the
+  // last revealed one — it carries the blinking cursor. Once the final command
+  // is fully typed, an extra empty prompt rests at the bottom with the cursor.
+  const revealedCount = TERMINAL_COMMANDS.filter((c) => progress >= c.typeStart).length;
+  const lastDone = progress >= TERMINAL_COMMANDS[TERMINAL_COMMANDS.length - 1].typeEnd;
+  const activeIndex = revealedCount - 1;
 
   return (
     <div style={screenStyle}>
-      {WORDS.map((w) => {
-        const opacity =
-          progress < w.typeStart || progress >= w.fadeEnd
-            ? 0
-            : progress < w.holdEnd
-              ? 1
-              : 1 - (progress - w.holdEnd) / Math.max(0.0001, w.fadeEnd - w.holdEnd);
-
-        const wordScrollProgress = Math.max(
-          0,
-          Math.min(1, (progress - w.typeStart) / Math.max(0.0001, w.typeEnd - w.typeStart)),
-        );
+      {TERMINAL_COMMANDS.slice(0, revealedCount).map((c, i) => {
+        const typeProgress = clamp01((progress - c.typeStart) / (c.typeEnd - c.typeStart));
+        // The cursor sits on the active input line, but once the session has
+        // finished it hops to the resting prompt below instead.
+        const showCursor = i === activeIndex && !lastDone;
 
         return (
-          <div
-            key={w.text}
-            style={{
-              position: 'absolute',
-              opacity,
-              transition: 'opacity 120ms linear',
-              color: '#ffffff',
-              fontSize: 'clamp(2rem, 6vw, 6rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              textTransform: 'lowercase',
-            }}
-          >
-            <Typewriter text={w.text} scrollProgress={wordScrollProgress} cursorMode='blink' />
+          <div key={c.command} style={{ whiteSpace: 'pre' }}>
+            <Prompt />
+            <Typewriter
+              text={c.command}
+              scrollProgress={typeProgress}
+              cursorMode='none'
+              style={{ color: COMMAND_COLOR }}
+            />
+            {showCursor && <BlinkingCursor />}
           </div>
         );
       })}
+
+      {lastDone && (
+        <div style={{ whiteSpace: 'pre' }}>
+          <Prompt />
+          <BlinkingCursor />
+        </div>
+      )}
     </div>
   );
 }

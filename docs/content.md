@@ -48,9 +48,9 @@ Set as the default `font-family` on `html` in `index.css`.
 
 - B.Sc. Informatics, Amman, 03/2014 (officially recognized in Germany)
 
-## Tech stack — orbit logos (priority order)
+## Tech stack — ring logos (priority order)
 
-These are the ones that get the floating-logo treatment in the orbit. Pick 10–12 for the main ring; the rest live on project cards as smaller badges.
+These are the ones that get the floating-logo treatment in the ring. Pick 10–12 for the main ring; the rest live on project cards as smaller badges.
 
 **Primary ring**: Angular, TypeScript, React, Vue / Nuxt, RxJS, NgRx, Nx, Tailwind, SCSS, SAP Composable Storefront, Node.js, Java / Spring Boot.
 

@@ -1,6 +1,6 @@
-# Mohanad Zahed — Portfolio ("The Orbit")
+# Mohanad Zahed — Portfolio
 
-A scroll-driven 3D portfolio site. The visitor sees a 3D avatar at the center of the screen with tech-stack logos orbiting around. As they scroll, the orbit choreographs through eight sections: **Hero → About → Notebook → Skills → Knowledge → Certificates → Experience → Contact**. One persistent `<Canvas>` lives behind the page; HTML sections scroll on top.
+A scroll-driven 3D portfolio site. The visitor sees a 3D avatar at the center of the screen with tech-stack logos circling around. As they scroll, the ring choreographs through eight sections: **Hero → About → Notebook → Skills → Knowledge → Certificates → Experience → Contact**. One persistent `<Canvas>` lives behind the page; HTML sections scroll on top.
 
 Inspiration: activetheory.net — calm, hypnotic, cinematic motion.
 

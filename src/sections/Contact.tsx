@@ -83,7 +83,7 @@ export function Contact() {
               <h2
                 ref={headlineRef}
                 id='contact-h2'
-                className='font-semibold text-zinc-100 whitespace-nowrap text-[clamp(1.5rem,7vw,2.25rem)] sm:text-5xl md:text-6xl'
+                className='font-semibold uppercase text-zinc-100 whitespace-nowrap text-[clamp(2.5rem,7vw,3.25rem)] sm:text-[4rem] md:text-[4.75rem]'
                 style={{ clipPath: 'inset(0 100% 0 0)', lineHeight: 'normal' }}
               >
                 {t('contact.headline')}

@@ -16,7 +16,7 @@ export function Experience() {
         </p>
         <h2
           id='experience-h2'
-          className='mt-3 font-mono text-3xl font-semibold text-secondary md:text-5xl'
+          className='mt-3 font-mono text-[2.875rem] font-semibold uppercase text-secondary md:text-[4rem]'
         >
           {t('experience.heading')}
         </h2>

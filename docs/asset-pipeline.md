@@ -19,7 +19,7 @@ assets/source/        # originals (svg, raw glb) — keep for re-export
 - Source: [simpleicons.org](https://simpleicons.org) or [vectorlogo.zone](https://vectorlogo.zone). Both expose clean SVGs.
 - Pipeline: SVG → 1024×1024 transparent PNG → `.webp` (lossy q=85) or `.ktx2` (basisu) for production.
 - Naming: `{tech-name}.{ext}` lowercase kebab-case. Examples: `angular.ktx2`, `nx.ktx2`, `react.ktx2`, `sap-composable-storefront.ktx2`.
-- Required priority list: see `docs/content.md` → "Tech stack — orbit logos".
+- Required priority list: see `docs/content.md` → "Tech stack — ring logos".
 
 ## Math constellations (Knowledge backdrop)
 
@@ -51,7 +51,7 @@ background: linear-gradient(135deg, #0f0f1a 0%, #1a0f2e 100%);
 <pointLight position={[4, 0, 2]} intensity={1} color="#38bdf8" />   {/* sky blue fill */}
 ```
 
-This gives a dark, glowing tech-portfolio aesthetic — avatar lit with colored point lights, orbiting logos catching the colors as they pass through. No file to load, no `<Environment>`, no Polyhaven dependency.
+This gives a dark, glowing tech-portfolio aesthetic — avatar lit with colored point lights, circling logos catching the colors as they pass through. No file to load, no `<Environment>`, no Polyhaven dependency.
 
 ## Compression commands (reference)
 
