@@ -48,8 +48,12 @@ export function Avatar() {
 
     const t = state.clock.elapsedTime;
 
-    // Delayed fade-in after hero text finishes
-    const fadeProgress = Math.min(1, Math.max(0, (t - FADE_START) / (FADE_END - FADE_START)));
+    // Fade-in keyed off the shared intro clock (set once the scene is ready),
+    // not the raw R3F clock — so the avatar appears at the right beat of the
+    // sequence regardless of how long loading took. Hidden until the clock starts.
+    const startedAt = useScrollStore.getState().heroStartedAt;
+    const tIntro = startedAt == null ? 0 : (performance.now() - startedAt) / 1000;
+    const fadeProgress = Math.min(1, Math.max(0, (tIntro - FADE_START) / (FADE_END - FADE_START)));
     const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const m of mats) {
       (m as MeshStandardMaterial).opacity = fadeProgress;

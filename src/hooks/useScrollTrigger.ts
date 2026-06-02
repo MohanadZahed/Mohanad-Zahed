@@ -14,7 +14,15 @@ export function useScrollTrigger() {
       gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
       });
-      gsap.ticker.lagSmoothing(0);
+      // Lenis' stock recipe disables lag smoothing (lagSmoothing(0)), but that
+      // makes GSAP apply the *full* wall-clock gap after a main-thread stall in
+      // one tick — so the WebGL init hitch (~300ms while the avatar/logo shaders
+      // compile, ~0.8s in) freezes the hero name-reveal tween and then snaps it
+      // to the end. Re-enabling with a 150ms threshold absorbs that hitch: any
+      // frame slower than 150ms is treated as 33ms, so the tween resumes smoothly
+      // instead of jumping. Normal-cadence frames (<150ms) are unaffected, so
+      // scroll feel is unchanged — this only ever fires on a genuine stall.
+      gsap.ticker.lagSmoothing(150, 33);
     }
 
     const trigger = ScrollTrigger.create({

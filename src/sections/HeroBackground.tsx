@@ -312,9 +312,11 @@ export function HeroBackground({ triggerRef }: Props) {
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Entry fly-in — non-circuit SVGs collapse radially inward from off-screen,
-  // circuit SVGs slide in horizontally per side. Runs once after the hero name
-  // lands (HERO_SVG_DELAY). useLayoutEffect so the off-screen start transforms
-  // are applied before first paint (no flash at rest).
+  // circuit SVGs slide in horizontally per side. The off-screen start transforms
+  // are applied on mount (useLayoutEffect, before paint — no flash at rest and
+  // icons stay hidden through the pre-intro hold); the fly-in itself starts when
+  // the shared intro clock begins (scene ready), so the WebGL init hitch can't
+  // freeze it mid-flight.
   useLayoutEffect(() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -351,20 +353,30 @@ export function HeroBackground({ triggerRef }: Props) {
       }
     }
 
-    const tween = gsap.to(els, {
-      x: 0,
-      y: 0,
-      duration: HERO_SVG_DUR,
-      ease: 'power3.out',
-      stagger: HERO_SVG_STAGGER,
-      delay: HERO_SVG_DELAY,
-      // Icons started off-screen, so the proximity effect cached stale centres.
-      // Re-measure once they've settled (the effect listens for 'resize').
-      onComplete: () => window.dispatchEvent(new Event('resize')),
+    let tween: gsap.core.Tween | null = null;
+    const start = () => {
+      if (tween) return;
+      tween = gsap.to(els, {
+        x: 0,
+        y: 0,
+        duration: HERO_SVG_DUR,
+        ease: 'power3.out',
+        stagger: HERO_SVG_STAGGER,
+        delay: HERO_SVG_DELAY,
+        // Icons started off-screen, so the proximity effect cached stale centres.
+        // Re-measure once they've settled (the effect listens for 'resize').
+        onComplete: () => window.dispatchEvent(new Event('resize')),
+      });
+    };
+
+    if (useScrollStore.getState().heroStartedAt != null) start();
+    const unsub = useScrollStore.subscribe((s) => {
+      if (s.heroStartedAt != null) start();
     });
 
     return () => {
-      tween.kill();
+      unsub();
+      tween?.kill();
       gsap.set(els, { clearProps: 'transform' });
     };
   }, []);

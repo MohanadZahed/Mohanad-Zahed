@@ -25,7 +25,7 @@ Section heights in viewport-units: Hero=1, About=1, **Manifesto=6.9** (pinned in
 
 | Range | Section | What happens in 3D |
 |---|---|---|
-| Hero state | Hero | Ring r=4 with autonomous slow drift (~80s/rev), avatar centered on `[data-avatar-anchor="hero"]` div + idle breathing, per-logo colored point lights tint the avatar as they pass |
+| Hero state | Hero | Ring r=4 with autonomous slow drift (~80s/rev), avatar centered on `[data-avatar-anchor="hero"]` div + idle breathing, per-logo colored point lights tint the avatar as they pass. **Load intro is scene-gated and sequenced — see "Hero load intro" below.** |
 | Hero → About | Hero → About | Avatar + ring anchor lerps from the hero anchor div to the about anchor div, avatar yaws 0 → ~36°, ring shrinks 4 → 1.5. Blend `t` is driven by the about div's on-screen Y, **not** global scroll — published to `useScrollStore.avatarBlend` |
 | About settled | About | Anchor follows `[data-avatar-anchor="about"]` div in document space — the avatar tracks its bounding rect so it scrolls off-screen upward with About automatically |
 | 0.064–0.264 | About → Manifesto (continued) | About div scrolls upward out of viewport; avatar follows it off-screen for free (no special pin math) |
@@ -37,6 +37,17 @@ Section heights in viewport-units: Hero=1, About=1, **Manifesto=6.9** (pinned in
 | 0.968–1.000 | **Contact** | Camera pulls back, gentle drift. Section is HTML/CSS only — fixed 750px height. Scroll-driven truck reveal: `contactProgress` (0..1) drives `clip-path` on the `<h2>` and `translateX` on `minime-truck`. Three mini-me images: coffee (`top: -192px` above section edge), truck (inline in headline row), programming (in-flow between CTAs and footer text, `-scale-x-100`). |
 
 Avatar position is **DOM-anchor-driven**, not global-progress-driven. Two zero-size hidden `<div data-avatar-anchor="hero"|"about">` markers are placed by CSS in [Hero.tsx](Hero.tsx) and [About.tsx](About.tsx). Each frame [Scene.tsx](../scene/Scene.tsx) measures both rects, projects them via `rectToWorld()` ([../scene/lib/projectAnchor.ts](../scene/lib/projectAnchor.ts)), and lerps the avatar's world position between them. The blend `t = smoothstep(vh, vh × 0.3, aboutCenterFromTop)` is derived from the About anchor's on-screen Y — the avatar reaches its final pose when that div has scrolled to 30% from the viewport bottom. `t` is published to `useScrollStore.avatarBlend` so [Avatar.tsx](../scene/Avatar.tsx) can drive yaw from the same signal. Past `t = 1` the avatar tracks the about div directly; because the div is in document flow, it scrolls upward with the page and the avatar leaves the viewport automatically — no `pxPastAboutCenter` pin math required. **Tuning the avatar landing spot on a new screen size = editing the about anchor div's Tailwind classes, not Scene.tsx.**
+
+## Hero load intro (scene-gated, one-shot)
+
+The hero's first-load reveal is **not** scroll-driven — it's a one-shot sequence gated on WebGL readiness so the GPU init hitch can't freeze it mid-animation. The full storyboard (motion of each element) lives in [docs/vision.md](../../docs/vision.md) → "Hero load intro"; the mechanics:
+
+- **Why gated:** the avatar GLB + logo textures compile on the Canvas's first render (~100–300 ms of blocked main thread). If a GSAP tween (the name fold) is running then, it freezes and — with `lagSmoothing(0)` — snaps to the time-correct frame when the thread frees. Fix: do the compile *before* the intro starts.
+- **Readiness signal:** `<Preload all />` inside the `<Canvas>` forces shader/texture compilation during load; `HeroIntroGate` ([App.tsx](../App.tsx)) watches drei `useProgress` and, once loaded + compiled (+2 rAFs), stamps `useScrollStore.heroStartedAt = performance.now()` (4 s safety-timeout fallback).
+- **One shared clock:** all four intro layers key off `heroStartedAt`, not their own clocks — the DOM GSAP timeline ([Hero.tsx](Hero.tsx)), the SVG fly-in ([HeroBackground.tsx](HeroBackground.tsx)), and the avatar fade + logo-ring expand ([../scene/Avatar.tsx](../scene/Avatar.tsx), [../scene/LogoPlane.tsx](../scene/LogoPlane.tsx)) which compute `(performance.now() − heroStartedAt) / 1000` inside `useFrame`. Until the stamp is set everything is hidden (name width 0, SVGs off-screen, avatar/logos opacity 0). Continuous idle motion (avatar breathing, logo idle spin) still reads the raw R3F clock.
+- **Timing:** all offsets (seconds from `heroStartedAt`) live in [hero.constants.ts](hero.constants.ts) — order is name → SVG fly-in → title → tagline → avatar → logo ring. Tune there.
+- **Backstop:** [../hooks/useScrollTrigger.ts](../hooks/useScrollTrigger.ts) uses `gsap.ticker.lagSmoothing(150, 33)` (not the stock Lenis `lagSmoothing(0)`) so any stray >150 ms hitch resumes smoothly instead of snapping. Don't revert it to `0`.
+- `prefers-reduced-motion` shows the hero fully composed and static (no fold/fly-in).
 
 ## Section-local progress
 

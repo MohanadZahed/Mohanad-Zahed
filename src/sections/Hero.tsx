@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useScrollStore } from '../store/useScrollStore';
 import { useT } from '../i18n/useT';
@@ -37,7 +37,7 @@ export function Hero() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const nameEl = nameRef.current;
     const titleEl = titleRef.current;
     const taglineEl = taglineRef.current;
@@ -52,53 +52,56 @@ export function Hero() {
       return;
     }
 
-    // Measure natural width before collapsing
+    // Hide everything immediately (before paint) so nothing flashes during the
+    // pre-intro hold while the WebGL scene loads. Measure natural width first.
     gsap.set(nameEl, { width: 'auto', opacity: 0 });
     const naturalWidth = nameEl.offsetWidth;
     gsap.set(nameEl, { width: 0, opacity: 0 });
-
     gsap.set(titleChars, { yPercent: 110 });
     gsap.set(taglineEl, { opacity: 0, y: 16 });
 
-    const tl = gsap.timeline();
+    let tl: gsap.core.Timeline | null = null;
 
-    tl.to(
-      nameEl,
-      {
-        width: naturalWidth,
-        opacity: 1,
-        duration: HERO_NAME_DUR,
-        ease: 'power4.out',
-        onComplete: () => gsap.set(nameEl, { width: 'auto' }),
-      },
-      HERO_NAME_DELAY,
-    );
+    // Build + play the reveal once the shared intro clock starts (scene ready),
+    // so the GPU init hitch can't freeze the name-reveal tween mid-fold.
+    const start = () => {
+      if (tl) return;
+      tl = gsap.timeline();
 
-    // Title and tagline wait for the background SVGs to fly in and settle.
-    tl.to(
-      titleChars,
-      {
-        yPercent: 0,
-        duration: 0.8,
-        stagger: 0.03,
-        ease: 'power3.out',
-      },
-      HERO_TITLE_DELAY,
-    );
+      tl.to(
+        nameEl,
+        {
+          width: naturalWidth,
+          opacity: 1,
+          duration: HERO_NAME_DUR,
+          ease: 'power4.out',
+          onComplete: () => gsap.set(nameEl, { width: 'auto' }),
+        },
+        HERO_NAME_DELAY,
+      );
 
-    tl.to(
-      taglineEl,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      },
-      HERO_TAGLINE_DELAY,
-    );
+      // Title and tagline wait for the background SVGs to fly in and settle.
+      tl.to(
+        titleChars,
+        { yPercent: 0, duration: 0.8, stagger: 0.03, ease: 'power3.out' },
+        HERO_TITLE_DELAY,
+      );
+
+      tl.to(
+        taglineEl,
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+        HERO_TAGLINE_DELAY,
+      );
+    };
+
+    if (useScrollStore.getState().heroStartedAt != null) start();
+    const unsub = useScrollStore.subscribe((s) => {
+      if (s.heroStartedAt != null) start();
+    });
 
     return () => {
-      tl.kill();
+      unsub();
+      tl?.kill();
     };
   }, []);
 

@@ -1,6 +1,8 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { Preload, useProgress } from '@react-three/drei';
 import { Scene } from './scene/Scene';
+import { useScrollStore } from './store/useScrollStore';
 import { useLenis } from './hooks/useLenis';
 import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { useSectionHash } from './hooks/useSectionHash';
@@ -17,6 +19,38 @@ import { ScrollLogger } from './debug/ScrollLogger';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { ViewportIndicator } from './components/ViewportIndicator';
 import { useT } from './i18n/useT';
+
+// Holds the hero intro until the WebGL scene has finished loading AND compiling
+// (Preload forces shader compilation during the load phase). Only then does the
+// shared intro clock start, so the GPU init hitch lands during a brief black
+// hold instead of freezing the name-reveal tween mid-fold. Renders nothing.
+function HeroIntroGate() {
+  const { active, loaded, total } = useProgress();
+  const firedRef = useRef(false);
+
+  const fire = () => {
+    if (firedRef.current) return;
+    firedRef.current = true;
+    // Two rAFs: let Preload's compile + first paint settle before the clock starts.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        useScrollStore.getState().setHeroStartedAt(performance.now());
+      }),
+    );
+  };
+
+  useEffect(() => {
+    if (total > 0 && loaded >= total && !active) fire();
+  }, [active, loaded, total]);
+
+  // Safety net: never let the intro hang if loading stalls or assets are absent.
+  useEffect(() => {
+    const id = window.setTimeout(fire, 4000);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  return null;
+}
 
 function App() {
   useLenis();
@@ -38,9 +72,11 @@ function App() {
         <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>
           <Suspense fallback={null}>
             <Scene />
+            <Preload all />
           </Suspense>
         </Canvas>
       </div>
+      <HeroIntroGate />
 
       <main>
         <Hero />

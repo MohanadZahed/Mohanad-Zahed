@@ -6,7 +6,11 @@ These rules are non-negotiable when touching anything inside `src/scene/`. Viola
 
 - **Never trigger React re-renders inside `useFrame`.** Don't call `setState`, don't subscribe to a Zustand store via a selector. Read scroll progress via `useScrollStore.getState().progress` or a stable `useRef`. Mutate `mesh.position`, `mesh.rotation`, `material.opacity` on refs directly.
 - **Lerp, don't snap.** Default tween factor `0.1` for position, `0.05` for rotation. This is what gives motion the buttery, slightly-delayed Active Theory feel. Use `vec.lerp(target, 0.1)` or `THREE.MathUtils.damp` for frame-rate independence.
-- **`frameloop="demand"`** for static moments, `"always"` while scrolling. Toggle off when `document.visibilityState === 'hidden'`.
+- **`frameloop="demand"`** for static moments, `"always"` while scrolling. Toggle off when `document.visibilityState === 'hidden'`. **Note:** the hero intro (avatar fade + logo-ring expand) reads `useScrollStore.heroStartedAt` via `getState()` inside `useFrame` — a store write that does **not** invalidate a `demand` loop. The Canvas currently runs the default `"always"`; if you switch the hero to `demand`, also `invalidate()` when `heroStartedAt` is set or the avatar/ring will never fade in.
+
+## Hero intro readiness
+
+- The hero's first-load reveal is gated on WebGL readiness: `<Preload all />` inside the `<Canvas>` ([App.tsx](../App.tsx)) forces shader/texture compilation during load, and `HeroIntroGate` stamps `useScrollStore.heroStartedAt` once drei `useProgress` reports loaded + compiled. The avatar ([Avatar.tsx](Avatar.tsx)) and logo planes ([LogoPlane.tsx](LogoPlane.tsx)) compute their fade from `(performance.now() − heroStartedAt) / 1000`; they stay at opacity 0 while it's `null`. Keep `<Preload all />` — it's what moves the init hitch into the pre-intro hold instead of mid-animation. Full rationale: [../sections/CLAUDE.md](../sections/CLAUDE.md) → "Hero load intro".
 
 ## Geometry and materials
 

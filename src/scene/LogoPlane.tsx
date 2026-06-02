@@ -42,9 +42,12 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
     // Ring appears only after the avatar has resolved (see hero.constants),
     // expanding out from the avatar's centre: scaling the target by `fade`
     // collapses it to the origin at fade 0 and grows it to full radius at 1.
+    // Keyed off the shared intro clock (scene-ready), not the raw R3F clock.
+    const startedAt = useScrollStore.getState().heroStartedAt;
+    const tIntro = startedAt == null ? 0 : (performance.now() - startedAt) / 1000;
     const fade = Math.min(
       1,
-      Math.max(0, (clock.elapsedTime - LOGO_FADE_START) / (LOGO_FADE_END - LOGO_FADE_START)),
+      Math.max(0, (tIntro - LOGO_FADE_START) / (LOGO_FADE_END - LOGO_FADE_START)),
     );
     target.set(x * fade, y * fade, z * fade);
     group.position.lerp(target, 0.1);
