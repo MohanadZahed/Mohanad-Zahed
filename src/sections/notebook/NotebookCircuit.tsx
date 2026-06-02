@@ -135,6 +135,15 @@ export function NotebookCircuit({ progress, color = '#ffffff' }: NotebookCircuit
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Glow only on fine-pointer (desktop) devices. A CSS filter rasterizes the
+  // whole animated SVG into one cached layer; WebKit (iOS) fails to invalidate
+  // it when descendant attrs change per tick, leaving ghost node-dots. Omitting
+  // the filter on coarse-pointer devices avoids that repaint bug entirely.
+  const finePointer = useMemo(
+    () => typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches,
+    [],
+  );
+
   const paint = clamp((progress - CIRCUIT_PAINT_START) / (CIRCUIT_PAINT_END - CIRCUIT_PAINT_START), 0, 1);
   const sweepY = reduced ? VIEWBOX_H : paint * VIEWBOX_H;
 
@@ -163,13 +172,15 @@ export function NotebookCircuit({ progress, color = '#ffffff' }: NotebookCircuit
           height: '100%',
           width: 'auto',
           maxWidth: '100%',
-          filter: 'drop-shadow(0 0 2px currentColor)',
+          ...(finePointer ? { filter: 'drop-shadow(0 0 2px currentColor)' } : null),
         }}
       >
         {segments.map((s, i) => {
           const drawn = reduced
             ? 1
             : clamp((sweepY - s.yTop) / Math.max(1, s.yBottom - s.yTop), 0, 1);
+          // Don't render un-revealed traces — nothing paintable, nothing to ghost.
+          if (drawn <= 0) return null;
           return (
             <path
               key={i}
@@ -182,6 +193,8 @@ export function NotebookCircuit({ progress, color = '#ffffff' }: NotebookCircuit
         })}
         {nodes.map((n, i) => {
           const op = reduced ? 1 : smoothstep(n.cy - 12, n.cy + 8, sweepY);
+          // Don't render un-revealed nodes — nothing paintable, nothing to ghost.
+          if (op <= 0.01) return null;
           return (
             <circle
               key={i}
@@ -189,12 +202,7 @@ export function NotebookCircuit({ progress, color = '#ffffff' }: NotebookCircuit
               cy={n.cy}
               r={n.r}
               fill={n.filled ? 'currentColor' : 'none'}
-              style={{
-                opacity: op,
-                transform: `scale(${0.4 + 0.6 * op})`,
-                transformBox: 'fill-box',
-                transformOrigin: 'center',
-              }}
+              style={{ opacity: op }}
             />
           );
         })}
