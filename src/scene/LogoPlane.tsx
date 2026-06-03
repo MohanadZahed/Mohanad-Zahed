@@ -49,7 +49,11 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
       1,
       Math.max(0, (tIntro - LOGO_FADE_START) / (LOGO_FADE_END - LOGO_FADE_START)),
     );
-    target.set(x * fade, y * fade, z * fade);
+    // Radial expansion eases out (cubic): the ring shoots out from the avatar's
+    // centre fast, then decelerates into its final radius. Opacity/light stay on
+    // the linear `fade` so the glow ramps evenly across the window.
+    const expand = 1 - (1 - fade) ** 3;
+    target.set(x * expand, y * expand, z * expand);
     group.position.lerp(target, 0.1);
     mesh.lookAt(camera.position);
 

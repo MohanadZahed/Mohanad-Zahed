@@ -13,4 +13,4 @@ export const HERO_TAGLINE_DELAY = 2.4; // tagline fade
 export const AVATAR_FADE_START = 2.9; // avatar fades in
 export const AVATAR_FADE_END = 3.6;
 export const LOGO_FADE_START = 3.5; // tech-stack ring expands in as the avatar settles
-export const LOGO_FADE_END = 4.4;
+export const LOGO_FADE_END = 4.0;

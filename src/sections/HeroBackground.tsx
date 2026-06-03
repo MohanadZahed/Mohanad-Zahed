@@ -297,7 +297,10 @@ const ENTRY_BUFFER_PX = 80;
 const PROX_NEAR_PX = 60;
 const PROX_FAR_PX = 280;
 const DAMP = 0.15;
-// BASE = white (255,255,255), GLOW = sky cyan #38bdf8 (56,189,248)
+// BASE = cream --color-secondary #F3EED6 (243,238,214), GLOW = sky cyan #38bdf8 (56,189,248)
+const BASE_R = 243;
+const BASE_G = 238;
+const BASE_B = 214;
 const GLOW_R = 56;
 const GLOW_G = 189;
 const GLOW_B = 248;
@@ -465,10 +468,10 @@ export function HeroBackground({ triggerRef }: Props) {
 
         const rest = ICONS[i].restOpacity;
         const opacity = rest + (1 - rest) * cur;
-        // RGB lerp white → cyan
-        const r = Math.round(255 + (GLOW_R - 255) * cur);
-        const g = Math.round(255 + (GLOW_G - 255) * cur);
-        const b = Math.round(255 + (GLOW_B - 255) * cur);
+        // RGB lerp cream → cyan
+        const r = Math.round(BASE_R + (GLOW_R - BASE_R) * cur);
+        const g = Math.round(BASE_G + (GLOW_G - BASE_G) * cur);
+        const b = Math.round(BASE_B + (GLOW_B - BASE_B) * cur);
 
         el.style.opacity = opacity.toFixed(3);
         el.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
@@ -505,7 +508,7 @@ export function HeroBackground({ triggerRef }: Props) {
           WebkitMaskImage: `url(${url})`,
           maskImage: `url(${url})`,
           opacity: icon.restOpacity,
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--color-secondary)',
           ...icon.style,
         };
         // Classification for the entry fly-in: circuit pieces slide horizontally,

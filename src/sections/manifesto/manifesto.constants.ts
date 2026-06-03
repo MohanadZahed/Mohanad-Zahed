@@ -8,13 +8,16 @@ export const NOTEBOOK_ASPECT = 16 / 10;
 export const FINDER_BOX_WIDTH_PX = 360;
 export const FINDER_BOX_HEIGHT_PX = 260;
 
-// Each box owns a scroll window [start, end]; start_{i+1} = start_i + 0.63 * (end - start)
-// so when box i is ~30% from the viewport top, box i+1 begins rising from below.
+// Each box owns a scroll window [start, end]; spans are widened (0.156 each) so
+// the boxes rise ~20% slower than a tight pack would. The whole sequence stays
+// locked inside the [0.08, 0.37] envelope (PIN_START → SCALE_START), so the
+// stagger is ~0.43 * span: box i+1 begins rising while box i is near the vertical
+// centre (a touch more on-screen overlap than before, by design).
 // Typing for a box completes at its window midpoint (vertical centre of viewport).
 export const FINDER_BOX_RANGES = [
-  [0.08, 0.21],
-  [0.16, 0.29],
-  [0.24, 0.37],
+  [0.08, 0.236],
+  [0.147, 0.303],
+  [0.214, 0.37],
 ] as const;
 
 export const PHASE = {
