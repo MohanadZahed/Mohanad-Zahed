@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { getLenis } from './useLenis';
 
 const SECTION_IDS = [
-  'hero',
   'about',
   'manifesto',
   'skills',
@@ -54,11 +53,20 @@ export function useSectionHash() {
         }
       }
 
-      if (next && next !== currentId) {
+      if (next !== currentId) {
         currentId = next;
-        const newHash = `#${next}`;
-        if (window.location.hash !== newHash) {
-          history.replaceState(null, '', newHash);
+        if (next) {
+          const newHash = `#${next}`;
+          if (window.location.hash !== newHash) {
+            history.replaceState(null, '', newHash);
+          }
+        } else if (window.location.hash) {
+          // Scrolled back up to the hero — clear the hash for a clean URL.
+          history.replaceState(
+            null,
+            '',
+            window.location.pathname + window.location.search,
+          );
         }
       }
     };

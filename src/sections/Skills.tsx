@@ -239,7 +239,7 @@ export function Skills() {
       <div ref={pinRef}>
         <div
           ref={contentRef}
-          className='relative min-h-screen overflow-hidden bg-canvas-gradient myDiv'
+          className='relative min-h-screen overflow-hidden bg-canvas-gradient'
           style={{
             transformOrigin: '50% 0',
             // Hidden until the intro's first frame makes it visible — see apply().

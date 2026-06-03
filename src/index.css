@@ -23,7 +23,8 @@
 
 @layer base {
   html {
-    background:
+    background-color: #000;
+    background-image:
       radial-gradient(at 50% 110%, rgba(0, 65, 109, 0.45) 40%, transparent 65%),
       linear-gradient(rgb(13, 17, 23) 0%, rgb(6, 13, 22) 100%);
     color: rgb(244 244 245 / 0.9);
