@@ -41,8 +41,7 @@ export function ProjectCard({
         position: 'absolute',
         inset: 0,
         zIndex: index + 1,
-        transform:
-          'translate3d(0, calc((1 - var(--card-progress, 0)) * 100%), 0)',
+        transform: 'translate3d(0, calc((1 - var(--card-progress, 0)) * 100%), 0)',
         willChange: 'transform',
         '--card-progress': index === 0 ? '1' : '0',
       } as CSSProperties)
@@ -71,11 +70,7 @@ export function ProjectCard({
       };
 
   return (
-    <article
-      ref={cardRef}
-      className='experience-card relative flex flex-col'
-      style={articleStyle}
-    >
+    <article ref={cardRef} className='experience-card relative flex flex-col' style={articleStyle}>
       <div className='relative w-full shrink-0' style={tagRegionStyle}>
         <div
           className='experience-card__tag absolute flex items-center overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
@@ -92,7 +87,7 @@ export function ProjectCard({
       >
         <div
           ref={contentRef}
-          className={`grid gap-6 px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10 md:gap-8 lg:grid-cols-[1fr_400px] ${
+          className={`grid gap-6 px-5 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10 md:gap-8 lg:grid-cols-[1fr_480px] ${
             pinned ? 'min-h-0 flex-1 overflow-y-auto' : ''
           }`}
           style={
@@ -102,9 +97,7 @@ export function ProjectCard({
           }
         >
           <div className='min-w-0'>
-            <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>
-              {role}
-            </p>
+            <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>{role}</p>
             <h3 className='mt-2 font-mono text-2xl font-semibold leading-tight text-zinc-900 md:text-3xl'>
               {name}
             </h3>

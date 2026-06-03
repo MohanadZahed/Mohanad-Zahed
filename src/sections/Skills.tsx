@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CircuitBackground, SPOTLIGHT_RADIUS } from './skills/CircuitBackground';
 import { ChipScatter } from './skills/ChipScatter';
+import { SkillsPixelFrame } from './skills/SkillsPixelFrame';
 import { useScrollStore } from '../store/useScrollStore';
 import { clamp, lerp, smoothstep } from '../scene/lib/math';
 import { computeScreenRectPx } from './manifesto/manifesto.constants';
@@ -236,10 +237,11 @@ export function Skills() {
         } as CSSProperties
       }
     >
+      <SkillsPixelFrame />
       <div ref={pinRef}>
         <div
           ref={contentRef}
-          className='relative min-h-screen overflow-hidden bg-canvas-gradient'
+          className='relative min-h-screen overflow-hidden bg-black'
           style={{
             transformOrigin: '50% 0',
             // Hidden until the intro's first frame makes it visible — see apply().
