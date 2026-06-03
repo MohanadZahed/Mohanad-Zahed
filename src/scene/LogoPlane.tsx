@@ -36,8 +36,8 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
     const group = groupRef.current;
     const mesh = meshRef.current;
     if (!group || !mesh) return;
-    const progress = useScrollStore.getState().progress;
-    const [x, y, z] = logoPosition(index, total, progress, clock.elapsedTime);
+    const { progress, logoSpin } = useScrollStore.getState();
+    const [x, y, z] = logoPosition(index, total, progress, clock.elapsedTime, logoSpin);
 
     // Ring appears only after the avatar has resolved (see hero.constants),
     // expanding out from the avatar's centre: scaling the target by `fade`

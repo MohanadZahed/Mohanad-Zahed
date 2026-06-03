@@ -12,6 +12,12 @@ These rules are non-negotiable when touching anything inside `src/scene/`. Viola
 
 - The hero's first-load reveal is gated on WebGL readiness: `<Preload all />` inside the `<Canvas>` ([App.tsx](../App.tsx)) forces shader/texture compilation during load, and `HeroIntroGate` stamps `useScrollStore.heroStartedAt` once drei `useProgress` reports loaded + compiled. The avatar ([Avatar.tsx](Avatar.tsx)) and logo planes ([LogoPlane.tsx](LogoPlane.tsx)) compute their fade from `(performance.now() − heroStartedAt) / 1000`; they stay at opacity 0 while it's `null`. Keep `<Preload all />` — it's what moves the init hitch into the pre-intro hold instead of mid-animation. Full rationale: [../sections/CLAUDE.md](../sections/CLAUDE.md) → "Hero load intro".
 
+## Logo ring drag
+
+The hero logo ring is grab-and-spin draggable with the mouse ([LogoRingControls.tsx](LogoRingControls.tsx)). Because the `<Canvas>` wrapper is `pointer-events-none` (page scroll passes through it), **R3F's raycast/pointer system is unavailable** — don't reach for `onPointerDown` on the meshes. Instead the controller attaches **window-level pointer listeners** and hit-tests a screen-space annulus it recomputes each frame by projecting the ring's world centre + radius (reads `anchorRef.matrixWorld` + `VISUAL_CENTER_OFFSET_Y`). The cursor (`grab`/`grabbing`) is set on `document.body`, not the canvas, for the same reason.
+
+The drag feeds `useScrollStore.logoSpin` — a **purely additive** angular offset consumed in [lib/logoPosition.ts](lib/logoPosition.ts) (`angle += spin`) via [LogoPlane.tsx](LogoPlane.tsx). While dragging, the angle tracks the mouse 1:1; on release the captured velocity becomes momentum that decays back to 0 (`exp(-DECAY·dt)`), returning the ring to its idle/scroll spin with no seam. Grab is gated to the hero state (`progress < HERO_GRAB_MAX`) and **disabled on coarse-pointer devices**. Tuning knobs live at the top of `LogoRingControls.tsx`. Desktop scroll is wheel-driven (Lenis), so the horizontal drag never fights scroll.
+
 ## Geometry and materials
 
 - **Instancing**: when ≥8 logos share a geometry, use drei's `<Instances>` + `<Instance>`. Don't mount N separate meshes.

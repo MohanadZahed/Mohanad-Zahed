@@ -19,6 +19,7 @@ export function logoPosition(
   total: number,
   progress: number,
   time: number,
+  spin: number = 0,
 ): [number, number, number] {
   const isNarrow = typeof window !== 'undefined' && window.innerWidth < NARROW_MAX_PX;
   const rStart = isNarrow ? RADIUS_START_NARROW : RADIUS_START;
@@ -27,7 +28,7 @@ export function logoPosition(
   const radius = lerp(4, minRadius, smoothstep(rStart, rEnd, progress));
   const idleSpin = time * 0.08;
   const scrollSpin = progress * 2;
-  const angle = (index / total) * Math.PI * 2 + idleSpin + scrollSpin;
+  const angle = (index / total) * Math.PI * 2 + idleSpin + scrollSpin + spin;
   const tilt = Math.sin(progress * Math.PI * 2 + index) * 0.5;
   return [Math.cos(angle) * radius, tilt, Math.sin(angle) * radius];
 }

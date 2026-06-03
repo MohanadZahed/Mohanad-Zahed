@@ -5,6 +5,7 @@ import { MathUtils } from 'three';
 import type { Group } from 'three';
 import { Avatar, VISUAL_CENTER_OFFSET_Y } from './Avatar';
 import { Orbit } from './Orbit';
+import { LogoRingControls } from './LogoRingControls';
 import { YogaAvatar } from './YogaAvatar';
 import { MathBackdrop } from './MathBackdrop';
 import { useScrollStore } from '../store/useScrollStore';
@@ -99,6 +100,8 @@ export function Scene() {
           <Orbit />
         </group>
       </group>
+
+      <LogoRingControls anchorRef={anchorRef} />
 
       {knowledgeReady && (
         <Suspense fallback={null}>
