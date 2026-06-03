@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Typewriter } from '../../components/Typewriter';
 import { clamp, lerp } from '../../scene/lib/math';
+import { rafThrottle } from '../../lib/rafThrottle';
 import { KnowledgeBubble } from './KnowledgeBubble';
 import { KNOWLEDGE } from './knowledge.data';
 import type { KnowledgeItem } from './knowledge.data';
@@ -124,14 +125,18 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
   }));
 
   useEffect(() => {
-    const update = () =>
+    const update = rafThrottle(() =>
       setViewport({
         w: document.documentElement.clientWidth,
         h: document.documentElement.clientHeight,
-      });
+      }),
+    );
     update();
     window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      update.cancel();
+    };
   }, []);
 
   const titleProgress = clamp(

@@ -437,19 +437,25 @@ export function HeroBackground({ triggerRef }: Props) {
       pointerX = e.clientX;
       pointerY = e.clientY;
       isInside = true;
+      requestTick();
     };
     const onPointerLeave = () => {
       isInside = false;
+      requestTick(); // wake the loop so icons damp back to rest
     };
+
+    // Below this, all icons are visually at rest; no point spending frames on it.
+    const SETTLED_EPS = 0.0008;
 
     let rafId = 0;
     const tick = () => {
-      const subscribers = useScrollStore;
-      // Tiny optimisation: pause loop when hero isn't on screen (progress > 0.05)
-      // Hero range ends at ~0.032 global progress, so > 0.05 means scrolled past.
-      const p = subscribers.getState().progress;
+      rafId = 0;
+      // Pause work when the hero isn't on screen (progress > ~0.05). Hero range
+      // ends at ~0.032 global progress, so < 0.06 means it's still visible.
+      const p = useScrollStore.getState().progress;
       const heroVisible = p < 0.06;
 
+      let maxCur = 0;
       for (let i = 0; i < total; i++) {
         const el = iconRefs.current[i];
         if (!el) continue;
@@ -465,6 +471,7 @@ export function HeroBackground({ triggerRef }: Props) {
         // Damp current toward target
         const cur = current[i] + (target - current[i]) * DAMP;
         current[i] = cur;
+        if (cur > maxCur) maxCur = cur;
 
         const rest = ICONS[i].restOpacity;
         const opacity = rest + (1 - rest) * cur;
@@ -477,22 +484,49 @@ export function HeroBackground({ triggerRef }: Props) {
         el.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
       }
 
-      rafId = requestAnimationFrame(tick);
+      // Keep looping while the hero is on-screen (proximity can change any frame)
+      // or while icons are still damping back to rest. Once off-screen AND
+      // settled, stop — the values won't change until the hero re-enters or the
+      // pointer moves, both of which call requestTick() to re-arm.
+      if (heroVisible || maxCur > SETTLED_EPS) {
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    const requestTick = () => {
+      if (rafId === 0) rafId = requestAnimationFrame(tick);
+    };
+
+    // Coalesce rect re-measurement to one rAF — scroll fires far more often than
+    // we need to re-read ~40 element rects, and bursts of resize events otherwise
+    // each trigger a full layout read.
+    let measureQueued = false;
+    const queueMeasure = () => {
+      if (measureQueued) return;
+      measureQueued = true;
+      requestAnimationFrame(() => {
+        measureQueued = false;
+        measure();
+      });
+    };
+    const onScroll = () => {
+      queueMeasure();
+      requestTick(); // re-arm the loop when scrolling back into the hero range
     };
 
     measure();
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerleave', onPointerLeave);
-    window.addEventListener('resize', measure);
-    window.addEventListener('scroll', measure, { passive: true });
-    rafId = requestAnimationFrame(tick);
+    window.addEventListener('resize', queueMeasure);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    requestTick();
 
     return () => {
-      cancelAnimationFrame(rafId);
+      if (rafId !== 0) cancelAnimationFrame(rafId);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerleave', onPointerLeave);
-      window.removeEventListener('resize', measure);
-      window.removeEventListener('scroll', measure);
+      window.removeEventListener('resize', queueMeasure);
+      window.removeEventListener('scroll', onScroll);
     };
   }, []);
 

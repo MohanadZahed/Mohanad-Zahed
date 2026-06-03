@@ -85,4 +85,7 @@ export function YogaAvatar() {
   );
 }
 
-useGLTF.preload('/models/avatar-yoga.glb');
+// NOTE: no module-level `useGLTF.preload(...)` here — the yoga GLB is ~18.5 MB
+// and is only needed in the Knowledge section (~29% scroll). Scene.tsx triggers
+// the preload + mount on Knowledge approach instead, keeping it off the initial
+// page load. See Scene.tsx.

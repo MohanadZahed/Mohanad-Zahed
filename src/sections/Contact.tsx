@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FlipLink } from '../components/FlipLink';
 import { useScrollStore } from '../store/useScrollStore';
 import { useT } from '../i18n/useT';
+import { rafThrottle } from '../lib/rafThrottle';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,8 +24,16 @@ export function Contact() {
 
     const rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    // Cache the row width and re-measure only on resize — reading offsetWidth
+    // inside apply() (which runs every scroll tick, right after writing the
+    // truck transform) forces a synchronous layout flush on every frame.
+    let rowW = row.offsetWidth;
+    const measure = rafThrottle(() => {
+      rowW = row.offsetWidth;
+      apply(useScrollStore.getState().contactProgress);
+    });
+
     const apply = (p: number) => {
-      const rowW = row.offsetWidth;
       // truck ends with its left edge at the right side of the text, fully clearing it
       const x = p * rowW;
       truck.style.transform = `translate3d(${x}px, -50%, 0)`;
@@ -35,6 +44,8 @@ export function Contact() {
       apply(1);
       return;
     }
+
+    window.addEventListener('resize', measure);
 
     apply(useScrollStore.getState().contactProgress);
 
@@ -56,6 +67,8 @@ export function Contact() {
     return () => {
       trigger.kill();
       unsubscribe();
+      window.removeEventListener('resize', measure);
+      measure.cancel();
     };
   }, []);
 

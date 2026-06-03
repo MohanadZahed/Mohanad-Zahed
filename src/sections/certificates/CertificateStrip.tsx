@@ -5,6 +5,7 @@ import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
 import { computeCertificatesLayout } from './certificates.constants';
 import { useT } from '../../i18n/useT';
+import { rafThrottle } from '../../lib/rafThrottle';
 
 export function CertificateStrip() {
   const { t } = useT();
@@ -34,13 +35,15 @@ export function CertificateStrip() {
       xVisibleRef.current = Math.max(0, lastCardRight + sidePad - viewportW);
     };
 
+    const onResize = rafThrottle(measure);
     measure();
-    const ro = new ResizeObserver(measure);
+    const ro = new ResizeObserver(onResize);
     ro.observe(stage);
-    window.addEventListener('resize', measure);
+    window.addEventListener('resize', onResize);
     return () => {
       ro.disconnect();
-      window.removeEventListener('resize', measure);
+      window.removeEventListener('resize', onResize);
+      onResize.cancel();
     };
   }, []);
 

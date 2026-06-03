@@ -1,5 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { lerp, smoothstep } from '../../scene/lib/math';
+import { rafThrottle } from '../../lib/rafThrottle';
 import { Typewriter } from '../../components/Typewriter';
 import {
   computeNotebookBoxPx,
@@ -46,13 +47,17 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
   }));
 
   useEffect(() => {
-    const onResize = () =>
+    const onResize = rafThrottle(() =>
       setViewport({
         w: document.documentElement.clientWidth,
         h: document.documentElement.clientHeight,
-      });
+      }),
+    );
     window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      onResize.cancel();
+    };
   }, []);
 
   // Title types in over [0, TITLE_TYPE_END] (scroll-driven), holds, then exits.

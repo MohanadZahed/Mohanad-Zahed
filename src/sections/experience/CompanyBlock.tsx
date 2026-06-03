@@ -5,6 +5,7 @@ import type { CSSProperties } from 'react';
 import type { ExperienceCompany } from '../../data/experience';
 import { ProjectCard } from './ProjectCard';
 import { useT } from '../../i18n/useT';
+import { rafThrottle } from '../../lib/rafThrottle';
 import {
   CARD_MAX_W_PX,
   COMPANY_HEADER_HEIGHT_PX,
@@ -103,12 +104,16 @@ export function CompanyBlock({ company }: Props) {
       setMinContentHeight((prev) => (Math.abs(prev - max) < 0.5 ? prev : max));
     };
 
+    const onResize = rafThrottle(measure);
     measure();
-    window.addEventListener('resize', measure);
+    window.addEventListener('resize', onResize);
     if (document.fonts?.ready) {
       document.fonts.ready.then(measure).catch(() => {});
     }
-    return () => window.removeEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      onResize.cancel();
+    };
   }, [total, regionWidth, isDesktop]);
 
   // Per-company ScrollTrigger: drives each card's translate via a CSS variable.

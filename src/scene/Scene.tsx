@@ -1,5 +1,6 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import { MathUtils } from 'three';
 import type { Group } from 'three';
 import { Avatar, VISUAL_CENTER_OFFSET_Y } from './Avatar';
@@ -26,6 +27,27 @@ export function Scene() {
   const heroAnchorRef = useRef<Element | null>(null);
   const aboutAnchorRef = useRef<Element | null>(null);
   const viewport = useThree((s) => s.viewport);
+
+  // The Knowledge-only payload (yoga GLB ≈ 18.5 MB + MathBackdrop's SVG textures)
+  // is heavy and not seen until ~29% scroll, so it must stay off the initial load.
+  // Mount it the first time Knowledge starts approaching (knowledgeApproach > 0,
+  // ~1 viewport before it pins — written by Knowledge.tsx). The preload kicks off
+  // the GLB fetch a beat before React mounts <YogaAvatar />. If this lead ever
+  // proves too short on slow links, move the trigger earlier (e.g. Skills start).
+  const [knowledgeReady, setKnowledgeReady] = useState(
+    () => useScrollStore.getState().knowledgeApproach > 0,
+  );
+  useEffect(() => {
+    if (knowledgeReady) return;
+    const unsub = useScrollStore.subscribe((s) => {
+      if (s.knowledgeApproach > 0) {
+        useGLTF.preload('/models/avatar-yoga.glb');
+        setKnowledgeReady(true);
+        unsub();
+      }
+    });
+    return unsub;
+  }, [knowledgeReady]);
 
   useFrame((_, delta) => {
     const anchor = anchorRef.current;
@@ -78,10 +100,12 @@ export function Scene() {
         </group>
       </group>
 
-      <Suspense fallback={null}>
-        <MathBackdrop />
-        <YogaAvatar />
-      </Suspense>
+      {knowledgeReady && (
+        <Suspense fallback={null}>
+          <MathBackdrop />
+          <YogaAvatar />
+        </Suspense>
+      )}
     </>
   );
 }
