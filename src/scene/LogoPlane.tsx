@@ -20,7 +20,7 @@ interface LogoPlaneProps {
   color: string;
 }
 
-const LIGHT_BASE_INTENSITY = 0.6;
+const LIGHT_BASE_INTENSITY = 2.4;
 const target = new Vector3();
 
 export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) {
@@ -67,7 +67,7 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
         <planeGeometry args={[0.45, 0.45]} />
         <meshBasicMaterial map={texture} transparent opacity={0} toneMapped={false} />
       </mesh>
-      <pointLight ref={lightRef} color={color} intensity={0} distance={3.5} decay={2} />
+      <pointLight ref={lightRef} color={color} intensity={0} distance={9} decay={1.4} />
     </group>
   );
 }

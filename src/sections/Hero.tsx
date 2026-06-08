@@ -87,11 +87,7 @@ export function Hero() {
         HERO_TITLE_DELAY,
       );
 
-      tl.to(
-        taglineEl,
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-        HERO_TAGLINE_DELAY,
-      );
+      tl.to(taglineEl, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, HERO_TAGLINE_DELAY);
     };
 
     if (useScrollStore.getState().heroStartedAt != null) start();
@@ -172,6 +168,7 @@ export function Hero() {
             fontSize: 'clamp(3rem, min(11vw, 11svh), 12rem)',
             lineHeight: 1,
             letterSpacing: '-0.025em',
+            borderRadius: '60px',
           }}
         >
           <MaskedChars text={NAME} />
