@@ -19,6 +19,12 @@
   --font-mono:
     'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
+  /* Fixed monospace anchor — never changes when the font switcher mutates
+     --font-mono. Used to keep the manifesto finder boxes and notebook terminal
+     text reading as code/terminal regardless of the selected site font. */
+  --font-terminal:
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 
 @layer base {

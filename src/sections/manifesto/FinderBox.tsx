@@ -31,6 +31,9 @@ export function FinderBox({
     <div
       aria-hidden={hasLines ? undefined : 'true'}
       style={{
+        // Pinned to the fixed terminal font so the finder boxes stay mono
+        // regardless of the site-wide font switcher (covers title + lines).
+        fontFamily: 'var(--font-terminal)',
         width,
         height,
         background: '#000',

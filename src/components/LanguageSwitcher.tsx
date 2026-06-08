@@ -10,8 +10,9 @@ export function LanguageSwitcher() {
     <div
       role='group'
       aria-label='Language switcher'
-      className='fixed top-4 right-4 z-50 pointer-events-auto font-mono text-sm select-none flex items-center gap-2 rounded-full px-3 py-1.5'
+      className='pointer-events-auto text-sm select-none flex items-center gap-2 rounded-full px-3 py-1.5'
       style={{
+        fontFamily: 'var(--font-terminal)',
         mixBlendMode: 'normal',
         backgroundColor: 'rgba(0, 0, 0, 0.45)',
         backdropFilter: 'blur(6px)',

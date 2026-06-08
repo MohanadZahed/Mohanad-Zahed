@@ -67,7 +67,7 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
         <planeGeometry args={[0.45, 0.45]} />
         <meshBasicMaterial map={texture} transparent opacity={0} toneMapped={false} />
       </mesh>
-      <pointLight ref={lightRef} color={color} intensity={0} distance={9} decay={1.4} />
+      <pointLight ref={lightRef} color={color} intensity={0} distance={9} decay={1.8} />
     </group>
   );
 }

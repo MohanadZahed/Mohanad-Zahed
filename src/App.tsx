@@ -17,6 +17,7 @@ import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { FontSwitcher } from './components/FontSwitcher';
 import { ViewportIndicator } from './components/ViewportIndicator';
 import { useT } from './i18n/useT';
 
@@ -66,7 +67,10 @@ function App() {
 
   return (
     <>
-      <LanguageSwitcher />
+      <div className='fixed top-4 right-4 z-50 flex items-center gap-3 pointer-events-none'>
+        <FontSwitcher />
+        <LanguageSwitcher />
+      </div>
       <KnowledgeBackground />
       <div className='fixed inset-0 -z-10 pointer-events-none'>
         <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>
