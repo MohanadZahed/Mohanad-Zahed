@@ -10,7 +10,7 @@ These rules are non-negotiable when touching anything inside `src/scene/`. Viola
 
 ## Hero intro readiness
 
-- The hero's first-load reveal is gated on WebGL readiness: `<Preload all />` inside the `<Canvas>` ([App.tsx](../App.tsx)) forces shader/texture compilation during load, and `HeroIntroGate` stamps `useScrollStore.heroStartedAt` once drei `useProgress` reports loaded + compiled. The avatar ([Avatar.tsx](Avatar.tsx)) and logo planes ([LogoPlane.tsx](LogoPlane.tsx)) compute their fade from `(performance.now() − heroStartedAt) / 1000`; they stay at opacity 0 while it's `null`. Keep `<Preload all />` — it's what moves the init hitch into the pre-intro hold instead of mid-animation. Full rationale: [../sections/CLAUDE.md](../sections/CLAUDE.md) → "Hero load intro".
+- The hero's first-load reveal is gated on WebGL readiness: `<Preload all />` inside the `<Canvas>` ([App.tsx](../App.tsx)) forces shader/texture compilation during load, and `HeroIntroGate` stamps `useScrollStore.heroStartedAt` once drei `useProgress` reports loaded + compiled. The avatar ([Avatar.tsx](Avatar.tsx)) and logo planes ([LogoPlane.tsx](LogoPlane.tsx)) compute their fade from `(performance.now() − heroStartedAt) / 1000`; they stay at opacity 0 while it's `null`. Keep `<Preload all />` — it's what moves the init hitch into the pre-intro dark hold instead of mid-animation; the `HeroLogo` DOM intro (the typographic MOZ build) is held behind a dark veil until the same `heroStartedAt` stamp. Full rationale: [../sections/CLAUDE.md](../sections/CLAUDE.md) → "Hero logo intro + corner mark".
 
 ## Logo ring drag
 

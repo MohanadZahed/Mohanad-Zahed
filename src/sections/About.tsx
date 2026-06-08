@@ -68,7 +68,13 @@ export function About() {
         className='pointer-events-none absolute size-0  right-[26%] min-[900px]:top-1/3 min-[900px]:left-1/4 min-[900px]:right-auto'
       />
 
-      <div className='bg-secondary relative min-h-full flex items-center' style={{ zIndex: -11 }}>
+      <div
+        className='bg-secondary relative min-h-full flex items-center'
+        style={{
+          zIndex: -11,
+          clipPath: 'polygon(0px 0px, 100% 0px, 100% 89%, 35% 89%, 27% 100%, 0px 100%)',
+        }}
+      >
         <div
           className='text-primary w-full max-w-full min-[900px]:ml-[50vw] min-[900px]:max-w-[50vw]'
           style={{

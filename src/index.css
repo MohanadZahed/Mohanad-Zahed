@@ -46,6 +46,19 @@
   }
 }
 
+h1,
+h2,
+h3 {
+  font-weight: 400;
+}
+
+.hero-subtitle {
+  background: #c8a96e;
+  background: linear-gradient(to right, #c8a96e 30%, #f3eed6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @utility bg-canvas-gradient {
   background: linear-gradient(134deg, #000000 0%, #131313 100%);
 }
