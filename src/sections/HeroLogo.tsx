@@ -511,7 +511,7 @@ export function HeroLogo({ triggerRef }: Props) {
                   color: i === O_IDX ? 'var(--color-quaternary)' : 'var(--color-secondary)',
                 }}
               >
-                {ch === ' ' ? ' ' : ch}
+                {ch === ' ' ? ' ' : ch}
               </span>
             ))}
           </h1>
