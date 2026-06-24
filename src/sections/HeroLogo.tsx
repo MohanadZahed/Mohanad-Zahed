@@ -40,7 +40,8 @@ const CORNER_X = 28; // parked-mark left inset
 const CORNER_Y = 22; // parked-mark top inset
 const CORNER_LOGO_H = 46; // parked-mark target glyph height
 const CORNER_LOGO_H_MOBILE = 26; // smaller parked mark on phones
-const CORNER_INSET_MOBILE = 14; // tighter corner inset on phones
+const CORNER_INSET_MOBILE = 14; // tighter top inset on phones
+const CORNER_X_MOBILE = 24; // left inset on phones — keep the mark off the screen edge
 const LINE_W = 2; // construction crosshair thickness
 const UNDERLINE_W = 4; // circuit underline thickness (vertical connector + segments)
 const NODE_D = 11;
@@ -229,7 +230,7 @@ export function HeroLogo({ triggerRef }: Props) {
       //    Smaller parked mark + tighter inset on phones.
       const mobile = document.documentElement.clientWidth < 640;
       const cornerH = mobile ? CORNER_LOGO_H_MOBILE : CORNER_LOGO_H;
-      const cornerX = mobile ? CORNER_INSET_MOBILE : CORNER_X;
+      const cornerX = mobile ? CORNER_X_MOBILE : CORNER_X;
       const cornerY = mobile ? CORNER_INSET_MOBILE : CORNER_Y;
       const ts = cornerH / (name.offsetHeight || 1);
       const tx = cornerX - (column.offsetLeft + nameWrap.offsetLeft);

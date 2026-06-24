@@ -56,7 +56,7 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
     gap: '0.35em',
     padding: '1.2em',
     fontFamily: 'var(--font-terminal)',
-    fontSize: 'clamp(0.85rem, 2vw, 1.7rem)',
+    fontSize: 'clamp(0.78rem, 2vw, 1.7rem)',
     lineHeight: 1.6,
     color: COMMAND_COLOR,
     pointerEvents: 'none',

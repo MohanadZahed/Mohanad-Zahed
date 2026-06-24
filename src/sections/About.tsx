@@ -62,9 +62,7 @@ export function About() {
   useEffect(() => {
     const facts = factsRef.current;
     if (!facts) return;
-    const words = Array.from(
-      facts.querySelectorAll<HTMLElement>('[data-reveal-word]'),
-    );
+    const words = Array.from(facts.querySelectorAll<HTMLElement>('[data-reveal-word]'));
     if (words.length === 0) return;
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -141,7 +139,7 @@ export function About() {
       />
 
       <div
-        className='bg-secondary relative min-h-full flex items-center [clip-path:polygon(0px_0px,100%_0px,100%_89%,60%_89%,40%_100%,0px_100%)] min-[900px]:[clip-path:polygon(0px_0px,100%_0px,100%_89%,35%_89%,27%_100%,0px_100%)]'
+        className='bg-secondary relative min-h-full flex items-center [clip-path:polygon(0px_0px,100%_0px,100%_89%,57.5%_89%,40%_100%,0px_100%)] min-[900px]:[clip-path:polygon(0px_0px,100%_0px,100%_89%,35%_89%,27%_100%,0px_100%)]'
         style={{
           zIndex: -11,
           backgroundImage: 'url(/textures/beige-texture.jpg)',
@@ -176,10 +174,7 @@ export function About() {
             style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.125rem)' }}
           >
             {WORDS.map((word, i) => (
-              <span
-                key={`${word}-${i}`}
-                style={{ color: `rgba(0, 0, 0, ${REST_ALPHA})` }}
-              >
+              <span key={`${word}-${i}`} style={{ color: `rgba(0, 0, 0, ${REST_ALPHA})` }}>
                 {word}
                 {i < WORDS.length - 1 ? ' ' : ''}
               </span>
