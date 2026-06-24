@@ -18,6 +18,16 @@
   },
   "manifesto": {
     "title": "elevate your system",
+    "pipeline": {
+      "label": "CI/CD Pipeline",
+      "steps": {
+        "push": "Push",
+        "unitTest": "Unit Test",
+        "build": "Build Image",
+        "e2e": "E2E",
+        "deploy": "Deploy"
+      }
+    },
     "finderBoxes": [
       {
         "fileName": "architecture.md",

@@ -144,6 +144,8 @@ export function About() {
         className='bg-secondary relative min-h-full flex items-center'
         style={{
           zIndex: -11,
+          backgroundImage: 'url(/textures/beige-texture.jpg)',
+          backgroundRepeat: 'repeat',
           clipPath: 'polygon(0px 0px, 100% 0px, 100% 89%, 35% 89%, 27% 100%, 0px 100%)',
         }}
       >

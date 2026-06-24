@@ -32,15 +32,15 @@ export function KnowledgeBackground() {
       return;
     }
 
-    const apply = (p: number, approach: number) => {
+    const apply = (p: number, beige: number) => {
       const fall = smoothstep(PHASE.AVATAR_SPIN_START, PHASE.AVATAR_SPIN_END, p);
       const expand = smoothstep(PHASE.BUBBLES_START, PHASE.BUBBLES_HOLD, p);
       const fadeIn = smoothstep(PHASE.AVATAR_SPIN_START, FADE_IN_END, p);
-      // Beige wrapper bg fades in as the Knowledge section approaches from
-      // below the viewport and is fully painted by the time it pins. Driven
-      // by a section-local trigger so it works regardless of total page
-      // height (mobile sections stack much taller than desktop).
-      const beigeAlpha = smoothstep(0, 1, approach);
+      // Beige wrapper bg is pre-painted one viewport BEFORE Knowledge enters the
+      // viewport, entirely behind Skills' opaque black (see `knowledgeBeige` /
+      // BEIGE_FADE_*_PCT in Knowledge.tsx), so the ramp is never seen — the
+      // section reveals an already-solid backdrop. Value is already 0..1.
+      const beigeAlpha = clamp(beige, 0, 1);
 
       const vh = document.documentElement.clientHeight;
       const ty = lerp((DISC_FALL_FROM_VH * vh) / 100, 0, fall);
@@ -77,16 +77,16 @@ export function KnowledgeBackground() {
     };
 
     const initial = useScrollStore.getState();
-    apply(initial.knowledgeProgress, initial.knowledgeApproach);
+    apply(initial.knowledgeProgress, initial.knowledgeBeige);
 
     const unsubscribe = useScrollStore.subscribe((state, prev) => {
       if (
         state.knowledgeProgress === prev.knowledgeProgress &&
-        state.knowledgeApproach === prev.knowledgeApproach
+        state.knowledgeBeige === prev.knowledgeBeige
       ) {
         return;
       }
-      apply(state.knowledgeProgress, state.knowledgeApproach);
+      apply(state.knowledgeProgress, state.knowledgeBeige);
     });
 
     return () => unsubscribe();

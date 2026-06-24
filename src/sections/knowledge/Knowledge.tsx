@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useScrollStore } from '../../store/useScrollStore';
 import { KnowledgeStage } from './KnowledgeStage';
-import { SECTION_VH } from './knowledge.constants';
+import { BEIGE_FADE_END_PCT, BEIGE_FADE_START_PCT, SECTION_VH } from './knowledge.constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,6 +35,19 @@ export function Knowledge() {
       },
     });
 
+    // Beige backdrop pre-paint: ramps to full one viewport before Knowledge
+    // enters the viewport, entirely behind Skills' opaque black, so the fade is
+    // never seen — Knowledge reveals an already-solid backdrop. Separate from
+    // `knowledgeApproach` (which still gates the avatar/math/scene-mount).
+    const beigeTrigger = ScrollTrigger.create({
+      trigger: el,
+      start: `top ${BEIGE_FADE_START_PCT}%`,
+      end: `top ${BEIGE_FADE_END_PCT}%`,
+      onUpdate: (self) => {
+        useScrollStore.getState().setKnowledgeBeige(self.progress);
+      },
+    });
+
     const exitTrigger = ScrollTrigger.create({
       trigger: el,
       start: 'bottom bottom',
@@ -47,6 +60,7 @@ export function Knowledge() {
     return () => {
       pinTrigger.kill();
       approachTrigger.kill();
+      beigeTrigger.kill();
       exitTrigger.kill();
     };
   }, []);

@@ -100,7 +100,7 @@ export function FinderBox({
                 start={start}
                 scrollProgress={lineScrollProgress}
                 speed={45}
-                cursorMode='blink'
+                cursorMode='hide'
                 style={{
                   color: '#e5e5e5',
                   fontSize: compact ? 12 : 16,

@@ -5,6 +5,7 @@ interface ScrollState {
   skillsIntro: number;
   knowledgeProgress: number;
   knowledgeApproach: number;
+  knowledgeBeige: number;
   knowledgeExit: number;
   certificatesProgress: number;
   contactProgress: number;
@@ -22,6 +23,7 @@ interface ScrollState {
   setSkillsIntro: (p: number) => void;
   setKnowledgeProgress: (p: number) => void;
   setKnowledgeApproach: (p: number) => void;
+  setKnowledgeBeige: (p: number) => void;
   setKnowledgeExit: (p: number) => void;
   setCertificatesProgress: (p: number) => void;
   setContactProgress: (p: number) => void;
@@ -35,6 +37,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   skillsIntro: 0,
   knowledgeProgress: 0,
   knowledgeApproach: 0,
+  knowledgeBeige: 0,
   knowledgeExit: 0,
   certificatesProgress: 0,
   contactProgress: 0,
@@ -45,6 +48,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setSkillsIntro: (p) => set({ skillsIntro: p }),
   setKnowledgeProgress: (p) => set({ knowledgeProgress: p }),
   setKnowledgeApproach: (p) => set({ knowledgeApproach: p }),
+  setKnowledgeBeige: (p) => set({ knowledgeBeige: p }),
   setKnowledgeExit: (p) => set({ knowledgeExit: p }),
   setCertificatesProgress: (p) => set({ certificatesProgress: p }),
   setContactProgress: (p) => set({ contactProgress: p }),

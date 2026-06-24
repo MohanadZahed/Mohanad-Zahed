@@ -14,6 +14,15 @@ export const PHASE = {
   BUBBLES_HOLD: 0.85,
 } as const;
 
+// Beige backdrop pre-paint window, expressed as GSAP `top N%` scroller offsets
+// for a trigger on the Knowledge section. The fade runs entirely while the
+// section's top is still BELOW the viewport bottom (both values > 100), so the
+// whole viewport is covered by Skills' opaque black content and the ramp is
+// imperceptible — by the time Knowledge reveals the backdrop it is already
+// solid. Lower START to paint even earlier in Skills; keep both > 100.
+export const BEIGE_FADE_START_PCT = 185; // knowledge top ~0.85vh below viewport bottom
+export const BEIGE_FADE_END_PCT = 120; // still 0.2vh below the bottom edge → fully covered
+
 export const RING_RADIUS_MIN_PX = 280;
 export const RING_RADIUS_MAX_PX = 320;
 export const RING_ANGLE_JITTER_RAD = 0.06;

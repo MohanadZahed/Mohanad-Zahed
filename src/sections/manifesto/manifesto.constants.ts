@@ -6,18 +6,35 @@ export const FULL_NOTEBOOK_MAX_WIDTH_PX = 2000;
 export const NOTEBOOK_ASPECT = 16 / 10;
 
 export const FINDER_BOX_WIDTH_PX = 360;
-export const FINDER_BOX_HEIGHT_PX = 260;
+export const FINDER_BOX_HEIGHT_PX = 200;
 
-// Each box owns a scroll window [start, end]; spans are widened (0.156 each) so
-// the boxes rise ~20% slower than a tight pack would. The whole sequence stays
-// locked inside the [0.08, 0.37] envelope (PIN_START → SCALE_START), so the
-// stagger is ~0.43 * span: box i+1 begins rising while box i is near the vertical
-// centre (a touch more on-screen overlap than before, by design).
-// Typing for a box completes at its window midpoint (vertical centre of viewport).
-export const FINDER_BOX_RANGES = [
-  [0.08, 0.236],
-  [0.147, 0.303],
-  [0.214, 0.37],
+// --- Vision area (serpentine CI/CD pipeline + in-bay finder boxes) ---
+// The serpentine line paints on and every node/check/box pop is sequenced by a
+// single `drawT` (0..1) over [VISION_BUILD_START, VISION_BUILD_END]. Once the
+// line reaches the parked notebook, the notebook grows + drifts to centre over
+// [VISION_EXIT_START, SCALE_END] while the pipeline + boxes fade out (the sand
+// panel stays). The terminal phase still starts at SCALE_END (0.47).
+export const VISION_BUILD_START = 0.05;
+export const VISION_BUILD_END = 0.3; // serpentine fully drawn + all pops done
+export const VISION_EXIT_START = 0.3; // notebook takeover (grow + recentre) begins
+export const CONTENT_FADE_END = 0.44; // pipeline + boxes fully faded by here
+
+export const POP_DRAW_SPAN = 0.06; // drawT span over which a node/box pops in
+export const CHECK_SPAN = 0.04; // drawT span the green check stamps on, post-pop
+
+// Notebook is parked at the bottom (the serpentine's terminus) during the build,
+// its centre at this fraction of the viewport height, then rises to centre.
+export const NOTEBOOK_PARK_CENTER_VH = 0.8;
+
+// CI/CD pipeline steps — language-neutral spine (top → bottom, bends alternate
+// R/L/R/L/R). Labels come from i18n (manifesto.pipeline.steps.<id>); `icon`
+// picks the glyph in ManifestoPipeline.
+export const PIPELINE_STEPS = [
+  { id: 'push', icon: 'push' },
+  { id: 'unitTest', icon: 'test' },
+  { id: 'build', icon: 'docker' },
+  { id: 'e2e', icon: 'test' },
+  { id: 'deploy', icon: 'rocket' },
 ] as const;
 
 export const PHASE = {
@@ -50,12 +67,6 @@ export const TERMINAL_COMMANDS = [
 
 export const TERMINAL_PROMPT_USER = 'mohanad@zahed';
 export const TERMINAL_PROMPT_PATH = '~';
-
-// Circuit-tree backdrop draws on over this section-local window:
-// starts when the title finishes typing (= TITLE_TYPE_END in ManifestoStage),
-// finishes exactly when the notebook image begins scaling up.
-export const CIRCUIT_PAINT_START = 0.045;
-export const CIRCUIT_PAINT_END = PHASE.SCALE_START; // 0.37
 
 export const SCREEN_RECT = {
   leftPct: 18,
