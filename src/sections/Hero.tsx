@@ -10,7 +10,7 @@ export function Hero() {
       ref={sectionRef}
       id='Hero'
       aria-labelledby='hero-h1'
-      className='relative overflow-hidden h-[82svh] sm:h-[85svh] md:h-[100svh]'
+      className='relative overflow-hidden h-[100svh]'
     >
       <HeroBackground triggerRef={sectionRef} />
 
@@ -20,7 +20,7 @@ export function Hero() {
       <div
         data-avatar-anchor='hero'
         aria-hidden='true'
-        className='pointer-events-none absolute left-1/2 top-[38svh] md:top-1/2 size-0'
+        className='pointer-events-none absolute left-1/2 top-[52svh] sm:top-[38svh] md:top-1/2 size-0'
       />
 
       {/* Typographic logo intro + persistent corner mark (fixed overlay). */}

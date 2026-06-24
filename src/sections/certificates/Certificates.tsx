@@ -7,11 +7,13 @@ import { CertificateCard } from './CertificateCard';
 import { CERTIFICATES } from './certificates.data';
 import { SECTION_VH, STACK_BREAKPOINT_PX } from './certificates.constants';
 import { useT } from '../../i18n/useT';
+import { useFitText } from '../../hooks/useFitText';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Certificates() {
   const { t } = useT();
+  const fitHeading = useFitText<HTMLHeadingElement>({ text: t('certificates.heading') });
   const sectionRef = useRef<HTMLElement>(null);
   const [isCompact, setIsCompact] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -63,7 +65,7 @@ export function Certificates() {
         <div className='certificates-fallback'>
           <header className='max-w-md text-center'>
             <span className='certificates-header__eyebrow block'>{t('certificates.eyebrow')}</span>
-            <h2 id='certificates-h2' className='certificates-header__title mt-3 text-balance'>
+            <h2 id='certificates-h2' ref={fitHeading} className='certificates-header__title mt-3 text-balance'>
               {t('certificates.heading')}
             </h2>
           </header>

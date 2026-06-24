@@ -1,9 +1,11 @@
 import { EXPERIENCE } from '../../data/experience';
 import { CompanyBlock } from './CompanyBlock';
 import { useT } from '../../i18n/useT';
+import { useFitText } from '../../hooks/useFitText';
 
 export function Experience() {
   const { t } = useT();
+  const fitHeading = useFitText<HTMLHeadingElement>({ text: t('experience.heading') });
   return (
     <section
       id='Experience'
@@ -16,6 +18,7 @@ export function Experience() {
         </p>
         <h2
           id='experience-h2'
+          ref={fitHeading}
           className='mt-3 font-mono text-[2.875rem] font-semibold uppercase text-secondary md:text-[4rem]'
         >
           {t('experience.heading')}

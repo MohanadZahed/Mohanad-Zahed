@@ -7,6 +7,7 @@ import { KNOWLEDGE } from './knowledge.data';
 import type { KnowledgeItem } from './knowledge.data';
 import { PHASE, RING_ANGLE_JITTER_RAD, getRingGeometry } from './knowledge.constants';
 import { useT } from '../../i18n/useT';
+import { useFitText } from '../../hooks/useFitText';
 
 interface KnowledgeStageProps {
   progress: number;
@@ -119,6 +120,14 @@ function computeSquarePositions(items: readonly KnowledgeItem[], rx: number, ry:
 
 export function KnowledgeStage({ progress }: KnowledgeStageProps) {
   const { t } = useT();
+  // Heading is absolutely positioned + shrink-to-content, so budget the parent
+  // (× 0.9 to match its 90vw max-width) rather than its own text-width box.
+  const fitHeading = useFitText<HTMLHeadingElement>({
+    text: t('knowledge.heading'),
+    widthFrom: 'parent',
+    maxWidthFraction: 0.9,
+    reserveCh: 0.6,
+  });
   const [viewport, setViewport] = useState(() => ({
     w: typeof window === 'undefined' ? 1280 : document.documentElement.clientWidth,
     h: typeof window === 'undefined' ? 800 : document.documentElement.clientHeight,
@@ -228,12 +237,13 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
     >
       <h2
         id='knowledge-h2'
+        ref={fitHeading}
         style={{
           position: 'absolute',
           top: '12svh',
           left: '50%',
           transform: 'translateX(-50%)',
-          fontSize: 'clamp(2.75rem, 6vw, 4.5rem)',
+          maxWidth: '90vw',
           fontWeight: 600,
           color: 'var(--knowledge-ink, rgba(0, 0, 0, 1))',
           letterSpacing: '-0.02em',

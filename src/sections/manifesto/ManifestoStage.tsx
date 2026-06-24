@@ -14,6 +14,7 @@ import { LaptopScreenWords } from './LaptopScreenWords';
 import { LaptopScreenMedia } from './LaptopScreenMedia';
 import { ManifestoVision } from './ManifestoVision';
 import { useT } from '../../i18n/useT';
+import { useFitText } from '../../hooks/useFitText';
 
 interface ManifestoStageProps {
   progress: number;
@@ -32,6 +33,15 @@ function clamp01(n: number) {
 export function ManifestoStage({ progress }: ManifestoStageProps) {
   const { t, locale } = useT();
   const TITLE_TEXT = t('manifesto.title');
+  // The heading is the <Typewriter as='h2'> itself; fit it by id against the
+  // full title, budgeting the parent's (stable) width so the size stays fixed
+  // while it types in (the h2 shrink-wraps to the typed substring).
+  useFitText({
+    text: TITLE_TEXT,
+    elementId: 'manifesto-h2',
+    widthFrom: 'parent',
+    reserveCh: 0.6,
+  });
 
   const [reduced] = useState(
     () =>
@@ -134,7 +144,6 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
           cursorMode='hide'
           className='text-secondary font-bold uppercase'
           style={{
-            fontSize: 'clamp(2.75rem, 7vw, 5.5rem)',
             lineHeight: 1.05,
             letterSpacing: '-0.05vw',
             margin: 0,

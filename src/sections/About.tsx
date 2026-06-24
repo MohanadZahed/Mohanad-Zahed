@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useT } from '../i18n/useT';
+import { useFitText } from '../hooks/useFitText';
 
 // Soft-wave reveal tuning: REST_ALPHA is the dim gray each word rests at; WAVE_SOFTNESS
 // is how many words are mid-transition at once (the width of the gray→black sweep edge).
@@ -29,6 +30,17 @@ export function About() {
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const factsRef = useRef<HTMLUListElement>(null);
   const WORDS = BODY.split(' ');
+
+  // Keep the heading on one line: shrink the font to fit, sharing the element
+  // with the existing wave-animation ref.
+  const fitHeadline = useFitText<HTMLHeadingElement>({ text: t('about.heading') });
+  const setHeadlineRef = useCallback(
+    (el: HTMLHeadingElement | null) => {
+      headlineRef.current = el;
+      fitHeadline(el);
+    },
+    [fitHeadline],
+  );
 
   // Body paragraph: scroll-scrubbed gray→black soft wave, fully dark by the time
   // the paragraph's top reaches 40% up from the viewport bottom. Words are painted
@@ -157,10 +169,9 @@ export function About() {
         >
           <h2
             id='about-h2'
-            ref={headlineRef}
+            ref={setHeadlineRef}
             className='font-bold uppercase'
             style={{
-              fontSize: 'clamp(2.75rem, 7vw, 5.5rem)',
               lineHeight: 1.05,
               letterSpacing: '-0.05vw',
             }}

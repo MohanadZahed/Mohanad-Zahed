@@ -15,6 +15,7 @@ import {
   ZOOM_START,
 } from './skills/skills.constants';
 import { useT } from '../i18n/useT';
+import { useFitText } from '../hooks/useFitText';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +25,7 @@ const HIDDEN_CLIP = 'inset(0 0 101% 0)';
 
 export function Skills() {
   const { t } = useT();
+  const fitHeading = useFitText<HTMLHeadingElement>({ text: t('skills.heading') });
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -199,6 +201,7 @@ export function Skills() {
       <header className='relative z-20 px-5 sm:px-10 md:px-16 pt-12 pointer-events-none'>
         <h2
           id='skills-h2'
+          ref={fitHeading}
           className='text-[2.5rem] sm:text-[2.875rem] md:text-[3.25rem] font-semibold text-zinc-100 tracking-tight uppercase'
         >
           {t('skills.heading')}

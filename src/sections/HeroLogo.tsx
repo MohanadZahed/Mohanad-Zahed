@@ -121,7 +121,11 @@ export function HeroLogo({ triggerRef }: Props) {
       }
       nameWrap.style.transform = 'none';
       const vh = document.documentElement.clientHeight;
-      column.style.top = `${vh * 0.18}px`;
+      // On phones the avatar drops to ~52svh, so the text column drops with it
+      // to keep the whole hero composition vertically centred (matches the
+      // mobile avatar-anchor `top` in Hero.tsx). Desktop keeps the high anchor.
+      const mobile = document.documentElement.clientWidth < 640;
+      column.style.top = `${vh * (mobile ? 0.32 : 0.18)}px`;
       for (let i = 0; i < chars.length; i++) {
         const r = charRefs.current[i]?.getBoundingClientRect();
         baseW[i] = r ? r.width : 0;

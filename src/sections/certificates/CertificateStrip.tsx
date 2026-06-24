@@ -6,9 +6,11 @@ import { CERTIFICATES } from './certificates.data';
 import { computeCertificatesLayout } from './certificates.constants';
 import { useT } from '../../i18n/useT';
 import { rafThrottle } from '../../lib/rafThrottle';
+import { useFitText } from '../../hooks/useFitText';
 
 export function CertificateStrip() {
   const { t } = useT();
+  const fitHeading = useFitText<HTMLHeadingElement>({ text: t('certificates.heading') });
   const stripRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -70,7 +72,7 @@ export function CertificateStrip() {
     <div id='CertificateStrip' ref={stageRef} className='certificates-stage'>
       <div ref={stripRef} className='certificates-strip'>
         <div className='certificates-header'>
-          <h2 id='certificates-h2' className='certificates-header__title'>
+          <h2 id='certificates-h2' ref={fitHeading} className='certificates-header__title'>
             {t('certificates.heading')}
           </h2>
           <p className='certificates-header__sub'>{t('certificates.subhead')}</p>
