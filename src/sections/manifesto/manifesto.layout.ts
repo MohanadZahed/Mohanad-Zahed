@@ -35,18 +35,18 @@ export interface VisionLayout {
 // Node vertical positions (fraction of the band), bend side, and draw fraction
 // (normalised position along the path where the node sits). The first segment
 // (top → Push) is a short vertical drop on the right, so Push's drawU is small.
-const NODE_Y_FRAC = [0.08, 0.3, 0.52, 0.72, 0.9];
+const NODE_Y_FRAC = [0.08, 0.285, 0.49, 0.695, 0.9];
 const NODE_SIDE: Side[] = ['R', 'L', 'R', 'L', 'R'];
-const NODE_DRAW_U = [0.12, 0.32, 0.54, 0.74, 0.92];
+const NODE_DRAW_U = [0.12, 0.305, 0.51, 0.715, 0.92];
 
 // Finder boxes sit in the open bays — opposite the bend, in the vertical gaps.
 // `x` is a fixed fraction of the width off-centre (NOT amp-based) so the boxes
 // stay inside the curve swing rather than getting pushed off-screen.
 const BOX_X_FRAC = 0.17;
 const BOX_DEFS: { side: Side; yFrac: number; drawU: number }[] = [
-  { side: 'R', yFrac: 0.3, drawU: 0.22 },
-  { side: 'L', yFrac: 0.51, drawU: 0.48 },
-  { side: 'R', yFrac: 0.715, drawU: 0.7 },
+  { side: 'R', yFrac: 0.285, drawU: 0.22 },
+  { side: 'L', yFrac: 0.49, drawU: 0.48 },
+  { side: 'R', yFrac: 0.695, drawU: 0.7 },
 ];
 
 /**

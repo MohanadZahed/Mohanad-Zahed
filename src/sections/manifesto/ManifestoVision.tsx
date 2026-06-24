@@ -96,7 +96,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
           const typeScroll = reduced ? 1 : clamp01((drawT - box.drawU) / BOX_TYPE_SPAN);
 
           const centerX = isMobile
-            ? [310, 115, 310][box.index]
+            ? clamp([310, 115, 310][box.index], margin + halfW, viewport.w - margin - halfW)
             : clamp(box.x, margin + halfW, viewport.w - margin - halfW);
 
           // On the laptop takeover each box leaves the screen in its own

@@ -60,16 +60,17 @@ export function FinderBox({
           position: 'relative',
         }}
       >
-        <span style={dot('#ff5f57')} />
-        <span style={dot('#febc2e')} />
-        <span style={dot('#28c840')} />
+        <span style={dot('#ff5f57', compact)} />
+        <span style={dot('#febc2e', compact)} />
+        <span style={dot('#28c840', compact)} />
         <span
           style={{
             position: 'absolute',
             inset: 0,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: compact ? 'flex-end' : 'center',
+            paddingRight: compact ? 28 : 0,
             color: '#9a9a9a',
             fontSize: 12,
             pointerEvents: 'none',
@@ -119,9 +120,9 @@ export function FinderBox({
   );
 }
 
-const dot = (color: string): CSSProperties => ({
-  width: 12,
-  height: 12,
+const dot = (color: string, compact = false): CSSProperties => ({
+  width: compact ? 10 : 12,
+  height: compact ? 10 : 12,
   borderRadius: '50%',
   background: color,
   display: 'inline-block',

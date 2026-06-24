@@ -177,6 +177,9 @@ function Label({
 }) {
   const gap = compact ? 10 : 16;
   const onRight = node.side === 'R';
+  // On mobile, stack multi-word labels one word per line so long labels
+  // (e.g. "Unit Test", "Build Image") don't overflow the screen edge.
+  const words = compact ? text.split(' ') : [text];
   return (
     <span
       style={{
@@ -196,7 +199,11 @@ function Label({
         textShadow: '0 1px 6px rgba(0,0,0,0.5)',
       }}
     >
-      {text}
+      {words.map((word, i) => (
+        <span key={i} style={{ display: 'block' }}>
+          {word}
+        </span>
+      ))}
     </span>
   );
 }
