@@ -27,6 +27,10 @@ const BOX_TYPE_SPAN = 0.12; // drawT span a box types over, after it pops
 const PANEL_CLIP =
   'polygon(50% 0%, 0 0, 0 100%, 50% 100%, 55% 88%, 55% 75%, 50% 64%, 50% 43%, 57% 30%, 57% 12%)';
 
+// On mobile the panel is narrower, so the seam pulls in toward the left edge.
+const PANEL_CLIP_MOBILE =
+  'polygon(40% 0%, 0px 0px, 0px 100%, 40% 100%, 55% 88%, 55% 75%, 40% 63%, 40% 43%, 57% 30%, 57% 12%)';
+
 export function ManifestoVision({ progress, viewport, reduced = false }: ManifestoVisionProps) {
   const { t, tArray } = useT();
   const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
@@ -73,7 +77,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
           backgroundImage: 'url(/textures/beige-texture.jpg)',
           backgroundBlendMode: 'multiply',
           backgroundRepeat: 'repeat',
-          clipPath: PANEL_CLIP,
+          clipPath: isMobile ? PANEL_CLIP_MOBILE : PANEL_CLIP,
         }}
       />
 

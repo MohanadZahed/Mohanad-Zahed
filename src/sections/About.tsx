@@ -125,7 +125,7 @@ export function About() {
       ref={sectionRef}
       id='About'
       aria-labelledby='about-h2'
-      className='relative min-h-200 min-[900px]:h-200'
+      className='relative min-h-167 min-[900px]:h-200'
     >
       {/* Amber background spans the full width; sits behind the canvas so the avatar + orbs stay in front */}
       <div aria-hidden='true' className='absolute inset-0 -z-20' />
@@ -141,12 +141,11 @@ export function About() {
       />
 
       <div
-        className='bg-secondary relative min-h-full flex items-center'
+        className='bg-secondary relative min-h-full flex items-center [clip-path:polygon(0px_0px,100%_0px,100%_89%,60%_89%,40%_100%,0px_100%)] min-[900px]:[clip-path:polygon(0px_0px,100%_0px,100%_89%,35%_89%,27%_100%,0px_100%)]'
         style={{
           zIndex: -11,
           backgroundImage: 'url(/textures/beige-texture.jpg)',
           backgroundRepeat: 'repeat',
-          clipPath: 'polygon(0px 0px, 100% 0px, 100% 89%, 35% 89%, 27% 100%, 0px 100%)',
         }}
       >
         <div
