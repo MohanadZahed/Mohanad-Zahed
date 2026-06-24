@@ -38,7 +38,7 @@ export function CertificateCard({ cert, index, flat = false }: CertificateCardPr
   const style: CSSProperties = { transform: `rotate(${rotation}deg)` };
 
   return (
-    <article className='certificate-card' style={style} aria-label={cert.name}>
+    <article id={`CertificateCard-${cert.id}`} className='certificate-card' style={style} aria-label={cert.name}>
       <div className='certificate-card__inner'>
         <header className='certificate-card__header'>
           <span className='certificate-card__eyebrow'>{t('certificates.card.eyebrow')}</span>

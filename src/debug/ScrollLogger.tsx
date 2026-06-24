@@ -20,7 +20,7 @@ export function ScrollLogger() {
   const progress = useScrollStore((s) => s.progress);
 
   return (
-    <div className='fixed bottom-4 left-4 z-50 font-mono text-xs bg-black/70 text-green-400 rounded px-3 py-2 pointer-events-none select-none leading-5'>
+    <div id='ScrollLogger' className='fixed bottom-4 left-4 z-50 font-mono text-xs bg-black/70 text-green-400 rounded px-3 py-2 pointer-events-none select-none leading-5'>
       <div>
         progress: <span className='text-white'>{progress.toFixed(4)}</span>
       </div>

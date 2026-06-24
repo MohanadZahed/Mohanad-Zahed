@@ -46,7 +46,7 @@ export function LaptopScreenMedia({ progress }: LaptopScreenMediaProps) {
   };
 
   return (
-    <div style={screenStyle} aria-hidden='true'>
+    <div id='LaptopScreenMedia' style={screenStyle} aria-hidden='true'>
       <video
         ref={videoRef}
         muted

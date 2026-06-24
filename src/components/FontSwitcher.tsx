@@ -6,6 +6,7 @@ export function FontSwitcher() {
 
   return (
     <div
+      id='FontSwitcher'
       className='pointer-events-auto relative flex items-center rounded-full text-sm select-none'
       style={{
         backgroundColor: 'rgba(0, 0, 0, 0.45)',

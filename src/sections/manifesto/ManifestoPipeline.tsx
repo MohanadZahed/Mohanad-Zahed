@@ -40,7 +40,7 @@ export function ManifestoPipeline({
     : clamp01((progress - VISION_BUILD_START) / (VISION_BUILD_END - VISION_BUILD_START));
 
   return (
-    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+    <div id='ManifestoPipeline' style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
       <svg
         width={viewport.w}
         height={viewport.h}

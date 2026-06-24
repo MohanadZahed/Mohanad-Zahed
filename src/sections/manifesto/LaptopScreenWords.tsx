@@ -71,7 +71,7 @@ export function LaptopScreenWords({ progress }: LaptopScreenWordsProps) {
   const activeIndex = revealedCount - 1;
 
   return (
-    <div style={screenStyle}>
+    <div id='LaptopScreenWords' style={screenStyle}>
       {TERMINAL_COMMANDS.slice(0, revealedCount).map((c, i) => {
         const typeProgress = clamp01((progress - c.typeStart) / (c.typeEnd - c.typeStart));
         // The cursor sits on the active input line, but once the session has

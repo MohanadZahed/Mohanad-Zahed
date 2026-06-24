@@ -94,6 +94,7 @@ export function KnowledgeBackground() {
 
   return (
     <div
+      id='KnowledgeBackground'
       ref={wrapperRef}
       aria-hidden
       className='fixed inset-0 -z-20 pointer-events-none my-circle-mask'

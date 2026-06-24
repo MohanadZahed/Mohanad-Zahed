@@ -123,7 +123,7 @@ export function About() {
   return (
     <section
       ref={sectionRef}
-      id='about'
+      id='About'
       aria-labelledby='about-h2'
       className='relative min-h-200 min-[900px]:h-200'
     >

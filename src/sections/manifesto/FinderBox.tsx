@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import { Typewriter } from '../../components/Typewriter';
 
 interface FinderBoxProps {
+  id?: string;
   title?: string;
   lines?: readonly string[];
   start?: boolean;
@@ -16,6 +17,7 @@ interface FinderBoxProps {
 }
 
 export function FinderBox({
+  id = 'FinderBox',
   title = '',
   lines,
   start = false,
@@ -29,6 +31,7 @@ export function FinderBox({
   const compact = width < 280;
   return (
     <div
+      id={id}
       aria-hidden={hasLines ? undefined : 'true'}
       style={{
         // Pinned to the fixed terminal font so the finder boxes stay mono

@@ -29,6 +29,7 @@ export function Microchip({ skill }: { skill: Skill }) {
 
   return (
     <div
+      id={`Microchip-${skill.id}`}
       className={`chip ${SIZE_CLASS[skill.size]}`}
       role='meter'
       aria-label={skill.label}

@@ -56,7 +56,7 @@ export function Certificates() {
     return (
       <section
         ref={sectionRef}
-        id='certificates'
+        id='Certificates'
         aria-labelledby='certificates-h2'
         className='certificates-section relative'
       >
@@ -78,7 +78,7 @@ export function Certificates() {
   return (
     <section
       ref={sectionRef}
-      id='certificates'
+      id='Certificates'
       aria-labelledby='certificates-h2'
       className='certificates-section relative'
       style={{ height: `${SECTION_VH}svh` }}

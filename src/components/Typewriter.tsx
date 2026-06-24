@@ -1,6 +1,7 @@
 import {
   createElement,
   useEffect,
+  useId,
   useState,
   type CSSProperties,
   type ElementType,
@@ -72,6 +73,7 @@ export function Typewriter({
     startDelay,
     scrollProgress,
   });
+  const autoId = useId();
   const [beatHidden, setBeatHidden] = useState(false);
   const [prevStart, setPrevStart] = useState(start);
   const [prevDone, setPrevDone] = useState(done);
@@ -113,7 +115,7 @@ export function Typewriter({
 
   return createElement(
     As,
-    { id, className, style, 'aria-label': text },
+    { id: id ?? `Typewriter-${autoId}`, className, style, 'aria-label': text },
     <span aria-hidden='true' style={{ whiteSpace: 'pre-wrap' }}>
       {isScrollMode ? displayed : renderAnimatedChars(displayed)}
     </span>,

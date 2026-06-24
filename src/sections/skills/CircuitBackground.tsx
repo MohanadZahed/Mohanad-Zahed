@@ -30,7 +30,7 @@ const vias: Array<[number, number]> = [
 
 export const CircuitBackground = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div ref={ref} aria-hidden='true' className='absolute inset-0 overflow-hidden'>
+    <div id='CircuitBackground' ref={ref} aria-hidden='true' className='absolute inset-0 overflow-hidden'>
       <svg className='absolute inset-0 h-full w-full' aria-hidden='true'>
         <defs>
           <pattern id='circuit-tile' width={TILE} height={TILE} patternUnits='userSpaceOnUse'>

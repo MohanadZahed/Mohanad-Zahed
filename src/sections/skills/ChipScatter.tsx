@@ -40,7 +40,7 @@ export function ChipScatter() {
   }));
 
   return (
-    <div className='relative z-10 px-4 pt-28 pb-12 mx-auto flex flex-col gap-10 sm:px-8 sm:gap-14 md:px-12 md:gap-16' style={{ maxWidth: '125rem' }}>
+    <div id='ChipScatter' className='relative z-10 px-4 pt-28 pb-12 mx-auto flex flex-col gap-10 sm:px-8 sm:gap-14 md:px-12 md:gap-16' style={{ maxWidth: '125rem' }}>
       {grouped.map(({ category, items }) => (
         <CircuitFrame key={category} category={category}>
           <div

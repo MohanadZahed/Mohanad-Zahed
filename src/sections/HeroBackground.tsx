@@ -532,6 +532,7 @@ export function HeroBackground({ triggerRef }: Props) {
 
   return (
     <div
+      id='HeroBackground'
       ref={wrapperRef}
       aria-hidden='true'
       className='absolute inset-0 -z-20 bg-primary overflow-hidden pointer-events-none will-change-transform'

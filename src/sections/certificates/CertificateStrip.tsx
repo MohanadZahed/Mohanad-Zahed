@@ -67,7 +67,7 @@ export function CertificateStrip() {
   }, []);
 
   return (
-    <div ref={stageRef} className='certificates-stage'>
+    <div id='CertificateStrip' ref={stageRef} className='certificates-stage'>
       <div ref={stripRef} className='certificates-strip'>
         <div className='certificates-header'>
           <h2 id='certificates-h2' className='certificates-header__title'>

@@ -6,7 +6,7 @@ export function Experience() {
   const { t } = useT();
   return (
     <section
-      id='experience'
+      id='Experience'
       aria-labelledby='experience-h2'
       className='experience-section relative'
     >

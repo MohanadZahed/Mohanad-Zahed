@@ -213,7 +213,7 @@ export function Skills() {
     return (
       <section
         ref={sectionRef}
-        id='skills'
+        id='Skills'
         aria-labelledby='skills-h2'
         className='relative min-h-screen overflow-hidden bg-canvas-gradient'
         style={{ '--spot-r': `${SPOTLIGHT_RADIUS}px` } as CSSProperties}
@@ -226,7 +226,7 @@ export function Skills() {
   return (
     <section
       ref={sectionRef}
-      id='skills'
+      id='Skills'
       aria-labelledby='skills-h2'
       className='relative'
       style={

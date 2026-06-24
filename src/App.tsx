@@ -17,7 +17,7 @@ import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
-import { FontSwitcher } from './components/FontSwitcher';
+// import { FontSwitcher } from './components/FontSwitcher'; // hidden from UI; kept for future use
 import { ViewportIndicator } from './components/ViewportIndicator';
 import { useT } from './i18n/useT';
 
@@ -68,7 +68,7 @@ function App() {
   return (
     <>
       <div className='fixed top-4 right-4 z-50 flex items-center gap-3 pointer-events-none'>
-        <FontSwitcher />
+        {/* <FontSwitcher /> — hidden from the UI; component kept for future use */}
         <LanguageSwitcher />
       </div>
       <KnowledgeBackground />

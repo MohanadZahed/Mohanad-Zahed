@@ -29,7 +29,7 @@ export function Manifesto() {
   return (
     <section
       ref={sectionRef}
-      id='manifesto'
+      id='Manifesto'
       aria-labelledby='manifesto-h2'
       className='relative'
       style={{ height: `${SECTION_VH}svh` }}

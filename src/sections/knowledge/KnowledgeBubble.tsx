@@ -48,20 +48,30 @@ export function KnowledgeBubble({
     willChange: 'transform, opacity',
   };
 
-  return <BubbleVisual style={style} label={item.label} tintColor={tintColor} />;
+  return (
+    <BubbleVisual
+      id={`KnowledgeBubble-${item.id}`}
+      style={style}
+      label={item.label}
+      tintColor={tintColor}
+    />
+  );
 }
 
 function BubbleVisual({
+  id,
   style,
   label,
   tintColor,
 }: {
+  id: string;
   style: CSSProperties;
   label: string;
   tintColor: string;
 }) {
   return (
     <div
+      id={id}
       style={{
         ...style,
         background: 'rgba(255, 255, 255, 0.2)',

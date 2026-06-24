@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { getLenis } from './useLenis';
 
 const SECTION_IDS = [
-  'about',
-  'manifesto',
-  'skills',
-  'knowledge',
-  'certificates',
-  'experience',
-  'contact',
+  'About',
+  'Manifesto',
+  'Skills',
+  'Knowledge',
+  'Certificates',
+  'Experience',
+  'Contact',
 ] as const;
 
 type SectionId = (typeof SECTION_IDS)[number];

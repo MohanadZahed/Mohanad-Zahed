@@ -43,7 +43,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
 
   // Boxes are kept compact so they sit cleanly inside the widened curve bays.
   const boxWidth = isMobile
-    ? Math.min(280, viewport.w - 32)
+    ? Math.min(220, viewport.w - 32)
     : Math.min(FINDER_BOX_WIDTH_PX, Math.max(220, viewport.w * 0.21));
   const boxHeight = isMobile ? 116 : 150;
   const halfW = boxWidth / 2;
@@ -62,7 +62,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
   };
 
   return (
-    <div style={containerStyle}>
+    <div id='ManifestoVision' style={containerStyle}>
       {/* Sand panel — stays put the whole time (covered by the full notebook). */}
       <div
         id='manifesto-left-panel'
@@ -96,7 +96,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
           const typeScroll = reduced ? 1 : clamp01((drawT - box.drawU) / BOX_TYPE_SPAN);
 
           const centerX = isMobile
-            ? viewport.w / 2
+            ? [310, 115, 310][box.index]
             : clamp(box.x, margin + halfW, viewport.w - margin - halfW);
 
           // On the laptop takeover each box leaves the screen in its own
@@ -125,6 +125,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
               }}
             >
               <FinderBox
+                id={`FinderBox-${box.index}`}
                 title={t(`manifesto.finderBoxes.${box.index}.fileName`)}
                 lines={tArray(`manifesto.finderBoxes.${box.index}.lines`)}
                 width={boxWidth}

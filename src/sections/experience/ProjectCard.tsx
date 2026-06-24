@@ -70,7 +70,7 @@ export function ProjectCard({
       };
 
   return (
-    <article ref={cardRef} className='experience-card relative flex flex-col' style={articleStyle}>
+    <article id={`ProjectCard-${project.id}`} ref={cardRef} className='experience-card relative flex flex-col' style={articleStyle}>
       <div className='relative w-full shrink-0' style={tagRegionStyle}>
         <div
           className='experience-card__tag absolute flex items-center overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'

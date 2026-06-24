@@ -395,7 +395,7 @@ export function HeroLogo({ triggerRef }: Props) {
   const circBase: CSSProperties = { backgroundColor: 'var(--color-quaternary)' };
 
   return (
-    <div ref={overlayRef} aria-hidden='true' className='pointer-events-none fixed inset-0 z-40'>
+    <div id='HeroLogo' ref={overlayRef} aria-hidden='true' className='pointer-events-none fixed inset-0 z-40'>
       {/* dark veil over the construction phase — opaque while the lines + O build,
           lifts once the O reaches its slot to reveal the composing hero */}
       <div

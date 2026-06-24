@@ -167,6 +167,7 @@ export function CompanyBlock({ company }: Props) {
   return (
     <section
       ref={sectionRef}
+      id={`CompanyBlock-${company.id}`}
       aria-labelledby={`company-${company.id}`}
       className='experience-company relative mx-auto w-full px-3 sm:px-4 md:px-6'
       style={sectionStyle}

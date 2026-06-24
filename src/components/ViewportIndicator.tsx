@@ -49,6 +49,7 @@ export function ViewportIndicator() {
 
   return (
     <div
+      id='ViewportIndicator'
       style={{
         position: 'fixed',
         top: '0.75rem',

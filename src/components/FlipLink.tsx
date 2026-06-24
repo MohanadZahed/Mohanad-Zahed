@@ -10,8 +10,10 @@ type Props = {
 
 export function FlipLink({ text, href, external, ariaLabel, className }: Props) {
   const chars = Array.from(text);
+  const slug = href.replace(/[^a-z0-9]+/gi, '-').replace(/(^-|-$)/g, '');
   return (
     <a
+      id={`FlipLink-${slug}`}
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}

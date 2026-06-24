@@ -112,6 +112,7 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
 
   return (
     <div
+      id='ManifestoStage'
       style={{
         position: 'sticky',
         top: 0,

@@ -57,6 +57,7 @@ export function CircuitFrame({ category, children }: Props) {
 
   return (
     <div
+      id={`CircuitFrame-${category}`}
       ref={ref}
       className='circuit-frame'
       style={{ '--cat-color': CATEGORY_COLOR[category] } as CSSProperties}

@@ -214,6 +214,7 @@ export function KnowledgeStage({ progress }: KnowledgeStageProps) {
 
   return (
     <div
+      id='KnowledgeStage'
       style={{
         position: 'sticky',
         top: 0,
