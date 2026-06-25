@@ -64,7 +64,7 @@ export const FONTS: Record<FontId, FontDef> = {
 export const FONT_IDS = Object.keys(FONTS) as FontId[];
 
 const STORAGE_KEY = 'font';
-const DEFAULT_FONT: FontId = 'roboto-mono';
+const DEFAULT_FONT: FontId = 'archivo';
 
 function getInitialFont(): FontId {
   if (typeof window === 'undefined') return DEFAULT_FONT;

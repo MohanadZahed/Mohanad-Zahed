@@ -16,9 +16,11 @@
   --color-canvas-to: #1a0f2e;
   --color-accent-indigo: #818cf8;
   --color-accent-sky: #38bdf8;
+  /* Default SITE font (misnamed --font-mono for historical reasons). The font
+     switcher overrides this inline on :root; Archivo is the unset default so a
+     fresh browser matches the desktop default. */
   --font-mono:
-    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+    'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   /* Fixed monospace anchor — never changes when the font switcher mutates
      --font-mono. Used to keep the manifesto finder boxes and notebook terminal
      text reading as code/terminal regardless of the selected site font. */
