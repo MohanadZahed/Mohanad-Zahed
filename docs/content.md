@@ -16,13 +16,32 @@ Tailwind aliases: `text-primary`, `bg-secondary`, `border-tertiary`, `bg-quatern
 
 ## Typography
 
-| Role           | Family      | Token         | Tailwind    |
-| -------------- | ----------- | ------------- | ----------- |
-| Global / body  | Roboto Mono | `--font-mono` | `font-mono` |
+| Role                          | Family      | Token            | Tailwind    |
+| ----------------------------- | ----------- | ---------------- | ----------- |
+| Global / body (default)       | Archivo     | `--font-mono`    | `font-mono` |
+| Terminal / code (fixed)       | Roboto Mono | `--font-terminal`| —           |
 
-Single font loaded from Google Fonts in `index.html` (`display=swap`).
-Roboto Mono supports full variable weight range (`100–700`), italic included.
-Set as the default `font-family` on `html` in `index.css`.
+Both families are loaded from Google Fonts in `index.html` (`display=swap`, one
+shared `<link>`). **Archivo is the default site font** (`--font-mono`, the global
+`font-family` on `html` in `index.css`). The `--font-mono` token name is a
+historical misnomer — it is the general site font, not necessarily monospace.
+`--font-terminal` is a **fixed Roboto Mono anchor** kept for the manifesto finder
+boxes + notebook terminal so they always read as code, regardless of the site font.
+
+**Font switcher (feature-flagged, off by default).** `src/store/useFontStore.ts`
+holds a roster of selectable fonts and writes the choice into `--font-mono`. The
+switcher UI (`src/components/FontSwitcher.tsx`) is gated behind
+`FONT_SWITCHER_ENABLED` in `src/config/featureFlags.ts`:
+
+- **Off (current):** switcher hidden; the site is locked to the default
+  (`DEFAULT_FONT = 'archivo'`). Any font saved to `localStorage` from when the
+  switcher was live is **ignored**, so the font is deterministic for every visitor.
+- **On:** switcher renders top-right; the user's choice is read from / persisted to
+  `localStorage.font`.
+
+Flip the one flag to bring the switcher back. To change the default font, edit
+`DEFAULT_FONT` in `useFontStore.ts` **and** the base `--font-mono` value in
+`index.css` (so the first paint, before JS runs, matches and there's no flash).
 
 ---
 

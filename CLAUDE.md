@@ -37,6 +37,24 @@ Fresh Vite + React 19 + TypeScript template. The R3F / animation stack is **not 
 - DOM and 3D worlds are separate: one fixed `<Canvas>` behind the page; HTML sections scroll over it.
 - Read scroll progress through the Zustand store, not via React props/state, to avoid re-renders inside the animation loop.
 
+## Fonts
+
+The site font is a Zustand-backed token system with a **feature-flagged** switcher.
+
+| File | Purpose |
+|---|---|
+| `src/config/featureFlags.ts` | `FONT_SWITCHER_ENABLED` (default `false`). The single switch for the font switcher — gates both the UI and the font-resolution logic. |
+| `src/store/useFontStore.ts` | Roster of selectable fonts + `{ font, setFont }`. `DEFAULT_FONT = 'archivo'`. `setFont` writes `localStorage.font` and the `--font-mono` custom property. `getInitialFont()` returns `DEFAULT_FONT` immediately when the flag is off (ignoring any stored choice); when on, reads `localStorage.font` first. |
+| `src/components/FontSwitcher.tsx` | The top-right `<select>` UI. Rendered in `App.tsx` only when `FONT_SWITCHER_ENABLED`. |
+| `index.css` (`@theme`) | Base `--font-mono` (default **Archivo** site font) + fixed `--font-terminal` (Roboto Mono). |
+
+Rules:
+
+- **Two tokens, two jobs.** `--font-mono` is the **general site font** (misnomer — not necessarily monospace); the switcher mutates it. `--font-terminal` is a **fixed Roboto Mono anchor** — never switch it; the manifesto finder boxes + notebook terminal must always read as code.
+- **Flag off (current): the site is locked to the default font** and any stale `localStorage.font` (from when the switcher was live) is ignored — so the font is deterministic for every visitor/device. Flip `FONT_SWITCHER_ENABLED` to `true` to restore the switcher.
+- **Changing the default font** = edit `DEFAULT_FONT` in `useFontStore.ts` **and** the base `--font-mono` value in `index.css` (so the pre-JS first paint matches — no flash of the old font). Add the new family's `<link>` in `index.html`.
+- Both Archivo + Roboto Mono are loaded via one shared Google Fonts `<link>` in `index.html`; other roster families are commented out there, re-enable as needed.
+
 ## i18n (bilingual EN / DE)
 
 The site supports English and German via a custom Zustand + hook system — no third-party i18n library.

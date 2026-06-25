@@ -17,8 +17,9 @@ import { Experience } from './sections/experience/Experience';
 import { Contact } from './sections/Contact';
 import { ScrollLogger } from './debug/ScrollLogger';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
-// import { FontSwitcher } from './components/FontSwitcher'; // hidden from UI; kept for future use
+import { FontSwitcher } from './components/FontSwitcher';
 import { ViewportIndicator } from './components/ViewportIndicator';
+import { FONT_SWITCHER_ENABLED } from './config/featureFlags';
 import { useT } from './i18n/useT';
 
 // Holds the hero intro until the WebGL scene has finished loading AND compiling
@@ -68,7 +69,7 @@ function App() {
   return (
     <>
       <div className='fixed top-4 right-4 z-50 flex items-center gap-3 pointer-events-none'>
-        {/* <FontSwitcher /> — hidden from the UI; component kept for future use */}
+        {FONT_SWITCHER_ENABLED && <FontSwitcher />}
         <LanguageSwitcher />
       </div>
       <KnowledgeBackground />

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { FONT_SWITCHER_ENABLED } from '../config/featureFlags';
 
 export type FontId =
   | 'roboto-mono'
@@ -67,6 +68,8 @@ const STORAGE_KEY = 'font';
 const DEFAULT_FONT: FontId = 'archivo';
 
 function getInitialFont(): FontId {
+  // Flag off → ignore any stored choice and lock to the default font.
+  if (!FONT_SWITCHER_ENABLED) return DEFAULT_FONT;
   if (typeof window === 'undefined') return DEFAULT_FONT;
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
