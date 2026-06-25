@@ -125,7 +125,7 @@ export function HeroLogo({ triggerRef }: Props) {
       // to keep the whole hero composition vertically centred (matches the
       // mobile avatar-anchor `top` in Hero.tsx). Desktop keeps the high anchor.
       const mobile = document.documentElement.clientWidth < 640;
-      column.style.top = `${vh * (mobile ? 0.32 : 0.18)}px`;
+      column.style.top = `${vh * (mobile ? 0.24 : 0.18)}px`;
       for (let i = 0; i < chars.length; i++) {
         const r = charRefs.current[i]?.getBoundingClientRect();
         baseW[i] = r ? r.width : 0;
