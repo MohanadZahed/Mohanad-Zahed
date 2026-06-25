@@ -130,6 +130,18 @@ export function HeroLogo({ triggerRef }: Props) {
         const r = charRefs.current[i]?.getBoundingClientRect();
         baseW[i] = r ? r.width : 0;
       }
+      // Size the construction square to the gold O's actual rendered height
+      // (line-height:1 → box height ≈ font-size), so it fits the O at every
+      // width — desktop ~55, shrinking with the viewport-scaled O on phones.
+      const squareHalf = introO.getBoundingClientRect().height / 2;
+      const top = lineRefs.current[0];
+      const bottom = lineRefs.current[1];
+      const left = lineRefs.current[2];
+      const right = lineRefs.current[3];
+      if (top) top.style.top = `calc(50% - ${squareHalf}px)`;
+      if (bottom) bottom.style.top = `calc(50% + ${squareHalf}px)`;
+      if (left) left.style.left = `calc(50% - ${squareHalf}px)`;
+      if (right) right.style.left = `calc(50% + ${squareHalf}px)`;
     };
 
     const render = () => {
