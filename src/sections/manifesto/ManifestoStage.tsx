@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { lerp, smoothstep } from '../../scene/lib/math';
 import { rafThrottle } from '../../lib/rafThrottle';
 import { Typewriter } from '../../components/Typewriter';
@@ -49,18 +49,26 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
 
+  // The stage is the `height: 100vh` box. We measure its own clientHeight (the
+  // resolved large-viewport height) rather than document.documentElement
+  // clientHeight (the small/svh viewport), so the pipeline, sand panel, finder
+  // boxes, and laptop spread across the whole viewport — including the strip
+  // behind the mobile address bar — and don't reflow when the bar toggles.
+  const stageRef = useRef<HTMLDivElement>(null);
+
   const [viewport, setViewport] = useState(() => ({
     w: typeof window === 'undefined' ? 1920 : document.documentElement.clientWidth,
-    h: typeof window === 'undefined' ? 1080 : document.documentElement.clientHeight,
+    h: typeof window === 'undefined' ? 1080 : window.innerHeight,
   }));
 
-  useEffect(() => {
-    const onResize = rafThrottle(() =>
+  useLayoutEffect(() => {
+    const measure = () =>
       setViewport({
         w: document.documentElement.clientWidth,
-        h: document.documentElement.clientHeight,
-      }),
-    );
+        h: stageRef.current?.clientHeight ?? window.innerHeight,
+      });
+    measure();
+    const onResize = rafThrottle(measure);
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
@@ -104,8 +112,8 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
     justifyContent: 'center',
     paddingLeft: 'clamp(1.5rem, 6vw, 6rem)',
     paddingRight: 'clamp(1.5rem, 6vw, 6rem)',
-    paddingTop: 'clamp(4rem, 10svh, 8rem)',
-    paddingBottom: 'clamp(4rem, 10svh, 8rem)',
+    paddingTop: 'clamp(4rem, 10vh, 8rem)',
+    paddingBottom: 'clamp(4rem, 10vh, 8rem)',
     zIndex: 25,
   };
 
@@ -123,10 +131,11 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
   return (
     <div
       id='ManifestoStage'
+      ref={stageRef}
       style={{
         position: 'sticky',
         top: 0,
-        height: '100svh',
+        height: '100vh',
         width: '100%',
         overflow: 'hidden',
         pointerEvents: 'none',
