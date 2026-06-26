@@ -58,3 +58,7 @@ export const HERO_PARK_UP_START = 0.15;
 export const HERO_PARK_UP_END = 0.6;
 export const HERO_PARK_LEFT_START = 0.62;
 export const HERO_PARK_LEFT_END = 1.0;
+
+// Dark backdrop geometry — shared between HeroLogo (renders the backdrop div)
+// and MozNav (restores border-radius on menu close).
+export const BACKDROP_RADIUS = 22;
