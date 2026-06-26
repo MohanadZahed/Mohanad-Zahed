@@ -182,7 +182,7 @@ export function About() {
           <p
             ref={bodyRef}
             className='mt-6 leading-relaxed sm:mt-8'
-            style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.125rem)' }}
+            style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}
           >
             {WORDS.map((word, i) => (
               <span key={`${word}-${i}`} style={{ color: `rgba(0, 0, 0, ${REST_ALPHA})` }}>
