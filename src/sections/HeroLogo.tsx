@@ -6,6 +6,7 @@ import {
 } from 'react';
 import gsap from 'gsap';
 import { useScrollStore } from '../store/useScrollStore';
+import { onScrollIntent } from '../hooks/useLenis';
 import { useFontStore } from '../store/useFontStore';
 import { useT } from '../i18n/useT';
 import { MozNav, type MozNavHandle } from './MozNav';
@@ -399,6 +400,36 @@ export function HeroLogo({ triggerRef }: Props) {
     applyCollapse();
     const unsubScroll = useScrollStore.subscribe(applyCollapse);
 
+    // ----- parked-mark scroll-direction hide/show (like LanguageSwitcher) -----
+    // Once the hero is fully off-screen, the parked corner mark slides up out of
+    // view on scroll-down and back to its spot on scroll-up. Applied to columnRef
+    // (transform-free otherwise) so it composes on top of the render()-owned park
+    // transform on nameWrap without fighting it.
+    column.style.transition = 'transform 0.4s ease';
+    let markHidden = false;
+    const setMarkHidden = (hide: boolean) => {
+      if (hide === markHidden) return; // direction unchanged → ignore
+      markHidden = hide;
+      if (markHidden) {
+        // Measure the parked mark's lower bound so it fully clears the top edge
+        // at every breakpoint (desktop vs. smaller mobile mark).
+        const r = backdropRef.current?.getBoundingClientRect();
+        const off = r ? r.bottom + 16 : 140;
+        column.style.transform = `translateY(-${off}px)`;
+      } else {
+        column.style.transform = 'translateY(0)';
+      }
+    };
+    // React once per actual scroll input (wheel / touch-drag), not on a
+    // continuous signal — so it never re-triggers during Lenis' momentum glide.
+    const unsubVisibility = onScrollIntent((down) => {
+      const sec = triggerRef.current;
+      if (!sec) return;
+      // Only hide/show once the hero is fully off-screen; otherwise keep parked.
+      const heroGone = sec.getBoundingClientRect().bottom <= 0;
+      setMarkHidden(heroGone ? down : false);
+    });
+
     // Re-measure on resize / font reflow — only while fully expanded so the live
     // collapse animation never feeds its own shrinking width back in.
     const ro = new ResizeObserver(() => {
@@ -412,6 +443,7 @@ export function HeroLogo({ triggerRef }: Props) {
     return () => {
       unsubStart();
       unsubScroll();
+      unsubVisibility();
       tl?.kill();
       ro.disconnect();
     };
