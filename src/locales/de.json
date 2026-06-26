@@ -293,5 +293,15 @@
     "xing": "Xing",
     "copyright": "© 2026 Mohanad Zahed",
     "builtWith": "Gebaut mit React · Three.js · GSAP"
+  },
+  "nav": {
+    "ariaLabel": "Seitennavigation",
+    "About": "Über mich",
+    "Manifesto": "Manifesto",
+    "Skills": "Fähigkeiten",
+    "Knowledge": "Wissen",
+    "Certificates": "Zertifikate",
+    "Experience": "Erfahrung",
+    "Contact": "Kontakt"
   }
 }

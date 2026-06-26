@@ -882,3 +882,45 @@ h3 {
     transform: translate3d(0, 0, 0);
   }
 }
+
+/* MOZ nav menu — circuit border elements */
+.moz-menu-line {
+  position: absolute;
+  background-color: var(--color-quaternary);
+}
+
+.moz-menu-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-quaternary);
+}
+
+/* Nav flip link — text-only, reuses .flip-link__* inner classes */
+.nav-flip-link {
+  display: block;
+  color: var(--color-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 5px 0;
+  cursor: pointer;
+  line-height: 1;
+}
+.nav-flip-link:hover .flip-link__slide,
+.nav-flip-link:focus-visible .flip-link__slide {
+  transform: translate3d(0, -100%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-flip-link .flip-link__slide {
+    transition: none;
+  }
+  .nav-flip-link:hover .flip-link__slide,
+  .nav-flip-link:focus-visible .flip-link__slide {
+    transform: translate3d(0, 0, 0);
+  }
+}

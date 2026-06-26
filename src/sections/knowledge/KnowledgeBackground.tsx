@@ -58,7 +58,7 @@ export function KnowledgeBackground() {
       const circleEnd = clamp((vmin - DISC_BOX_PX) / (diagonal - DISC_BOX_PX), 0, 1);
       const radiusPct = lerp(50, 0, smoothstep(circleEnd, 1.0, expand));
 
-      wrapper.style.backgroundColor = `color-mix(in srgb, var(--color-quaternary) ${beigeAlpha * 100}%, transparent)`;
+      wrapper.style.backgroundColor = `color-mix(in srgb, var(--color-secondary) ${beigeAlpha * 100}%, transparent)`;
       disc.style.width = `${size}px`;
       disc.style.height = `${size}px`;
       disc.style.transform = `translate3d(0, ${ty}px, 0)`;
