@@ -22,6 +22,11 @@ const NAV_ITEMS = [
   { id: 'Contact' },
 ] as const;
 
+// Mobile fullscreen-grow tuning.
+const FULL_GROW_DUR = 0.45;
+const FULL_SHRINK_DUR = 0.4;
+const FULL_LINK_STAGGER = 0.06;
+
 function NavFlipLink({
   sectionId,
   label,
@@ -82,6 +87,9 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
   const menuBotLeftDotRef = useRef<HTMLDivElement>(null);
   const menuBotRightDotRef = useRef<HTMLDivElement>(null);
   const menuNavRef = useRef<HTMLElement | null>(null);
+  const menuCloseRef = useRef<HTMLButtonElement>(null);
+  // Backdrop rect captured at open time so the fullscreen menu shrinks back to it.
+  const openRectRef = useRef<DOMRect | null>(null);
 
   useImperativeHandle(ref, () => ({
     close: () => setMenuOpen(false),
@@ -136,6 +144,126 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     menuTlRef.current?.kill();
 
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarse = matchMedia('(pointer: coarse)').matches;
+    const closeBtn = menuCloseRef.current;
+
+    // --- Mobile (coarse pointer): the backdrop grows to fill the screen. ---
+    if (isCoarse && closeBtn) {
+      const linkEls = Array.from(nav.children);
+      // Reset every property the fullscreen branch mutates back to the JSX defaults
+      // so the overlay is invisible + inert again once closed.
+      const restoreStatic = () => {
+        overlay.classList.remove('moz-menu-overlay--full');
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.border =
+          '1px solid color-mix(in srgb, var(--color-quaternary) 28%, transparent)';
+        overlay.style.borderTop = 'none';
+        overlay.style.overflow = '';
+        overlay.style.borderRadius = `0 0 ${BACKDROP_RADIUS}px ${BACKDROP_RADIUS}px`;
+      };
+
+      if (menuOpen) {
+        menuEverOpenedRef.current = true;
+        const r = backdrop.getBoundingClientRect();
+        openRectRef.current = r;
+        const vw = document.documentElement.clientWidth;
+        const vh = document.documentElement.clientHeight;
+
+        // Hide the dropdown circuit border; centring + sizing come from CSS.
+        gsap.set([leftLine, rightLine, bottomLine, botLeftDot, botRightDot], { autoAlpha: 0 });
+        nav.style.padding = '';
+
+        overlay.classList.add('moz-menu-overlay--full');
+        Object.assign(overlay.style, {
+          left: `${r.left}px`,
+          top: `${r.top}px`,
+          width: `${r.width}px`,
+          height: `${r.height}px`,
+          border: 'none',
+          borderRadius: `${BACKDROP_RADIUS}px`,
+          overflow: 'hidden',
+          opacity: '1',
+          pointerEvents: 'auto',
+        });
+        gsap.set(linkEls, { x: 0, y: 12, opacity: 0 });
+        gsap.set(closeBtn, { opacity: 0 });
+
+        // Lock page scroll while the menu covers the viewport.
+        getLenis()?.stop();
+
+        if (reduced) {
+          Object.assign(overlay.style, {
+            left: '0px',
+            top: '0px',
+            width: `${vw}px`,
+            height: `${vh}px`,
+            borderRadius: '0px',
+          });
+          gsap.set(linkEls, { y: 0, opacity: 1 });
+          gsap.set(closeBtn, { opacity: 1 });
+          return;
+        }
+
+        const tl = gsap.timeline();
+        menuTlRef.current = tl;
+        tl.to(overlay, {
+          left: 0,
+          top: 0,
+          width: vw,
+          height: vh,
+          borderRadius: 0,
+          duration: FULL_GROW_DUR,
+          ease: 'power3.inOut',
+        })
+          .to(closeBtn, { opacity: 1, duration: 0.2 }, '<+=0.15')
+          .to(
+            linkEls,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: 0.3,
+              stagger: FULL_LINK_STAGGER,
+              ease: 'power2.out',
+            },
+            '<',
+          );
+      } else {
+        if (!menuEverOpenedRef.current) return; // nothing to close on initial mount
+        const r = openRectRef.current ?? backdrop.getBoundingClientRect();
+
+        if (reduced) {
+          restoreStatic();
+          getLenis()?.start();
+          return;
+        }
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            restoreStatic();
+            getLenis()?.start();
+          },
+        });
+        menuTlRef.current = tl;
+        tl.to(linkEls, { y: 12, opacity: 0, duration: 0.2, stagger: 0.03, ease: 'power2.in' })
+          .to(closeBtn, { opacity: 0, duration: 0.15 }, '<')
+          .to(
+            overlay,
+            {
+              left: r.left,
+              top: r.top,
+              width: r.width,
+              height: r.height,
+              borderRadius: BACKDROP_RADIUS,
+              duration: FULL_SHRINK_DUR,
+              ease: 'power3.inOut',
+            },
+            '<+=0.05',
+          );
+      }
+      return;
+    }
 
     if (menuOpen) {
       menuEverOpenedRef.current = true;
@@ -297,8 +425,10 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     const el = document.getElementById(sectionId);
     if (!el) return;
     const lenis = getLenis();
-    if (lenis) lenis.scrollTo(el, { offset: 0 });
-    else el.scrollIntoView({ behavior: 'smooth' });
+    if (lenis) {
+      lenis.start(); // the fullscreen mobile menu pauses Lenis while open
+      lenis.scrollTo(el, { offset: 0 });
+    } else el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -319,6 +449,13 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
       <div ref={menuBottomLineRef} className='moz-menu-line' />
       <div ref={menuBotLeftDotRef} className='moz-menu-dot' />
       <div ref={menuBotRightDotRef} className='moz-menu-dot' />
+      <button
+        ref={menuCloseRef}
+        type='button'
+        className='moz-menu-close'
+        aria-label={t('nav.close')}
+        onClick={() => setMenuOpen(false)}
+      />
       <nav ref={menuNavRef as RefObject<HTMLElement>} aria-label={t('nav.ariaLabel')}>
         {NAV_ITEMS.map((item) => (
           <NavFlipLink

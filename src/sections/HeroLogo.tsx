@@ -240,10 +240,10 @@ export function HeroLogo({ triggerRef }: Props) {
           backdrop.style.top = `${bTop}px`;
           backdrop.style.height = `${bBottom - bTop}px`;
           backdrop.style.opacity = String(smoothstep(0.15, 0.5, collapse));
-          // Become clickable only once the mark is fully parked top-left,
-          // and only on non-touch devices.
-          const isCoarse = matchMedia('(pointer: coarse)').matches;
-          const isParked = collapse >= 0.95 && !isCoarse;
+          // Become tappable once the mark is fully parked top-left. Touch
+          // devices get a fullscreen-grow menu (MozNav branches on pointer type);
+          // fine pointers keep the dropdown.
+          const isParked = collapse >= 0.95;
           backdrop.style.pointerEvents = isParked ? 'auto' : 'none';
           backdrop.style.cursor = isParked ? 'pointer' : 'default';
         }

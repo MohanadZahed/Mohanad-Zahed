@@ -897,6 +897,64 @@ h3 {
   background-color: var(--color-quaternary);
 }
 
+/* Mobile fullscreen menu — the overlay grows from the parked mark to fill the
+   screen; links centre, the circuit border is hidden, an X closes it. */
+.moz-menu-overlay--full nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  height: 100%;
+  /* override the dropdown's computed inline padding (centring comes from flex) */
+  padding: 0 !important;
+}
+.moz-menu-overlay--full .nav-flip-link {
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  text-align: center;
+  padding: 0;
+}
+
+.moz-menu-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-secondary);
+  opacity: 0; /* faded in by GSAP when the fullscreen menu opens */
+  pointer-events: none; /* only the fullscreen menu activates it */
+}
+.moz-menu-overlay--full .moz-menu-close {
+  pointer-events: auto;
+}
+.moz-menu-close::before,
+.moz-menu-close::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+.moz-menu-close::before {
+  transform: rotate(45deg);
+}
+.moz-menu-close::after {
+  transform: rotate(-45deg);
+}
+.moz-menu-close:focus-visible {
+  outline: 2px solid var(--color-tertiary);
+  outline-offset: 2px;
+}
+
 /* Nav flip link — text-only, reuses .flip-link__* inner classes */
 .nav-flip-link {
   display: block;
