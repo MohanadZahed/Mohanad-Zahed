@@ -6,6 +6,7 @@ import { useScrollStore } from '../store/useScrollStore';
 import { VISUAL_CENTER_OFFSET_Y } from './Avatar';
 import { LOGO_FADE_END } from '../sections/hero.constants';
 import { clamp, lerp } from './lib/math';
+import { ORBIT_MAX_VIEWPORT_FRACTION } from './lib/logoPosition';
 
 // --- Tuning knobs -----------------------------------------------------------
 // Radians of ring spin per CSS pixel of horizontal drag (1:1 grab feel).
@@ -50,6 +51,7 @@ interface LogoRingControlsProps {
 export function LogoRingControls({ anchorRef }: LogoRingControlsProps) {
   const camera = useThree((s) => s.camera);
   const size = useThree((s) => s.size);
+  const viewport = useThree((s) => s.viewport);
   const coarse = useMemo(
     () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
     [],
@@ -155,9 +157,16 @@ export function LogoRingControls({ anchorRef }: LogoRingControlsProps) {
     cx.current = (c.x * 0.5 + 0.5) * size.width;
     cy.current = (1 - (c.y * 0.5 + 0.5)) * size.height;
 
+    // Match the visual ring's capped radius (see logoPosition.ts): world radius =
+    // local × scale = min(4·scale, frac·viewportWidth), so the grab annulus stays
+    // aligned with the pulled-in logos.
+    const worldRadius = Math.min(
+      HERO_RING_RADIUS * anchor.scale.x,
+      ORBIT_MAX_VIEWPORT_FRACTION * viewport.width,
+    );
     const edge = worldCenter
       .clone()
-      .addScaledVector(right, HERO_RING_RADIUS * anchor.scale.x)
+      .addScaledVector(right, worldRadius)
       .project(camera);
     const ex = (edge.x * 0.5 + 0.5) * size.width;
     const ey = (1 - (edge.y * 0.5 + 0.5)) * size.height;

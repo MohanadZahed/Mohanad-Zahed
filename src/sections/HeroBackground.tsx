@@ -19,14 +19,14 @@ const ICONS: IconSpec[] = [
   // — corner circuits (filename = position)
   {
     src: 'circuit-left-top.svg',
-    className: 'absolute top-[15svh] left-0 w-[34vw] max-w-[520px] aspect-[565/425]',
+    className: 'absolute top-[15svh] left-0 w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
 
   // — top-left cluster
   {
     src: 'javascript.svg',
-    className: 'absolute top-[9svh] left-[5vw] w-8 md:w-12 lg:w-16 aspect-square',
+    className: 'absolute top-[9svh] left-[5vw] w-8 md:w-12 lg:w-11 aspect-square',
     restOpacity: 0.3,
   },
   {
@@ -41,44 +41,44 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'code_tag_icon.svg',
-    className: 'absolute top-[3svh] left-[8vw] w-10 md:w-24 lg:w-50 aspect-[680/400]',
+    className: 'absolute top-[3svh] left-[8vw] w-10 md:w-24 lg:w-36 aspect-[680/400]',
     restOpacity: 0.25,
   },
   {
     src: 'brackets-curly-svgrepo-com.svg',
-    className: 'absolute top-[15svh] left-[15vw] w-7 md:w-10 lg:w-14 aspect-square',
+    className: 'absolute top-[15svh] left-[15vw] w-7 md:w-10 lg:w-10 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'binary_two_rows_mono.svg',
-    className: 'absolute top-[2svh] left-[17vw] w-16 md:w-24 lg:w-40 aspect-[680/400]',
+    className: 'absolute top-[2svh] left-[17vw] w-16 md:w-24 lg:w-28 aspect-[680/400]',
     restOpacity: 0.25,
   },
   {
     src: 'cloud-upload-svgrepo-com.svg',
-    className: 'absolute top-[3svh] left-[26vw] w-7 md:w-10 lg:w-14 aspect-square',
+    className: 'absolute top-[3svh] left-[26vw] w-7 md:w-10 lg:w-10 aspect-square',
     restOpacity: 0.3,
   },
 
   // — top-right cluster
   {
     src: 'circuit-right-top.svg',
-    className: 'absolute top-0 right-[3vw] w-[34vw] max-w-[520px] aspect-[565/425]',
+    className: 'absolute top-0 right-[3vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
   {
     src: 'git.svg',
-    className: 'absolute top-[3svh] right-[1vw] w-7 md:w-12 lg:w-20 aspect-square',
+    className: 'absolute top-[3svh] right-[1vw] w-7 md:w-12 lg:w-14 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'brackets-curly-svgrepo-com.svg',
-    className: 'absolute top-[12svh] right-[8vw] w-7 md:w-10 lg:w-14 aspect-square',
+    className: 'absolute top-[12svh] right-[8vw] w-7 md:w-10 lg:w-10 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'terminal_prompt_boxed.svg',
-    className: 'absolute top-[14svh] right-[0vw] w-12 md:w-24 lg:w-45 aspect-square',
+    className: 'absolute top-[14svh] right-[0vw] w-12 md:w-24 lg:w-32 aspect-square',
     restOpacity: 0.3,
   },
   {
@@ -113,22 +113,22 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'cloud-upload-svgrepo-com.svg',
-    className: 'absolute top-[30svh] right-[1vw] w-7 md:w-12 lg:w-17 aspect-square',
+    className: 'absolute top-[30svh] right-[1vw] w-7 md:w-12 lg:w-12 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'semicolon_icon.svg',
-    className: 'absolute top-[34svh] right-[-0.5vw] w-4 md:w-16 lg:w-30 aspect-square',
+    className: 'absolute top-[34svh] right-[-0.5vw] w-4 md:w-16 lg:w-20 aspect-square',
     restOpacity: 0.45,
   },
   {
     src: 'code-code-tags-html-inline-editor-svgrepo-com.svg',
-    className: 'absolute top-[42svh] right-[2vw] w-8 md:w-12 lg:w-16 aspect-square',
+    className: 'absolute top-[42svh] right-[2vw] w-8 md:w-12 lg:w-11 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'hash.svg',
-    className: 'absolute top-[48svh] right-[2vw] w-7 md:w-10 lg:w-14 aspect-square',
+    className: 'absolute top-[48svh] right-[2vw] w-7 md:w-10 lg:w-10 aspect-square',
     restOpacity: 0.3,
   },
   {
@@ -145,7 +145,7 @@ const ICONS: IconSpec[] = [
   // — middle edges
   {
     src: 'globe-1-svgrepo-com.svg',
-    className: 'absolute top-[25svh] left-[2vw] w-7 md:w-12 lg:w-19 aspect-square',
+    className: 'absolute top-[25svh] left-[2vw] w-7 md:w-12 lg:w-13 aspect-square',
     restOpacity: 0.3,
   },
   {
@@ -155,12 +155,12 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'terminal_prompt_icon.svg',
-    className: 'absolute top-[38svh] left-[-1vw] w-7 md:w-24 lg:w-42 aspect-square',
+    className: 'absolute top-[38svh] left-[-1vw] w-7 md:w-24 lg:w-30 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'semicolon_icon.svg',
-    className: 'absolute top-[32svh] left-[1vw] w-4 md:w-16 lg:w-30 aspect-square',
+    className: 'absolute top-[32svh] left-[1vw] w-4 md:w-16 lg:w-20 aspect-square',
     restOpacity: 0.45,
   },
   {
@@ -172,7 +172,7 @@ const ICONS: IconSpec[] = [
   // — bottom-left cluster (React atom, code tag, binary, big circle)
   {
     src: 'git.svg',
-    className: 'absolute bottom-[40svh] left-[2vw] w-7 md:w-12 lg:w-18 aspect-square',
+    className: 'absolute bottom-[40svh] left-[2vw] w-7 md:w-12 lg:w-12 aspect-square',
     restOpacity: 0.3,
   },
   {
@@ -182,27 +182,27 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'circuit-left-bottom.svg',
-    className: 'absolute bottom-43 left-0 w-[30vw] max-w-[350px] aspect-[565/425]',
+    className: 'absolute bottom-43 left-0 w-[30vw] max-w-[350px] lg:max-w-[260px] aspect-[565/425]',
     restOpacity: 0.3,
   },
   {
     src: 'circuit-left-bottom2.svg',
-    className: 'absolute bottom-[5svh] left-0 w-[26vw] max-w-[400px] aspect-[565/425]',
+    className: 'absolute bottom-[5svh] left-0 w-[26vw] max-w-[400px] lg:max-w-[300px] aspect-[565/425]',
     restOpacity: 0.25,
   },
   {
     src: 'react_dark.svg',
-    className: 'absolute bottom-[15svh] left-[3vw] w-10 md:w-20 lg:w-35 aspect-square',
+    className: 'absolute bottom-[15svh] left-[3vw] w-10 md:w-20 lg:w-24 aspect-square',
     restOpacity: 0.35,
   },
   {
     src: 'code_tag_icon.svg',
-    className: 'absolute bottom-[17svh] left-[15vw] w-8 md:w-20 lg:w-40 aspect-[680/400]',
+    className: 'absolute bottom-[17svh] left-[15vw] w-8 md:w-20 lg:w-28 aspect-[680/400]',
     restOpacity: 0.25,
   },
   {
     src: 'binary_two_rows_mono.svg',
-    className: 'absolute bottom-[7svh] left-[20vw] w-16 md:w-24 lg:w-35 aspect-[680/400]',
+    className: 'absolute bottom-[7svh] left-[20vw] w-16 md:w-24 lg:w-24 aspect-[680/400]',
     restOpacity: 0.25,
   },
   {
@@ -225,7 +225,7 @@ const ICONS: IconSpec[] = [
 
   {
     src: 'angular.svg',
-    className: 'absolute bottom-[30svh] right-[3vw] w-8 md:w-14 lg:w-24 aspect-square',
+    className: 'absolute bottom-[30svh] right-[3vw] w-8 md:w-14 lg:w-16 aspect-square',
     restOpacity: 0.4,
   },
   {
@@ -240,12 +240,12 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'circuit-right-bottom.svg',
-    className: 'absolute bottom-0 right-[-1vw] w-[34vw] max-w-[520px] aspect-[565/425]',
+    className: 'absolute bottom-0 right-[-1vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
   {
     src: 'code_tag_icon.svg',
-    className: 'absolute bottom-[5svh] right-[13vw] w-10 md:w-24 lg:w-50 aspect-[680/400]',
+    className: 'absolute bottom-[5svh] right-[13vw] w-10 md:w-24 lg:w-36 aspect-[680/400]',
     restOpacity: 0.25,
   },
   {
@@ -270,12 +270,12 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'globe-1-svgrepo-com.svg',
-    className: 'absolute bottom-[6svh] right-[23vw] w-7 md:w-12 lg:w-20 aspect-square',
+    className: 'absolute bottom-[6svh] right-[23vw] w-7 md:w-12 lg:w-14 aspect-square',
     restOpacity: 0.3,
   },
   {
     src: 'binary_two_rows_mono.svg',
-    className: 'absolute bottom-[4svh] right-[27vw] w-16 md:w-24 lg:w-40 aspect-[680/400]',
+    className: 'absolute bottom-[4svh] right-[27vw] w-16 md:w-24 lg:w-28 aspect-[680/400]',
     restOpacity: 0.25,
   },
   // — scattered dots

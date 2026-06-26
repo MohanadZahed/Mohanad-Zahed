@@ -10,6 +10,11 @@ interface ScrollState {
   certificatesProgress: number;
   contactProgress: number;
   avatarBlend: number;
+  // Live (damped) uniform scale of the avatar+orbit anchor group, published each
+  // frame by Scene.tsx. Read by LogoPlane (which has no direct anchor ref) to
+  // convert the viewport-fraction orbit cap from world space into the anchor's
+  // local space (local radius = worldCap / anchorScale).
+  anchorScale: number;
   // User-driven angular offset (radians) added to the logo ring's spin. Written
   // every frame by LogoRingControls (mouse grab-drag + momentum decay) and read
   // by LogoPlane via getState(). Additive: when momentum decays to 0 the ring
@@ -28,6 +33,7 @@ interface ScrollState {
   setCertificatesProgress: (p: number) => void;
   setContactProgress: (p: number) => void;
   setAvatarBlend: (p: number) => void;
+  setAnchorScale: (s: number) => void;
   setLogoSpin: (p: number) => void;
   setHeroStartedAt: (t: number | null) => void;
 }
@@ -42,6 +48,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   certificatesProgress: 0,
   contactProgress: 0,
   avatarBlend: 0,
+  anchorScale: 1,
   logoSpin: 0,
   heroStartedAt: null,
   setProgress: (p) => set({ progress: p }),
@@ -53,6 +60,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setCertificatesProgress: (p) => set({ certificatesProgress: p }),
   setContactProgress: (p) => set({ contactProgress: p }),
   setAvatarBlend: (p) => set({ avatarBlend: p }),
+  setAnchorScale: (s) => set({ anchorScale: s }),
   setLogoSpin: (p) => set({ logoSpin: p }),
   setHeroStartedAt: (t) => set({ heroStartedAt: t }),
 }));

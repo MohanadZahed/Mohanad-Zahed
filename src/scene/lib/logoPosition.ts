@@ -14,18 +14,25 @@ const RADIUS_END_NARROW = 0.01;
 const NARROW_MAX_PX = 900;
 const ORBIT_RADIUS_NARROW = 1.3;
 
+// The orbit radius (logo → avatar distance) is capped to this fraction of the
+// viewport width, so the far-left → far-right logo span never exceeds 2× this
+// (≈ 50% of the viewport). Consumed by LogoPlane (visual) + LogoRingControls
+// (drag hit-test) so the grab annulus tracks the capped ring.
+export const ORBIT_MAX_VIEWPORT_FRACTION = 0.25;
+
 export function logoPosition(
   index: number,
   total: number,
   progress: number,
   time: number,
   spin: number = 0,
+  maxRadius: number = Infinity,
 ): [number, number, number] {
   const isNarrow = typeof window !== 'undefined' && window.innerWidth < NARROW_MAX_PX;
   const rStart = isNarrow ? RADIUS_START_NARROW : RADIUS_START;
   const rEnd = isNarrow ? RADIUS_END_NARROW : RADIUS_END;
   const minRadius = isNarrow ? ORBIT_RADIUS_NARROW : 1.5;
-  const radius = lerp(4, minRadius, smoothstep(rStart, rEnd, progress));
+  const radius = Math.min(lerp(4, minRadius, smoothstep(rStart, rEnd, progress)), maxRadius);
   const idleSpin = time * 0.08;
   const scrollSpin = progress * 2;
   const angle = (index / total) * Math.PI * 2 + idleSpin + scrollSpin + spin;

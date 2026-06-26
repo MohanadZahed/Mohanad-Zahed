@@ -10,7 +10,7 @@ import {
   Vector3,
 } from 'three';
 import { useScrollStore } from '../store/useScrollStore';
-import { logoPosition } from './lib/logoPosition';
+import { logoPosition, ORBIT_MAX_VIEWPORT_FRACTION } from './lib/logoPosition';
 import { LOGO_FADE_START, LOGO_FADE_END } from '../sections/hero.constants';
 
 interface LogoPlaneProps {
@@ -32,12 +32,17 @@ export function LogoPlane({ index, total, texturePath, color }: LogoPlaneProps) 
     tex.colorSpace = SRGBColorSpace;
   });
 
-  useFrame(({ camera, clock }) => {
+  useFrame(({ camera, clock, viewport }) => {
     const group = groupRef.current;
     const mesh = meshRef.current;
     if (!group || !mesh) return;
-    const { progress, logoSpin } = useScrollStore.getState();
-    const [x, y, z] = logoPosition(index, total, progress, clock.elapsedTime, logoSpin);
+    const { progress, logoSpin, anchorScale } = useScrollStore.getState();
+    // Cap the local orbit radius so the world-space radius never exceeds
+    // ORBIT_MAX_VIEWPORT_FRACTION of the viewport width. Logos live inside the
+    // scaled anchor group (world radius = local × anchorScale), so divide the
+    // world cap by anchorScale to express it in the local space logoPosition uses.
+    const maxRadius = (ORBIT_MAX_VIEWPORT_FRACTION * viewport.width) / anchorScale;
+    const [x, y, z] = logoPosition(index, total, progress, clock.elapsedTime, logoSpin, maxRadius);
 
     // Ring appears only after the avatar has resolved (see hero.constants),
     // expanding out from the avatar's centre: scaling the target by `fade`

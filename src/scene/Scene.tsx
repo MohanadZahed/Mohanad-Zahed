@@ -65,6 +65,7 @@ export function Scene() {
     const targetScale = MathUtils.clamp(viewport.width / SCALE_REFERENCE_WIDTH, SCALE_MIN, 1);
     const nextScale = MathUtils.damp(anchor.scale.x, targetScale, 4, delta);
     anchor.scale.setScalar(nextScale);
+    useScrollStore.getState().setAnchorScale(nextScale);
 
     const aboutRect = aboutEl.getBoundingClientRect();
     const hero = rectToWorld(heroEl.getBoundingClientRect(), viewport);
