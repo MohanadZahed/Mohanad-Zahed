@@ -70,6 +70,13 @@ export function CertificateStrip() {
 
   return (
     <div id='CertificateStrip' ref={stageRef} className='certificates-stage'>
+      <div className='gradients' aria-hidden='true'>
+        <div className='gradients__g1' />
+        <div className='gradients__g2' />
+        <div className='gradients__g3' />
+        <div className='gradients__g4' />
+        <div className='gradients__g5' />
+      </div>
       <div ref={stripRef} className='certificates-strip'>
         <div className='certificates-header'>
           <h2 id='certificates-h2' ref={fitHeading} className='certificates-header__title'>

@@ -176,7 +176,7 @@ export function CompanyBlock({ company }: Props) {
         className={`experience-company__stage ${pinned ? 'sticky' : 'relative'}`}
         style={stageStyle}
       >
-        <div className='relative flex h-full flex-col rounded-xl border border-tertiary/40 bg-black/20 backdrop-blur-sm'>
+        <div className='relative flex h-full flex-col rounded-xl border border-tertiary/40 bg-black/20 backdrop-blur-sm' style={{ boxShadow: 'inset 0 0 0 calc(1px + 0px) hsla(0, 0%, 100%, .075), inset 0 0 5vw hsla(0, 0%, 100%, .1)' }}>
           <h3
             id={`company-${company.id}`}
             className='absolute -top-3 left-6 z-10 bg-canvas-from px-3 font-mono text-sm uppercase tracking-[0.22em] text-quaternary md:left-10 md:text-base'

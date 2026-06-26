@@ -60,8 +60,15 @@ export function Certificates() {
         ref={sectionRef}
         id='Certificates'
         aria-labelledby='certificates-h2'
-        className='certificates-section relative'
+        className='certificates-section relative isolate'
       >
+        <div className='gradients' aria-hidden='true' style={{ zIndex: -1 }}>
+          <div className='gradients__g1' />
+          <div className='gradients__g2' />
+          <div className='gradients__g3' />
+          <div className='gradients__g4' />
+          <div className='gradients__g5' />
+        </div>
         <div className='certificates-fallback'>
           <header className='max-w-md text-center'>
             <span className='certificates-header__eyebrow block'>{t('certificates.eyebrow')}</span>

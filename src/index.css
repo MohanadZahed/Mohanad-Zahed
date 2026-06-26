@@ -19,8 +19,7 @@
   /* Default SITE font (misnamed --font-mono for historical reasons). The font
      switcher overrides this inline on :root; Archivo is the unset default so a
      fresh browser matches the desktop default. */
-  --font-mono:
-    'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   /* Fixed monospace anchor — never changes when the font switcher mutates
      --font-mono. Used to keep the manifesto finder boxes and notebook terminal
      text reading as code/terminal regardless of the selected site font. */
@@ -105,6 +104,127 @@ h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .char-in {
+    animation: none;
+  }
+}
+
+.gradients {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  filter: blur(40px);
+  pointer-events: none;
+  --circle-size: 80%;
+  --circle-size-small: 60%;
+  --blending: hard-light;
+}
+
+.gradients > div {
+  position: absolute;
+  mix-blend-mode: var(--blending);
+  opacity: 1;
+}
+
+.gradients__g1 {
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: calc(50% - var(--circle-size-small) / 2);
+  left: calc(50% - var(--circle-size-small) / 2);
+  background: radial-gradient(circle at center, hsla(0, 0%, 100%, 0.1) 0, hsla(0, 0%, 100%, 0) 50%)
+    no-repeat;
+  transform-origin: center center;
+  animation: gradientsMoveVertical 20s ease infinite;
+}
+.gradients__g2 {
+  width: var(--circle-size);
+  height: var(--circle-size);
+  top: calc(50% - var(--circle-size-small) / 2);
+  left: calc(50% - var(--circle-size-small) / 2);
+  background: radial-gradient(
+      circle at center,
+      hsla(0, 0%, 100%, 0.075) 0,
+      hsla(0, 0%, 100%, 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% - 400px);
+  animation: gradientsMoveInCircle 20s reverse infinite;
+}
+.gradients__g3 {
+  width: var(--circle-size-small);
+  height: var(--circle-size-small);
+  top: calc(50% - var(--circle-size) / 2 + 200px);
+  left: calc(50% - var(--circle-size) / 2 - 500px);
+  background: radial-gradient(circle at center, hsla(0, 0%, 100%, 0.05) 0, hsla(0, 0%, 100%, 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% + 400px);
+  animation: gradientsMoveInCircle 30s linear infinite;
+}
+.gradients__g4 {
+  width: var(--circle-size-small);
+  height: var(--circle-size-small);
+  top: calc(50% - var(--circle-size) / 2);
+  left: calc(50% - var(--circle-size) / 2);
+  background: radial-gradient(circle at center, hsla(0, 0%, 100%, 0.1) 0, hsla(0, 0%, 100%, 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% - 200px);
+  animation: gradientsMoveHorizontal 30s ease infinite;
+  opacity: 0.7;
+}
+.gradients__g5 {
+  width: calc(var(--circle-size-small) * 2);
+  height: calc(var(--circle-size-small) * 2);
+  top: calc(50% - var(--circle-size));
+  left: calc(50% - var(--circle-size));
+  background: radial-gradient(
+      circle at center,
+      hsla(0, 0%, 100%, 0.025) 0,
+      hsla(0, 0%, 100%, 0) 50%
+    )
+    no-repeat;
+  transform-origin: calc(50% - 800px) calc(50% + 200px);
+  animation: gradientsMoveInCircle 20s ease infinite;
+}
+
+@keyframes gradientsMoveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+@keyframes gradientsMoveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes gradientsMoveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradients__g1,
+  .gradients__g2,
+  .gradients__g3,
+  .gradients__g4,
+  .gradients__g5 {
     animation: none;
   }
 }
@@ -543,7 +663,9 @@ h3 {
 
 .certificates-section {
   position: relative;
-  background: linear-gradient(180deg, var(--color-canvas-from) 0%, var(--color-canvas-to) 100%);
+  background:
+    radial-gradient(at 50% 110%, rgba(0, 65, 109, 0.45) 0%, transparent 65%),
+    linear-gradient(rgb(13, 17, 23) 0%, rgb(6, 13, 22) 100%);
 }
 
 .certificates-stage {

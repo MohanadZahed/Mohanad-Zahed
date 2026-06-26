@@ -74,8 +74,8 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
           position: 'absolute',
           inset: 0,
           backgroundColor: 'var(--color-quaternary)',
-          backgroundImage: 'url(/textures/texture1.jpg)',
-          backgroundBlendMode: 'multiply',
+          backgroundImage: 'url(/textures/texture2.png)',
+          backgroundBlendMode: 'difference',
           backgroundRepeat: 'repeat',
           clipPath: isMobile ? PANEL_CLIP_MOBILE : PANEL_CLIP,
         }}
