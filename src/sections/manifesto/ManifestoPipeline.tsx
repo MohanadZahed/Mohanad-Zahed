@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import { backOut, clamp01 } from '../../scene/lib/math';
-import {
-  CHECK_SPAN,
-  POP_DRAW_SPAN,
-  VISION_BUILD_END,
-  VISION_BUILD_START,
-} from './manifesto.constants';
+import { CHECK_SPAN, POP_DRAW_SPAN } from './manifesto.constants';
 import type { Side, VisionLayout } from './manifesto.layout';
 import { useT } from '../../i18n/useT';
 
 interface ManifestoPipelineProps {
-  /** Section-local manifesto progress (0..1). */
-  progress: number;
+  /** Arc-length fraction of the line drawn (0..1) — computed centrally upstream. */
+  drawT: number;
   viewport: { w: number; h: number };
   layout: VisionLayout;
   reduced?: boolean;
@@ -21,7 +16,7 @@ const CHECK_GREEN = '#22c55e';
 const ACCENT = 'var(--color-tertiary)';
 
 export function ManifestoPipeline({
-  progress,
+  drawT,
   viewport,
   layout,
   reduced = false,
@@ -34,10 +29,6 @@ export function ManifestoPipeline({
   const compact = viewport.w < 768;
   const D = compact ? 36 : 52;
   const R = D / 2;
-
-  const drawT = reduced
-    ? 1
-    : clamp01((progress - VISION_BUILD_START) / (VISION_BUILD_END - VISION_BUILD_START));
 
   return (
     <div id='ManifestoPipeline' style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>

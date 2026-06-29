@@ -4,8 +4,6 @@ import {
   CONTENT_FADE_END,
   FINDER_BOX_WIDTH_PX,
   POP_DRAW_SPAN,
-  VISION_BUILD_END,
-  VISION_BUILD_START,
   VISION_EXIT_START,
 } from './manifesto.constants';
 import type { VisionLayout } from './manifesto.layout';
@@ -19,6 +17,8 @@ interface ManifestoVisionProps {
   layout: VisionLayout;
   /** Camera transform (look-at + zoom) applied to the world group, origin 0 0. */
   worldTransform: string;
+  /** Arc-length fraction of the line drawn (computed centrally, coarse-aware). */
+  drawT: number;
   reduced?: boolean;
 }
 
@@ -42,14 +42,11 @@ export function ManifestoVision({
   viewport,
   layout,
   worldTransform,
+  drawT,
   reduced = false,
 }: ManifestoVisionProps) {
   const { t, tArray } = useT();
   const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
-
-  const drawT = reduced
-    ? 1
-    : clamp01((progress - VISION_BUILD_START) / (VISION_BUILD_END - VISION_BUILD_START));
 
   // The pipeline + boxes fade out (in place) as the notebook grows to take over;
   // the sand panel stays put (it's simply covered by the full-screen notebook).
@@ -105,7 +102,7 @@ export function ManifestoVision({
         }}
       >
         <ManifestoPipeline
-          progress={progress}
+          drawT={drawT}
           viewport={viewport}
           layout={layout}
           reduced={reduced}
