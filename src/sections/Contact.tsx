@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FlipLink } from '../components/FlipLink';
 import { useScrollStore } from '../store/useScrollStore';
 import { useT } from '../i18n/useT';
+import { useFitText } from '../hooks/useFitText';
 import { rafThrottle } from '../lib/rafThrottle';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,6 +15,20 @@ export function Contact() {
   const rowRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const truckRef = useRef<HTMLImageElement>(null);
+
+  // Heading is centered + shrink-to-content, so budget the parent box (the
+  // `max-w-full` row, which clamps to the column width when the nowrap text
+  // overflows) rather than its own text-width box.
+  const fitHeadline = useFitText<HTMLHeadingElement>({
+    text: t('contact.headline'),
+    widthFrom: 'parent',
+  });
+
+  // Merge the fit callback ref with headlineRef (used below for the clip-path).
+  const setHeadline = (node: HTMLHeadingElement | null) => {
+    headlineRef.current = node;
+    fitHeadline(node);
+  };
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -90,11 +105,11 @@ export function Contact() {
       />
 
       <div className='flex-1 flex items-center justify-center'>
-        <div className='px-5 sm:px-10 md:px-16 max-w-2xl text-center'>
+        <div className='w-full px-5 sm:px-10 md:px-16 max-w-2xl text-center'>
           <div className='flex justify-center'>
-            <div ref={rowRef} className='relative inline-block'>
+            <div ref={rowRef} className='relative inline-block max-w-full'>
               <h2
-                ref={headlineRef}
+                ref={setHeadline}
                 id='contact-h2'
                 className='font-semibold uppercase text-zinc-100 whitespace-nowrap text-[clamp(2.5rem,7vw,3.25rem)] sm:text-[4rem] md:text-[4.75rem]'
                 style={{ clipPath: 'inset(0 100% 0 0)', lineHeight: 'normal' }}
