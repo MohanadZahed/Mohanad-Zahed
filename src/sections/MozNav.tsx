@@ -153,6 +153,8 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
       // Reset every property the fullscreen branch mutates back to the JSX defaults
       // so the overlay is invisible + inert again once closed.
       const restoreStatic = () => {
+        // Reveal the language switcher again now the fullscreen overlay is gone.
+        document.documentElement.classList.remove('moz-menu-open');
         overlay.classList.remove('moz-menu-overlay--full');
         overlay.style.opacity = '0';
         overlay.style.pointerEvents = 'none';
@@ -189,8 +191,11 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
         gsap.set(linkEls, { x: 0, y: 12, opacity: 0 });
         gsap.set(closeBtn, { opacity: 0 });
 
-        // Lock page scroll while the menu covers the viewport.
+        // Lock page scroll while the menu covers the viewport, and hide the
+        // language switcher so it doesn't sit on top of the close (X) button —
+        // the switcher is a z-50 sibling outside this overlay's stacking context.
         getLenis()?.stop();
+        document.documentElement.classList.add('moz-menu-open');
 
         if (reduced) {
           Object.assign(overlay.style, {

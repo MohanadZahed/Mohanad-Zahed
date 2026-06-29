@@ -955,6 +955,17 @@ h3 {
   outline-offset: 2px;
 }
 
+/* While the mobile nav menu is open it covers the whole viewport with an opaque
+   overlay. The language switcher is a z-50 sibling outside that overlay's
+   stacking context, so it would otherwise sit on top of the close (X) button —
+   hide it for the duration. !important beats the switcher's inline opacity
+   (set by its scroll-direction show/hide). The class is toggled on <html> by
+   MozNav's coarse-pointer open/close branch. */
+html.moz-menu-open #LanguageSwitcher {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* Nav flip link — text-only, reuses .flip-link__* inner classes */
 .nav-flip-link {
   display: block;

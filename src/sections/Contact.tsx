@@ -77,7 +77,7 @@ export function Contact() {
       ref={sectionRef}
       id='Contact'
       aria-labelledby='contact-h2'
-      className='relative flex flex-col min-h-150 md:min-h-170.5 md:h-170.5'
+      className='relative isolate flex flex-col min-h-150 md:min-h-170.5 md:h-170.5'
       style={{
         background:
           'radial-gradient(ellipse at 50% 110%, rgba(0,65,109,0.45) 0%, transparent 65%), linear-gradient(to bottom, #0d1117 0%, #060d16 100%)',
