@@ -406,6 +406,9 @@ export function HeroLogo({ triggerRef }: Props) {
     // (transform-free otherwise) so it composes on top of the render()-owned park
     // transform on nameWrap without fighting it.
     column.style.transition = 'transform 0.4s ease';
+    // Promote to its own layer so the slide composites on the GPU and doesn't
+    // stall on the scroll-throttled main thread during an iOS momentum fling.
+    column.style.willChange = 'transform';
     let markHidden = false;
     const setMarkHidden = (hide: boolean) => {
       if (hide === markHidden) return; // direction unchanged → ignore
