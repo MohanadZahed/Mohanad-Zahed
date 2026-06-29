@@ -1,4 +1,41 @@
-export const SECTION_VH = 690;
+// Section scroll height (svh). Lengthened from the original 690 so the
+// camera-follow journey (the line drawing + camera panning down the tall world
+// over the build window [VISION_BUILD_START, VISION_BUILD_END]) gets unhurried
+// scroll. All phase fractions below are unchanged — they scale uniformly with
+// this. SKILLS_OVERLAP_VH (in skills.constants.ts) is derived from this value, so
+// keep the two coupled. Feel-tuned in the dev server.
+export const SECTION_VH = 900;
+
+// --- Intro: title types at the top, then a zoom-in beat toward "system" ---
+// The title types in at a CONSTANT size near the top edge (z = 1 during typing).
+// Once typed, the camera does a gentle dolly-in toward "system" (z → PEAK) while
+// the dashed line drops in from above the top border, then settles to z = 1 and
+// hands off to the downward tip-follow. All feel-tuned in the dev server.
+//
+// Zoom is a push-in that returns: z = 1 (typing) → INTRO_ZOOM_PEAK (dolly) → 1
+// (settle). Set PEAK = 1 to disable the beat (pure framing change, no zoom).
+export const INTRO_ZOOM_PEAK = 1.3;
+export const INTRO_ZOOM_IN_END = 0.08; // progress where the dolly-in reaches PEAK
+export const INTRO_SETTLE_END = 0.16; // progress where z returns to 1 + look-at = tip
+// Intro framing (fractions of viewport): the title sits at TITLE_SCREEN_Y from the
+// top; START_SCREEN_X frames the line-start right-of-centre (title to its left).
+export const START_SCREEN_X = 0.6;
+export const TITLE_SCREEN_Y = 0.12;
+// Title's world Y (fraction of viewport height) — sits beside the path's first
+// vertical segment (between the line-start at y=0 and Push). Larger pushes the
+// line-start further above the top border (more "comes from above" feel).
+export const TITLE_WORLD_DY_VH = 0.14;
+// Title's right edge ("system") sits TITLE_GAP_PX left of the line-start.
+export const TITLE_GAP_PX = 28;
+// Title box width (world px, for useFitText's budget) — capped fraction of width.
+export const TITLE_BOX_W_FRAC = 0.62;
+
+// Height of the serpentine "world" the camera pans across, in viewport heights.
+// The path + nodes + finder boxes spread over MANIFESTO_WORLD_VH screens; the
+// notebook sits at the very bottom (off-screen until the drawing tip reaches it).
+// Pan distance ≈ (MANIFESTO_WORLD_VH − 1) screens; tune against the build-window
+// scroll (~0.25·(SECTION_VH−100) svh) so panning isn't faster than scrolling.
+export const MANIFESTO_WORLD_VH = 2.6;
 
 export const SMALL_NOTEBOOK_WIDTH_PX = 480;
 export const FULL_NOTEBOOK_MAX_WIDTH_PX = 2000;

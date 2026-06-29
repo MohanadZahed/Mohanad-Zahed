@@ -1,6 +1,8 @@
+import { SECTION_VH as MANIFESTO_SECTION_VH } from '../manifesto/manifesto.constants';
+
 // Skills "emerge from the laptop screen" choreography.
 //
-// The Manifesto section (690svh) pins its laptop full-size from its section-local
+// The Manifesto section pins its laptop full-size from its section-local
 // progress 0.47 to 1.0. Skills is pulled up with a negative margin so its GSAP-
 // pinned intro engages while the laptop is still pinned and full-size (just
 // after the plan/build/improve words fade at manifesto-progress 0.74).
@@ -15,9 +17,11 @@
 // Timing/tuning constants — adjust by feel in the dev server. svh units.
 
 // Negative top margin (svh) that overlaps Skills onto the manifesto tail. Sized so
-// the pin engages ~manifesto-progress 0.80: manifesto bottom = top + 690svh; engage
-// scroll ≈ 0.80 * (690 - 100) ≈ 472svh past the manifesto top → margin ≈ 472 - 690.
-export const SKILLS_OVERLAP_VH = 218;
+// the pin engages ~manifesto-progress 0.80: manifesto bottom = top + SECTION_VH;
+// engage scroll ≈ 0.80 * (SECTION_VH - 100) past the manifesto top → margin ≈
+// engage - SECTION_VH = 0.20·SECTION_VH + 80. Derived from MANIFESTO_SECTION_VH so
+// the two stay coupled automatically when the manifesto height changes.
+export const SKILLS_OVERLAP_VH = 0.2 * MANIFESTO_SECTION_VH + 80;
 
 // Pinned scroll budget (svh) for the whole emerge + zoom. The pin releases after
 // this much scroll; chosen so the zoom completes ~as the manifesto unpins (≈590svh).

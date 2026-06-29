@@ -42,22 +42,25 @@ export function ManifestoPipeline({
   return (
     <div id='ManifestoPipeline' style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
       <svg
-        width={viewport.w}
-        height={viewport.h}
-        viewBox={`0 0 ${viewport.w} ${viewport.h}`}
+        width={layout.worldW}
+        height={layout.worldH}
+        viewBox={`0 0 ${layout.worldW} ${layout.worldH}`}
         style={{ position: 'absolute', inset: 0, overflow: 'visible' }}
         aria-hidden='true'
       >
         <defs>
           {/* A solid stroke that paints on (pathLength reveal) masks the visible
-              dashed line, so the dashes appear progressively along the curve. */}
+              dashed line, so the dashes appear progressively along the curve. The
+              mask must span the full (tall) world — sized to the viewport it would
+              clip the path below the first screen and the line would never reveal
+              past it. */}
           <mask
             id='manifesto-line-reveal'
             maskUnits='userSpaceOnUse'
             x='0'
             y='0'
-            width={viewport.w}
-            height={viewport.h}
+            width={layout.worldW}
+            height={layout.worldH}
           >
             <path
               d={layout.pathD}

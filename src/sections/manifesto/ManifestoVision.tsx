@@ -8,7 +8,7 @@ import {
   VISION_BUILD_START,
   VISION_EXIT_START,
 } from './manifesto.constants';
-import { computeVisionLayout } from './manifesto.layout';
+import type { VisionLayout } from './manifesto.layout';
 import { FinderBox } from './FinderBox';
 import { ManifestoPipeline } from './ManifestoPipeline';
 import { useT } from '../../i18n/useT';
@@ -16,26 +16,36 @@ import { useT } from '../../i18n/useT';
 interface ManifestoVisionProps {
   progress: number;
   viewport: { w: number; h: number };
+  layout: VisionLayout;
+  /** Camera transform (look-at + zoom) applied to the world group, origin 0 0. */
+  worldTransform: string;
   reduced?: boolean;
 }
 
 const MOBILE_BREAKPOINT_PX = 768;
 const BOX_TYPE_SPAN = 0.12; // drawT span a box types over, after it pops
+// On mobile (camera-follow) the boxes are nudged off the curve toward their own
+// bay side by this fraction of the viewport width, so they don't sit on the line.
+const MOBILE_BOX_PUSH_FRAC = 0.18;
 
 // Sand panel — mirrored to fill the LEFT half, angular "circuit-board" seam on
-// its right edge. Present from the very start; only fades on exit.
-const PANEL_CLIP =
-  'polygon(50% 0%, 0 0, 0 100%, 50% 100%, 55% 88%, 55% 75%, 50% 64%, 50% 43%, 57% 30%, 57% 12%)';
-
+// its right edge. Currently disabled (the panel JSX is commented out below);
+// re-enable both together to bring it back.
+// const PANEL_CLIP =
+//   'polygon(50% 0%, 0 0, 0 100%, 50% 100%, 55% 88%, 55% 75%, 50% 64%, 50% 43%, 57% 30%, 57% 12%)';
 // On mobile the panel is narrower, so the seam pulls in toward the left edge.
-const PANEL_CLIP_MOBILE =
-  'polygon(40% 0%, 0px 0px, 0px 100%, 40% 100%, 55% 88%, 55% 75%, 40% 63%, 40% 43%, 57% 30%, 57% 12%)';
+// const PANEL_CLIP_MOBILE =
+//   'polygon(40% 0%, 0px 0px, 0px 100%, 40% 100%, 55% 88%, 55% 75%, 40% 63%, 40% 43%, 57% 30%, 57% 12%)';
 
-export function ManifestoVision({ progress, viewport, reduced = false }: ManifestoVisionProps) {
+export function ManifestoVision({
+  progress,
+  viewport,
+  layout,
+  worldTransform,
+  reduced = false,
+}: ManifestoVisionProps) {
   const { t, tArray } = useT();
   const isMobile = viewport.w < MOBILE_BREAKPOINT_PX;
-
-  const layout = computeVisionLayout(viewport.w, viewport.h);
 
   const drawT = reduced
     ? 1
@@ -68,7 +78,7 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
   return (
     <div id='ManifestoVision' style={containerStyle}>
       {/* Sand panel — stays put the whole time (covered by the full notebook). */}
-      <div
+      {/* <div
         id='manifesto-left-panel'
         style={{
           position: 'absolute',
@@ -79,33 +89,51 @@ export function ManifestoVision({ progress, viewport, reduced = false }: Manifes
           backgroundRepeat: 'repeat',
           clipPath: isMobile ? PANEL_CLIP_MOBILE : PANEL_CLIP,
         }}
-      />
+      /> */}
 
-      {/* Pipeline fades out in place as the notebook grows to take over. */}
-      <div style={{ position: 'absolute', inset: 0, opacity: contentOpacity }}>
+      {/* Camera "world": the pipeline + finder boxes live in (possibly taller-
+          than-viewport) world space and are translated so the drawing tip stays
+          screen-centred. The whole group fades out as the notebook takes over. */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          transform: worldTransform,
+          transformOrigin: '0 0',
+          opacity: contentOpacity,
+          willChange: 'transform, opacity',
+        }}
+      >
         <ManifestoPipeline
           progress={progress}
           viewport={viewport}
           layout={layout}
           reduced={reduced}
         />
-      </div>
 
-      {/* Boxes slide off-screen (each its own direction) on the takeover. */}
-      <div style={{ position: 'absolute', inset: 0 }}>
+        {/* Boxes pop into the curve bays; on the takeover they slide off-screen. */}
         {layout.boxes.map((box) => {
           const popT = reduced ? 1 : clamp01((drawT - box.drawU) / POP_DRAW_SPAN);
           const scale = reduced ? 1 : lerp(0.6, 1, backOut(popT));
           const opacity = reduced ? 1 : clamp01(popT * 1.5);
           const typeScroll = reduced ? 1 : clamp01((drawT - box.drawU) / BOX_TYPE_SPAN);
 
-          const centerX = isMobile
-            ? clamp([310, 115, 310][box.index], margin + halfW, viewport.w - margin - halfW)
-            : clamp(box.x, margin + halfW, viewport.w - margin - halfW);
+          // Static/reduced layout clamps boxes inside the single viewport; the
+          // camera-follow layout places them at their world anchor. On mobile the
+          // box is nudged off the curve toward its own bay side (away from the line
+          // at that y, which is on the opposite/bend side), since the camera — not
+          // the clamp — frames them.
+          const centerX = reduced
+            ? isMobile
+              ? clamp([310, 115, 310][box.index], margin + halfW, viewport.w - margin - halfW)
+              : clamp(box.x, margin + halfW, viewport.w - margin - halfW)
+            : isMobile
+              ? viewport.w / 2 + (box.side === 'R' ? 1 : -1) * viewport.w * MOBILE_BOX_PUSH_FRAC
+              : box.x;
 
-          // On the laptop takeover each box leaves the screen in its own
-          // direction: architecture.md (0) up, delivery.md (1) left,
-          // quality.md (2) right. Pure scroll function — scrubs both ways.
+          // On the laptop takeover each box leaves in its own direction:
+          // architecture.md (0) up, delivery.md (1) left, quality.md (2) right.
+          // Pure scroll function — scrubs both ways.
           const exitT = smoothstep(VISION_EXIT_START, CONTENT_FADE_END, progress);
           let exitX = 0;
           let exitY = 0;
