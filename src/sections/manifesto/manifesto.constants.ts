@@ -37,6 +37,15 @@ export const TITLE_BOX_W_FRAC = 0.62;
 // scroll (~0.25·(SECTION_VH−100) svh) so panning isn't faster than scrolling.
 export const MANIFESTO_WORLD_VH = 2.6;
 
+// On mobile the whole world becomes ONE composited layer / masked SVG; if its
+// backing texture (worldH × devicePixelRatio) exceeds the GPU max texture size
+// (commonly 4096 on mobile), the browser tiles / CPU-rasterizes it and re-rasters
+// the animated mask every scroll frame → laggy path draw. Cap worldH on coarse
+// pointers so worldH × dpr stays under this budget (safely below 4096), keeping
+// it a single texture. Lower if a device still tiles; raise for a longer mobile
+// journey (watch the tiling threshold).
+export const MOBILE_WORLD_TEXTURE_BUDGET_PX = 3800;
+
 export const SMALL_NOTEBOOK_WIDTH_PX = 480;
 export const FULL_NOTEBOOK_MAX_WIDTH_PX = 2000;
 

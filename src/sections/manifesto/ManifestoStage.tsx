@@ -8,6 +8,7 @@ import {
   INTRO_ZOOM_IN_END,
   INTRO_ZOOM_PEAK,
   MANIFESTO_WORLD_VH,
+  MOBILE_WORLD_TEXTURE_BUDGET_PX,
   NOTEBOOK_ASPECT,
   NOTEBOOK_PARK_CENTER_VH,
   PHASE,
@@ -57,6 +58,12 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
 
+  // Coarse pointer (mobile) → cap the world height so the masked SVG / composited
+  // layer fits in one GPU texture (see MOBILE_WORLD_TEXTURE_BUDGET_PX).
+  const [isCoarse] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
+  );
+
   // The stage is the `height: 100vh` box. We measure its own clientHeight (the
   // resolved large-viewport height) rather than document.documentElement
   // clientHeight (the small/svh viewport), so the pipeline, sand panel, finder
@@ -97,7 +104,13 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
   // tip stays screen-centred (the laptop is off-screen at the very bottom until
   // the tip reaches it). Reduced motion falls back to the single-screen layout
   // (worldH = viewport h) with no camera and the parked → centre notebook drift.
-  const worldH = reduced ? viewport.h : MANIFESTO_WORLD_VH * viewport.h;
+  const dpr = typeof window === 'undefined' ? 1 : Math.min(window.devicePixelRatio || 1, 3);
+  const motionWorldH = MANIFESTO_WORLD_VH * viewport.h;
+  const worldH = reduced
+    ? viewport.h
+    : isCoarse
+      ? Math.min(motionWorldH, MOBILE_WORLD_TEXTURE_BUDGET_PX / dpr)
+      : motionWorldH;
   const layout = useMemo(
     () => computeVisionLayout(viewport.w, viewport.h, reduced ? undefined : worldH),
     [viewport.w, viewport.h, worldH, reduced],

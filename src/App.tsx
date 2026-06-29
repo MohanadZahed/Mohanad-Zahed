@@ -22,6 +22,14 @@ import { ViewportIndicator } from './components/ViewportIndicator';
 import { FONT_SWITCHER_ENABLED } from './config/featureFlags';
 import { useT } from './i18n/useT';
 
+// Coarse pointer (mobile) → cap the canvas DPR at 1.5 (per src/scene/CLAUDE.md
+// "Mobile fallback") so the always-on render loop leaves GPU headroom for the
+// scroll-driven section work (e.g. the manifesto's masked-SVG path reveal).
+const CANVAS_DPR: [number, number] =
+  typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+    ? [1, 1.5]
+    : [1, 2];
+
 // Holds the hero intro until the WebGL scene has finished loading AND compiling
 // (Preload forces shader compilation during the load phase). Only then does the
 // shared intro clock start, so the GPU init hitch lands during a brief black
@@ -74,7 +82,7 @@ function App() {
       </div>
       <KnowledgeBackground />
       <div className='fixed inset-0 -z-10 pointer-events-none'>
-        <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>
+        <Canvas dpr={CANVAS_DPR} camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true }}>
           <Suspense fallback={null}>
             <Scene />
             <Preload all />
