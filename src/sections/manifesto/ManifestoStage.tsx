@@ -8,10 +8,7 @@ import {
   INTRO_ZOOM_IN_END,
   INTRO_ZOOM_PEAK,
   MANIFESTO_WORLD_VH,
-  MOBILE_LOOK_END,
   MOBILE_WORLD_TEXTURE_BUDGET_PX,
-  MOBILE_ZOOM_IN_END,
-  MOBILE_ZOOM_SETTLE,
   NOTEBOOK_ASPECT,
   NOTEBOOK_PARK_CENTER_VH,
   PHASE,
@@ -120,23 +117,11 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
   );
   const samples = useMemo(() => buildArcSamples(layout), [layout]);
 
-  // Intro timing. Desktop: the line draws DURING the zoom (concurrent, smooth on
-  // desktop GPUs). Mobile: the dolly plays on the EMPTY stage and the line draws
-  // only AFTER it settles, so scale() never animates while the masked SVG
-  // rasterizes (the mobile lag/heat fix). The look-at still pans home→tip during
-  // the early draw on both, so the line enters "from above".
-  const zoomInEnd = isCoarse ? MOBILE_ZOOM_IN_END : INTRO_ZOOM_IN_END;
-  const zoomSettle = isCoarse ? MOBILE_ZOOM_SETTLE : INTRO_SETTLE_END;
-  const buildStart = isCoarse ? MOBILE_ZOOM_SETTLE : VISION_BUILD_START;
-  const lookStart = isCoarse ? buildStart : INTRO_ZOOM_IN_END;
-  const lookEnd = isCoarse ? MOBILE_LOOK_END : INTRO_SETTLE_END;
-
   // Arc-length fraction of the line currently drawn — matches the SVG dash reveal.
-  // Computed once here (coarse-aware buildStart) and passed down so the line and
-  // the camera tip stay in sync.
+  // Computed once here and passed down so the line and the camera tip stay in sync.
   const drawT = reduced
     ? 1
-    : clamp01((progress - buildStart) / (VISION_BUILD_END - buildStart));
+    : clamp01((progress - VISION_BUILD_START) / (VISION_BUILD_END - VISION_BUILD_START));
   const tip = reduced ? layout.notebookEnd : pointAtFraction(samples, drawT);
 
   // Camera = look-at + zoom (transform-origin 0 0 on the world layers):
@@ -158,14 +143,18 @@ export function ManifestoStage({ progress }: ManifestoStageProps) {
   const homeX = start.x - (START_SCREEN_X - 0.5) * viewport.w;
   const homeY = titleWorldY - (TITLE_SCREEN_Y - 0.5) * viewport.h;
 
-  // Push-in that returns: 1 (typing) → PEAK (dolly) → 1 (settle).
-  const introZoom = reduced
-    ? 1
-    : lerp(1, INTRO_ZOOM_PEAK, smoothstep(TITLE_TYPE_END, zoomInEnd, progress)) -
-      (INTRO_ZOOM_PEAK - 1) * smoothstep(zoomInEnd, zoomSettle, progress);
-  // Look-at frames `home` through the dolly, then blends to the tip (during the
-  // early draw on mobile, concurrently with it on desktop) so the line enters from above.
-  const lookBlend = reduced ? 1 : smoothstep(lookStart, lookEnd, progress);
+  // Desktop: push-in that returns, 1 (typing) → PEAK (dolly) → 1 (settle). Mobile
+  // (coarse): NO zoom — scale stays 1. Animating scale() while the masked SVG path
+  // rasterizes is the mobile lag/heat source; pan-only is smooth. Mobile keeps the
+  // same framing (title at top, line from above) via the look-at pan below.
+  const introZoom =
+    reduced || isCoarse
+      ? 1
+      : lerp(1, INTRO_ZOOM_PEAK, smoothstep(TITLE_TYPE_END, INTRO_ZOOM_IN_END, progress)) -
+        (INTRO_ZOOM_PEAK - 1) * smoothstep(INTRO_ZOOM_IN_END, INTRO_SETTLE_END, progress);
+  // Look-at frames `home`, then blends to the tip during the early draw so the line
+  // enters from above the top border, then follows the tip down.
+  const lookBlend = reduced ? 1 : smoothstep(INTRO_ZOOM_IN_END, INTRO_SETTLE_END, progress);
   const lookX = lerp(homeX, tip.x, lookBlend);
   const lookY = lerp(homeY, tip.y, lookBlend);
 

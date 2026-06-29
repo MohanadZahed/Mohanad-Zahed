@@ -17,16 +17,10 @@ export const SECTION_VH = 900;
 export const INTRO_ZOOM_PEAK = 1.3;
 export const INTRO_ZOOM_IN_END = 0.08; // progress where the dolly-in reaches PEAK
 export const INTRO_SETTLE_END = 0.16; // progress where z returns to 1 + look-at = tip
-
-// Mobile (coarse-pointer) re-timing: animating scale() while the masked SVG path
-// is rasterizing is the mobile lag/heat source. So on mobile the dolly plays on the
-// EMPTY stage (line not drawing yet) and the line only starts AFTER the zoom
-// settles — scale never overlaps the draw. Desktop keeps the concurrent timing
-// above. (The line still enters "from above": the look-at pans home→tip during the
-// early draw, after the zoom.)
-export const MOBILE_ZOOM_IN_END = 0.075; // mobile dolly reaches PEAK
-export const MOBILE_ZOOM_SETTLE = 0.11; // mobile z back to 1; line draw starts here
-export const MOBILE_LOOK_END = 0.21; // mobile look-at finishes home→tip (during early draw)
+// NOTE: the dolly zoom is DESKTOP-ONLY. On coarse pointers ManifestoStage forces
+// introZoom = 1 (no scale) — animating scale() while the masked SVG rasterizes is
+// the mobile lag/heat source. Mobile keeps the framing (title at top, line from
+// above) via the look-at pan, just without the scale.
 // Intro framing (fractions of viewport): the title sits at TITLE_SCREEN_Y from the
 // top; START_SCREEN_X frames the line-start right-of-centre (title to its left).
 export const START_SCREEN_X = 0.6;
