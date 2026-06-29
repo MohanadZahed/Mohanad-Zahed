@@ -149,7 +149,9 @@ export function Contact() {
 
       <footer className='relative z-10 pb-6 px-5 sm:px-10 md:px-16 text-center text-xs text-zinc-500'>
         <p>{t('contact.copyright')}</p>
-        <p className='mt-1'>{t('contact.builtWith')}</p>
+        <p className='mt-1'>
+          {t('contact.builtWith')} · v{__APP_VERSION__}
+        </p>
       </footer>
     </section>
   );
