@@ -134,6 +134,11 @@ export function HeroLogo({ triggerRef }: Props) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const composedFinal = reduced || introPlayedRef.current;
 
+    // Gate the parked mark's clickability on the first-load intro finishing, not
+    // just the scroll-collapse. composedFinal (reduced motion / font re-run) is
+    // "already done"; the timed intro flips this true in its onComplete.
+    let introDone = composedFinal;
+
     const S = { build: 0, titleIn: 0, taglineIn: 0, collapse: 0 };
     const baseW: number[] = [];
 
@@ -315,10 +320,10 @@ export function HeroLogo({ triggerRef }: Props) {
           backdrop.style.top = `${bTop}px`;
           backdrop.style.height = `${bBottom - bTop}px`;
           backdrop.style.opacity = String(smoothstep(0.15, 0.5, collapse));
-          // Become tappable once the mark is fully parked top-left. Touch
-          // devices get a fullscreen-grow menu (MozNav branches on pointer type);
-          // fine pointers keep the dropdown.
-          const isParked = collapse >= 0.95;
+          // Become tappable once the mark is fully parked top-left AND the
+          // first-load intro has finished. Touch devices get a fullscreen-grow
+          // menu (MozNav branches on pointer type); fine pointers keep the dropdown.
+          const isParked = collapse >= 0.95 && introDone;
           backdrop.style.pointerEvents = isParked ? 'auto' : 'none';
           backdrop.style.cursor = isParked ? 'pointer' : 'default';
         }
@@ -398,7 +403,12 @@ export function HeroLogo({ triggerRef }: Props) {
       const dx = oR ? oR.left + oR.width / 2 - vw / 2 : 0;
       const dy = oR ? oR.top + oR.height / 2 - vh / 2 : 0;
 
-      tl = gsap.timeline();
+      tl = gsap.timeline({
+        onComplete: () => {
+          introDone = true;
+          render(); // re-evaluate the parked-mark clickability gate
+        },
+      });
       // 1 — crosshair lines draw out from centre
       tl.to(hLines, { scaleX: 1, duration: HERO_LINES_DUR, ease: 'power3.out' }, HERO_LINES_DELAY);
       tl.to(vLines, { scaleY: 1, duration: HERO_LINES_DUR, ease: 'power3.out' }, HERO_LINES_DELAY);
@@ -687,7 +697,13 @@ export function HeroLogo({ triggerRef }: Props) {
                   color: i === O_IDX ? 'var(--color-quaternary)' : 'var(--color-secondary)',
                 }}
               >
-                {ch === ' ' ? ' ' : ch}
+                {/* thin space (U+2009, ~0.2em) — a normal space is the sole
+                    content of this inline-block and gets collapsed to ~0 width
+                    by white-space:normal, so the word gap vanishes. A
+                    non-collapsing space restores a visible (but tight) gap; it scales
+                    with the font and still collapses to 0 during the MOZ gather
+                    (baseW is measured from this glyph). */}
+                {ch === ' ' ? ' ' : ch}
               </span>
             ))}
           </h1>
