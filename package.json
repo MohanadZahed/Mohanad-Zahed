@@ -1,11 +1,13 @@
 {
   "name": "mohanad-zahed",
   "private": true,
-  "version": "0.0.17",
+  "version": "0.0.18",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "prerender": "node scripts/prerender.mjs",
+    "build:prerender": "npm run build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview",
@@ -40,6 +42,7 @@
     "husky": "^9.1.7",
     "leva": "^0.10.1",
     "prettier": "^3.8.3",
+    "puppeteer": "^25.2.1",
     "r3f-perf": "^7.2.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
