@@ -3,6 +3,7 @@ import { backOut, clamp, clamp01, lerp, smoothstep } from '../../scene/lib/math'
 import {
   CONTENT_FADE_END,
   FINDER_BOX_WIDTH_PX,
+  POP_DRAW_LEAD,
   POP_DRAW_SPAN,
   VISION_EXIT_START,
 } from './manifesto.constants';
@@ -110,10 +111,11 @@ export function ManifestoVision({
 
         {/* Boxes pop into the curve bays; on the takeover they slide off-screen. */}
         {layout.boxes.map((box) => {
-          const popT = reduced ? 1 : clamp01((drawT - box.drawU) / POP_DRAW_SPAN);
+          const boxDrawU = box.drawU - POP_DRAW_LEAD;
+          const popT = reduced ? 1 : clamp01((drawT - boxDrawU) / POP_DRAW_SPAN);
           const scale = reduced ? 1 : lerp(0.6, 1, backOut(popT));
           const opacity = reduced ? 1 : clamp01(popT * 1.5);
-          const typeScroll = reduced ? 1 : clamp01((drawT - box.drawU) / BOX_TYPE_SPAN);
+          const typeScroll = reduced ? 1 : clamp01((drawT - boxDrawU) / BOX_TYPE_SPAN);
 
           // Static/reduced layout clamps boxes inside the single viewport; the
           // camera-follow layout places them at their world anchor. On mobile the

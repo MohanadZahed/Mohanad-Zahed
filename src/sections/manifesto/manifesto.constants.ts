@@ -71,6 +71,15 @@ export const CONTENT_FADE_END = 0.44; // pipeline + boxes fully faded by here
 
 export const POP_DRAW_SPAN = 0.06; // drawT span over which a node/box pops in
 export const CHECK_SPAN = 0.04; // drawT span the green check stamps on, post-pop
+// How far ahead of the drawing tip (in drawT units) a box/node starts popping
+// in — a "lead" so the finder boxes + CI/CD step bubbles appear a bit sooner,
+// before the line actually reaches them. 0 = pop exactly when the tip arrives.
+// Boxes lead more (they're bigger / further off the line); the node bubbles sit
+// right on the line, so a smaller lead keeps them from popping way too early.
+// The green check still stamps at the node's true arc-length position (drawU),
+// so the bubble shows early but is only "completed" once the line gets there.
+export const POP_DRAW_LEAD = 0.09; // finder boxes
+export const NODE_POP_DRAW_LEAD = 0.02; // CI/CD step bubbles
 
 // Notebook is parked at the bottom (the serpentine's terminus) during the build,
 // its centre at this fraction of the viewport height, then rises to centre.

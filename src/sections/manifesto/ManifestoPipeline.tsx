@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { backOut, clamp01 } from '../../scene/lib/math';
-import { CHECK_SPAN, POP_DRAW_SPAN } from './manifesto.constants';
+import { CHECK_SPAN, NODE_POP_DRAW_LEAD, POP_DRAW_SPAN } from './manifesto.constants';
 import type { Side, VisionLayout } from './manifesto.layout';
 import { useT } from '../../i18n/useT';
 
@@ -80,7 +80,7 @@ export function ManifestoPipeline({
       </svg>
 
       {layout.nodes.map((node) => {
-        const popT = reduced ? 1 : clamp01((drawT - node.drawU) / POP_DRAW_SPAN);
+        const popT = reduced ? 1 : clamp01((drawT - (node.drawU - NODE_POP_DRAW_LEAD)) / POP_DRAW_SPAN);
         const scale = reduced ? 1 : backOut(popT);
         // Cap the check's completion at drawT = 1 so the last node (Deploy,
         // drawU 0.92) finishes stamping exactly as the line reaches the laptop,

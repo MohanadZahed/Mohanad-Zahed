@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { useScrollStore } from '../store/useScrollStore';
+import { HERO_O_TRAVEL_DELAY, HERO_O_TRAVEL_DUR } from '../sections/hero.constants';
 
 let lenisInstance: Lenis | null = null;
+
+// Scroll stays locked through the hero load intro and releases the instant the
+// gold "O" lands in its slot — i.e. when the O-travel beat ends. Same clock as
+// every other intro layer: seconds from `useScrollStore.heroStartedAt`.
+const HERO_SCROLL_UNLOCK = HERO_O_TRAVEL_DELAY + HERO_O_TRAVEL_DUR; // = 2.5s
 
 export const getLenis = () => lenisInstance;
 
@@ -24,15 +31,44 @@ export const getLenis = () => lenisInstance;
  * every frame (it doesn't translate a wrapper), so `window.scrollY` is accurate
  * on desktop too and `scroll` fires each Lenis RAF.
  *
+ * Detection only *arms* after the first genuine user scroll input (`wheel` /
+ * `touchstart` / `keydown`). Until then the detector silently trails `pivot` and
+ * never fires `cb`, so the browser's scroll-restoration jump on refresh — a
+ * programmatic downward scroll — can't false-trigger a "hide". The chrome must
+ * only ever hide in response to a real user scroll-down; programmatic scrolls
+ * (restoration, `ScrollTrigger.refresh()`, the hero intro's `stop()/start()`)
+ * leave it visible.
+ *
  * Returns an unsubscribe fn.
  */
 export function onScrollIntent(cb: (down: boolean) => void): () => void {
   const THRESHOLD = 12; // px of reversal before a direction flip registers (swallows fling bounce)
   let dir: 'up' | 'down' | null = null;
   let pivot = window.scrollY;
+  let armed = false;
+
+  const arm = () => {
+    if (armed) return;
+    armed = true;
+    pivot = window.scrollY; // re-baseline off the (possibly restored) resting position
+    dir = null;
+    removeInputListeners();
+  };
+  const removeInputListeners = () => {
+    window.removeEventListener('wheel', arm);
+    window.removeEventListener('touchstart', arm);
+    window.removeEventListener('keydown', arm);
+  };
+  window.addEventListener('wheel', arm, { passive: true });
+  window.addEventListener('touchstart', arm, { passive: true });
+  window.addEventListener('keydown', arm, { passive: true });
 
   const onScroll = () => {
     const y = window.scrollY;
+    if (!armed) {
+      pivot = y; // trail the restoration jump silently — no direction fired until armed
+      return;
+    }
     if (dir !== 'down' && y > pivot + THRESHOLD) {
       dir = 'down';
       pivot = y;
@@ -49,7 +85,10 @@ export function onScrollIntent(cb: (down: boolean) => void): () => void {
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  return () => window.removeEventListener('scroll', onScroll);
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    removeInputListeners();
+  };
 }
 
 export function useLenis() {
@@ -68,8 +107,35 @@ export function useLenis() {
     };
     rafId = requestAnimationFrame(raf);
 
+    // Lock scrolling during the hero load intro; release once the "O" is placed.
+    // Reduced-motion skips the intro entirely, so don't lock there.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let unlockTimer = 0;
+    let unsubscribe: (() => void) | undefined;
+
+    if (!reduceMotion) {
+      lenis.stop();
+      const releaseAfter = (startedAt: number) => {
+        const remaining = Math.max(0, HERO_SCROLL_UNLOCK * 1000 - (performance.now() - startedAt));
+        unlockTimer = window.setTimeout(() => lenis.start(), remaining);
+      };
+      const started = useScrollStore.getState().heroStartedAt;
+      if (started != null) {
+        releaseAfter(started);
+      } else {
+        unsubscribe = useScrollStore.subscribe((state) => {
+          if (state.heroStartedAt != null) {
+            unsubscribe?.();
+            releaseAfter(state.heroStartedAt);
+          }
+        });
+      }
+    }
+
     return () => {
       cancelAnimationFrame(rafId);
+      window.clearTimeout(unlockTimer);
+      unsubscribe?.();
       lenis.destroy();
       lenisInstance = null;
     };
