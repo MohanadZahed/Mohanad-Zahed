@@ -19,7 +19,8 @@ const ICONS: IconSpec[] = [
   // — corner circuits (filename = position)
   {
     src: 'circuit-left-top.svg',
-    className: 'absolute top-[15svh] left-0 w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
+    className:
+      'absolute top-[15svh] left-0 w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
 
@@ -63,7 +64,8 @@ const ICONS: IconSpec[] = [
   // — top-right cluster
   {
     src: 'circuit-right-top.svg',
-    className: 'absolute top-0 right-[3vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
+    className:
+      'absolute top-0 right-[3vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
   {
@@ -187,12 +189,13 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'circuit-left-bottom2.svg',
-    className: 'absolute bottom-[5svh] left-0 w-[26vw] max-w-[400px] lg:max-w-[300px] aspect-[565/425]',
+    className:
+      'absolute bottom-[5svh] left-0 w-[26vw] max-w-[400px] lg:max-w-[300px] aspect-[565/425]',
     restOpacity: 0.25,
   },
   {
     src: 'react_dark.svg',
-    className: 'absolute bottom-[15svh] left-[3vw] w-10 md:w-20 lg:w-24 aspect-square',
+    className: 'absolute bottom-[13svh] left-[3vw] w-10 md:w-20 lg:w-24 aspect-square',
     restOpacity: 0.35,
   },
   {
@@ -240,7 +243,8 @@ const ICONS: IconSpec[] = [
   },
   {
     src: 'circuit-right-bottom.svg',
-    className: 'absolute bottom-0 right-[-1vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
+    className:
+      'absolute bottom-0 right-[-1vw] w-[34vw] max-w-[520px] lg:max-w-[380px] aspect-[565/425]',
     restOpacity: 0.3,
   },
   {

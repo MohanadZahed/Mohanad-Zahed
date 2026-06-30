@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 565 425" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <!-- Trace 1: enters top-left, steps down-right, small node, then up-right 45° to a ring -->
-  <path d="M0 22 L40 22 L60 42 L130 42"/>
-  <circle cx="130" cy="42" r="3" fill="#ffffff"/>
-  <path d="M130 42 L180 42 L210 12"/>
+  <path d="M0 22 L40 22 L60 42 L125 42"/>
+  <circle cx="130" cy="42" r="5"/>
+  <path d="M135 42 L180 42 L210 12"/>
   <circle cx="215" cy="12" r="5"/>
 
   <!-- Trace 2: enters left edge, steps down-right to a ring at the right -->

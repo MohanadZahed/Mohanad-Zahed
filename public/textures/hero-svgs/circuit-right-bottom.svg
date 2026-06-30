@@ -5,24 +5,24 @@
 
   <!-- Trace 2: starts upper-left with circle, small node, then steps down-right -->
   <circle cx="110" cy="45" r="5"/>
-  <path d="M115 45 L138 45 L150 57"/>
-  <circle cx="150" cy="57" r="3" fill="#ffffff"/>
-  <path d="M150 57 L165 57 L180 72"/>
-  <circle cx="180" cy="72" r="3" fill="#ffffff"/>
-  <path d="M180 72 L215 72"/>
-  <circle cx="215" cy="72" r="3" fill="#ffffff"/>
+  <path d="M115 45 L138 45 L146.5 53.5"/>
+  <circle cx="150" cy="57" r="5"/>
+  <path d="M155 57 L165 57 L176.5 68.5"/>
+  <circle cx="180" cy="72" r="5"/>
+  <path d="M185 72 L210 72"/>
+  <circle cx="215" cy="72" r="5"/>
 
   <!-- Trace 3: left circle, small node, long horizontal, step down -->
   <circle cx="11" cy="106" r="5"/>
-  <path d="M16 106 L60 106"/>
-  <circle cx="60" cy="106" r="3" fill="#ffffff"/>
-  <path d="M60 106 L130 106 L155 131 L225 131 L240 146 L290 146"/>
+  <path d="M16 106 L55 106"/>
+  <circle cx="60" cy="106" r="5"/>
+  <path d="M65 106 L130 106 L155 131 L225 131 L240 146 L285 146"/>
   <circle cx="290" cy="146" r="5"/>
 
   <!-- Trace 4: small middle horizontal with two nodes around a center circle, extending right -->
-  <path d="M140 168 L165 168"/>
-  <circle cx="165" cy="168" r="3" fill="#ffffff"/>
-  <path d="M165 168 L195 168"/>
+  <path d="M140 168 L160 168"/>
+  <circle cx="165" cy="168" r="5"/>
+  <path d="M170 168 L190 168"/>
   <circle cx="195" cy="168" r="5"/>
   <path d="M200 168 L240 168"/>
 
