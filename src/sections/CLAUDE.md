@@ -9,6 +9,7 @@ Sections are pure HTML/Tailwind that scrolls *over* the persistent 3D canvas. Th
 - The 3D scene reads it via `useScrollStore.getState().progress` inside `useFrame`.
 - Section components may subscribe with a selector (re-render is fine here, just not in the canvas).
 - **Never** read `window.scrollY` directly — Lenis virtualises it. **One documented exception:** scroll-*direction* show/hide of fixed UI chrome (see below).
+- **Analytics reads this store too.** `useScrollAnalytics` ([../hooks/useScrollAnalytics.ts](../hooks/useScrollAnalytics.ts)) `subscribe`s to `progress` for coarse `scroll_depth` milestones (25/50/75/100, once each) and uses an IntersectionObserver over the real `<section id>` elements (ids from [../config/sections.ts](../config/sections.ts)) for `section_view` events — section reach, not progress bands, because the progress→section mapping is fuzzy. Vercel Web Analytics; see root [CLAUDE.md](../../CLAUDE.md) → Analytics. Don't add tracking inside `useFrame` or per scroll tick.
 
 ### Scroll-direction show/hide of fixed UI chrome (`onScrollIntent`)
 

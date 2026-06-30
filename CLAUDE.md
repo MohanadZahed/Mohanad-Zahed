@@ -79,6 +79,24 @@ The site supports English and German via a custom Zustand + hook system — no t
 - For a string containing HTML (e.g. `<em>` in certificates count), use `dangerouslySetInnerHTML` — content is authored, not user input.
 - Auto-mode `<Typewriter>` call sites must carry `key={locale}` so a locale switch triggers remount and replays from char 0. Scroll-driven Typewriters update automatically when their `text` prop changes.
 - `App.tsx` syncs `document.title` and `meta[name="description"]` via a `useEffect` keyed on `[t, locale]`.
+- The section-id list now lives in `src/config/sections.ts` (`SECTION_IDS` / `NAV_SECTION_IDS`); `useSectionHash` reads `NAV_SECTION_IDS` from there. See **Analytics** below.
+
+## Analytics
+
+Visitor + scroll-depth analytics via **Vercel Web Analytics** (`@vercel/analytics`) — free on the Hobby plan, cookieless/no-PII (so **no GDPR consent banner needed**), enabled in the Vercel dashboard after deploy. The site is meant to be hosted on Vercel.
+
+| File | Purpose |
+|---|---|
+| `src/config/sections.ts` | Canonical section ids top-to-bottom: `SECTION_IDS` (all 8 incl. `Hero`) + `NAV_SECTION_IDS` (excl. `Hero`, for hash-nav). Shared by `useScrollAnalytics` and `useSectionHash` — don't re-declare the list. |
+| `src/hooks/useScrollAnalytics.ts` | Fires Vercel custom events, each **once per page load** (guarded `Set`s; ~4–8 events/visit to stay inside the free quota): `section_view { section }` the first time each section enters view (IntersectionObserver), and `scroll_depth { pct }` as global `progress` first crosses 25/50/75/100 (via `useScrollStore.subscribe`, no re-renders). |
+| `App.tsx` | Calls `useScrollAnalytics()` and renders `<Analytics />` (from `@vercel/analytics/react`). |
+
+Rules:
+
+- **Section reach over progress bands.** "How far did they scroll" uses `section_view` (IntersectionObserver on the real `<section id>` elements), not global-progress thresholds — the progress→section mapping is intentionally fuzzy (Skills overlap + variable Experience height). `scroll_depth` is only a coarse page-level funnel.
+- **Keep events coarse + guarded.** Each event fires at most once per load. Don't move tracking into `useFrame` or fire per scroll tick — it would blow the free event quota and add main-thread work.
+- **Dev = no-op/debug.** Vercel events only land in production once Web Analytics is enabled in the dashboard.
+- Installing `@vercel/analytics` needed `--legacy-peer-deps` once (a stray Remix peer pinned to React 18); the resulting lockfile is clean, so `npm ci` (Docker + Vercel) works without the flag.
 
 ## When asked for non-trivial work
 

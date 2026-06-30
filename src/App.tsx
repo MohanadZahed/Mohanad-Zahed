@@ -1,11 +1,13 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Preload, useProgress } from '@react-three/drei';
+import { Analytics } from '@vercel/analytics/react';
 import { Scene } from './scene/Scene';
 import { useScrollStore } from './store/useScrollStore';
 import { useLenis } from './hooks/useLenis';
 import { useScrollTrigger } from './hooks/useScrollTrigger';
 import { useSectionHash } from './hooks/useSectionHash';
+import { useScrollAnalytics } from './hooks/useScrollAnalytics';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Manifesto } from './sections/manifesto/Manifesto';
@@ -66,6 +68,7 @@ function App() {
   useLenis();
   useScrollTrigger();
   useSectionHash();
+  useScrollAnalytics();
   const { t, locale } = useT();
 
   useEffect(() => {
@@ -104,6 +107,7 @@ function App() {
 
       {import.meta.env.DEV && <ScrollLogger />}
       <ViewportIndicator />
+      <Analytics />
     </>
   );
 }

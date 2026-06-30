@@ -1,7 +1,7 @@
 {
   "name": "mohanad-zahed",
   "private": true,
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,6 +16,7 @@
     "@react-three/fiber": "^9.6.1",
     "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/vite": "^4.2.4",
+    "@vercel/analytics": "^2.0.1",
     "gsap": "^3.15.0",
     "lenis": "^1.3.23",
     "react": "^19.2.5",

@@ -1,20 +1,9 @@
 import { useEffect } from 'react';
 import { getLenis } from './useLenis';
+import { NAV_SECTION_IDS, type NavSectionId } from '../config/sections';
 
-const SECTION_IDS = [
-  'About',
-  'Manifesto',
-  'Skills',
-  'Knowledge',
-  'Certificates',
-  'Experience',
-  'Contact',
-] as const;
-
-type SectionId = (typeof SECTION_IDS)[number];
-
-function isSectionId(value: string): value is SectionId {
-  return (SECTION_IDS as readonly string[]).includes(value);
+function isSectionId(value: string): value is NavSectionId {
+  return (NAV_SECTION_IDS as readonly string[]).includes(value);
 }
 
 export function useSectionHash() {
@@ -32,7 +21,7 @@ export function useSectionHash() {
     }
 
     const intersecting = new Set<string>();
-    let currentId: SectionId | '' =
+    let currentId: NavSectionId | '' =
       initialHash && isSectionId(initialHash) ? initialHash : '';
 
     const onIntersect = (entries: IntersectionObserverEntry[]) => {
@@ -45,10 +34,10 @@ export function useSectionHash() {
 
       // Prefer the latest section in document order when overlap occurs
       // (e.g. Skills' negative margin makes it overlap Manifesto on entry).
-      let next: SectionId | '' = '';
-      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-        if (intersecting.has(SECTION_IDS[i])) {
-          next = SECTION_IDS[i];
+      let next: NavSectionId | '' = '';
+      for (let i = NAV_SECTION_IDS.length - 1; i >= 0; i--) {
+        if (intersecting.has(NAV_SECTION_IDS[i])) {
+          next = NAV_SECTION_IDS[i];
           break;
         }
       }
@@ -76,7 +65,7 @@ export function useSectionHash() {
       threshold: 0,
     });
 
-    SECTION_IDS.forEach((id) => {
+    NAV_SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
