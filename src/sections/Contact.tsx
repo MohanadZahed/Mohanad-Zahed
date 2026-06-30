@@ -96,6 +96,8 @@ export function Contact() {
       style={{
         background:
           'radial-gradient(ellipse at 50% 110%, rgba(0,65,109,0.45) 0%, transparent 65%), linear-gradient(to bottom, #0d1117 0%, #060d16 100%)',
+        boxShadow:
+          'rgba(255, 255, 255, 0.075) 0px 0px 0px calc(1px) inset, rgba(255, 255, 255, 0.1) 0px 0px 5vw inset',
       }}
     >
       <img
@@ -120,13 +122,13 @@ export function Contact() {
                 ref={truckRef}
                 src='/textures/minime-truck.png'
                 alt=''
-                className='absolute left-0 top-1/2 w-16 sm:w-28 md:w-48 pointer-events-none select-none'
+                className='absolute left-0 top-1/2 w-15 sm:w-28 md:w-43 pointer-events-none select-none'
                 style={{ transform: 'translate3d(0, -50%, 0)' }}
               />
             </div>
           </div>
 
-          <p className='mt-6 text-sm sm:text-lg text-zinc-400 leading-relaxed'>
+          <p className='mt-12 text-sm sm:text-lg text-zinc-400 leading-relaxed'>
             {t('contact.subhead')}
           </p>
 
@@ -153,12 +155,6 @@ export function Contact() {
               external
             />
           </div>
-
-          <img
-            src='/textures/minime-programming.png'
-            alt=''
-            className='mx-auto w-28 sm:w-32 md:w-36 pointer-events-none select-none -scale-x-100'
-          />
         </div>
       </div>
 
