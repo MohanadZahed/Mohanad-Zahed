@@ -34,6 +34,8 @@ import {
   HERO_PARK_LEFT_END,
   BACKDROP_RADIUS,
   MENU_OPEN_SCALE,
+  MENU_OPEN_DX,
+  MENU_OPEN_DY,
   MENU_SCALE_DUR,
 } from './hero.constants';
 
@@ -148,11 +150,13 @@ export function HeroLogo({ triggerRef }: Props) {
     const writeMenuTransform = (t: number) => {
       menuT = t;
       const scale = parkGeom.base + (MENU_OPEN_SCALE - parkGeom.base) * t;
-      // Translate stays locked at the parked corner — the mark only grows in
-      // place (origin 0 0). Interpolating tx/ty would animate the mark back to
-      // its natural centered column position (translate 0 0 = screen centre).
-      const tx = parkGeom.tx;
-      const ty = parkGeom.ty;
+      // Translate stays anchored at the parked corner, nudged by a small
+      // open-state offset (origin 0 0). It's an offset RELATIVE to the parked
+      // corner, not an absolute translate — interpolating tx/ty toward an
+      // absolute value would animate the mark back to its natural centered
+      // column position (translate 0 0 = screen centre).
+      const tx = parkGeom.tx + MENU_OPEN_DX * t;
+      const ty = parkGeom.ty + MENU_OPEN_DY * t;
       nameWrap.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
       const backdrop = backdropRef.current;
       // Counter the scale so the hairline border renders a true ~1px at any scale.
