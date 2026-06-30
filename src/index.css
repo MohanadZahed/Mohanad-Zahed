@@ -891,8 +891,8 @@ h3 {
 
 .moz-menu-dot {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background-color: var(--color-quaternary);
 }
@@ -971,7 +971,7 @@ html.moz-menu-open #LanguageSwitcher {
   display: block;
   color: var(--color-secondary);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;

@@ -62,3 +62,13 @@ export const HERO_PARK_LEFT_END = 1.0;
 // Dark backdrop geometry — shared between HeroLogo (renders the backdrop div)
 // and MozNav (restores border-radius on menu close).
 export const BACKDROP_RADIUS = 22;
+
+// Parked MOZ mark grows while its nav menu is open (fine pointers only) so the
+// dropdown reads at full weight; shrinks back to the parked scale on close.
+export const MENU_OPEN_SCALE = 1; // nameWrap scale while the nav menu is open
+// nameWrap translate (px, transform-origin 0 0) at the open state — moves the
+// grown mark from its parked corner spot to where the dropdown reads best. The
+// dropdown auto-aligns since it's measured after the grow completes.
+export const MENU_OPEN_TX = -670;
+export const MENU_OPEN_TY = -292;
+export const MENU_SCALE_DUR = 0.28; // grow/shrink duration (s)

@@ -68,10 +68,14 @@ type Props = {
   backdropRef: RefObject<HTMLDivElement | null>;
   leftCircRef: RefObject<HTMLDivElement | null>;
   rightCircRef: RefObject<HTMLDivElement | null>;
+  // Grows/shrinks the parked MOZ mark while the dropdown opens/closes (fine
+  // pointers). Returns the tween so the dropdown can sequence off its completion,
+  // or null on coarse pointers (which use the fullscreen menu instead).
+  onMenuScale: (open: boolean) => gsap.core.Tween | null;
 };
 
 export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
-  { backdropRef, leftCircRef, rightCircRef },
+  { backdropRef, leftCircRef, rightCircRef, onMenuScale },
   ref,
 ) {
   const { t } = useT();
@@ -80,6 +84,7 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
   const menuOpenRef = useRef(false);
   const menuEverOpenedRef = useRef(false);
   const menuTlRef = useRef<gsap.core.Timeline | null>(null);
+  const menuGrowTweenRef = useRef<gsap.core.Tween | null>(null);
 
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const menuLeftLineRef = useRef<HTMLDivElement>(null);
@@ -277,128 +282,150 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     if (menuOpen) {
       menuEverOpenedRef.current = true;
 
-      // Measure real-screen positions of the backdrop and the two underline end-dots.
-      const backdropRect = backdrop.getBoundingClientRect();
-      const lDotRect = leftCirc.getBoundingClientRect();
-      const rDotRect = rightCirc.getBoundingClientRect();
-      const lX = lDotRect.left + lDotRect.width / 2; // screen-X of left dot centre
-      const rX = rDotRect.left + rDotRect.width / 2; // screen-X of right dot centre
-      const overlayLeft = backdropRect.left;
-      const overlayWidth = backdropRect.width;
-      const overlayTop = backdropRect.bottom;
+      // Build the dropdown sized to the (possibly grown) mark. Deferred until the
+      // grow tween finishes so the live rect measurements reflect the bigger mark.
+      const openDropdown = () => {
+        // Measure real-screen positions of the backdrop and the two underline end-dots.
+        const backdropRect = backdrop.getBoundingClientRect();
+        const lDotRect = leftCirc.getBoundingClientRect();
+        const rDotRect = rightCirc.getBoundingClientRect();
+        const lX = lDotRect.left + lDotRect.width / 2; // screen-X of left dot centre
+        const rX = rDotRect.left + rDotRect.width / 2; // screen-X of right dot centre
+        const overlayLeft = backdropRect.left;
+        const overlayWidth = backdropRect.width;
+        const overlayTop = backdropRect.bottom;
 
-      // Derive line positions relative to the overlay's left edge.
-      const leftLinePx = Math.max(0, lX - overlayLeft);
-      const rightLinePx = Math.min(overlayWidth, rX - overlayLeft);
+        // Derive line positions relative to the overlay's left edge.
+        const leftLinePx = Math.max(0, lX - overlayLeft);
+        const rightLinePx = Math.min(overlayWidth, rX - overlayLeft);
 
-      // Apply nav indent so links don't collide with the left circuit line.
-      nav.style.paddingTop = '10px';
-      nav.style.paddingBottom = '10px';
-      nav.style.paddingLeft = `${leftLinePx + 10}px`;
-      nav.style.paddingRight = `${overlayWidth - rightLinePx + 6}px`;
+        // Apply nav indent so links don't collide with the left circuit line.
+        nav.style.paddingTop = '10px';
+        nav.style.paddingBottom = '10px';
+        nav.style.paddingLeft = `${leftLinePx + 10}px`;
+        nav.style.paddingRight = `${overlayWidth - rightLinePx + 6}px`;
 
-      // Extra space at the bottom so the closing dots + bottom line stay inside the overlay.
-      const BOTTOM_EXTRA = 10;
-      const overlayH = nav.scrollHeight + BOTTOM_EXTRA;
+        // Extra space at the bottom so the closing dots + bottom line stay inside the overlay.
+        const BOTTOM_EXTRA = 10;
+        const overlayH = nav.scrollHeight + BOTTOM_EXTRA;
 
-      // Remove bottom corner radius so the menu connects flush to the backdrop.
-      backdrop.style.borderBottomLeftRadius = '0';
-      backdrop.style.borderBottomRightRadius = '0';
+        // Remove bottom corner radius so the menu connects flush to the backdrop.
+        backdrop.style.borderBottomLeftRadius = '0';
+        backdrop.style.borderBottomRightRadius = '0';
 
-      // Position the overlay below the backdrop; overlap by 8px to hide the seam,
-      // and widen by 1px so the side borders align flush with the backdrop's border.
-      Object.assign(overlay.style, {
-        left: `${overlayLeft}px`,
-        top: `${overlayTop - 8}px`,
-        width: `${overlayWidth + 1}px`,
-        height: `${overlayH}px`,
-        pointerEvents: 'auto',
-      });
+        // Position the overlay below the backdrop; overlap by 18px to hide the seam.
+        // Width matches the backdrop exactly (the mark is at scale 1 while open, so
+        // the backdrop border is already a true 1px — no sub-pixel widen needed).
+        Object.assign(overlay.style, {
+          left: `${overlayLeft}px`,
+          top: `${overlayTop - 18}px`,
+          width: `${overlayWidth}px`,
+          height: `${overlayH}px`,
+          pointerEvents: 'auto',
+        });
 
-      // Layout circuit lines (1 px — matches the visual weight of the underline at park scale).
-      Object.assign(leftLine.style, {
-        left: `${leftLinePx}px`,
-        top: '0',
-        width: '1px',
-        bottom: `${BOTTOM_EXTRA}px`,
-        height: '',
-      });
-      Object.assign(rightLine.style, {
-        left: `${rightLinePx}px`,
-        top: '0',
-        width: '1px',
-        bottom: `${BOTTOM_EXTRA}px`,
-        height: '',
-      });
-      Object.assign(bottomLine.style, {
-        left: `${leftLinePx}px`,
-        bottom: `${BOTTOM_EXTRA}px`,
-        top: '',
-        width: `${rightLinePx - leftLinePx + 1}px`,
-        height: '1px',
-      });
+        // Nudge the circuit border (lines + bottom dots) 3px left of the underline
+        // end-dots; the nav text padding still keys off the un-shifted positions.
+        const LINE_SHIFT = 3;
+        const lineLeftPx = leftLinePx - LINE_SHIFT;
+        const lineRightPx = rightLinePx - LINE_SHIFT;
 
-      // Initial GSAP state for transform properties.
-      gsap.set([leftLine, rightLine], { scaleY: 0, transformOrigin: 'top center' });
-      gsap.set(bottomLine, { scaleX: 0, transformOrigin: 'left center' });
-      gsap.set(botLeftDot, {
-        left: leftLinePx,
-        bottom: BOTTOM_EXTRA,
-        xPercent: -50,
-        yPercent: 50,
-        scale: 0,
-      });
-      gsap.set(botRightDot, {
-        left: rightLinePx,
-        bottom: BOTTOM_EXTRA,
-        xPercent: -50,
-        yPercent: 50,
-        scale: 0,
-      });
+        // Layout circuit lines (3 px — thicker now the mark is full-size while open).
+        Object.assign(leftLine.style, {
+          left: `${lineLeftPx}px`,
+          top: '0',
+          width: '3px',
+          bottom: `${BOTTOM_EXTRA}px`,
+          height: '',
+        });
+        Object.assign(rightLine.style, {
+          left: `${lineRightPx}px`,
+          top: '0',
+          width: '3px',
+          bottom: `${BOTTOM_EXTRA}px`,
+          height: '',
+        });
+        Object.assign(bottomLine.style, {
+          left: `${lineLeftPx}px`,
+          bottom: `${BOTTOM_EXTRA}px`,
+          top: '',
+          width: `${rightLinePx - leftLinePx + 1}px`,
+          height: '3px',
+        });
 
-      if (reduced) {
-        overlay.style.opacity = '1';
-        gsap.set([leftLine, rightLine], { scaleY: 1 });
-        gsap.set(bottomLine, { scaleX: 1 });
-        gsap.set([botLeftDot, botRightDot], { scale: 1 });
-        gsap.set(Array.from(nav.children), { x: 0, opacity: 1 });
-        return;
-      }
+        // Initial GSAP state for transform properties.
+        gsap.set([leftLine, rightLine], { scaleY: 0, transformOrigin: 'top center' });
+        gsap.set(bottomLine, { scaleX: 0, transformOrigin: 'left center' });
+        gsap.set(botLeftDot, {
+          left: lineLeftPx,
+          bottom: BOTTOM_EXTRA,
+          xPercent: -50,
+          yPercent: 50,
+          scale: 0,
+        });
+        gsap.set(botRightDot, {
+          left: lineRightPx,
+          bottom: BOTTOM_EXTRA,
+          xPercent: -50,
+          yPercent: 50,
+          scale: 0,
+        });
 
-      const tl = gsap.timeline();
-      menuTlRef.current = tl;
+        if (reduced) {
+          overlay.style.opacity = '1';
+          gsap.set([leftLine, rightLine], { scaleY: 1 });
+          gsap.set(bottomLine, { scaleX: 1 });
+          gsap.set([botLeftDot, botRightDot], { scale: 1 });
+          gsap.set(Array.from(nav.children), { x: 0, opacity: 1 });
+          return;
+        }
 
-      tl.to(overlay, { opacity: 1, duration: 0 })
-        .fromTo(
-          [leftLine, rightLine],
-          { scaleY: 0 },
-          { scaleY: 1, duration: 0.28, ease: 'power2.inOut', transformOrigin: 'top center' },
-        )
-        .fromTo(
-          bottomLine,
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.26, ease: 'power2.inOut', transformOrigin: 'left center' },
-        )
-        .fromTo(
-          [botLeftDot, botRightDot],
-          { scale: 0 },
-          { scale: 1, duration: 0.18, ease: 'back.out(2.5)' },
-          '<+=0.10',
-        )
-        .fromTo(
-          Array.from(nav.children),
-          { x: -16, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.22, stagger: 0.07, ease: 'power2.out' },
-          '<+=0.08',
-        );
+        const tl = gsap.timeline();
+        menuTlRef.current = tl;
+
+        tl.to(overlay, { opacity: 1, duration: 0 })
+          .fromTo(
+            [leftLine, rightLine],
+            { scaleY: 0 },
+            { scaleY: 1, duration: 0.28, ease: 'power2.inOut', transformOrigin: 'top center' },
+          )
+          .fromTo(
+            bottomLine,
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.26, ease: 'power2.inOut', transformOrigin: 'left center' },
+          )
+          .fromTo(
+            [botLeftDot, botRightDot],
+            { scale: 0 },
+            { scale: 1, duration: 0.18, ease: 'back.out(2.5)' },
+            '<+=0.10',
+          )
+          .fromTo(
+            Array.from(nav.children),
+            { x: -16, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.22, stagger: 0.07, ease: 'power2.out' },
+            '<+=0.08',
+          );
+      };
+
+      // Grow the mark first (fine pointers), then build the dropdown on completion so
+      // it's sized to the bigger mark. Coarse pointers never reach here (handled above).
+      const grow = onMenuScale(true);
+      menuGrowTweenRef.current = grow;
+      if (grow) grow.eventCallback('onComplete', openDropdown);
+      else openDropdown();
     } else {
       if (!menuEverOpenedRef.current) return; // nothing to close on initial mount
+
+      // Cancel an in-flight grow so a fast open→close doesn't leave it mid-scale.
+      menuGrowTweenRef.current?.kill();
 
       if (reduced) {
         overlay.style.opacity = '0';
         overlay.style.pointerEvents = 'none';
         backdrop.style.borderBottomLeftRadius = `${BACKDROP_RADIUS}px`;
         backdrop.style.borderBottomRightRadius = `${BACKDROP_RADIUS}px`;
+        onMenuScale(false); // shrink the mark back
         return;
       }
 
@@ -409,6 +436,7 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
           overlay.style.pointerEvents = 'none';
           backdrop.style.borderBottomLeftRadius = `${BACKDROP_RADIUS}px`;
           backdrop.style.borderBottomRightRadius = `${BACKDROP_RADIUS}px`;
+          onMenuScale(false); // dropdown gone → shrink the mark back
         },
       });
       menuTlRef.current = tl;
@@ -427,7 +455,7 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
           '<+=0.05',
         );
     }
-  }, [menuOpen, backdropRef, leftCircRef, rightCircRef]);
+  }, [menuOpen, backdropRef, leftCircRef, rightCircRef, onMenuScale]);
 
   const handleNavClick = (sectionId: string) => {
     setMenuOpen(false);

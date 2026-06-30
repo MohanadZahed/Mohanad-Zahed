@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useLayoutEffect,
   useRef,
   type CSSProperties,
@@ -32,6 +33,10 @@ import {
   HERO_PARK_LEFT_START,
   HERO_PARK_LEFT_END,
   BACKDROP_RADIUS,
+  MENU_OPEN_SCALE,
+  MENU_OPEN_TX,
+  MENU_OPEN_TY,
+  MENU_SCALE_DUR,
 } from './hero.constants';
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -92,6 +97,16 @@ export function HeroLogo({ triggerRef }: Props) {
   const darkScreenRef = useRef<HTMLDivElement>(null);
   const introPlayedRef = useRef(false);
 
+  // Menu-scale layer: the parked mark grows to MENU_OPEN_SCALE while its nav menu
+  // is open (fine pointers), then shrinks back. `animateMenuScale` is assigned
+  // inside the layout effect (where nameWrap/backdrop are in scope) and exposed to
+  // MozNav via the stable `onMenuScale` wrapper below.
+  const onMenuScaleRef = useRef<((open: boolean) => gsap.core.Tween | null) | null>(null);
+  const onMenuScale = useCallback(
+    (open: boolean) => onMenuScaleRef.current?.(open) ?? null,
+    [],
+  );
+
   // Underline sub-elements
   const vLineRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -121,6 +136,61 @@ export function HeroLogo({ triggerRef }: Props) {
 
     const S = { build: 0, titleIn: 0, taglineIn: 0, collapse: 0 };
     const baseW: number[] = [];
+
+    // ----- menu-scale layer (parked mark grows while its nav menu is open) -----
+    // While active, this owns the nameWrap transform + backdrop border (render()
+    // yields via the `menuActive` guard). `parkGeom` is captured when fully parked.
+    let menuActive = false;
+    let menuT = 0; // 0 = parked/closed, 1 = menu open (drives scale + translate)
+    let menuScaleTween: gsap.core.Tween | null = null;
+    const parkGeom = { tx: 0, ty: 0, base: 0.42 };
+
+    // Interpolate scale + translate between the parked corner spot (t=0) and the
+    // open state (t=1: scale MENU_OPEN_SCALE, translate MENU_OPEN_TX/TY).
+    const writeMenuTransform = (t: number) => {
+      menuT = t;
+      const scale = parkGeom.base + (MENU_OPEN_SCALE - parkGeom.base) * t;
+      const tx = parkGeom.tx + (MENU_OPEN_TX - parkGeom.tx) * t;
+      const ty = parkGeom.ty + (MENU_OPEN_TY - parkGeom.ty) * t;
+      nameWrap.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      const backdrop = backdropRef.current;
+      // Counter the scale so the hairline border renders a true ~1px at any scale.
+      if (backdrop) backdrop.style.borderWidth = `${1 / Math.max(scale, 0.0001)}px`;
+    };
+
+    // Returns the grow/shrink tween so MozNav can sequence the dropdown off its
+    // completion. No-op (null) on coarse pointers — they use the fullscreen menu.
+    const animateMenuScale = (open: boolean): gsap.core.Tween | null => {
+      if (matchMedia('(pointer: coarse)').matches) return null;
+      // A close fired while the mark is un-parking (scroll-up) must not grab the
+      // transform back from the scroll-driven render() — let render() own it.
+      if (!open && S.collapse < 0.999) return null;
+      menuScaleTween?.kill();
+      menuActive = true;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const proxy = { t: menuT };
+      menuScaleTween = gsap.to(proxy, {
+        t: open ? 1 : 0,
+        duration: reduced ? 0 : MENU_SCALE_DUR,
+        ease: 'power2.out',
+        onUpdate: () => writeMenuTransform(proxy.t),
+        onComplete: () => {
+          if (!open) menuActive = false; // hand the transform back to render()
+        },
+      });
+      return menuScaleTween;
+    };
+
+    // Release the boost so scroll-driven render() re-takes the transform (used when
+    // the user scrolls the mark back up / un-parks while the menu is open).
+    const killMenuScale = () => {
+      menuScaleTween?.kill();
+      menuScaleTween = null;
+      menuActive = false;
+      menuT = 0; // next open starts from the parked spot
+    };
+
+    onMenuScaleRef.current = animateMenuScale;
 
     // ----- measure (collapse 0) + place column -----
     const layout = () => {
@@ -266,8 +336,24 @@ export function HeroLogo({ triggerRef }: Props) {
       const ts = cornerH / (name.offsetHeight || 1);
       const tx = cornerX - (column.offsetLeft + nameWrap.offsetLeft);
       const ty = cornerY - (column.offsetTop + nameWrap.offsetTop);
+      const parkScale = 1 - (1 - ts) * parkUp; // 1 at hero → ts (~0.42) when parked
       nameWrap.style.transformOrigin = '0 0';
-      nameWrap.style.transform = `translate(${tx * parkLeft}px, ${ty * parkUp}px) scale(${1 - (1 - ts) * parkUp})`;
+      // Capture the parked geometry so the menu-scale layer can grow/shrink the
+      // mark in place (parkLeft/parkUp are 1 here).
+      if (collapse > 0.999) {
+        parkGeom.tx = tx * parkLeft;
+        parkGeom.ty = ty * parkUp;
+        parkGeom.base = parkScale;
+      }
+      // While the menu-scale layer is active it owns the transform + border; only
+      // write here when it isn't (so the boost isn't stomped if render() runs).
+      if (!menuActive) {
+        nameWrap.style.transform = `translate(${tx * parkLeft}px, ${ty * parkUp}px) scale(${parkScale})`;
+        // Counter the scale so the hairline border renders a true ~1px on screen
+        // instead of ~0.42px — matching the unscaled MOZ nav backdrop border.
+        const backdrop = backdropRef.current;
+        if (backdrop) backdrop.style.borderWidth = `${1 / Math.max(parkScale, 0.0001)}px`;
+      }
     };
 
     // ----- initial hidden state (before paint, no flash) -----
@@ -393,6 +479,9 @@ export function HeroLogo({ triggerRef }: Props) {
       if (next === lastCollapse) return; // parked / at rest — nothing to redraw
       lastCollapse = next;
       S.collapse = next;
+      // The mark is moving (un-parking) — release any menu-scale boost so render()
+      // re-takes the transform and the scale follows the scroll cleanly.
+      killMenuScale();
       // Auto-close nav menu when user scrolls back up and the mark un-parks.
       if (next < 0.9) mozNavRef.current?.close();
       render();
@@ -451,6 +540,8 @@ export function HeroLogo({ triggerRef }: Props) {
       unsubScroll();
       unsubVisibility();
       tl?.kill();
+      menuScaleTween?.kill();
+      onMenuScaleRef.current = null;
       ro.disconnect();
     };
     // Font change re-runs the whole effect so geometry + timeline re-derive.
@@ -652,6 +743,7 @@ export function HeroLogo({ triggerRef }: Props) {
         backdropRef={backdropRef}
         leftCircRef={leftCircRef}
         rightCircRef={rightCircRef}
+        onMenuScale={onMenuScale}
       />
     </div>
   );
