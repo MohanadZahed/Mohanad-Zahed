@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocaleStore, type Locale } from '../store/useLocaleStore';
+import { useScrollStore } from '../store/useScrollStore';
 import { onScrollIntent } from '../hooks/useLenis';
 
 const LOCALES: readonly Locale[] = ['en', 'de'];
@@ -28,6 +29,8 @@ export function LanguageSwitcher() {
     // continuous signal — so it toggles only when the direction changes and
     // never re-triggers during Lenis' momentum glide.
     const unsubscribe = onScrollIntent((down) => {
+      // Freeze the slide while the nav menu is open.
+      if (useScrollStore.getState().navMenuOpen) return;
       if (down === hidden) return; // direction unchanged → ignore
       hidden = down; // down → hide, up → show
       apply();

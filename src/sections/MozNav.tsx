@@ -10,6 +10,7 @@ import {
 import gsap from 'gsap';
 import { useT } from '../i18n/useT';
 import { getLenis } from '../hooks/useLenis';
+import { useScrollStore } from '../store/useScrollStore';
 import { BACKDROP_RADIUS } from './hero.constants';
 
 const NAV_ITEMS = [
@@ -96,9 +97,12 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     toggle: () => setMenuOpen((o) => !o),
   }));
 
-  // Keep menuOpenRef in sync so imperative callbacks can read it without a stale closure.
+  // Keep menuOpenRef in sync so imperative callbacks can read it without a stale
+  // closure, and publish open-state to the store so the scroll-direction
+  // hide/show of the parked mark + LanguageSwitcher freezes while the menu is up.
   useEffect(() => {
     menuOpenRef.current = menuOpen;
+    useScrollStore.getState().setNavMenuOpen(menuOpen);
   }, [menuOpen]);
 
   // Close on outside pointer-down when menu is open.

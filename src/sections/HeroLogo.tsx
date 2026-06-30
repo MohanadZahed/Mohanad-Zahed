@@ -428,6 +428,9 @@ export function HeroLogo({ triggerRef }: Props) {
     const unsubVisibility = onScrollIntent((down) => {
       const sec = triggerRef.current;
       if (!sec) return;
+      // Freeze the slide while the nav menu is open so the mark doesn't slide out
+      // from under the open dropdown.
+      if (useScrollStore.getState().navMenuOpen) return;
       // Only hide/show once the hero is fully off-screen; otherwise keep parked.
       const heroGone = sec.getBoundingClientRect().bottom <= 0;
       setMarkHidden(heroGone ? down : false);

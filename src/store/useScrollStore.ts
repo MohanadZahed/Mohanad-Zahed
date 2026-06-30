@@ -24,6 +24,10 @@ interface ScrollState {
   // the WebGL scene has loaded + compiled, so every intro clock (DOM tween,
   // avatar fade, logo-ring expand) shares one origin and none starts mid-stall.
   heroStartedAt: number | null;
+  // True while the MOZ nav menu (MozNav) is open. The scroll-direction show/hide
+  // of fixed UI chrome (parked MOZ mark + LanguageSwitcher) freezes while it's
+  // set, so the mark/switcher don't slide out from under the open dropdown.
+  navMenuOpen: boolean;
   setProgress: (p: number) => void;
   setSkillsIntro: (p: number) => void;
   setKnowledgeProgress: (p: number) => void;
@@ -36,6 +40,7 @@ interface ScrollState {
   setAnchorScale: (s: number) => void;
   setLogoSpin: (p: number) => void;
   setHeroStartedAt: (t: number | null) => void;
+  setNavMenuOpen: (open: boolean) => void;
 }
 
 export const useScrollStore = create<ScrollState>((set) => ({
@@ -51,6 +56,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   anchorScale: 1,
   logoSpin: 0,
   heroStartedAt: null,
+  navMenuOpen: false,
   setProgress: (p) => set({ progress: p }),
   setSkillsIntro: (p) => set({ skillsIntro: p }),
   setKnowledgeProgress: (p) => set({ knowledgeProgress: p }),
@@ -63,4 +69,5 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setAnchorScale: (s) => set({ anchorScale: s }),
   setLogoSpin: (p) => set({ logoSpin: p }),
   setHeroStartedAt: (t) => set({ heroStartedAt: t }),
+  setNavMenuOpen: (open) => set({ navMenuOpen: open }),
 }));

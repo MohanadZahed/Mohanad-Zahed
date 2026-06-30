@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Dev-only: hidden in production builds
-const ENABLED = import.meta.env.DEV;
+// Disabled: was a dev-only overlay (toggle back to `import.meta.env.DEV` to re-enable).
+const ENABLED = false;
 
 type Dims = {
   innerW: number;
