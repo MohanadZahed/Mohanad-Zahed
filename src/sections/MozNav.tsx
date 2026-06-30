@@ -306,7 +306,9 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
         nav.style.paddingRight = `${overlayWidth - rightLinePx + 6}px`;
 
         // Extra space at the bottom so the closing dots + bottom line stay inside the overlay.
-        const BOTTOM_EXTRA = 10;
+        // Doubles as the menu's overall extra height and the bottom line/dots' lift off
+        // the overlay's bottom edge (the side lines also terminate at this offset).
+        const BOTTOM_EXTRA = 22;
         const overlayH = nav.scrollHeight + BOTTOM_EXTRA;
 
         // Remove bottom corner radius so the menu connects flush to the backdrop.
@@ -357,15 +359,15 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
         gsap.set([leftLine, rightLine], { scaleY: 0, transformOrigin: 'top center' });
         gsap.set(bottomLine, { scaleX: 0, transformOrigin: 'left center' });
         gsap.set(botLeftDot, {
-          left: lineLeftPx,
-          bottom: BOTTOM_EXTRA,
+          left: 31,
+          bottom: 24,
           xPercent: -50,
           yPercent: 50,
           scale: 0,
         });
         gsap.set(botRightDot, {
           left: lineRightPx,
-          bottom: BOTTOM_EXTRA,
+          bottom: 24,
           xPercent: -50,
           yPercent: 50,
           scale: 0,

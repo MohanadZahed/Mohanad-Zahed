@@ -66,9 +66,9 @@ export const BACKDROP_RADIUS = 22;
 // Parked MOZ mark grows while its nav menu is open (fine pointers only) so the
 // dropdown reads at full weight; shrinks back to the parked scale on close.
 export const MENU_OPEN_SCALE = 1; // nameWrap scale while the nav menu is open
-// nameWrap translate (px, transform-origin 0 0) at the open state — moves the
-// grown mark from its parked corner spot to where the dropdown reads best. The
-// dropdown auto-aligns since it's measured after the grow completes.
-export const MENU_OPEN_TX = -670;
-export const MENU_OPEN_TY = -292;
+// The mark grows IN PLACE anchored at its parked top-left corner (origin 0 0) —
+// the open-state translate is locked to the parked corner in HeroLogo, so there
+// is no MENU_OPEN_TX/TY: any non-parked translate would fling the mark toward
+// its natural centered column position. The dropdown auto-aligns since it's
+// measured after the grow completes.
 export const MENU_SCALE_DUR = 0.28; // grow/shrink duration (s)
