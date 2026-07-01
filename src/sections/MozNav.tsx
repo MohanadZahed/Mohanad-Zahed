@@ -24,6 +24,13 @@ const NAV_ITEMS = [
   { id: 'Contact' },
 ] as const;
 
+// Sections whose nav link should land at a driving ScrollTrigger's END (the
+// fully-composed frame) rather than the section's top. Value = the trigger id.
+const NAV_END_TRIGGER: Record<string, string> = {
+  Skills: 'skills-intro',
+  Knowledge: 'knowledge',
+};
+
 // Mobile fullscreen-grow tuning.
 const FULL_GROW_DUR = 0.45;
 const FULL_SHRINK_DUR = 0.4;
@@ -465,18 +472,21 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     const el = document.getElementById(sectionId);
     if (!el) return;
     const lenis = getLenis();
-    // Skills emerges from the manifesto laptop: its section box starts at a large
-    // negative margin (the pin-start, skillsIntro=0), so scrolling to the element
-    // top lands inside the laptop before the emerge/zoom. Target the intro pin's
-    // END scroll instead, where skillsIntro=1 and Skills fully fills the screen.
-    const intro =
-      sectionId === 'Skills' ? ScrollTrigger.getById('skills-intro') : null;
+    // Some sections compose across a long scroll and shouldn't land on their top:
+    //  - Skills emerges from the manifesto laptop; its section box starts at a
+    //    large negative margin (skillsIntro=0), so the top is inside the laptop.
+    //  - Knowledge's labels/bubbles only finish rendering near the section end.
+    // For these, target the driving ScrollTrigger's END scroll (progress=1, fully
+    // composed and still on screen) instead of the element top.
+    const endTrigger = NAV_END_TRIGGER[sectionId]
+      ? ScrollTrigger.getById(NAV_END_TRIGGER[sectionId])
+      : null;
     if (lenis) {
       lenis.start(); // the fullscreen mobile menu pauses Lenis while open
-      if (intro) lenis.scrollTo(intro.end, { offset: 0 });
+      if (endTrigger) lenis.scrollTo(endTrigger.end, { offset: 0 });
       else lenis.scrollTo(el, { offset: 0 });
-    } else if (intro) {
-      window.scrollTo({ top: intro.end, behavior: 'smooth' });
+    } else if (endTrigger) {
+      window.scrollTo({ top: endTrigger.end, behavior: 'smooth' });
     } else el.scrollIntoView({ behavior: 'smooth' });
   };
 

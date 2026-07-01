@@ -16,6 +16,7 @@ export function Knowledge() {
     if (!el) return;
 
     const pinTrigger = ScrollTrigger.create({
+      id: 'knowledge',
       trigger: el,
       start: 'top top',
       end: 'bottom bottom',
