@@ -17,7 +17,7 @@
     ]
   },
   "manifesto": {
-    "title": "elevate your system",
+    "title": "Systeme auf das nächste Level bringen",
     "pipeline": {
       "label": "CI/CD-Pipeline",
       "steps": {
@@ -49,7 +49,7 @@
   },
   "skills": {
     "heading": "Tech-Skills",
-    "subhead": "Das Board, auf dem ich baue."
+    "subhead": ""
   },
   "knowledge": {
     "heading": "Knowledge"
@@ -65,8 +65,8 @@
   },
   "experience": {
     "eyebrow": "Berufserfahrung",
-    "heading": "Wo ich geliefert habe.",
-    "subhead": "Drei Unternehmen, zwölf Projekte, acht Jahre.",
+    "heading": "Wo ich mitgewirkt habe.",
+    "subhead": "Drei Unternehmen, zwölf Projekte.",
     "labels": {
       "customer": "Kunde",
       "industry": "Branche",
@@ -286,8 +286,8 @@
     }
   },
   "contact": {
-    "headline": "Lass uns etwas bauen.",
-    "subhead": "Offen für Senior-Frontend- / Architektur-Rollen und Beratungsmandate in Deutschland und remote.",
+    "headline": "Lust auf ein gemeinsames Projekt?",
+    "subhead": "Offen für Senior-Frontend-, Frontend-Architect- und Beratungsrollen in Deutschland sowie remote.",
     "getInTouch": "Kontakt aufnehmen",
     "linkedin": "LinkedIn",
     "xing": "Xing",

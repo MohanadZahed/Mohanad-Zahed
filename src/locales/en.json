@@ -45,7 +45,7 @@
   },
   "skills": {
     "heading": "Tech Skills",
-    "subhead": "The board I build on."
+    "subhead": ""
   },
   "knowledge": {
     "heading": "Knowledge"
@@ -62,7 +62,7 @@
   "experience": {
     "eyebrow": "Experience",
     "heading": "Where I've shipped.",
-    "subhead": "Three companies, twelve projects, eight years.",
+    "subhead": "Three companies, twelve projects.",
     "labels": {
       "customer": "Client",
       "industry": "Industry",
@@ -283,7 +283,7 @@
   },
   "contact": {
     "headline": "Let's build something.",
-    "subhead": "Open to senior frontend / architecture roles and consulting engagements in Germany and remote.",
+    "subhead": "Open to senior frontend / architecture roles and consulting in Germany and remote.",
     "getInTouch": "Get in touch",
     "linkedin": "LinkedIn",
     "xing": "Xing",
