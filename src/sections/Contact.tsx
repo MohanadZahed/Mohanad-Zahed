@@ -97,7 +97,7 @@ export function Contact() {
         background:
           'radial-gradient(ellipse at 50% 110%, rgba(0,65,109,0.45) 0%, transparent 65%), linear-gradient(to bottom, #0d1117 0%, #060d16 100%)',
         boxShadow:
-          'rgba(255, 255, 255, 0.075) 0px 0px 0px calc(1px) inset, rgba(255, 255, 255, 0.1) 0px 0px 5vw inset',
+          'rgba(255, 255, 255, 0.075) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.1) 0px 5vw 5vw -5vw inset',
       }}
     >
       <img
