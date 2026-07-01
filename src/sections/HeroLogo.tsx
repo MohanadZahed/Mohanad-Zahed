@@ -527,18 +527,31 @@ export function HeroLogo({ triggerRef }: Props) {
         column.style.transform = 'translateY(0)';
       }
     };
-    // React once per actual scroll input (wheel / touch-drag), not on a
-    // continuous signal — so it never re-triggers during Lenis' momentum glide.
-    const unsubVisibility = onScrollIntent((down) => {
+    // Latest scroll direction, captured from onScrollIntent's per-flip callback.
+    let scrollDown = false;
+    // Position-aware gate: hide only once the hero is fully off-screen AND the
+    // user is scrolling down; otherwise keep parked. Runs both on direction change
+    // and every scroll frame (see the store subscription below), because
+    // onScrollIntent fires only once per direction flip — during a single
+    // continuous scroll-down from the hero that flip happens while the hero is
+    // still on screen, so the gate must be re-checked as the hero later leaves.
+    const evaluateMark = () => {
       const sec = triggerRef.current;
       if (!sec) return;
       // Freeze the slide while the nav menu is open so the mark doesn't slide out
       // from under the open dropdown.
       if (useScrollStore.getState().navMenuOpen) return;
-      // Only hide/show once the hero is fully off-screen; otherwise keep parked.
       const heroGone = sec.getBoundingClientRect().bottom <= 0;
-      setMarkHidden(heroGone ? down : false);
+      setMarkHidden(heroGone && scrollDown);
+    };
+    const unsubVisibility = onScrollIntent((down) => {
+      scrollDown = down;
+      evaluateMark();
     });
+    // Re-check the position gate every scroll frame so the mark hides the instant
+    // the hero leaves the viewport mid-scroll, not only on a direction flip. Not
+    // folded into applyCollapse — that early-returns once the mark is parked.
+    const unsubMark = useScrollStore.subscribe(evaluateMark);
 
     // Re-measure on resize / font reflow — only while fully expanded so the live
     // collapse animation never feeds its own shrinking width back in.
@@ -554,6 +567,7 @@ export function HeroLogo({ triggerRef }: Props) {
       unsubStart();
       unsubScroll();
       unsubVisibility();
+      unsubMark();
       tl?.kill();
       menuScaleTween?.kill();
       onMenuScaleRef.current = null;
