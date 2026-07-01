@@ -10,7 +10,7 @@
   },
   "about": {
     "heading": "About me",
-    "body": "I'm a Frontend Software Architect with a passion for clean architecture and modern code. For over 8 years I've delivered Angular applications for insurance, telecom, retail, and the German public sector. My focus has been on modularization, micro-frontends, and migrating legacy systems to headless platforms. Full-stack experience lets me speak the same language as backend teams and own CI/CD end-to-end, from commit to release. My profile is rounded out by solid AI-augmented development skills that I use to ship more efficiently. Years of working in agile and Scrum environments give me a firm grasp of process, quality, and steady delivery.",
+    "body": "I am a Frontend Software Architect with a passion for clean architecture and modern code. For over 8 years, I have been developing Angular applications for insurance, telecommunications, retail, and public sectors. My focus has primarily been on building enterprise e-commerce solutions with SAP Commerce, developing enterprise management systems, driving modularization, and migrating legacy systems to modern headless platforms. With my full-stack knowledge, I communicate effectively with backend teams and design end-to-end CI/CD workflows from commit to release. My profile is further complemented by solid expertise in AI-assisted development, which I use to improve efficiency and accelerate project delivery. My extensive experience with agile methods and Scrum also provides me with a strong understanding of processes, quality, and agile delivery.",
     "facts": [
       "Languages — Arabic (native) · English (negotiation level) · German (negotiation level)",
       "Degree — 03/2014 B.Sc. Informatics, Amman (officially recognized in Germany)"
@@ -75,13 +75,13 @@
     "companies": {
       "iso-gruppe": {
         "name": "ISO-Gruppe",
-        "role": "Senior Consultant (Software Engineer)",
+        "role": "Software Developer (Senior Consultant)",
         "city": "Nürnberg",
         "timeline": "Jul 2025 – present"
       },
       "medienwerft": {
         "name": "Medienwerft GmbH",
-        "role": "Senior Frontend Engineer",
+        "role": "Senior Frontend Developer",
         "city": "Hamburg",
         "timeline": "Aug 2019 – Jun 2025"
       },
@@ -97,186 +97,186 @@
         "role": "Fullstack Developer",
         "name": "STEP — Master Data Management System",
         "industry": "Public sector",
-        "description": "STEP is the central master data system of the German Federal Employment Agency (Bundesagentur für Arbeit) — capturing and maintaining employer and individual records. It acts as the central system for nearly every BA IT process that depends on master data, and exposes that data through REST endpoints, Kafka events, file interfaces, and callable APIs.\n\nSTEP also owns employer-data management for social-security reporting, plus the MAZ component (proof and reporting of contribution-free periods for the pension system). Delivery combines BA IT standards with strict data-protection, data-security, and accessibility requirements.",
+        "description": "STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka events, file interfaces, service interfaces, and client applications.\n\nIn addition, STEP is responsible for the management and maintenance of company data for reporting purposes in the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number Serviceteam, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is MAZ (proof and reporting of non-contributory periods for the pension insurance system).\n\nAs part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also made to ensure compliance with data protection and information security requirements, as well as accessibility regulations.",
         "tasks": [
-          "Locating, analysing, and resolving software defects",
-          "Supporting the production of functional and solution-design specifications",
-          "Maintaining Continuous Integration / Continuous Delivery",
+          "Locating, analyzing, and fixing software defects",
+          "Supporting the creation of (functional) concepts and solution designs",
+          "Ensuring Continuous Integration / Continuous Delivery",
           "Applying the DevSecOps approach",
           "Applying agile practices",
-          "Taking on 3rd-level support",
-          "Test analysis, plus authoring and maintaining manual component, system, and end-to-end tests",
-          "Implementing new REST endpoints and evolving existing interfaces and Kafka-based event flows",
-          "Evolving GUI components",
-          "Conducting code reviews and refactoring to lift code quality",
-          "Ensuring accessibility compliance"
+          "Providing 3rd level support",
+          "Performing test analysis and creating and maintaining manual component tests, system tests, and end-to-end tests",
+          "Implementing new REST endpoints as well as adapting and further developing existing interfaces and Kafka-based event processes",
+          "Further development of GUI components",
+          "Conducting code reviews and refactoring to improve code quality",
+          "Ensuring accessibility"
         ]
       },
       "svlfg": {
         "role": "Frontend Consultant",
         "name": "B2B Insurance Customer Portal Modernization",
         "industry": "Insurance",
-        "description": "Modernization and restructuring of an existing B2B insurance customer portal originally built on SAP Commerce (Hybris). The monolithic architecture was replaced by a decoupled headless approach, with the frontend rebuilt in Angular. The backend initially remained on SAP Hybris / Spring Boot, with custom controllers exposing OpenAPI-aligned RESTful endpoints. Delivery followed Scrum in monthly sprints.\n\nLong-term goal: incremental migration off SAP Commerce onto a modern JHipster-based stack, since SAP Commerce was being used here purely as a technical base with no real e-commerce functionality. This delivers a significant reduction in licensing cost together with improved maintainability, frontend/backend independence, and platform future-proofing.",
+        "description": "As part of this project, an existing B2B insurance customer portal, originally based on SAP Commerce (Hybris), was modernized and restructured. The previously monolithic system architecture was replaced with a decoupled, headless approach, with the frontend redeveloped using Angular. The backend initially remained in the SAP Hybris / Spring Boot environment, with controllers adapted to provide RESTful API endpoints according to the OpenAPI standard. Work was carried out following the Scrum framework in one-month sprints.\n\nThe long-term goal of the project was to gradually migrate from SAP Commerce (Hybris) to a modern, JHipster-based solution—primarily because SAP Commerce served mainly as a technological foundation without using its e-commerce functionalities. The migration also aimed to achieve a significant reduction in licensing costs.\n\nThe restructuring was intended to improve maintainability, promote frontend-backend independence, and make the platform future-proof for extensions and integrations.",
         "tasks": [
-          "Migrating the Angular application into an Nx monorepo to structure and share libraries across multiple applications",
-          "Establishing and enforcing frontend architecture and code-style best practices",
-          "Supporting and technically mentoring the internal frontend team",
-          "Conducting code reviews and giving technical feedback on merge requests",
-          "Working closely with the backend team on integration and consumption of OpenAPI-driven REST endpoints",
-          "Implementing UI components against the new style guide in close collaboration with design",
-          "Ensuring accessibility, responsive design, and adherence to UX/UI guidelines",
-          "Running manual component and UI tests",
-          "Building GUI components with a strong focus on usability and performance",
-          "Documenting source code and UI components",
-          "Setting up and configuring the Angular CI pipeline"
+          "Migration of the Angular application to a monorepo using Nx to structure and share libraries across multiple applications.",
+          "Establishment and enforcement of best practices in frontend architecture and code style",
+          "Support and technical guidance for the internal frontend team",
+          "Conducting code reviews and providing technical feedback on merge requests within the development team",
+          "Close collaboration with the backend team to integrate and utilize OpenAPI-based REST APIs",
+          "Implementation of UI components based on the new style guide in close cooperation with the design team",
+          "Ensuring accessibility, responsive design, and compliance with UX/UI guidelines",
+          "Performing manual component and UI testing",
+          "Development of GUI components with a focus on usability and performance",
+          "Documentation of source code and UI components",
+          "Setup and configuration of the Angular pipeline to support continuous integration"
         ]
       },
       "mobilcom-ecare": {
         "role": "Senior Frontend Developer",
         "name": "mobilcom-debitel eCare User Dashboard Relaunch",
-        "industry": "Telecom retail",
-        "description": "Comprehensive relaunch of the existing eCare self-service platform with the goal of a faster, friendlier, and more visually compelling experience. Focus: performance optimization, a new responsive design, and features that give users a clearer view of their contracts, usage, and account details.\n\nThe dashboard was rebuilt from the ground up on the existing Angular architecture — an Nx monorepo with a fully GraphQL-driven backend. Functionally extended with personalized content (marketing campaigns, product recommendations, special offers) rendered dynamically and user-aware. Delivered in an agile Scrum setup in close collaboration with UX designers and marketing stakeholders.",
+        "industry": "Telecommunications",
+        "description": "As part of a comprehensive relaunch, the existing eCare self-service platform was modernized to deliver a faster, more user-friendly, and visually appealing solution. Key focuses included performance optimization, a new responsive design, and the addition of features that provide users with a clearer overview of personal data such as contract information, usage behavior, and account details.\n\nThe mobilcom-debitel eCare user dashboard was fully redeveloped based on the existing Angular architecture. The project was organized as an Nx monorepo and consistently used GraphQL for backend communication. Additionally, the dashboard was functionally enhanced to dynamically display personalized content such as marketing campaigns, product recommendations, and special offers in a user-centric manner.\n\nDevelopment was carried out in an agile Scrum setup in close collaboration with UX designers, the frontend team, and marketing stakeholders. The technical focus was on maintaining a clean and maintainable architecture, high component reusability, and scalability for future requirements.",
         "tasks": [
-          "Implementing the new eCare dashboard page showing contracts, data usage, invoices, marketing content, and more",
-          "Working with designers and the project manager to realise the desired UI",
-          "Authoring and grooming Jira tickets to plan and structure the work",
-          "Integrating the new dashboard into the existing Angular app in coordination with the development team",
-          "Building in Angular, TypeScript, HTML, and SCSS inside an Nx monorepo",
-          "Fetching backend data via GraphQL with a focus on performance and maintainability",
-          "Implementing the new UI surfaces in line with the style guide",
-          "Ensuring accessibility, responsive design, and UX/UI guideline adherence",
-          "Running E2E tests",
-          "Building the GUI components with strong attention to usability"
+          "Implementation of the new eCare dashboard page to display contracts, data usage, invoices, marketing content, and other information",
+          "Collaboration with designers and project managers to deliver the desired user interface",
+          "Creation and maintenance of Jira tickets for task planning and organization",
+          "Integration of the new dashboard into the existing Angular application in coordination with the development team",
+          "Development using Angular, TypeScript, HTML, and SCSS within an Nx monorepo architecture",
+          "Retrieval of backend data via GraphQL with a focus on performance and maintainability",
+          "Implementation of new UI components according to the style guide",
+          "Ensuring accessibility, responsive design, and compliance with UX/UI guidelines",
+          "Execution of end-to-end (E2E) tests",
+          "Development of GUI components with a focus on usability"
         ]
       },
       "emporix": {
         "role": "Senior Frontend Developer",
         "name": "Agnostic Integration SDK for Emporix",
         "industry": "IT services",
-        "description": "Development of an agnostic integration SDK that drops into any frontend application and provides a ready-to-use binding to the Emporix e-commerce platform. Technology-neutral by design for maximum flexibility and reusability. The official Alokai integration boilerplate served as the foundation to ensure consistency and maintainability.",
+        "description": "The goal of the project was to develop an agnostic integration SDK that can be seamlessly embedded into any frontend application and provides an immediately usable connection to the Emporix e-commerce platform. The SDK was designed to be technology-independent to ensure maximum flexibility and reusability. The official integration boilerplate from Alokai served as the foundation to guarantee standardization and maintainability.",
         "tasks": [
-          "Building TypeScript modules inside the integration SDK to handle login, product, and product-list queries",
-          "Implementing and maintaining the SDK as reusable npm packages",
-          "Publishing and versioning the packages to the internal GitLab registry",
-          "Ensuring framework-agnostic design and easy integration into different frontend applications"
+          "Development of TypeScript modules in the integration SDK to handle login processes as well as product and product list queries",
+          "Implementation and maintenance of the SDK as reusable npm packages",
+          "Publication and versioning of the packages in the internal GitLab registry",
+          "Ensuring framework-agnostic design and easy integration into various frontend applications"
         ]
       },
       "haba": {
         "role": "Senior Frontend Developer",
         "name": "Online-shop Performance Optimization (HABA Play & HABA Pro)",
         "industry": "Toy manufacturer",
-        "description": "Performance improvement for the HABA Play and HABA Pro online shops while lowering maintenance and runtime cost. The sites suffered from long load times and a heavy dependency on SAP Composable Storefront. At the customer's request, SAP Composable Storefront had to be removed without losing any core functionality.",
+        "description": "The goal of the project was to improve the performance of the HABA Play and HABA Pro online shops while reducing maintenance and operational costs. The sites suffered from long loading times and complex dependencies on the SAP Composable Storefront. At the client’s request, the SAP Composable Storefront was to be removed without losing key functionalities.",
         "tasks": [
-          "Analysing the existing shops to identify load-time bottlenecks and unnecessary JavaScript",
-          "Implementing optimizations to reduce load times, including lazy loading",
-          "Supporting the removal of SAP Composable Storefront on customer request",
-          "Lifting key functionality out into a dedicated, reusable library",
-          "Simplifying and reducing the codebase to lower maintenance overhead and bundle size",
-          "Working with the development team and stakeholders to ensure a smooth migration without feature loss"
+          "Analysis of the existing shops to identify loading issues and unnecessary JavaScript",
+          "Implementation of optimizations to reduce load times, e.g., through lazy loading",
+          "Support in removing the SAP Composable Storefront at the client’s request",
+          "Migration of key functionalities into a standalone, reusable library",
+          "Simplification and reduction of the codebase to lower maintenance effort and file size",
+          "Collaboration with the development team and stakeholders to ensure a smooth transition without loss of functionality"
         ]
       },
       "ottos-sherpa": {
         "role": "Frontend Project Lead",
         "name": "Modern online shops on SAP Commerce Cloud and Composable Storefront",
         "industry": "Retail",
-        "description": "Development of modern online shops for ottos.ch and Sherpa Outdoors on top of SAP Commerce Cloud and SAP Composable Storefront. Migration off the legacy SAP Hybris system onto a headless storefront architecture. A single shared Angular frontend codebase was specialised per brand through distinct themes and configurations. Delivered under Scrum, in close collaboration with Valantic (Zürich), Medienwerft (Hamburg), Team Neusta (Bremen), and Maify GmbH (Mühlingen).",
+        "description": "The goal of the project was to develop modern online shops for ottos.ch and Sherpa Outdoors based on SAP Commerce Cloud and the SAP Composable Storefront. The migration involved moving from the legacy SAP Hybris system to a headless storefront architecture using SAP Composable Storefront. A unified Angular frontend codebase was implemented, customized for each brand through different themes and configurations. The project was managed using the Scrum methodology and carried out in close collaboration with Valantic (Zurich), Medienwerft (Hamburg), Team Neusta (Bremen), and Maify GmbH (Mühlingen).",
         "tasks": [
-          "Frontend project lead, technically supporting Team Neusta and Medienwerft on SAP Composable Storefront",
-          "Creating technical sub-tasks and assigning Jira tickets to streamline structure and onboarding",
-          "Reviewing code and merge requests from team members while also contributing actively to the code",
-          "Tight collaboration and coordination with the backend team, product manager, and product owner",
-          "Ensuring adherence to best practices, code standards, and frontend quality",
-          "Supporting technical decisions and solution design throughout the project",
-          "Implementing UI components against the new style guide in close collaboration with design",
-          "Ensuring accessibility, responsive design, and UX/UI guideline adherence",
-          "Running manual component and E2E tests",
-          "Building GUI components with a strong focus on usability and performance",
-          "Setting up and configuring the Angular CI pipeline"
+          "Frontend project leadership and technical support for the teams from Team Neusta and Medienwerft in using SAP Composable Storefront",
+          "Creation of technical subtasks and assignment of Jira tickets to structure and simplify onboarding",
+          "Review of team members’ code and merge requests, and active contribution to the code",
+          "Close collaboration and coordination with the backend team, product manager, and product owner",
+          "Ensuring adherence to best practices, code standards, and quality in the frontend",
+          "Support in technical decision-making and problem-solving throughout the project",
+          "Implementation of UI components based on the new style guide in close collaboration with the design team",
+          "Ensuring accessibility, responsive design, and compliance with UX/UI guidelines",
+          "Performing manual component and end-to-end (E2E) testing",
+          "Development of GUI components with a focus on usability and performance",
+          "Setup and configuration of the Angular pipeline to support continuous integration"
         ]
       },
       "landgard": {
         "role": "Senior Frontend Developer",
         "name": "B2B Online Shops for Landgard and Ordertage",
-        "industry": "Horticulture & wholesale",
-        "description": "Development of modern online shops for Landgard and Ordertage on SAP Commerce Cloud and SAP Composable Storefront. A single shared Angular frontend codebase was specialised per brand through distinct themes and configurations. Delivered under Scrum.",
+        "industry": "Horticulture & Wholesale",
+        "description": "The goal of the project was to develop modern online shops for Landgard and Ordertage based on SAP Commerce Cloud and the SAP Composable Storefront. A unified Angular frontend codebase was used, customized for each brand through different themes and configurations. The project was executed using the Scrum methodology.",
         "tasks": [
-          "Implementing components and features on SAP Composable Storefront",
-          "Tailoring the shared Angular codebase to each brand through configuration and theming",
-          "Working closely with the backend team to integrate interfaces and data flows",
-          "Aligning with the product owner on translating business requirements into delivery",
-          "Participating in sprint planning, reviews, and daily meetings in the Scrum team",
-          "Implementing UI components against the new style guide in close collaboration with design",
-          "Ensuring accessibility, responsive design, and UX/UI guideline adherence",
-          "Building GUI components with a strong focus on usability and performance"
+          "Implementation of components and functionalities in the SAP Composable Storefront",
+          "Customization of the unified Angular codebase for each brand through configuration and theming",
+          "Close collaboration with the backend team to integrate interfaces and data flows",
+          "Coordination with the product owner to implement business requirements",
+          "Participation in sprint planning, reviews, and daily meetings within the Scrum team",
+          "Implementation of UI components based on the new style guide in close collaboration with the design team",
+          "Ensuring accessibility, responsive design, and compliance with UX/UI guidelines",
+          "Development of GUI components with a focus on usability and performance"
         ]
       },
       "spar": {
         "role": "Senior Frontend Developer",
         "name": "Online-shop Accessibility Refit (SPAR Hungary & Italy)",
         "industry": "Retail",
-        "description": "Accessibility refit of the SPAR Hungary and SPAR Italy online shops. The existing shops were built on SAP Commerce (Hybris) with a JSP frontend that did not meet current digital accessibility requirements. A large portion of the existing code was reworked and refactored to align with applicable accessibility guidelines and deliver a better user experience. Delivered under Scrum.",
+        "description": "The goal of the project was to make the online shops of SPAR Hungary and SPAR Italy fully accessible. The existing shops were based on SAP Commerce (Hybris) with a JSP frontend that did not meet current digital accessibility standards. To address this, a large portion of the existing code was revised and refactored to comply with accessibility guidelines and ensure a better user experience for all customers. The project was executed using the Scrum methodology.",
         "tasks": [
-          "Analysing the existing JSP frontend for accessibility issues",
-          "Refactoring and adjusting HTML, CSS, and JavaScript to meet accessibility guidelines",
-          "Running accessibility tests and using the relevant tooling for quality assurance",
-          "Supporting the team in delivering accessibility standards inside the Scrum process"
+          "Analysis of the existing JSP frontend for accessibility issues",
+          "Refactoring and adjustment of HTML, CSS, and JavaScript to comply with accessibility guidelines",
+          "Conducting accessibility tests and using relevant tools for quality assurance",
+          "Supporting the team in implementing accessible standards within the Scrum process"
         ]
       },
       "daw": {
         "role": "Frontend Developer",
         "name": "13 Online Shops for the DAW Group",
-        "industry": "Building chemistry / paints and coatings",
-        "description": "Development of a new e-commerce system on SAP Commerce Hybris that allowed users to configure paint colours interactively. The system was designed as the central solution for 13 different online shops, each differing in CMS content, product range, and theme. Delivered inside a Scrum process.",
+        "industry": "Construction chemicals / Paint and coatings industry",
+        "description": "The goal of the project was to develop a new e-commerce system based on SAP Commerce Hybris, enabling users to customize colors to configure the right product. The system was designed as a central solution and is used across 13 different online shops, each with its own CMS content, product assortment, and individual themes. The implementation was carried out within a Scrum process.",
         "tasks": [
-          "Implementing frontend features usable across all 13 shops",
-          "Working closely with the backend team",
-          "Coordinating with the product owner on clarifying business requirements",
-          "Adapting components to different CMS content, product data, and themes",
-          "Implementing UI components against the new style guide in close collaboration with design"
+          "Implementation of frontend features reusable across all 13 online shops",
+          "Close collaboration with the backend team",
+          "Coordination with the product owner to clarify business requirements",
+          "Adaptation of components to different CMS content, product data, and themes",
+          "Implementation of UI components based on the new style guide in close collaboration with the design team"
         ]
       },
       "dachdecker": {
         "role": "Frontend Developer",
         "name": "Roofers' Online Shop",
-        "industry": "Trade & construction",
-        "description": "Development of a new online shop on SAP Commerce Hybris, tailored to roofing-trade needs. The shop was individually configured and themed for the roofing industry. Delivered agile under Scrum.",
+        "industry": "Crafts & Construction Industry",
+        "description": "The goal of the project was to develop a new online shop based on SAP Commerce Hybris, specifically tailored for roofing supplies. The shop was individually configured and thematically customized to meet the requirements of the roofing industry. The implementation was carried out using an agile Scrum methodology.",
         "tasks": [
-          "Evolving the existing shop and shipping new features",
+          "Further development and implementation of new features for the existing online shop",
           "Fixing bugs and technical issues in the frontend",
-          "Working with the backend team to integrate new functionality",
-          "Aligning with the product owner on prioritisation",
-          "Implementing UI components against the new style guide in close collaboration with design"
+          "Collaboration with the backend team to integrate new functionalities",
+          "Coordination with the product owner to prioritize requirements",
+          "Implementation of UI components based on the new style guide in close collaboration with the design team"
         ]
       },
       "frosta": {
         "role": "Junior Fullstack Developer",
         "name": "FRoSTA Digital Work Instructions",
-        "industry": "Food & beverage",
-        "description": "Development of a mobile application that digitally surfaces work and machine instructions. Content (videos, images, PDFs, text) explains each work step visually and clearly to shop-floor staff. Content is maintained through a separate web application with role-based access. Comprised a native Android app, an Angular CMS, and a REST API on JAX-RS backed by Microsoft SQL Server.",
+        "industry": "Food & Beverage",
+        "description": "The goal of the project was to develop a mobile application for the digital presentation of work and machine instructions. The content included videos, images, PDFs, and text descriptions, designed to visually and clearly explain work steps to employees. The content was managed via a separate web application accessible only to authorized users. The project included a native Android app, an Angular-based CMS, and a REST API based on JAX-RS, connected to a Microsoft SQL Server.",
         "tasks": [
-          "Frontend: building the mobile app on Android Native to surface work instructions with video, images, PDFs, and text",
-          "Frontend: building an Angular 6 CMS web app to manage content through authorized users",
-          "Frontend: designing a user-friendly UI for both content viewing and authoring",
-          "Backend: building RESTful web services on JAX-RS to serve content to the app and CMS",
-          "Backend: integrating and managing content via a Microsoft SQL Server database",
-          "Backend: ensuring data consistency and performance across frontend and database",
-          "Technical alignment with the product owner on delivering the requirements"
+          "Frontend: Implementation of the mobile app using native Android to display work instructions with videos, images, PDFs, and text",
+          "Frontend: Development of an Angular 6 CMS web application for content management by authorized users",
+          "Frontend: Design of a user-friendly UI for content display and management",
+          "Backend: Development of RESTful web services using JAX-RS to provide content for the app and CMS",
+          "Backend: Integration and management of content via a Microsoft SQL Server database",
+          "Backend: Ensuring data consistency and performance in coordination with frontend and database",
+          "Technical alignment with the product owner to implement requirements"
         ]
       },
       "lsw": {
         "role": "Junior Fullstack Developer",
         "name": "LSW Warehouse Picking",
-        "industry": "Utilities",
-        "description": "Development of a mobile application for Android and iOS tablets, used by warehouse staff for picking and quality control. The app scans barcodes, surfaces product information, runs quality checks, and confirms work orders via digital signature. Completed order data flows through the SAP Java Connector (JCo) into the connected SAP ERP system. Built on Ionic in the frontend with JAX-RS web services and Microsoft SQL Server on the backend.",
+        "industry": "Utilities / Energy Sector",
+        "description": "The goal of the project was to develop a mobile application for Android and iOS tablets, used by warehouse staff for order picking and quality assurance. The app allows scanning product barcodes, displaying relevant information, performing quality checks, and completing work orders. Processes are confirmed with the employee’s signature, and order data is then transmitted from the backend to the connected SAP ERP system via the SAP Java Connector (JCo). The implementation was based on Ionic for the frontend and JAX-RS web services with Microsoft SQL Server in the backend.",
         "tasks": [
-          "Frontend: building a cross-platform mobile app on Ionic for Android and iOS",
-          "Frontend: integrating the barcode scanner to capture warehouse product data",
-          "Frontend: displaying the product-relevant information",
-          "Frontend: implementing the digital signature flow to confirm orders",
-          "Backend: building RESTful web services on JAX-RS to interface with the SAP ERP system",
-          "Backend: connecting to a SQL Server database to manage and store order data",
-          "Backend: processing completed orders and forwarding them to the ERP system",
-          "Backend: keeping the communication between app and backend stable"
+          "Frontend: Development of a cross-platform mobile app using Ionic for Android and iOS",
+          "Frontend: Integration of barcode scanning functionality to capture product data in the warehouse",
+          "Frontend: Display of product-relevant information",
+          "Frontend: Implementation of digital signature functionality to confirm work orders",
+          "Backend: Development of RESTful web services using JAX-RS for integration with the SAP ERP system",
+          "Backend: Connection to a SQL Server database for management and storage of order data",
+          "Backend: Processing and forwarding of completed orders to the ERP system",
+          "Backend: Ensuring stable communication between the app and backend system"
         ]
       }
     }

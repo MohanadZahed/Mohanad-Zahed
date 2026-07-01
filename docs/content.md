@@ -1,6 +1,6 @@
 # Site content (CV-derived)
 
-Source of truth for any copy that goes on the site. Distilled from the CV at [`docs/cv.md`](cv.md). When the CV updates, update this file.
+Source of truth for any copy that goes on the site. Distilled from the CVs — English [`docs/cv-en.md`](cv-en.md) (source for the EN site strings) and German [`docs/cv-de.md`](cv-de.md) (source for the DE site strings). When a CV updates, update this file.
 
 ## Colour palette
 
