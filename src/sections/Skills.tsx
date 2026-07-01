@@ -111,6 +111,7 @@ export function Skills() {
     apply(useScrollStore.getState().skillsIntro);
 
     const trigger = ScrollTrigger.create({
+      id: 'skills-intro',
       trigger: section,
       start: 'top top',
       end: () => '+=' + (INTRO_SCROLL_VH / 100) * document.documentElement.clientHeight,

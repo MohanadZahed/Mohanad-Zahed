@@ -8,6 +8,7 @@ import {
   type RefObject,
 } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useT } from '../i18n/useT';
 import { getLenis } from '../hooks/useLenis';
 import { useScrollStore } from '../store/useScrollStore';
@@ -464,9 +465,18 @@ export const MozNav = forwardRef<MozNavHandle, Props>(function MozNav(
     const el = document.getElementById(sectionId);
     if (!el) return;
     const lenis = getLenis();
+    // Skills emerges from the manifesto laptop: its section box starts at a large
+    // negative margin (the pin-start, skillsIntro=0), so scrolling to the element
+    // top lands inside the laptop before the emerge/zoom. Target the intro pin's
+    // END scroll instead, where skillsIntro=1 and Skills fully fills the screen.
+    const intro =
+      sectionId === 'Skills' ? ScrollTrigger.getById('skills-intro') : null;
     if (lenis) {
       lenis.start(); // the fullscreen mobile menu pauses Lenis while open
-      lenis.scrollTo(el, { offset: 0 });
+      if (intro) lenis.scrollTo(intro.end, { offset: 0 });
+      else lenis.scrollTo(el, { offset: 0 });
+    } else if (intro) {
+      window.scrollTo({ top: intro.end, behavior: 'smooth' });
     } else el.scrollIntoView({ behavior: 'smooth' });
   };
 

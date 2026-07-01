@@ -32,6 +32,13 @@ export const EMERGE_END = 0.3; // header slides up inside the (fixed) screen rec
 export const ZOOM_START = 0.3; // screen rect + content begin scaling to viewport
 export const ZOOM_END = 1.0; // fills the viewport exactly at pin release (seamless)
 
+// `skillsIntro` value at/above which Skills is considered to have filled the
+// viewport — the point the URL hash is allowed to flip to #Skills (see
+// useSectionHash). Just under ZOOM_END (1.0) so it fires as the zoom visually
+// completes, robust to float. Until then the hash stays #Manifesto even though
+// Skills' negative-margin section box already crosses the viewport's middle band.
+export const SKILLS_HASH_FILL = 0.98;
+
 // Dithered "pixel frame" drawn around the section during the zoom (see
 // SkillsPixelFrame.tsx). A band of black squares hugs the growing reveal window,
 // grows in cell size as it scales toward the user, and rides off the viewport
