@@ -7,8 +7,11 @@ How 3D assets enter the project, what formats they live in, and how they're opti
 ```
 public/
 ├── models/           # final .glb files (avatar, accessories)
-└── textures/
-    └── logos/        # one file per tech logo
+├── textures/
+│   └── logos/        # one file per tech logo
+└── favicon.*         # generated icon set — see "Favicon / app icons" below.
+    icon-*.png        # Do not hand-edit; regenerate via scripts/generate-favicon.mjs
+    apple-touch-icon.png
 
 assets/source/        # originals (svg, raw glb) — keep for re-export
                       # gitignored: too large for the repo, so back these up
@@ -21,6 +24,27 @@ assets/source/        # originals (svg, raw glb) — keep for re-export
 - Pipeline: SVG → 1024×1024 transparent PNG → `.webp` (lossy q=85) or `.ktx2` (basisu) for production.
 - Naming: `{tech-name}.{ext}` lowercase kebab-case. Examples: `angular.ktx2`, `nx.ktx2`, `react.ktx2`, `sap-composable-storefront.ktx2`.
 - Required priority list: see `docs/content.md` → "Tech stack — ring logos".
+
+## Favicon / app icons
+
+The favicon is the **MOZ mark with the Z dropped** — cream `M` + gold `O` + gold circuit underline on black. Generated, not hand-drawn: [scripts/generate-favicon.mjs](../scripts/generate-favicon.mjs) emits all seven files into `public/`. **Never hand-edit the outputs** — they'll be overwritten on the next run.
+
+```bash
+npm i --no-save opentype.js sharp png-to-ico   # not project deps: this runs by hand, rarely
+node scripts/generate-favicon.mjs
+```
+
+Outputs: `favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`. `site.webmanifest` is hand-maintained and references the last three. All are wired up in `index.html`'s `<head>`.
+
+### Why it's built this way
+
+- **Text → outline paths, not `<text>`.** Browsers rasterize a favicon outside the page's font context, so `<text font-family="Archivo">` would render in whatever the OS happens to have. The script fetches Archivo Bold from the Google Fonts CSS API — with a **legacy `User-Agent`**, which is what makes the API hand back a `.ttf` instead of woff2 (`opentype.js` can't parse woff2) — and converts `M` + `O` to paths. The shipped SVG is therefore self-contained.
+- **Geometry mirrors the hero mark.** `STROKE_F` / `NODE_D_F` / `CIRC_D_F` / `TRACKING_EM` are the `HeroLogo.tsx` constants (`UNDERLINE_W` 4, `NODE_D` 11, `CIRC_D` 13 at `CORNER_LOGO_H` 60, `letterSpacing: -0.025em`) expressed as fractions of the font size. The stem anchors under the O exactly as in the hero. Colours are `--color-secondary` / `--color-quaternary` / `--color-primary`.
+- **The 16px tab is the real constraint.** Two design decisions exist only because of it: padding is `PAD_FRAC = 0.08` (every point of margin is a point the glyphs don't get) and the circuit strokes are `STROKE_MUL = 1.3`× the hero's ratios (at 4/60 the line antialiases into a grey smear rather than a gold stroke). At 13% padding and literal ratios the O's counter fills in and the M reads as mush. **Re-render at 16px and actually look at it before changing either constant.**
+- **`favicon.svg` wins over `favicon.ico` in modern browsers**, including at 16px — so 16px legibility must be solved in the SVG. The `.ico`'s 16px member uses the generator's `simplify: true` variant (plain bar, node + end circles dropped — they're sub-pixel there), but that variant only ever reaches old Edge/Safari.
+- **`favicon.ico` stays at the public root.** Google's crawler probes `/favicon.ico` directly for the search-result icon.
+- `apple-touch-icon.png` and `icon-maskable-512.png` ship **full-bleed** (`radiusFrac: 0`, extra padding) because iOS and Android apply their own corner mask; the rounded-corner variant is only for `favicon.svg` / `icon-192` / `icon-512`.
+- No external license — derived from the site's own brand mark. Archivo is SIL OFL.
 
 ## Math constellations (Knowledge backdrop)
 
