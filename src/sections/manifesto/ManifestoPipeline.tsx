@@ -172,7 +172,7 @@ function Label({
   const gap = compact ? 10 : 16;
   const onRight = node.side === 'R';
   // On mobile, stack multi-word labels one word per line so long labels
-  // (e.g. "Unit Test", "Build Image") don't overflow the screen edge.
+  // (e.g. "Unit Test", "Build") don't overflow the screen edge.
   const words = compact ? text.split(' ') : [text];
   return (
     <span

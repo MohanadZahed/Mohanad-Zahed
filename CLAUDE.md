@@ -75,7 +75,7 @@ The site supports English and German via a custom Zustand + hook system — no t
 - **Never hardcode UI copy in JSX.** All strings go through `t()` or `tArray()`.
 - **Keep verbatim across both locales**: company names, customer names, tech stack tokens, URLs, dates, team-size strings, city names, file-name window titles (`context.md`, `notes.md`).
 - **Translate**: role labels, project names, industry labels, descriptions, task lists, section headings, eyebrows, sub-copy, CTA labels, footer text, meta title + description.
-- `src/data/experience.ts` is language-neutral: only `id`, `dateLabel`, `customer`, `teamSize`, `stack`, `link?`. All translated fields (`role`, `name`, `industry`, `description`, `tasks`) live in the JSON files under `experience.projects.<id>.*` and `experience.companies.<id>.*`.
+- `src/data/experience.ts` is language-neutral: only `id`, `dateLabel`, `ongoing?`, `customer`, `teamSize`, `stack`, `link?`. A running project sets `ongoing: true` and a bare start date (`'05/2026'`); `ProjectCard` appends the localized `experience.labels.present` ("present" / "heute") so the "– today" half stays translatable. All translated fields (`role`, `name`, `industry`, `description`, `tasks`) live in the JSON files under `experience.projects.<id>.*` and `experience.companies.<id>.*`.
 - For a string containing HTML (e.g. `<em>` in certificates count), use `dangerouslySetInnerHTML` — content is authored, not user input.
 - Auto-mode `<Typewriter>` call sites must carry `key={locale}` so a locale switch triggers remount and replays from char 0. Scroll-driven Typewriters update automatically when their `text` prop changes.
 - `App.tsx` syncs `document.title` and `meta[name="description"]` via a `useEffect` keyed on `[t, locale]`.

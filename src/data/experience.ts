@@ -1,6 +1,8 @@
 export interface ExperienceProject {
   id: string;
   dateLabel: string;
+  /** Still running — the card appends the localized "present" label to `dateLabel`. */
+  ongoing?: boolean;
   customer: string;
   teamSize: string;
   stack: string[];
@@ -11,6 +13,19 @@ export interface ExperienceCompany {
   id: string;
   projects: ExperienceProject[];
 }
+
+const OMEGAONE: ExperienceProject = {
+  id: 'omegaone',
+  dateLabel: '05/2026',
+  ongoing: true,
+  customer: 'DGUV, Berlin',
+  teamSize: '14 / 30',
+  stack: [
+    'Scrum', 'Agile', 'Spring Boot', 'Java', 'Maven', 'Oracle SQL', 'OpenAPI',
+    'Swagger', 'Angular 22', 'TypeScript', 'HTML', 'SCSS', 'Bitbucket', 'Git',
+    'REST', 'Microsoft Entra ID', 'Jest', 'Jira', 'Confluence',
+  ],
+};
 
 const STEP: ExperienceProject = {
   id: 'step',
@@ -34,7 +49,8 @@ const SVLFG: ExperienceProject = {
   stack: [
     'Scrum', 'Agile', 'Docker', 'Migration', 'OpenAPI', 'E-Commerce', 'Spring Boot',
     'Java', 'SAP Hybris', 'SAP Commerce', 'SAP Composable Storefront', 'Angular 19',
-    'NgRx', 'TypeScript', 'Nx', 'HTML', 'SCSS', 'GitLab CI/CD', 'Git', 'REST',
+    'NgRx', 'TypeScript', 'Nx', 'Micro-Frontends', 'HTML', 'SCSS',
+    'GitLab CI/CD', 'Git', 'REST',
     'JWT', 'OAuth 2', 'Jasmine/Karma', 'Cypress', 'Software-Architektur',
     'Refactoring', 'Code Analyse', 'CleanCode', 'Jira', 'Confluence',
   ],
@@ -168,7 +184,7 @@ const LSW: ExperienceProject = {
 export const EXPERIENCE: readonly ExperienceCompany[] = [
   {
     id: 'iso-gruppe',
-    projects: [STEP],
+    projects: [OMEGAONE, STEP],
   },
   {
     id: 'medienwerft',

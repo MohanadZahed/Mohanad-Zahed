@@ -31,12 +31,6 @@ export const CERTIFICATES: readonly Certificate[] = [
     date: '08/2025',
   },
   {
-    id: 'telc-deutsch-b1',
-    name: 'Deutsch B1',
-    issuer: 'telc gGmbH',
-    date: '02/2017',
-  },
-  {
     id: 'Informatik',
     name: 'B.Sc. Informatik',
     issuer: 'Al-Ahliyya Amman University',

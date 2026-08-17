@@ -55,7 +55,8 @@ export const skills: Skill[] = [
   // AI
   { id: 'claude-code', label: 'Claude Code', category: 'ai', level: 85, size: 'lg' },
   { id: 'prompt-eng', label: 'Prompt Engineering', category: 'ai', level: 80, size: 'md' },
-  { id: 'llm-integration', label: 'LLM Integration', category: 'ai', level: 70, size: 'md' },
+  { id: 'ai-workflows', label: 'AI Workflow Optimization', category: 'ai', level: 80, size: 'md' },
+  { id: 'token-management', label: 'Token Management', category: 'ai', level: 75, size: 'lg' },
 
   // DevOps
   { id: 'git', label: 'Git', category: 'devops', level: 92, size: 'sm' },

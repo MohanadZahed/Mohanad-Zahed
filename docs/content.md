@@ -49,9 +49,10 @@ Flip the one flag to bring the switcher back. To change the default font, edit
 
 - **Name**: Mohanad Zahed, B.Sc.
 - **Role**: Software Architect Frontend / Senior Frontend Engineer
-- **Location**: Germany
+- **Location**: Hamburg, Germany
 - **Email**: mzahed-p@outlook.com
 - **LinkedIn**: https://www.linkedin.com/in/m-zahed/
+- **Website**: https://www.mohanadzahed.com
 
 ## Headline (Hero/About)
 
@@ -75,7 +76,7 @@ These are the ones that get the floating-logo treatment in the ring. Pick 10–1
 
 **Project-card badges**: Docker, AWS (EC2), GitHub / GitLab CI/CD, Cypress, Jasmine, GraphQL, REST / OpenAPI, Kafka, Storybook, Ionic, Android Native, PWA.
 
-**AI**: Claude Code, prompt engineering, LLM integration, token management.
+**AI**: Claude Code, AI-assisted development, AI workflow optimization, token management, prompt engineering.
 
 ## Manifesto finder boxes
 
@@ -115,7 +116,8 @@ Per-category accent dot: methodology `#a78bfa` · architecture `#38bdf8` · proc
 | 09/2025 | ITIL 4 Foundation                                                   |
 | 08/2025 | ISTQB Certified Tester — Foundation                                 |
 | 08/2025 | PRINCE2 Foundation Agile                                            |
-| 02/2017 | telc Deutsch B1                                                     |
+
+The section also renders the B.Sc. Informatik (03/2014, Al-Ahliyya Amman University) as a closing card — see `certificates.data.ts`.
 
 ## Experience (reverse chronological — feeds Projects + Experience sections)
 
@@ -123,13 +125,14 @@ Per-category accent dot: methodology `#a78bfa` · architecture `#38bdf8` · proc
 
 **Nürnberg · Jul 2025 – present**
 
+- **OMEGAone — DGUV** (05/2026–present, public sector / social insurance, team 14/30). Senior Frontend Architect on the German Social Accident Insurance's central platform for exposure measurements — replacing the OMEGAclassic legacy system with digital workflows for measurement planning, data collection, lab analyses, QA, and reporting. Stack: Angular 22, TypeScript, SCSS, Spring Boot, Java, Maven, Oracle SQL, OpenAPI, Microsoft Entra ID, Jest, Bitbucket. Frontend architecture (modularization, layering, component decoupling), best practices, code reviews, BITV/WCAG accessibility.
 - **STEP — Bundesagentur für Arbeit** (11/2025–02/2026, public sector). Fullstack on the federal employment agency's central master-data system. Stack: Angular 20, NgRx, Spring Boot, Java, Maven, Kafka, Oracle SQL, Docker, OpenAPI, GitLab CI/CD, Jasmine/Karma, Selenium. Team 12/80. Implemented REST endpoints + Kafka event flows, evolved GUI components, code reviews, accessibility.
 
 ### Medienwerft GmbH — Senior Frontend Engineer
 
 **Hamburg · Aug 2019 – Jun 2025**
 
-- **SVLFG B2B Insurance Portal Modernization** (03/2024–06/2025, insurance, team 8/14). Headless rebuild of a SAP Hybris portal in Angular 19 + Nx, OpenAPI-driven REST, GitLab CI/CD. Established frontend best practices, mentored team, drove migration toward JHipster.
+- **SVLFG B2B Insurance Portal Modernization** (03/2024–06/2025, insurance, team 8/14). Headless rebuild of a SAP Hybris portal in Angular 19 + Nx (micro-frontend architecture), OpenAPI-driven REST, GitLab CI/CD. Established frontend best practices, mentored team, drove migration toward JHipster.
 - **mobilcom-debitel eCare Dashboard Relaunch — Freenet AG** (10/2023–02/2024, telecom, team 8/15). Full Angular 18 rebuild on Nx monorepo, GraphQL backend, personalized marketing surfaces. Cypress E2E, design system implementation.
 - **Emporix Integration SDK** (09–10/2023, IT services, team 4/7). Framework-agnostic TypeScript SDK boilerplate (based on Alokai), published as versioned npm packages to internal GitLab registry.
 - **HABA FAMILYGROUP — Onlineshop Performance Optimization** (07–09/2023, toys, team 2/8). Removed SAP Composable Storefront from HABA Play and HABA Pro on customer request, extracted reusable lib, lazy-loading, dropped maintenance/runtime cost.

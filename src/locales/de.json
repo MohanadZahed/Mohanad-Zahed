@@ -23,7 +23,7 @@
       "steps": {
         "push": "Push",
         "unitTest": "Unit-Test",
-        "build": "Image bauen",
+        "build": "Build",
         "e2e": "E2E",
         "deploy": "Deploy"
       }
@@ -66,7 +66,7 @@
   "experience": {
     "eyebrow": "Berufserfahrung",
     "heading": "Wo ich mitgewirkt habe.",
-    "subhead": "Drei Unternehmen, zwölf Projekte.",
+    "subhead": "Drei Unternehmen, dreizehn Projekte.",
     "labels": {
       "customer": "Kunde",
       "industry": "Branche",
@@ -74,6 +74,7 @@
       "stack": "Umfeld",
       "tasks": "Aufgaben im Projekt",
       "visitLink": "Live-Seite besuchen",
+      "present": "heute",
       "projectCounter": "Projekt {number} von {total}"
     },
     "companies": {
@@ -97,6 +98,23 @@
       }
     },
     "projects": {
+      "omegaone": {
+        "role": "Senior Frontend Architekt",
+        "name": "OMEGAone — Plattform für Expositionsmessungen",
+        "industry": "Öffentlicher Dienst / Sozialversicherung",
+        "description": "Entwicklung und Modernisierung der OMEGAone-Plattform, einer zentralen Webanwendung der Deutschen Gesetzlichen Unfallversicherung (DGUV) zur Verwaltung von Expositionsmessungen und zugehörigen Prozessen im Bereich Arbeitsschutz. Die Plattform ersetzt das bestehende Legacy-System OMEGAclassic und unterstützt digitale Workflows für Messplanung, Datenerfassung, Laboranalysen, Qualitätssicherung und Reporting innerhalb der arbeitsmedizinischen und sicherheitstechnischen Prozesse.\n\nDas Projekt verfolgt das Ziel, eine skalierbare und benutzerfreundliche Anwendungsarchitektur aufzubauen, um die Effizienz, Datenqualität und Zusammenarbeit zwischen den DGUV-Institutionen und den beteiligten Messstellen zu verbessern.",
+        "tasks": [
+          "Analyse, Optimierung und Weiterentwicklung der Frontend-Architektur durch Modularisierung, klare Schichtenstruktur, Entkopplung von Komponenten sowie nachhaltige und skalierbare Codeorganisation",
+          "Etablierung und Durchsetzung von Best Practices in der Frontend-Architektur, Codequalität und im Code-Stil",
+          "Konzeption und Umsetzung technischer Lösungsansätze sowie Unterstützung bei der Erstellung von Fachkonzepten und technischen Lösungsentwürfen",
+          "Durchführung von Code-Reviews und Refactorings zur Verbesserung von Wartbarkeit, Erweiterbarkeit, Performance und Codequalität",
+          "Weiterentwicklung und Optimierung moderner Frontend-Anwendungen sowie wiederverwendbarer GUI-Komponenten",
+          "Enge Zusammenarbeit mit Backend-Teams zur Integration und Nutzung OpenAPI-basierter REST-Schnittstellen",
+          "Gewährleistung von Barrierefreiheit (BITV/WCAG), Responsive Design sowie der Einhaltung von UX-/UI-Richtlinien",
+          "Lokalisierung, Analyse und Behebung von Softwarefehlern",
+          "Mitarbeit in agilen Entwicklungsteams unter Anwendung agiler Methoden (z. B. Scrum oder Kanban)"
+        ]
+      },
       "step": {
         "role": "Fullstack Entwickler",
         "name": "STEP — Stammdatenerfassungs- und pflegesystem",

@@ -37,7 +37,6 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
   { id: 'solid', label: 'SOLID', category: 'architecture' },
 
   { id: 'scrum', label: 'Scrum', category: 'methodology' },
-  { id: 'headless-commerce', label: 'Headless Commerce', category: 'architecture' },
 
   {
     id: 'clean-architecture',
@@ -50,22 +49,22 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
     id: 'knowledge-transfer',
     label: 'Knowledge Transfer',
     category: 'soft',
-    mobileOffsets: { x: -20, y: 25 },
+    mobileOffsets: { x: -60, y: 25 },
   },
   {
     id: 'monorepos',
     label: 'Monorepos',
     category: 'architecture',
-    mobileOffsets: { x: -40, y: 25 },
+    mobileOffsets: { x: -100, y: 25 },
   },
   {
     id: 'design-systems',
     label: 'Design Systems',
     category: 'architecture',
-    mobileOffsets: { x: -1, y: -15 },
+    mobileOffsets: { x: -30, y: -10 },
   },
 
-  { id: 'code-reviews', label: 'Code Reviews', category: 'process' },
+  { id: 'code-reviews', label: 'Code Reviews', category: 'process', mobileOffsets: { y: -30 } },
   { id: 'refactoring', label: 'Refactoring', category: 'process' },
   { id: 'wcag', label: 'WCAG / a11y', category: 'process' },
   { id: 'release-mgmt', label: 'Release Mgmt', category: 'process' },
@@ -75,6 +74,8 @@ export const KNOWLEDGE: readonly KnowledgeItem[] = [
     id: 'tech-leadership',
     label: 'Technical Leadership',
     category: 'soft',
+    x: -20,
+    y: 25,
     mobileOffsets: { x: -10, y: -25 },
   },
   { id: 'mentoring', label: 'Mentoring', category: 'soft', mobileOffsets: { x: 15, y: -30 } },

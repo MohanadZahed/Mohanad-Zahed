@@ -1,6 +1,6 @@
 Mohanad Zahed, B.Sc.  
 S O F T W A R E A R C H I T E C T F R O N T E N D  
-Hamburg, Germany | mzahed-p@outlook.com | Linkedin  
+Hamburg, Germany | mzahed-p@outlook.com | Linkedin | www.mohanadzahed.com
 A B O U T  
 I am a Frontend Software Architect with a passion for clean architecture and modern code. For over 8 years, I have been  
 developing Angular applications for insurance, telecommunications, retail, and public sectors. My focus has primarily  
@@ -13,7 +13,7 @@ understanding of processes, quality, and agile delivery.
 • Languages: Arabic (native) | English (Negotiable) | German (Negotiable)  
 • Education: Computer Science B.Sc. at Al-Ahliyya Amman University, 2014 (officially recognized in Germany)  
 S K I L L S  
-TECHNICAL Frontend Angular 20 | SAP Composable Storefront (Spartacus) | React | Vue 3 | Nuxt  
+TECHNICAL Frontend Angular 22 | SAP Composable Storefront (Spartacus) | React | Vue 3 | Nuxt  
 3 | JSP | Typescript | Javascript | JQuery | SCSS | Css | Tailwind CSS |  
 Bootstrap | Html | NPM | RxJS | NgRx | Nx | RESTful-API | GraphQL-API |  
 storybook | Ionic | Android Native (Java) | Xamarin | Web components |  
@@ -41,7 +41,6 @@ Customer Orientation | Solution-Oriented Thinking | Strategic Thinking | Team Sp
 Software Architecture Foundation Level  
 0 9 / 2 0 2 5 ITIL 4 Foundation Certificate  
 0 8 / 2 0 2 5 ISTQB Certified Tester Foundation Level 0 8 / 2 0 2 5 PRINCE2 Foundation Agile  
-0 2 / 2 0 1 7 Sprachzertifikat \- telc Deutsch B1  
 A D D I T I O N A L T R A I N I N G  
 ○ React (Udemy) ○ Angular 19 (Udemy)  
 ○ Nuxt 3 (Udemy) ○ Vue.js 3 (Udemy)  
@@ -55,31 +54,56 @@ Firmentraning B2 (KERN AG)
 E X P E R I E N C E  
 Software Developer (Senior Consultant) ISO-Gruppe | Nuremberg | July 2025 – Today  
 PROJECTS:  
-Fullstack Developer | STEP | 11/2025 – 02/2026
+Senior Frontend Architect | OMEGAone | 05/2026 – Today
 
-|                     | Customer Bundesagentur für Arbeit, Nuremberg |
-| :------------------ | :------------------------------------------- |
-| Industry            | Public Sector                                |
-| Team / Project size | 12/80                                        |
-| Environment         |                                              |
-|                     |                                              |
-|                     |                                              |
-|                     |                                              |
+| Customer DGUV, Berlin |                                  |
+| :-------------------- | :------------------------------- |
+| Industry              | Public Sector / Social Insurance |
+| Team / Project size   | 14/30                            |
+| Environment           |                                  |
 
-Scrum | Agile | Spring boot | Java | Maven | Micro Services | Kafka | Oracle SQL | Docker |  
+Scrum | Agile | Spring boot | Java | Maven | Oracle SQL | OpenAPI | Swagger | Angular 22 |  
+Typescript | HTML | SCSS | Bitbucket | Git | REST | Microsoft Entra ID | Jest | IntelliJ IDEA |  
+Jira | Confluence  
+Development and modernization of the OMEGAone platform, a central web application of the German Social  
+Accident Insurance (DGUV) for managing exposure measurements and related occupational health and safety  
+processes. The platform replaces the existing OMEGAclassic legacy system and supports digital workflows for  
+measurement planning, data collection, laboratory analyses, quality assurance, and reporting within  
+occupational health and safety processes.  
+The project aims to establish a scalable and user-friendly application architecture to improve efficiency, data  
+quality, and collaboration between DGUV institutions and the involved measurement centers.RESPONSIBILITIES  
+▪ Analysis, optimization, and further development of the frontend architecture through modularization, a  
+clear layered structure, component decoupling, and sustainable, scalable code organization  
+▪ Establishment and enforcement of best practices in frontend architecture, code quality, and coding  
+standards  
+▪ Design and implementation of technical solutions, as well as support in the creation of functional  
+concepts and technical solution designs  
+▪ Conducting code reviews and refactorings to improve maintainability, extensibility, performance, and  
+code quality  
+▪ Further development and optimization of modern frontend applications and reusable GUI components  
+▪ Close collaboration with backend teams to integrate and consume OpenAPI-based REST APIs  
+▪ Ensuring accessibility (BITV/WCAG), responsive design, and compliance with UX/UI guidelines  
+▪ Localization, analysis, and resolution of software defects  
+▪ Working in agile development teams using agile methodologies (e.g., Scrum or Kanban)  
+Fullstack Developer | STEP | 11/2025 – 02/2026  
+Customer Bundesagentur für Arbeit, Nuremberg  
+Industry Public Sector  
+Team / Project size 12/80  
+Environment Scrum | Agile | Spring boot | Java | Maven | Micro Services | Kafka | Oracle SQL | Docker |  
 OpenAPI | Swagger | Angular 20 | Eslint | NgRx | Typescript | HTML | SCSS | Github | GitLab  
 CI/CD | Git | REST | JWT | Jasmine/Karma | Selenium | Silk Central | IntelliJ IDEA | Code  
 Analyse | CleanCode | Jira | Confluence  
-STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal Employment  
-Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and personal data. STEP  
-serves as a central system for almost all BA IT applications that require master data to fulfill their tasks. The master data  
-is provided for different business use cases and user groups via REST endpoints, Kafka events, file interfaces, service  
-interfaces, and client applications.  
-In addition, STEP is responsible for the management and maintenance of company data for reporting purposes in the  
-social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number Serviceteam, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is MAZ (proof  
-and reporting of non-contributory periods for the pension insurance system).  
-As part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also made  
-to ensure compliance with data protection and information security requirements, as well as accessibility regulations.  
+STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal  
+Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and  
+personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill  
+their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka  
+events, file interfaces, service interfaces, and client applications.  
+In addition, STEP is responsible for the management and maintenance of company data for reporting purposes in  
+the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number  
+Service team, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is  
+MAZ (proof and reporting of non-contributory periods for the pension insurance system).As part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also  
+made to ensure compliance with data protection and information security requirements, as well as accessibility  
+regulations.  
 RESPONSIBILITIES  
 ▪ Locating, analyzing, and fixing software defects  
 ▪ Supporting the creation of (functional) concepts and solution designs  
@@ -104,9 +128,9 @@ Environment Scrum | Agile | Docker | Migration | OpenAPI | E-Commerce | Spring b
 | SAP Commerce | SAP Composable Storefront | Angular 19 | Eslint | NgRx | Typescript | Nx  
 | Monolithic software architecture | HTML | SCSS | GitLab | GitLab CI/CD | Git | REST | JWT  
 | OAuth 2 | Jasmine/Karma | Cypress | IntelliJ IDEA | Software architecture | Refactoring |  
-Code analysis | Code review techniques | CleanCode | Jira | ConfluenceAs part of this project, an existing B2B insurance customer portal, originally based on SAP Commerce (Hybris),  
-was modernized and restructured. The previously monolithic system architecture was replaced with a decoupled,  
-headless approach, with the frontend redeveloped using Angular. The backend initially remained in the SAP Hybris  
+Code analysis | Code review techniques | CleanCode | Jira | Confluence  
+As part of this project, an existing B2B insurance customer portal, originally based on SAP Commerce (Hybris),  
+was modernized and restructured. The previously monolithic system architecture was replaced with a decoupled,headless approach, with the frontend redeveloped using Angular. The backend initially remained in the SAP Hybris  
 / Spring Boot environment, with controllers adapted to provide RESTful API endpoints according to the OpenAPI  
 standard. Work was carried out following the Scrum framework in one-month sprints.  
 The long-term goal of the project was to gradually migrate from SAP Commerce (Hybris) to a modern, JHipster-  
@@ -183,10 +207,10 @@ Environment Spring boot | Java | E-Commerce | CMS | SAP Hybris | SAP Commerce | 
 Storefront | Angular 16 | NgRx | Typescript | HTML | SCSS | GitLab | Git | OpenAPI | REST |  
 JWT | OAuth 2 | Jasmine/Karma | IntelliJ IDEA | Software Architectur | Refactoring | Code  
 Analyse | CleanCode  
-The goal of the project was to improve the performance of the HABA Play and HABA Pro online shops while  
-reducing maintenance and operational costs. The sites suffered from long loading times and complex  
-dependencies on the SAP Composable Storefront. At the client’s request, the SAP Composable Storefront was to  
-be removed without losing key functionalities.  
+Improve the performance of the HABA Play and HABA Pro online shops while reducing maintenance and  
+operational costs. The sites suffered from long loading times and complex dependencies on the SAP Composable  
+Storefront. At the client’s request, the SAP Composable Storefront was to be removed without losing key  
+functionalities.  
 RESPONSIBILITIES  
 ▪ Analysis of the existing shops to identify loading issues and unnecessary JavaScript  
 ▪ Implementation of optimizations to reduce load times, e.g., through lazy loading  
@@ -203,12 +227,12 @@ Environment Scrum | Agile | Migration | OpenAPI | E-Commerce | CMS | Spring boot
 SAP Commerce | SAP Composable Storefront | Angular 16 | Eslint | NgRx | Typescript |  
 HTML | SCSS | GitLab | GitLab CI/CD | Git | REST | JWT | OAuth 2 | Jasmine/Karma | Cypress  
 | IntelliJ IDEA | Code Review Techniques | CleanCode | Jira | Confluence  
-The goal of the project was to develop modern online shops for ottos.ch and Sherpa Outdoors based on SAP  
-Commerce Cloud and the SAP Composable Storefront. The migration involved moving from the legacy SAP Hybris  
-system to a headless storefront architecture using SAP Composable Storefront. A unified Angular frontend  
-codebase was implemented, customized for each brand through different themes and configurations. The project  
-was managed using the Scrum methodology and carried out in close collaboration with Valantic (Zurich),  
-Medienwerft (Hamburg), Team Neusta (Bremen), and Maify GmbH (Mühlingen).  
+Develop modern online shops for ottos.ch and Sherpa Outdoors based on SAP Commerce Cloud and the SAP  
+Composable Storefront. The migration involved moving from the legacy SAP Hybris system to a headless storefront  
+architecture using SAP Composable Storefront. A unified Angular frontend codebase was implemented,  
+customized for each brand through different themes and configurations. The project was managed using the  
+Scrum methodology and carried out in close collaboration with Valantic (Zurich), Medienwerft (Hamburg), Team  
+Neusta (Bremen), and Maify GmbH (Mühlingen).  
 RESPONSIBILITIES  
 ▪ Frontend project leadership and technical support for the teams from Team Neusta and Medienwerft in  
 using SAP Composable Storefront  
@@ -229,9 +253,9 @@ Team / Project size 6/10
 Environment Scrum | Agile | OpenAPI | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP  
 Commerce | SAP Composable Storefront | Angular 15 | Eslint | NgRx | Typescript | HTML |  
 SCSS | GitLab | Git | REST | JWT | OAuth 2 | IntelliJ IDEA | CleanCode | Jira | Confluence  
-The goal of the project was to develop modern online shops for Landgard and Ordertage based on SAP Commerce  
-Cloud and the SAP Composable Storefront. A unified Angular frontend codebase was used, customized for each  
-brand through different themes and configurations. The project was executed using the Scrum methodology.  
+Develop modern online shops for Landgard and Ordertage based on SAP Commerce Cloud and the SAP  
+Composable Storefront. A unified Angular frontend codebase was used, customized for each brand through  
+different themes and configurations. The project was executed using the Scrum methodology.  
 RESPONSIBILITIES  
 ▪ Implementation of components and functionalities in the SAP Composable Storefront  
 ▪ Customization of the unified Angular codebase for each brand through configuration and theming  
@@ -264,10 +288,10 @@ Industry Team / Project size 8/16
 Environment Construction chemicals / Paint and coatings industry  
 Scrum | Agile | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP Commerce | JSP  
 | Javascript | HTML | Less | Bitbucket | Git | IntelliJ IDEA | Jira | Confluence  
-The goal of the project was to develop a new e-commerce system based on SAP Commerce Hybris, enabling users  
-to customize colors to configure the right product. The system was designed as a central solution and is used  
-across 13 different online shops, each with its own CMS content, product assortment, and individual themes. The  
-implementation was carried out within a Scrum process.  
+Develop a new e-commerce system based on SAP Commerce Hybris, enabling users to customize colors to  
+configure the right product. The system was designed as a central solution and is used across 13 different online  
+shops, each with its own CMS content, product assortment, and individual themes. The implementation was  
+carried out within a Scrum process.  
 RESPONSIBILITIES  
 ▪ Implementation of frontend features reusable across all 13 online shops  
 ▪ Close collaboration with the backend team  
@@ -280,9 +304,9 @@ Industry Crafts & Construction Industry
 Team / Project size 5/8  
 Environment Scrum | Agile | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP Commerce | JSP  
 | Javascript | HTML | Less | Bitbucket | Git | IntelliJ IDEA | Jira | Confluence  
-The goal of the project was to develop a new online shop based on SAP Commerce Hybris, specifically tailored for  
-roofing supplies. The shop was individually configured and thematically customized to meet the requirements of  
-the roofing industry. The implementation was carried out using an agile Scrum methodology.  
+Develop a new online shop based on SAP Commerce Hybris, specifically tailored for roofing supplies. The shop  
+was individually configured and thematically customized to meet the requirements of the roofing industry. The  
+implementation was carried out using an agile Scrum methodology.  
 RESPONSIBILITIES  
 ▪ Further development and implementation of new features for the existing online shop  
 ▪ Fixing bugs and technical issues in the frontend  
@@ -300,11 +324,10 @@ Android | Angular | Angular Material UI | Single Page Application | Sass | HTML 
 | J2EE / JEE | JAX-RS (Jakarta RESTful Web Services) | JDBC \- Java Database Connectivity |  
 Apache HTTP Server | Microsoft SQL Server | REST | JWT \- JSON Web Token | OpenAPISpecification | Swagger | OOP | Software Architectur | System Architectur | Git | GitLab |  
 Postman | Visual Studio Code  
-The goal of the project was to develop a mobile application for the digital presentation of work and machine  
-instructions. The content included videos, images, PDFs, and text descriptions, designed to visually and clearly  
-explain work steps to employees. The content was managed via a separate web application accessible only to  
-authorized users. The project included a native Android app, an Angular-based CMS, and a REST API based on JAX-  
-RS, connected to a Microsoft SQL Server.  
+Develop a mobile application for the digital presentation of work and machine instructions. The content included  
+videos, images, PDFs, and text descriptions, designed to visually and clearly explain work steps to employees. The  
+content was managed via a separate web application accessible only to authorized users. The project included a  
+native Android app, an Angular-based CMS, and a REST API based on JAX-RS, connected to a Microsoft SQL Server.  
 RESPONSIBILITIES  
 Frontend  
 ▪ Implementation of the mobile app using native Android to display work instructions with videos, images,  
@@ -323,11 +346,11 @@ Team / Project size Environment 5 / 3
 Ionic | Single Page Application | Sass | HTML | JavaScript | Typescript | J2EE / JEE | JAX-RS  
 (Jakarta RESTful Web Services) | JDBC \- Java Database Connectivity | Apache HTTP Server  
 | Microsoft SQL Server | REST | OOP | Git | GitLab | Postman | Visual Studio Code | Eclipse  
-The goal of the project was to develop a mobile application for Android and iOS tablets, used by warehouse staff for  
-order picking and quality assurance. The app allows scanning product barcodes, displaying relevant information,  
-performing quality checks, and completing work orders. Processes are confirmed with the employee’s signature,and order data is then transmitted from the backend to the connected SAP ERP system via the SAP Java Connector  
-(JCo). The implementation was based on Ionic for the frontend and JAX-RS web services with Microsoft SQL Server  
-in the backend.  
+Develop a mobile application for Android and iOS tablets, used by warehouse staff for order picking and quality  
+assurance. The app allows scanning product barcodes, displaying relevant information, performing quality checks,  
+and completing work orders. Processes are confirmed with the employee’s signature, and order data is then  
+transmitted from the backend to the connected SAP ERP system via the SAP Java Connector (JCo). Theimplementation was based on Ionic for the frontend and JAX-RS web services with Microsoft SQL Server in the  
+backend.  
 RESPONSIBILITIES  
 Frontend  
 ▪ Development of a cross-platform mobile app using Ionic for Android and iOS  
@@ -339,5 +362,3 @@ Backend
 ▪ Connection to a SQL Server database for management and storage of order data  
 ▪ Processing and forwarding of completed orders to the ERP system  
 ▪ Ensuring stable communication between the app and backend system
-
-test

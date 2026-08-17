@@ -1,6 +1,6 @@
 Mohanad Zahed, B.Sc.  
 S O F T W A R E A R C H I T E K T F R O N T E N D  
-Hamburg, Deutschland | mzahed-p@outlook.com | Linkedin  
+Hamburg, Deutschland | mzahed-p@outlook.com | Linkedin | www.mohanadzahed.com  
 Ü B E R M I C H  
 Ich bin Frontend Software-Architekt mit Leidenschaft für saubere Architektur und modernen Code. Seit über 8 Jahren  
 setze ich Angular-Anwendungen für Versicherungen, Telekommunikation, Einzelhandel und den öffentlichen Dienst um.  
@@ -13,16 +13,14 @@ Methoden und Scrum bringt zudem ein solides Verständnis für Prozesse, Qualitä
 • Sprachkenntnisse: Arabisch (muttersprachlich) | Englisch (verhandlungssicher) | Deutsch (verhandlungssicher)  
 • Abschluss: 03/2014 B.Sc. Informatik, Amman (offiziell anerkannt in Deutschland)  
 S K I L L S  
-TECHNIK Frontend Angular 20 | SAP Composable Storefront (Spartacus) | React | Vue 3 | Nuxt  
+TECHNIK Frontend Angular 22 | SAP Composable Storefront (Spartacus) | React | Vue 3 | Nuxt  
 3 | JSP | Typescript | Javascript | JQuery | SCSS | Css | Tailwind CSS |  
 Bootstrap | Html | NPM | RxJS | NgRx | Nx | RESTful-API | GraphQL-API |  
 storybook | Ionic | Android Native (Java) | Xamarin | Web components |  
-State Management | Lazy loading | Cypress | Jasmine | PWA | ESLint |  
-StyleLint | Prettier | Husky  
+State Management | Lazy loading | Cypress | Jasmine | PWA  
 KI Claude Code | KI-gestütztes Entwickeln | KI-Workflow-Optimierung | Token  
-management | Prompt Engineering | LLM Integration | Gemini | ChatGPT |  
-Copilot  
-Backend Java | Nodejs | JAX-RS | Springboot | SQL Server | .NET | C\# | Solidity  
+management | Prompt Engineering | Gemini | ChatGPT | Copilot  
+Backend Java | Nodejs | JAX-RS | Springboot | SQL Server | .NET | C\#  
 Sonstiges GIT | Gitlab | Github | CI/CD | Github Actions | Docker | AWS-EC2 | SAP  
 Commerce (Backoffice, Hac, Smartedit) | Web Sockets | Jira | Confluence |  
 IntelliJ IDEA | VS Code | Teams | WSL | macOs | Windows | Linux |  
@@ -43,7 +41,6 @@ Transfer | Verantwortungsbewusstsein | Zeitmanagement | CoachingZ E R T I F I K 
 0 9 / 2 0 2 5 ITIL 4 Foundation Certificate  
 Software Architecture Foundation Level  
 0 8 / 2 0 2 5 ISTQB Certified Tester Foundation Level 0 8 / 2 0 2 5 PRINCE2 Foundation Agile  
-0 2 / 2 0 1 7 Sprachzertifikat \- telc Deutsch B1  
 W E I T E R B I L D U N G E N  
 ○ React (Udemy) ○ Angular 19 (Udemy)  
 ○ Nuxt 3 (Udemy) ○ Vue.js 3 (Udemy)  
@@ -53,10 +50,41 @@ Firmentraning B2 (KERN AG)
 ○ Angular 6 (Udemy) ○ Ionic (Udemy)  
 ○ CSS \- Sass (Udemy) ○ Android App Development (Udemy)  
 ○ Xamarin Forms (Udemy) ○ Java Masterclass (Udemy)  
-○ VHS: Deutsch Integrationskurs B1 (Udemy)  
+○ VHS: Deutsch Integrationskurs B1  
 B E R U F S E R F A H R U N G  
 Software-Entwickler (Senior-Consultant) ISO-Gruppe | Nürnberg | Juli 2025 – Heute  
 PROJEKTE:  
+Senior Frontend Architekt | OMEGAone | 05/2026 – Heute  
+Kunde DGUV, Berlin  
+Branche Öffentlicher Dienst / Sozialversicherung  
+Team- /Projektgröße 14/30  
+Umfeld Scrum | Agile | Spring boot | Java | Maven | Oracle SQL | OpenAPI | Swagger | Angular 22 |  
+Typescript | HTML | SCSS | Bitbucket | Git | REST | Microsoft Entra ID | Jest | IntelliJ IDEA |  
+Jira | Confluence  
+Entwicklung und Modernisierung der OMEGAone-Plattform, einer zentralen Webanwendung der Deutschen  
+Gesetzlichen Unfallversicherung (DGUV) zur Verwaltung von Expositionsmessungen und zugehörigen Prozessen  
+im Bereich Arbeitsschutz. Die Plattform ersetzt das bestehende Legacy-System OMEGAclassic und unterstützt  
+digitale Workflows für Messplanung, Datenerfassung, Laboranalysen, Qualitätssicherung und Reporting  
+innerhalb der arbeitsmedizinischen und sicherheitstechnischen Prozesse.  
+Das Projekt verfolgt das Ziel, eine skalierbare und benutzerfreundliche Anwendungsarchitektur aufzubauen, um  
+die Effizienz, Datenqualität und Zusammenarbeit zwischen den DGUV-Institutionen und den beteiligten  
+Messstellen zu verbessern.AUFGABEN IM PROJEKT  
+▪ Analyse, Optimierung und Weiterentwicklung der Frontend-Architektur durch Modularisierung, klare  
+Schichtenstruktur, Entkopplung von Komponenten sowie nachhaltige und skalierbare Codeorganisation  
+▪ Etablierung und Durchsetzung von Best Practices in der Frontend-Architektur, Codequalität und im Code-  
+Stil  
+▪ Konzeption und Umsetzung technischer Lösungsansätze sowie Unterstützung bei der Erstellung von  
+Fachkonzepten und technischen Lösungsentwürfen  
+▪ Durchführung von Code-Reviews und Refactorings zur Verbesserung von Wartbarkeit, Erweiterbarkeit,  
+Performance und Codequalität  
+▪ Weiterentwicklung und Optimierung moderner Frontend-Anwendungen sowie wiederverwendbarer GUI-  
+Komponenten  
+▪ Enge Zusammenarbeit mit Backend-Teams zur Integration und Nutzung OpenAPI-basierter REST-  
+Schnittstellen  
+▪ Gewährleistung von Barrierefreiheit (BITV/WCAG), Responsive Design sowie der Einhaltung von UX-/UI-  
+Richtlinien  
+▪ Lokalisierung, Analyse und Behebung von Softwarefehlern  
+▪ Mitarbeit in agilen Entwicklungsteams unter Anwendung agiler Methoden (z. B. Scrum oder Kanban)  
 Fullstack Entwickler | STEP | 11/2025 – 02/2026  
 Kunde Bundesagentur für Arbeit, Nürnberg  
 Branche Öffentlicher Dienst  
@@ -71,8 +99,8 @@ Personendaten. STEP fungiert als zentrales System für fast alle BA-IT-Verfahren
 ihrer Aufgabenerfüllung benötigen. Die Stammdaten werden für die unterschiedlichen fachlichen  
 Anwendungszwecke und Nutzergruppen über REST-Endpunkte, Kafka-Events, Datei-Schnittstellen,  
 Aufrufschnittstellen und per Client angeboten.  
-Des Weiteren obliegt STEP die Verwaltung und Pflege von Betriebsdaten für das Meldewesen in derSozialversicherung, die in der Zuständigkeit der Organisationseinheit BNS (Team Betriebsnummern-  
-Service, organisatorisch der Agentur für Arbeit Saarbrücken zugeordnet) liegt. Ein weiterer Teil von  
+Des Weiteren obliegt STEP die Verwaltung und Pflege von Betriebsdaten für das Meldewesen in der  
+Sozialversicherung, die in der Zuständigkeit der Organisationseinheit BNS (Team Betriebsnummern-Service, organisatorisch der Agentur für Arbeit Saarbrücken zugeordnet) liegt. Ein weiterer Teil von  
 STEP ist die Komponente MAZ (Nachweis und Meldung beitragsfreier Zeiten für die  
 Rentenversicherung).  
 Im Rahmen der Realisierung werden neben den in der BA gängigen IT-Standards auch Anpassungen  
@@ -100,9 +128,9 @@ Branche Versicherung
 Team- /Projektgröße 8/14  
 Umfeld Scrum | Agile | Docker | Migration | OpenAPI | E-Commerce | Spring boot | Java | SAP Hybris  
 | SAP Commerce | SAP Composable Storefront | Angular 19 | Eslint | NgRx | Typescript | Nx  
-| Monolithische Software-Architektur | HTML | SCSS | GitLab | GitLab CI/CD | Git | REST |JWT | OAuth 2 | Jasmine/Karma | Cypress | IntelliJ IDEA | Software-Architektur | Refactoring  
-| Code Analyse | Code Review Techniken | CleanCode | Jira | Confluence  
-Im Rahmen dieses Projekts wurde ein bestehendes B2B-Versicherungskundenportal, das ursprünglich auf SAP  
+| Micro-Frontend-Architektur | HTML | SCSS | GitLab | GitLab CI/CD | Git | REST | JWT |  
+OAuth 2 | Jasmine/Karma | Cypress | IntelliJ IDEA | Software-Architektur | Refactoring |  
+Code Analyse | Code Review Techniken | CleanCode | Jira | ConfluenceIm Rahmen dieses Projekts wurde ein bestehendes B2B-Versicherungskundenportal, das ursprünglich auf SAP  
 Commerce (Hybris) basierte, modernisiert und neu strukturiert. Die ehemals monolithische Systemarchitektur  
 wurde durch einen entkoppelten, Headless-Ansatz ersetzt, wobei das Frontend mit Angular neu implementiert  
 wurde. Das Backend verblieb zunächst in der SAP-Hybris-/Spring-Boot-Umgebung, wobei die Controller  
@@ -130,9 +158,9 @@ Zusammenarbeit mit dem Design-Team.
 ▪ Dokumentation des Quellcodes und der Oberflächenkomponenten.  
 ▪ Aufbau und Konfiguration der Angular-Pipeline zur Unterstützung von Continuous Integration  
 Senior Frontend-Entwickler | mobilcom-debitel eCare-Benutzer-Dashboard Relaunch | 10/2023 – 02/2024  
-Kunde Freenet AG, BüdelsdorfBranche Telekommunikationsvertrieb  
-Team- /Projektgröße 8/15  
-Umfeld Scrum | Agile | GraphQL | Angular 18 | Eslint | Typescript | Nx | Monolithische Software-  
+Kunde Freenet AG, Büdelsdorf  
+Branche Telekommunikationsvertrieb  
+Team- /Projektgröße 8/15Umfeld Scrum | Agile | GraphQL | Angular 18 | Eslint | Typescript | Nx | Monolithische Software-  
 Architektur | HTML | SCSS | GitHub | GitHub CI/CD | Git | Jasmine/Karma | Cypress | IntelliJ  
 IDEA | Software-Architektur | CleanCode | Jira | Confluence  
 Im Rahmen eines umfassenden Relaunchs wurde die bestehende eCare Self-Service-Plattform modernisiert, mit  
@@ -160,9 +188,9 @@ Entwicklungsteam
 ▪ Implementierung der neuen Oberflächen gemäß des Styleguides  
 ▪ Gewährleistung der Prinzipien von Barrierefreiheit, Responsive Design und UX/UI-Richtlinien  
 ▪ Durchführung von E2E Tests  
-▪ Entwicklung der GUI-Komponenten unter Berücksichtigung der UsabilitySenior Frontend-Entwickler | Agnostische Integration für Emporix | 09/2023 – 10/2023  
-Kunde Medienwerft GmbH, Hamburg  
-Branche IT-Dienstleistungen  
+▪ Entwicklung der GUI-Komponenten unter Berücksichtigung der Usability  
+Senior Frontend-Entwickler | Agnostische Integration für Emporix | 09/2023 – 10/2023  
+Kunde Medienwerft GmbH, HamburgBranche IT-Dienstleistungen  
 Team- /Projektgröße 4/7  
 Umfeld Kanban | E-Commerce | OpenAPI | Spring boot | Java | Emporix | Alokai | Nuxt | Typescript |  
 Monolithische Software-Architektur | GitLab | GitLab CI/CD | Git | REST | JWT | IntelliJ IDEA  
@@ -188,9 +216,9 @@ Storefront | Angular 16 | NgRx | Typescript | HTML | SCSS | GitLab | Git | OpenA
 JWT | OAuth 2 | Jasmine/Karma | IntelliJ IDEA | Software-Architektur | Refactoring | Code  
 Analyse | CleanCode  
 Ziel des Projekts war es, die Performance zweier Onlineshops HABA Play und HABA Pro zu verbessern und  
-gleichzeitig die Wartungs- und Betriebskosten zu senken. Die Seiten litten unter langen Ladezeiten und einerkomplexen Abhängigkeit vom SAP Composable Storefront. Auf Wunsch des Kunden sollte der SAP Composable  
-Storefront entfernt werden, ohne dabei zentrale Funktionalitäten zu verlieren.  
-AUFGABEN IM PROJEKT  
+gleichzeitig die Wartungs- und Betriebskosten zu senken. Die Seiten litten unter langen Ladezeiten und einer  
+komplexen Abhängigkeit vom SAP Composable Storefront. Auf Wunsch des Kunden sollte der SAP Composable  
+Storefront entfernt werden, ohne dabei zentrale Funktionalitäten zu verlieren.AUFGABEN IM PROJEKT  
 ▪ Analyse der bestehenden Shops zur Erkennung von Ladezeit-Problemen und unnötigem JavaScript  
 ▪ Umsetzung von Optimierungen zur Reduzierung der Ladezeiten, z. B. durch Lazy Loading  
 ▪ Unterstützung beim Entfernen des SAP Composable Storefronts auf Kundenwunsch  
@@ -207,19 +235,19 @@ Umfeld Scrum | Agile | Migration | OpenAPI | E-Commerce | CMS | Spring boot | Ja
 SAP Commerce | SAP Composable Storefront | Angular 16 | Eslint | NgRx | Typescript |  
 HTML | SCSS | GitLab | GitLab CI/CD | Git | REST | JWT | OAuth 2 | Jasmine/Karma | Cypress  
 | IntelliJ IDEA | Code Review Techniken | CleanCode | Jira | Confluence  
-Ziel des Projekts war die Entwicklung moderner Onlineshops für ottos.ch und Sherpa Outdoors auf Basis von SAP  
-Commerce Cloud und dem SAP Composable Storefront. Dabei wurde von dem alten SAP-Hybris-System auf eine  
-Headless-Storefront-Architektur mit SAP Composable Storefront migriert. Es kam eine einheitliche Angular-  
-Frontend-Codebasis zum Einsatz, die durch unterschiedliche Themes und Konfigurationen an die jeweiligen  
-Marken angepasst wurde. Das Projekt wurde nach der Scrum-Methode gesteuert und in enger Zusammenarbeit  
-mit den Unternehmen Valantic (Zürich), Medienwerft (Hamburg), Team Neusta (Bremen) und Maify GmbH  
-(Mühlingen) durchgeführt.  
+Im Rahmen des Projekts wurden moderne Onlineshops für ottos.ch und Sherpa Outdoors auf Basis von SAP  
+Commerce Cloud und dem SAP Composable Storefront entwickelt. Dabei erfolgte die Migration vom bisherigen  
+SAP-Hybris-System auf eine Headless-Storefront-Architektur mit SAP Composable Storefront. Zum Einsatz kam  
+eine gemeinsame Angular-Frontend-Codebasis, die durch markenspezifische Themes und Konfigurationen für die  
+jeweiligen Onlineshops angepasst wurde. Die Umsetzung erfolgte nach der Scrum-Methode in enger  
+Zusammenarbeit mit den Unternehmen Valantic (Zürich), Medienwerft (Hamburg), Team Neusta (Bremen) und  
+Maify GmbH (Mühlingen).  
 AUFGABEN IM PROJEKT  
 ▪ Frontend-Projektleitung und fachliche Unterstützung der Teams von Team Neusta und Medienwerft bei  
-der Nutzung von SAP Composable Storefront▪ Erstellung technischer Unteraufgaben und Zuweisung von Jira-Tickets zur Strukturierung und  
+der Nutzung von SAP Composable Storefront  
+▪ Erstellung technischer Unteraufgaben und Zuweisung von Jira-Tickets zur Strukturierung und  
 Vereinfachung des Onboardings  
-▪ Überprüfung von Code und Merge Requests der Teammitglieder sowie aktive Mitarbeit am Code  
-▪ Enge Zusammenarbeit und Koordination mit dem Backend-Team, Product Manager und Product Owner  
+▪ Überprüfung von Code und Merge Requests der Teammitglieder sowie aktive Mitarbeit am Code▪ Enge Zusammenarbeit und Koordination mit dem Backend-Team, Product Manager und Product Owner  
 ▪ Sicherstellung der Einhaltung von Best Practices, Code-Standards und Qualität im Frontend  
 ▪ Unterstützung bei technischen Entscheidungen und Lösungsfindungen während des Projekts  
 ▪ Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger  
@@ -235,10 +263,10 @@ Team- /Projektgröße 6/10
 Umfeld Scrum | Agile | OpenAPI | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP  
 Commerce | SAP Composable Storefront | Angular 15 | Eslint | NgRx | Typescript | HTML |  
 SCSS | GitLab | Git | REST | JWT | OAuth 2 | IntelliJ IDEA | CleanCode | Jira | Confluence  
-Ziel des Projekts war die Entwicklung moderner Onlineshops für Landgard und Ordertage auf Basis von SAP  
-Commerce Cloud und dem SAP Composable Storefront. Es wurde eine einheitliche Angular-Frontend-Codebasis  
-verwendet, die durch unterschiedliche Themes und Konfigurationen an die jeweiligen Marken angepasst wurde.  
-Das Projekt wurde nach der Scrum-Methode umgesetzt.  
+Entwicklung moderner Onlineshops für Landgard und Ordertage auf Basis von SAP Commerce Cloud und dem  
+SAP Composable Storefront. Dabei wurde eine einheitliche Angular-Frontend-Codebasis eingesetzt, die durch  
+markenspezifische Themes und Konfigurationen an die jeweiligen Anforderungen angepasst wurde. Die  
+Umsetzung erfolgte nach der Scrum-Methode.  
 AUFGABEN IM PROJEKT  
 ▪ Umsetzung von Komponenten und Funktionalitäten im SAP Composable Storefront  
 ▪ Anpassung der einheitlichen Angular-Codebasis an die jeweiligen Marken durch Konfiguration und  
@@ -247,20 +275,20 @@ Theming
 ▪ Abstimmung mit dem Product Owner zur Umsetzung fachlicher Anforderungen  
 ▪ Mitwirkung an Sprint-Planungen, Reviews und Daily-Meetings im Scrum-Team  
 ▪ Implementierung von Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger  
-Zusammenarbeit mit dem Design-Team.▪ Gewährleistung von Barrierefreiheit, Responsive Design und Einhaltung von UX-/UI-Richtlinien  
-▪ Entwicklung von GUI-Komponenten unter besonderer Berücksichtigung von Usability und Performance  
-Senior Frontend-Entwickler | Barrierefreiheitsoptimierung eines Onlineshops | 11/2020 – 04/2021  
+Zusammenarbeit mit dem Design-Team.  
+▪ Gewährleistung von Barrierefreiheit, Responsive Design und Einhaltung von UX-/UI-Richtlinien  
+▪ Entwicklung von GUI-Komponenten unter besonderer Berücksichtigung von Usability und PerformanceSenior Frontend-Entwickler | Barrierefreiheitsoptimierung eines Onlineshops | 11/2020 – 04/2021  
 Kunde SPAR, Wien  
 Branche Einzelhandel  
 Team- /Projektgröße 8/25  
 Umfeld Scrum | Agile | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP Commerce | JSP  
 | Javascript | HTML | Less | GitLab | Git | Barrierefrei | IntelliJ IDEA | CleanCode | Jira |  
 Confluence  
-Ziel des Projekts war es, die Onlineshops von SPAR Ungarn und SPAR Italien barrierefrei zu gestalten. Die  
-bestehenden Shops basierten auf SAP Commerce (Hybris) mit einem JSP-Frontend, das nicht den aktuellen  
-Anforderungen an digitale Barrierefreiheit entsprach. Um dies zu beheben, wurde ein Großteil des bestehenden  
-Codes überarbeitet und refaktoriert, um den geltenden Accessibility-Richtlinien zu entsprechen und eine bessere  
-Nutzererfahrung für alle Kund:innen sicherzustellen. Das Projekt wurde nach der Scrum-Methodik umgesetzt.  
+Umsetzung der Barrierefreiheit für die Onlineshops von SPAR Ungarn und SPAR Italien auf Basis von SAP  
+Commerce (Hybris). Die bestehenden Shops mit JSP-Frontend wurden umfassend überarbeitet und refaktoriert,  
+um aktuelle Anforderungen an digitale Barrierefreiheit zu erfüllen. Dabei erfolgte eine Optimierung des  
+bestehenden Codes zur Einhaltung relevanter Accessibility-Richtlinien sowie zur Verbesserung der  
+Nutzererfahrung für alle Kund:innen. Die Umsetzung erfolgte nach der Scrum-Methodik.  
 AUFGABEN IM PROJEKT  
 ▪ Analyse des bestehenden JSP-Frontends auf Barrierefreiheitsprobleme  
 ▪ Refactoring und Anpassung von HTML, CSS und JavaScript zur Einhaltung von Accessibility-Richtlinien  
@@ -272,11 +300,11 @@ Branche Bauchemie / Farben- und Lackindustrie
 Team- /Projektgröße 8/16  
 Umfeld Scrum | Agile | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP Commerce | JSP  
 | Javascript | HTML | Less | Bitbucket | Git | IntelliJ IDEA | Jira | Confluence  
-Ziel des Projekts war die Entwicklung eines neuen E-Commerce-Systems auf Basis von SAP Commerce Hybris,  
-das Nutzer:innen die Möglichkeit bietet, Farben individuell zu kombinieren, um so das passende Produkt zu  
-konfigurieren. Das System wurde als zentrale Lösung konzipiert und wird für insgesamt 13 verschiedeneOnlineshops eingesetzt, die sich jeweils durch eigene CMS-Inhalte, Produktsortimente und individuelle Themes  
-unterscheiden. Die Umsetzung erfolgte im Rahmen eines Scrum-Prozesses.  
-AUFGABEN IM PROJEKT  
+Entwicklung eines neuen E-Commerce-Systems auf Basis von SAP Commerce Hybris, das Nutzer:innen die  
+individuelle Kombination von Farben zur Konfiguration passender Produkte ermöglicht. Die Lösung wurde als  
+zentrale Plattform für insgesamt 13 verschiedene Onlineshops konzipiert, die sich durch eigene CMS-Inhalte,  
+Produktsortimente und individuelle Themes unterscheiden. Die Umsetzung erfolgte im Rahmen eines Scrum-  
+Prozesses.AUFGABEN IM PROJEKT  
 ▪ Implementierung von Frontend-Features, die in allen 13 Onlineshops einsetzbar sind  
 ▪ Enge Zusammenarbeit mit dem Backend-Team  
 ▪ Abstimmung mit dem Product Owner zur Klärung fachlicher Anforderungen  
@@ -289,10 +317,9 @@ Branche Handwerk & Baugewerbe
 Team- /Projektgröße 5/8  
 Umfeld Scrum | Agile | E-Commerce | CMS | Spring boot | Java | SAP Hybris | SAP Commerce | JSP  
 | Javascript | HTML | Less | Bitbucket | Git | IntelliJ IDEA | Jira | Confluence  
-Ziel des Projekts war die Entwicklung eines neuen Onlineshops auf Basis von SAP Commerce Hybris, der speziell  
-auf Dachdeckerbedarf ausgerichtet ist. Der Shop wurde individuell konfiguriert und thematisch angepasst —  
-zugeschnitten auf die Anforderungen der Dachdeckerbranche. Die Umsetzung erfolgte agil nach der Scrum-  
-Methodik.  
+Entwicklung eines neuen Onlineshops auf Basis von SAP Commerce Hybris, spezialisiert auf den Bereich  
+Dachdeckerbedarf. Der Shop wurde individuell konfiguriert und thematisch an die spezifischen Anforderungen der  
+Dachdeckerbranche angepasst. Die Umsetzung erfolgte agil nach der Scrum-Methodik.  
 AUFGABEN IM PROJEKT  
 ▪ Weiterentwicklung und Umsetzung neuer Features für den bestehenden Onlineshop  
 ▪ Behebung von Bugs und technischen Problemen im Frontend  
@@ -301,21 +328,20 @@ AUFGABEN IM PROJEKT
 ▪ Oberflächenkomponenten basierend auf dem neuen Styleguide und in enger Zusammenarbeit mit dem  
 Design-Team.  
 Full Stack Developer MERENTIS GmbH | Bremen | July 2017 – July 2019  
-PROJEKTE:Junior Fullstack-Entwickler | FroSTA Digitale Arbeitsanweisung | 01/2019 \- 08/2019  
-Kunde FRoSTA AG, Bremerhaven  
-Branche Lebensmittel & Getränke  
+PROJEKTE:  
+Junior Fullstack-Entwickler | FroSTA Digitale Arbeitsanweisung | 01/2019 \- 08/2019  
+Kunde FRoSTA AG, BremerhavenBranche Lebensmittel & Getränke  
 Team- /Projektgröße 5 / 3  
 **Umfeld** Android | Angular | Angular Material UI | Single Page Application | Sass | HTML | TypeScript  
 | J2EE / JEE | JAX-RS (Jakarta RESTful Web Services) | JDBC \- Java Database Connectivity |  
 Apache HTTP Server | Microsoft SQL Server | REST | JWT \- JSON Web Token | OpenAPI  
 Specification | Swagger | OOP | Software-Architektur | Systemarchitektur | Git | GitLab |  
 Postman | Visual Studio Code  
-Ziel des Projekts war die Entwicklung einer mobilen Applikation zur digitalen Darstellung von Arbeits- und  
-Maschinenanweisungen. Die Inhalte bestanden aus Videos, Bildern, PDFs und textlichen Beschreibungen und  
-sollten den Mitarbeitenden die Arbeitsschritte visuell und verständlich erklären. Die Inhalte wurden über eine  
-separate Webanwendung gepflegt, auf die nur berechtigte Nutzer zugreifen konnten. Das Projekt umfasste eine  
-native Android-App, ein Angular-gestütztes CMS sowie eine REST-API auf Basis von JAX-RS, angebunden an einen  
-Microsoft SQL Server.  
+Entwicklung einer mobilen Applikation zur digitalen Darstellung von Arbeits- und Maschinenanweisungen. Die  
+Anwendung ermöglichte die visuelle und verständliche Darstellung von Arbeitsschritten mithilfe von Videos,  
+Bildern, PDFs und Textbeschreibungen. Die Inhalte wurden über eine separate Webanwendung gepflegt, die  
+ausschließlich berechtigten Nutzer:innen zur Verfügung stand. Das System umfasste eine native Android-App, ein  
+Angular-basiertes CMS sowie eine REST-API auf Basis von JAX-RS mit Anbindung an einen Microsoft SQL Server.  
 AUFGABEN IM PROJEKT  
 Frontend  
 ▪ Umsetzung der mobilen App mit Android Native zur Darstellung von Arbeitsanweisungen mit Videos,  
@@ -329,17 +355,16 @@ Backend
 ▪ Technische Abstimmung mit dem Product Owner zur Umsetzung der Anforderungen  
 Junior Fullstack-Entwickler | LSW Kommissionierung | 01/2018 \- 12/2018  
 Kunde LSW Netz GmbH & Co. KG, Wolfsburg  
-Branche VersorgungswirtschaftTeam- /Projektgröße 5 / 3  
+Branche Versorgungswirtschaft  
+Team- /Projektgröße 5 / 3  
 **Umfeld** Ionic | Single Page Application | Sass | HTML | JavaScript | Typescript | J2EE / JEE | JAX-RS  
 (Jakarta RESTful Web Services) | JDBC \- Java Database Connectivity | Apache HTTP Server |  
-Microsoft SQL Server | REST | OOP | Git | GitLab | Postman | Visual Studio Code | Eclipse  
-Ziel des Projekts war die Entwicklung einer mobilen Applikation für Android- und iOS-Tablets, die von Lager-  
-Mitarbeitenden zur Kommissionierung und Qualitätssicherung eingesetzt wird. Mit der App können Barcodes von  
-Produkten gescannt, relevante Informationen angezeigt, Qualitätskontrollen durchgeführt und Arbeitsaufträge  
-abgeschlossen werden. Der Prozess wird mit der Unterschrift des Mitarbeitenden bestätigt und die Auftragsdaten  
-anschließend vom Backend über den SAP Java Connector (JCo) an das angebundene SAP ERP-System übertragen.  
-Die Umsetzung erfolgte auf Basis von Ionic im Frontend und JAX-RS Webservices sowie Microsoft SQL Server im  
-Backend.  
+Microsoft SQL Server | REST | OOP | Git | GitLab | Postman | Visual Studio Code | EclipseEntwicklung einer mobilen Applikation für Android- und iOS-Tablets zur Unterstützung von Lager-Mitarbeitenden  
+bei der Kommissionierung und Qualitätssicherung. Die Anwendung ermöglicht das Scannen von Produkt-  
+Barcodes, die Anzeige relevanter Informationen, die Durchführung von Qualitätskontrollen sowie den Abschluss  
+von Arbeitsaufträgen. Die Prozesse werden durch eine digitale Unterschrift bestätigt und anschließend über den  
+SAP Java Connector (JCo) vom Backend an das angebundene SAP ERP-System übertragen. Die Umsetzung  
+erfolgte mit Ionic im Frontend sowie JAX-RS Webservices und Microsoft SQL Server im Backend.  
 AUFGABEN IM PROJEKT  
 Frontend  
 ▪ Entwicklung einer plattformübergreifenden mobilen App mit Ionic für Android und iOS  
@@ -351,4 +376,3 @@ Backend
 ▪ Anbindung an eine SQL-Server-Datenbank zur Verwaltung und Speicherung der Auftragsdaten  
 ▪ Verarbeitung und Weiterleitung abgeschlossener Aufträge an das ERP-System  
 ▪ Sicherstellung stabiler Kommunikation zwischen App und Backend-System
-

@@ -23,7 +23,7 @@
       "steps": {
         "push": "Push",
         "unitTest": "Unit Test",
-        "build": "Build Image",
+        "build": "Build",
         "e2e": "E2E",
         "deploy": "Deploy"
       }
@@ -62,7 +62,7 @@
   "experience": {
     "eyebrow": "Experience",
     "heading": "Where I've shipped.",
-    "subhead": "Three companies, twelve projects.",
+    "subhead": "Three companies, thirteen projects.",
     "labels": {
       "customer": "Client",
       "industry": "Industry",
@@ -70,6 +70,7 @@
       "stack": "Environment",
       "tasks": "Project tasks",
       "visitLink": "Visit live site",
+      "present": "present",
       "projectCounter": "Project {number} of {total}"
     },
     "companies": {
@@ -93,11 +94,28 @@
       }
     },
     "projects": {
+      "omegaone": {
+        "role": "Senior Frontend Architect",
+        "name": "OMEGAone — Exposure Measurement Platform",
+        "industry": "Public sector / Social insurance",
+        "description": "Development and modernization of the OMEGAone platform, a central web application of the German Social Accident Insurance (DGUV) for managing exposure measurements and related occupational health and safety processes. The platform replaces the existing OMEGAclassic legacy system and supports digital workflows for measurement planning, data collection, laboratory analyses, quality assurance, and reporting within occupational health and safety processes.\n\nThe project aims to establish a scalable and user-friendly application architecture to improve efficiency, data quality, and collaboration between DGUV institutions and the involved measurement centers.",
+        "tasks": [
+          "Analysis, optimization, and further development of the frontend architecture through modularization, a clear layered structure, component decoupling, and sustainable, scalable code organization",
+          "Establishment and enforcement of best practices in frontend architecture, code quality, and coding standards",
+          "Design and implementation of technical solutions, as well as support in the creation of functional concepts and technical solution designs",
+          "Conducting code reviews and refactorings to improve maintainability, extensibility, performance, and code quality",
+          "Further development and optimization of modern frontend applications and reusable GUI components",
+          "Close collaboration with backend teams to integrate and consume OpenAPI-based REST APIs",
+          "Ensuring accessibility (BITV/WCAG), responsive design, and compliance with UX/UI guidelines",
+          "Localization, analysis, and resolution of software defects",
+          "Working in agile development teams using agile methodologies (e.g., Scrum or Kanban)"
+        ]
+      },
       "step": {
         "role": "Fullstack Developer",
         "name": "STEP — Master Data Management System",
         "industry": "Public sector",
-        "description": "STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka events, file interfaces, service interfaces, and client applications.\n\nIn addition, STEP is responsible for the management and maintenance of company data for reporting purposes in the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number Serviceteam, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is MAZ (proof and reporting of non-contributory periods for the pension insurance system).\n\nAs part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also made to ensure compliance with data protection and information security requirements, as well as accessibility regulations.",
+        "description": "STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka events, file interfaces, service interfaces, and client applications.\n\nIn addition, STEP is responsible for the management and maintenance of company data for reporting purposes in the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number Service team, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is MAZ (proof and reporting of non-contributory periods for the pension insurance system).\n\nAs part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also made to ensure compliance with data protection and information security requirements, as well as accessibility regulations.",
         "tasks": [
           "Locating, analyzing, and fixing software defects",
           "Supporting the creation of (functional) concepts and solution designs",
@@ -165,7 +183,7 @@
         "role": "Senior Frontend Developer",
         "name": "Online-shop Performance Optimization (HABA Play & HABA Pro)",
         "industry": "Toy manufacturer",
-        "description": "The goal of the project was to improve the performance of the HABA Play and HABA Pro online shops while reducing maintenance and operational costs. The sites suffered from long loading times and complex dependencies on the SAP Composable Storefront. At the client’s request, the SAP Composable Storefront was to be removed without losing key functionalities.",
+        "description": "Improve the performance of the HABA Play and HABA Pro online shops while reducing maintenance and operational costs. The sites suffered from long loading times and complex dependencies on the SAP Composable Storefront. At the client’s request, the SAP Composable Storefront was to be removed without losing key functionalities.",
         "tasks": [
           "Analysis of the existing shops to identify loading issues and unnecessary JavaScript",
           "Implementation of optimizations to reduce load times, e.g., through lazy loading",
@@ -179,7 +197,7 @@
         "role": "Frontend Project Lead",
         "name": "Modern online shops on SAP Commerce Cloud and Composable Storefront",
         "industry": "Retail",
-        "description": "The goal of the project was to develop modern online shops for ottos.ch and Sherpa Outdoors based on SAP Commerce Cloud and the SAP Composable Storefront. The migration involved moving from the legacy SAP Hybris system to a headless storefront architecture using SAP Composable Storefront. A unified Angular frontend codebase was implemented, customized for each brand through different themes and configurations. The project was managed using the Scrum methodology and carried out in close collaboration with Valantic (Zurich), Medienwerft (Hamburg), Team Neusta (Bremen), and Maify GmbH (Mühlingen).",
+        "description": "Develop modern online shops for ottos.ch and Sherpa Outdoors based on SAP Commerce Cloud and the SAP Composable Storefront. The migration involved moving from the legacy SAP Hybris system to a headless storefront architecture using SAP Composable Storefront. A unified Angular frontend codebase was implemented, customized for each brand through different themes and configurations. The project was managed using the Scrum methodology and carried out in close collaboration with Valantic (Zurich), Medienwerft (Hamburg), Team Neusta (Bremen), and Maify GmbH (Mühlingen).",
         "tasks": [
           "Frontend project leadership and technical support for the teams from Team Neusta and Medienwerft in using SAP Composable Storefront",
           "Creation of technical subtasks and assignment of Jira tickets to structure and simplify onboarding",
@@ -198,7 +216,7 @@
         "role": "Senior Frontend Developer",
         "name": "B2B Online Shops for Landgard and Ordertage",
         "industry": "Horticulture & Wholesale",
-        "description": "The goal of the project was to develop modern online shops for Landgard and Ordertage based on SAP Commerce Cloud and the SAP Composable Storefront. A unified Angular frontend codebase was used, customized for each brand through different themes and configurations. The project was executed using the Scrum methodology.",
+        "description": "Develop modern online shops for Landgard and Ordertage based on SAP Commerce Cloud and the SAP Composable Storefront. A unified Angular frontend codebase was used, customized for each brand through different themes and configurations. The project was executed using the Scrum methodology.",
         "tasks": [
           "Implementation of components and functionalities in the SAP Composable Storefront",
           "Customization of the unified Angular codebase for each brand through configuration and theming",
@@ -226,7 +244,7 @@
         "role": "Frontend Developer",
         "name": "13 Online Shops for the DAW Group",
         "industry": "Construction chemicals / Paint and coatings industry",
-        "description": "The goal of the project was to develop a new e-commerce system based on SAP Commerce Hybris, enabling users to customize colors to configure the right product. The system was designed as a central solution and is used across 13 different online shops, each with its own CMS content, product assortment, and individual themes. The implementation was carried out within a Scrum process.",
+        "description": "Develop a new e-commerce system based on SAP Commerce Hybris, enabling users to customize colors to configure the right product. The system was designed as a central solution and is used across 13 different online shops, each with its own CMS content, product assortment, and individual themes. The implementation was carried out within a Scrum process.",
         "tasks": [
           "Implementation of frontend features reusable across all 13 online shops",
           "Close collaboration with the backend team",
@@ -239,7 +257,7 @@
         "role": "Frontend Developer",
         "name": "Roofers' Online Shop",
         "industry": "Crafts & Construction Industry",
-        "description": "The goal of the project was to develop a new online shop based on SAP Commerce Hybris, specifically tailored for roofing supplies. The shop was individually configured and thematically customized to meet the requirements of the roofing industry. The implementation was carried out using an agile Scrum methodology.",
+        "description": "Develop a new online shop based on SAP Commerce Hybris, specifically tailored for roofing supplies. The shop was individually configured and thematically customized to meet the requirements of the roofing industry. The implementation was carried out using an agile Scrum methodology.",
         "tasks": [
           "Further development and implementation of new features for the existing online shop",
           "Fixing bugs and technical issues in the frontend",
@@ -252,7 +270,7 @@
         "role": "Junior Fullstack Developer",
         "name": "FRoSTA Digital Work Instructions",
         "industry": "Food & Beverage",
-        "description": "The goal of the project was to develop a mobile application for the digital presentation of work and machine instructions. The content included videos, images, PDFs, and text descriptions, designed to visually and clearly explain work steps to employees. The content was managed via a separate web application accessible only to authorized users. The project included a native Android app, an Angular-based CMS, and a REST API based on JAX-RS, connected to a Microsoft SQL Server.",
+        "description": "Develop a mobile application for the digital presentation of work and machine instructions. The content included videos, images, PDFs, and text descriptions, designed to visually and clearly explain work steps to employees. The content was managed via a separate web application accessible only to authorized users. The project included a native Android app, an Angular-based CMS, and a REST API based on JAX-RS, connected to a Microsoft SQL Server.",
         "tasks": [
           "Frontend: Implementation of the mobile app using native Android to display work instructions with videos, images, PDFs, and text",
           "Frontend: Development of an Angular 6 CMS web application for content management by authorized users",
@@ -267,7 +285,7 @@
         "role": "Junior Fullstack Developer",
         "name": "LSW Warehouse Picking",
         "industry": "Utilities / Energy Sector",
-        "description": "The goal of the project was to develop a mobile application for Android and iOS tablets, used by warehouse staff for order picking and quality assurance. The app allows scanning product barcodes, displaying relevant information, performing quality checks, and completing work orders. Processes are confirmed with the employee’s signature, and order data is then transmitted from the backend to the connected SAP ERP system via the SAP Java Connector (JCo). The implementation was based on Ionic for the frontend and JAX-RS web services with Microsoft SQL Server in the backend.",
+        "description": "Develop a mobile application for Android and iOS tablets, used by warehouse staff for order picking and quality assurance. The app allows scanning product barcodes, displaying relevant information, performing quality checks, and completing work orders. Processes are confirmed with the employee’s signature, and order data is then transmitted from the backend to the connected SAP ERP system via the SAP Java Connector (JCo). The implementation was based on Ionic for the frontend and JAX-RS web services with Microsoft SQL Server in the backend.",
         "tasks": [
           "Frontend: Development of a cross-platform mobile app using Ionic for Android and iOS",
           "Frontend: Integration of barcode scanning functionality to capture product data in the warehouse",

@@ -34,6 +34,9 @@ export function ProjectCard({
   const description = t(`${projectKey}.description`);
   const tasks = tArray(`${projectKey}.tasks`);
   const number = String(index + 1).padStart(2, '0');
+  const dateLabel = project.ongoing
+    ? `${project.dateLabel} – ${t('experience.labels.present')}`
+    : project.dateLabel;
   const isCompactRow = pinned && tagPosition.rowIndex >= 1;
 
   const articleStyle: CSSProperties = pinned
@@ -76,7 +79,7 @@ export function ProjectCard({
           className='experience-card__tag absolute flex items-center overflow-hidden whitespace-nowrap rounded-t-md bg-white px-3 pt-1.5 font-mono uppercase tracking-wider text-zinc-900 shadow-[0_-2px_20px_rgba(0,0,0,0.08)]'
           style={tagStyle}
         >
-          {project.dateLabel}
+          {dateLabel}
         </div>
       </div>
 
