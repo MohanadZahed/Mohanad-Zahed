@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Un-optimized asset originals (kept locally for re-export, too large for git).
+# See docs/asset-pipeline.md → Folder layout.
+assets/source
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

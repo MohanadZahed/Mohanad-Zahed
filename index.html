@@ -50,6 +50,18 @@
       }
     </script>
 
+    <!-- The hero avatar gates the intro veil (App.tsx HeroIntroGate), but three's
+         FileLoader can only request it after the JS bundle parses and React mounts.
+         Preloading starts it in parallel with the bundle (~150 ms vs ~530 ms),
+         shortening the dark hold.
+         `crossorigin` is REQUIRED, not optional: without it the preload is a
+         no-cors request that three's cors-mode fetch() can't reuse, so the 2.9 MB
+         GLB downloads TWICE. Verify in the Network panel after touching this.
+         Knowledge-only assets are deliberately NOT preloaded here — they'd join
+         useProgress and hold the veil. See src/scene/Scene.tsx →
+         KNOWLEDGE_WARMUP_DELAY_S. -->
+    <link rel="preload" href="/models/avatar.glb" as="fetch" crossorigin />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Active: Archivo + Roboto Mono share one link tag -->

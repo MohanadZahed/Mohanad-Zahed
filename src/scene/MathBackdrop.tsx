@@ -375,4 +375,9 @@ export function MathBackdrop() {
   );
 }
 
-useTexture.preload(URLS);
+// NOTE: no module-level `useTexture.preload(URLS)` here. Scene.tsx imports this
+// module statically, so a module-level preload fires at app start — pushing these
+// Knowledge-only SVGs (~594 KB, 7 loader items) into `useProgress().total`, which
+// gates the hero veil + scroll unlock (App.tsx HeroIntroGate). Scene.tsx mounts
+// this subtree behind a <Suspense> in its own warm-up window instead; that mount
+// is the fetch. See Scene.tsx → KNOWLEDGE_WARMUP_DELAY_S.

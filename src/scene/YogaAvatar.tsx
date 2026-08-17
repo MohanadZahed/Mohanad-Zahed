@@ -49,10 +49,13 @@ export function YogaAvatar() {
     const exit = store.knowledgeExit;
 
     const visible = approach > 0 && exit < 1;
-    const opacity = visible ? 1 : 0;
+    // Damped rather than binary: if a slow connection loses the race with the
+    // warm-up in Scene.tsx, the yogi fades in over ~0.3 s instead of popping.
+    // group.visible stays binary so hidden frames still cost nothing.
     const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const m of mats) {
-      (m as MeshStandardMaterial).opacity = opacity;
+      const mat = m as MeshStandardMaterial;
+      mat.opacity = MathUtils.damp(mat.opacity, visible ? 1 : 0, 12, delta);
     }
     group.visible = visible;
 
@@ -85,7 +88,8 @@ export function YogaAvatar() {
   );
 }
 
-// NOTE: no module-level `useGLTF.preload(...)` here — the yoga GLB is ~18.5 MB
-// and is only needed in the Knowledge section (~29% scroll). Scene.tsx triggers
-// the preload + mount on Knowledge approach instead, keeping it off the initial
-// page load. See Scene.tsx.
+// NOTE: no module-level `useGLTF.preload(...)` here — the yoga GLB (~1.6 MB, and
+// only needed in the Knowledge section at ~29% scroll) must stay out of the
+// initial load and out of `useProgress`, which gates the hero veil. Scene.tsx
+// mounts this component in its own warm-up window once the hero intro is done,
+// and that mount is the fetch. See Scene.tsx → KNOWLEDGE_WARMUP_DELAY_S.

@@ -24,6 +24,12 @@ interface ScrollState {
   // the WebGL scene has loaded + compiled, so every intro clock (DOM tween,
   // avatar fade, logo-ring expand) shares one origin and none starts mid-stall.
   heroStartedAt: number | null;
+  // Latched true once every hero asset has actually finished loading (drei's
+  // useProgress reports loaded + idle) — unlike `heroStartedAt`, which also gets
+  // stamped by HeroIntroGate's safety timeout while downloads are still running.
+  // Scene.tsx waits on this before fetching the Knowledge payload, so a slow link
+  // doesn't have the yoga GLB stealing bandwidth from the hero avatar.
+  assetsReady: boolean;
   // True while the MOZ nav menu (MozNav) is open. The scroll-direction show/hide
   // of fixed UI chrome (parked MOZ mark + LanguageSwitcher) freezes while it's
   // set, so the mark/switcher don't slide out from under the open dropdown.
@@ -40,6 +46,7 @@ interface ScrollState {
   setAnchorScale: (s: number) => void;
   setLogoSpin: (p: number) => void;
   setHeroStartedAt: (t: number | null) => void;
+  setAssetsReady: () => void;
   setNavMenuOpen: (open: boolean) => void;
 }
 
@@ -56,6 +63,7 @@ export const useScrollStore = create<ScrollState>((set) => ({
   anchorScale: 1,
   logoSpin: 0,
   heroStartedAt: null,
+  assetsReady: false,
   navMenuOpen: false,
   setProgress: (p) => set({ progress: p }),
   setSkillsIntro: (p) => set({ skillsIntro: p }),
@@ -69,5 +77,8 @@ export const useScrollStore = create<ScrollState>((set) => ({
   setAnchorScale: (s) => set({ anchorScale: s }),
   setLogoSpin: (p) => set({ logoSpin: p }),
   setHeroStartedAt: (t) => set({ heroStartedAt: t }),
+  // Latched: only ever goes false → true. Later loads (the Knowledge subtree)
+  // push drei's useProgress back to active, which must not clear it.
+  setAssetsReady: () => set({ assetsReady: true }),
   setNavMenuOpen: (open) => set({ navMenuOpen: open }),
 }));

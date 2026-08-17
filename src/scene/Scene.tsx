@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
+import { Preload } from '@react-three/drei';
 import { MathUtils } from 'three';
 import type { Group } from 'three';
 import { Avatar, VISUAL_CENTER_OFFSET_Y } from './Avatar';
@@ -9,6 +9,7 @@ import { LogoRingControls } from './LogoRingControls';
 import { YogaAvatar } from './YogaAvatar';
 import { MathBackdrop } from './MathBackdrop';
 import { useScrollStore } from '../store/useScrollStore';
+import { LOGO_FADE_END } from '../sections/hero.constants';
 import { smoothstep } from './lib/math';
 import { rectToWorld } from './lib/projectAnchor';
 
@@ -23,31 +24,76 @@ const BLEND_END_FROM_BOTTOM = 0.3;    // anchor 30% from bottom → blend = 1
 const SCALE_REFERENCE_WIDTH = 9;
 const SCALE_MIN = 0.28;
 
+// Knowledge warm-up: how long after the hero intro clock starts before the
+// Knowledge-only subtree (yoga GLB + math SVGs) is mounted. `LOGO_FADE_END` is
+// the last intro beat, so the fetch + glTF parse + shader compile land in the
+// calm hero-idle stage rather than hitching a tween mid-intro.
+const KNOWLEDGE_WARMUP_DELAY_S = LOGO_FADE_END + 0.3;
+
 export function Scene() {
   const anchorRef = useRef<Group>(null);
   const heroAnchorRef = useRef<Element | null>(null);
   const aboutAnchorRef = useRef<Element | null>(null);
   const viewport = useThree((s) => s.viewport);
 
-  // The Knowledge-only payload (yoga GLB ≈ 18.5 MB + MathBackdrop's SVG textures)
-  // is heavy and not seen until ~29% scroll, so it must stay off the initial load.
-  // Mount it the first time Knowledge starts approaching (knowledgeApproach > 0,
-  // ~1 viewport before it pins — written by Knowledge.tsx). The preload kicks off
-  // the GLB fetch a beat before React mounts <YogaAvatar />. If this lead ever
-  // proves too short on slow links, move the trigger earlier (e.g. Skills start).
+  // The Knowledge-only payload (yoga GLB + MathBackdrop's SVG textures) is not
+  // seen until ~29% scroll, so it must stay out of the initial load — and out of
+  // `useProgress`, which gates the hero veil (see App.tsx HeroIntroGate).
+  //
+  // Mounting this subtree *is* the fetch (drei's Suspense cache), so it doubles
+  // as the preload. It mounts at whichever comes first:
+  //   1. `assetsReady` AND KNOWLEDGE_WARMUP_DELAY_S past the intro clock — a head
+  //      start of the whole Hero → About → Manifesto → Skills stretch, instead of
+  //      the single viewport the old `knowledgeApproach` trigger allowed.
+  //   2. `knowledgeApproach > 0` (~1 viewport before Knowledge pins, written by
+  //      Knowledge.tsx) — the fallback for a visitor who flings straight down, and
+  //      for data-saver / never-finishes-loading cases where (1) never fires.
   const [knowledgeReady, setKnowledgeReady] = useState(
     () => useScrollStore.getState().knowledgeApproach > 0,
   );
   useEffect(() => {
     if (knowledgeReady) return;
-    const unsub = useScrollStore.subscribe((s) => {
+
+    let timer = 0;
+    let scheduled = false;
+
+    // `unsub` is declared below; nothing can call cleanup before that line runs.
+    const cleanup = () => {
+      window.clearTimeout(timer);
+      unsub();
+    };
+    const ready = () => {
+      cleanup();
+      setKnowledgeReady(true);
+    };
+
+    // On a metered/data-saver connection don't spend the visitor's bytes ahead of
+    // time — fall back to fetching on Knowledge approach only. `saveData` isn't in
+    // the TS DOM lib, hence the narrow local cast.
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+      ?.saveData;
+
+    const consider = (s: ReturnType<typeof useScrollStore.getState>) => {
       if (s.knowledgeApproach > 0) {
-        useGLTF.preload('/models/avatar-yoga.glb');
-        setKnowledgeReady(true);
-        unsub();
+        ready();
+        return;
       }
-    });
-    return unsub;
+      if (scheduled || saveData) return;
+      // `assetsReady` (not just `heroStartedAt`) is the gate: HeroIntroGate's
+      // safety timeout can stamp the clock while the hero avatar is still
+      // downloading, and starting a second GLB then just splits the pipe —
+      // measured on Slow 4G, it pushed avatar.glb's completion from ~17 s to
+      // ~64 s. Wait for the hero to be genuinely done, then add the intro delay.
+      if (!s.assetsReady || s.heroStartedAt == null) return;
+      scheduled = true;
+      const elapsedS = (performance.now() - s.heroStartedAt) / 1000;
+      timer = window.setTimeout(ready, Math.max(0, (KNOWLEDGE_WARMUP_DELAY_S - elapsedS) * 1000));
+    };
+
+    const unsub = useScrollStore.subscribe(consider);
+    consider(useScrollStore.getState());
+
+    return cleanup;
   }, [knowledgeReady]);
 
   useFrame((_, delta) => {
@@ -108,6 +154,12 @@ export function Scene() {
         <Suspense fallback={null}>
           <MathBackdrop />
           <YogaAvatar />
+          {/* Compiles the yoga material + math planes as soon as they resolve
+              (drei's Preload temporarily un-hides invisible objects), so
+              Knowledge's first rendered frame isn't a program-compile +
+              texture-upload hitch mid-scroll. App.tsx's <Preload all /> can't
+              cover them — it runs gl.compile once, before this subtree exists. */}
+          <Preload all />
         </Suspense>
       )}
     </>

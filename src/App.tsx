@@ -52,7 +52,14 @@ function HeroIntroGate() {
   };
 
   useEffect(() => {
-    if (total > 0 && loaded >= total && !active) fire();
+    if (total > 0 && loaded >= total && !active) {
+      // Distinct from `heroStartedAt`, which the timeout below also stamps while
+      // downloads may still be in flight: this says the hero assets are genuinely
+      // on the GPU. Scene.tsx gates its Knowledge warm-up fetch on it so the yoga
+      // GLB never competes with the hero avatar on a slow connection.
+      useScrollStore.getState().setAssetsReady();
+      fire();
+    }
   }, [active, loaded, total]);
 
   // Safety net: never let the intro hang if loading stalls or assets are absent.

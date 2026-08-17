@@ -8,6 +8,24 @@ These rules are non-negotiable when touching anything inside `src/scene/`. Viola
 - **Lerp, don't snap.** Default tween factor `0.1` for position, `0.05` for rotation. This is what gives motion the buttery, slightly-delayed Active Theory feel. Use `vec.lerp(target, 0.1)` or `THREE.MathUtils.damp` for frame-rate independence.
 - **`frameloop="demand"`** for static moments, `"always"` while scrolling. Toggle off when `document.visibilityState === 'hidden'`. **Note:** the hero intro (avatar fade + logo-ring expand) reads `useScrollStore.heroStartedAt` via `getState()` inside `useFrame` — a store write that does **not** invalidate a `demand` loop. The Canvas currently runs the default `"always"`; if you switch the hero to `demand`, also `invalidate()` when `heroStartedAt` is set or the avatar/ring will never fade in.
 
+## Knowledge warm-up (keep heavy off-screen assets out of `useProgress`)
+
+Anything drei loads through `DefaultLoadingManager` lands in `useProgress().total`, which `HeroIntroGate` ([../App.tsx](../App.tsx)) waits on before stamping `heroStartedAt` — so **a module-level `useGLTF.preload` / `useTexture.preload` for an asset that isn't on screen in the hero makes the visitor stare at the dark veil for it.** That regression happened twice (the yoga GLB, then MathBackdrop's 594 KB of math SVGs) — both are now explicitly commented as "no module-level preload".
+
+The Knowledge subtree (`YogaAvatar` + `MathBackdrop`) is instead mounted by [Scene.tsx](Scene.tsx) at whichever comes first:
+
+1. `useScrollStore.assetsReady` **and** `KNOWLEDGE_WARMUP_DELAY_S` past `heroStartedAt` (= `LOGO_FADE_END + 0.3`, i.e. just after the last intro beat), or
+2. `knowledgeApproach > 0` — the fallback for a visitor who flings straight down, for `saveData`, and for the case where loading never completes.
+
+Rules when touching this:
+
+- **Mounting is the fetch.** drei's Suspense cache means a separate `preload()` call adds nothing; don't reintroduce one.
+- **Gate on `assetsReady`, not on `heroStartedAt` alone.** `heroStartedAt` is also stamped by `HeroIntroGate`'s 4 s safety timeout, which can fire while the hero avatar is still downloading; starting a second GLB then just splits the pipe. Measured on Slow 4G (1.6 Mbit), warming up off `heroStartedAt` alone pushed `avatar.glb`'s completion from ~56 s to ~65 s. `assetsReady` is set only from the real `useProgress` loaded condition, and is **latched** — the Knowledge subtree's own loads push `useProgress` back to active, which must not clear it.
+- **Warm up after the intro, not during it.** The download is network work, but the glTF parse + meshopt decode are main-thread and would hitch the name-reveal tween.
+- **The subtree carries its own `<Preload all />`.** The one in `App.tsx` runs `gl.compile` in a `useLayoutEffect([])` — once, before this subtree exists — so without a second one the program compile + texture upload hits the first rendered frame mid-scroll. drei's `Preload` temporarily un-hides `visible === false` objects, which is why it works on `YogaAvatar`'s hidden group.
+- **`navigator.connection.saveData` skips the early warm-up**, falling back to fetch-on-approach.
+- Keep the GLB itself small — see [../../docs/asset-pipeline.md](../../docs/asset-pipeline.md) → "Yoga avatar". No amount of preload scheduling saves an 18 MB uncompressed export.
+
 ## Hero intro readiness
 
 - The hero's first-load reveal is gated on WebGL readiness: `<Preload all />` inside the `<Canvas>` ([App.tsx](../App.tsx)) forces shader/texture compilation during load, and `HeroIntroGate` stamps `useScrollStore.heroStartedAt` once drei `useProgress` reports loaded + compiled. The avatar ([Avatar.tsx](Avatar.tsx)) and logo planes ([LogoPlane.tsx](LogoPlane.tsx)) compute their fade from `(performance.now() − heroStartedAt) / 1000`; they stay at opacity 0 while it's `null`. Keep `<Preload all />` — it's what moves the init hitch into the pre-intro dark hold instead of mid-animation; the `HeroLogo` DOM intro (the typographic MOZ build) is held behind a dark veil until the same `heroStartedAt` stamp. Full rationale: [../sections/CLAUDE.md](../sections/CLAUDE.md) → "Hero logo intro + corner mark".
