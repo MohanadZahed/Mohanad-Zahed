@@ -66,6 +66,16 @@ const PROX_NEAR = 0.05;
 const PROX_FAR = 0.6;
 const PUSH_NDC_MAX = 0.06;
 
+// While the SVGs travel from the arc centre out to their anchors they burn at
+// full brightness (the same lift the cursor gives on hover), then dim back to
+// `restOpacity` as they land. Both windows are in `expand` space, so the whole
+// thing scrubs cleanly in both scroll directions.
+// `TRAVEL_LIGHT_IN` doubles as the fade-in ramp — without it the lit look would
+// be scaled down by `expand` and the mid-journey planes would still read faint.
+const TRAVEL_LIGHT_IN = 0.18;
+const TRAVEL_LIGHT_OUT_START = 0.72;
+const TRAVEL_LIGHT_OUT_END = 1.0;
+
 const BASE_COLOR = new Color('#38bdf8');
 const GLOW_COLOR = new Color('#bae6fd');
 
@@ -210,9 +220,17 @@ function MathSvg({
 
     const targetX = restX + pushX;
     const targetY = restY + pushY;
-    // Cursor proximity lifts opacity from `restOpacity` toward 1.0 while
-    // preserving the colour-glow lerp below.
-    const targetOpacity = expand * (restOpacity + (1 - restOpacity) * prox);
+
+    // Travel glow: full lift while the plane flies from the arc centre to its
+    // anchor, easing back to rest as it lands. `lift` merges it with cursor
+    // proximity so hover keeps working (and wins) once the burst is over.
+    const fadeIn = smoothstep(0, TRAVEL_LIGHT_IN, expand);
+    const travel = fadeIn * (1 - smoothstep(TRAVEL_LIGHT_OUT_START, TRAVEL_LIGHT_OUT_END, expand));
+    const lift = Math.max(prox, travel);
+
+    // `lift` raises opacity from `restOpacity` toward 1.0 while preserving the
+    // colour-glow lerp below.
+    const targetOpacity = fadeIn * (restOpacity + (1 - restOpacity) * lift);
 
     mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 4, delta);
     mesh.position.y = MathUtils.damp(mesh.position.y, targetY, 4, delta);
@@ -225,7 +243,7 @@ function MathSvg({
 
     material.opacity = MathUtils.damp(material.opacity, targetOpacity, 5, delta);
 
-    refs.glowTarget.copy(BASE_COLOR).lerp(GLOW_COLOR, prox);
+    refs.glowTarget.copy(BASE_COLOR).lerp(GLOW_COLOR, lift);
     material.color.lerp(refs.glowTarget, 0.08);
 
     if (halo) {
@@ -235,7 +253,7 @@ function MathSvg({
       halo.scale.set(nextScale, nextScale, 1);
       haloMaterial.opacity = MathUtils.damp(
         haloMaterial.opacity,
-        HALO_OPACITY_MAX * prox * expand,
+        HALO_OPACITY_MAX * lift * fadeIn,
         5,
         delta,
       );
