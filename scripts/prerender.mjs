@@ -20,7 +20,25 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const DIST_INDEX = resolve('dist/index.html');
+const STATUS_FILE = resolve('dist/prerender-status.json');
 const SETTLE_MS = 2500; // GSAP/font settle after the DOM is present
+
+// Because a failure here deliberately exits 0, a skipped prerender is invisible
+// in a green deploy. Drop a breadcrumb into dist/ on BOTH paths so the outcome
+// is fetchable at /prerender-status.json on the deployed site: 404 means the
+// build command never ran the script at all, 200 + { ok: false } means it ran
+// and Chrome/the snapshot failed (and says why).
+function writeStatus(fields) {
+  try {
+    writeFileSync(
+      STATUS_FILE,
+      JSON.stringify({ at: new Date().toISOString(), node: process.version, ...fields }, null, 2),
+      'utf8',
+    );
+  } catch {
+    /* dist/ missing — nothing to report into */
+  }
+}
 
 async function run() {
   // Fail fast (but softly) if there's no build to snapshot.
@@ -33,6 +51,10 @@ async function run() {
 
   const server = await preview({ preview: { port: 4319 } });
   const base = server.resolvedUrls?.local?.[0] ?? 'http://localhost:4319/';
+
+  // Sync in older puppeteer, a promise in v25 — await covers both.
+  const execPath = await puppeteer.executablePath();
+  console.log('[prerender] chrome executablePath:', execPath);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -71,7 +93,8 @@ async function run() {
 
     const html = await page.content();
     writeFileSync(DIST_INDEX, html, 'utf8');
-    console.log('[prerender] wrote composed DOM to dist/index.html');
+    writeStatus({ ok: true, bytes: html.length, chrome: execPath });
+    console.log(`[prerender] wrote composed DOM to dist/index.html (${html.length} bytes)`);
   } finally {
     await browser.close();
     await server.httpServer.close();
@@ -86,5 +109,6 @@ run()
     // hard build failure instead — useful while verifying the step actually
     // runs, since a silent skip is indistinguishable from success in the log.
     console.warn('[prerender] failed, keeping plain SPA index.html:', err?.message ?? err);
+    writeStatus({ ok: false, error: String(err?.message ?? err), stack: err?.stack ?? null });
     process.exit(process.env.PRERENDER_STRICT === '1' ? 1 : 0);
   });
