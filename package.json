@@ -1,13 +1,13 @@
 {
   "name": "mohanad-zahed",
   "private": true,
-  "version": "0.0.28",
+  "version": "0.0.29",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "prerender": "node scripts/prerender.mjs",
-    "build:prerender": "npm run build && node scripts/prerender.mjs",
+    "build:prerender": "npm run build && npx puppeteer browsers install chrome && node scripts/prerender.mjs",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview",

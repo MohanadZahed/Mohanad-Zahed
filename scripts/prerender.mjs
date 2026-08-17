@@ -82,6 +82,9 @@ run()
   .then(() => process.exit(0))
   .catch((err) => {
     // Never fail the deploy: leave the plain SPA index.html and move on.
+    // Set PRERENDER_STRICT=1 (e.g. as a Vercel env var) to turn this into a
+    // hard build failure instead — useful while verifying the step actually
+    // runs, since a silent skip is indistinguishable from success in the log.
     console.warn('[prerender] failed, keeping plain SPA index.html:', err?.message ?? err);
-    process.exit(0);
+    process.exit(process.env.PRERENDER_STRICT === '1' ? 1 : 0);
   });
