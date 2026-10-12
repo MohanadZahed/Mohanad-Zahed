@@ -37,6 +37,7 @@ SOFTSKILLS Anpassungsfähigkeit | Continuous learning | Ausgeprägte Organisatio
 eidungskompetenz | Fachliche Teamführung | Flexibilität | Kritikfähigkeit | Kundenorientier-  
 ung | Lösungsorientiert | Strategisches Denken | Teamgeist | Unterweisung / Know-how  
 Transfer | Verantwortungsbewusstsein | Zeitmanagement | CoachingZ E R T I F I K A T E  
+1 0 / 2 0 2 6 iSAQB CPSA-Advanced Level Modul SWARC4AI (Software Architecture for AI Systems) Schulung der ITech Progress GmbH  
 0 2 / 2 0 2 6 iSAQB Certified Professional for  
 0 9 / 2 0 2 5 ITIL 4 Foundation Certificate  
 Software Architecture Foundation Level  

@@ -13,7 +13,7 @@ A 3×viewport-tall HTML/CSS-only section between Knowledge and Experience. The 3
       <div class="certificates-header">…</div>   ← left-most: "ich habe N Zertifikate"
       <CertificateCard index={0} … />     ← rotation: -8deg
       <CertificateCard index={1} … />     ← rotation: +8deg
-      … 5 cards total, alternating ±8°
+      … one card per `CERTIFICATES` entry, alternating ±8°
     </div>
   </div>
 </section>
@@ -39,7 +39,7 @@ No GSAP `pin: true` needed — CSS sticky expresses the timing for free. The ram
 ## Rules
 
 - Card width, height, gap, header width, and side padding are computed at runtime via `computeCertificatesLayout(viewportW)` in [`certificates.constants.ts`](certificates.constants.ts). The strip writes them as CSS custom properties on the stage (`--cert-card-w`, `--cert-card-h`, `--cert-gap`, `--cert-header-w`, `--cert-pad`); `.certificate-card`, `.certificates-strip`, `.certificates-header` in [`src/index.css`](../../index.css) read those vars. Geometry constraint: exactly `VISIBLE_CARDS` (=3) cards + `VISIBLE_CARDS−1` gaps fill `VIEWPORT_FILL` (=86%) of the usable viewport, clamped to [`CARD_MIN_WIDTH_PX`, `CARD_MAX_WIDTH_PX`]. Recompute on `ResizeObserver` and `window.resize`.
-- Width measurement (`X_visible`) is derived from those same runtime layout values (header + 5 cards + gaps + side pads).
+- Width measurement (`X_visible`) is derived from those same runtime layout values (header + `CERTIFICATES.length` cards + gaps + side pads).
 - Don't trigger React re-renders for the strip's transform — subscribe to the store with `useScrollStore.subscribe` and write `element.style.transform` directly inside the subscriber. **No `requestAnimationFrame` wrapper** — ScrollTrigger's `onUpdate` already runs in the GSAP ticker (rAF-synced), so wrapping the DOM write in another rAF schedules it for the next frame and shows up as 1-frame input lag.
 - No global progress reads. The strip uses `certificatesProgress` only; other sections don't read `certificatesProgress`.
 - The card visual is pure CSS (`.certificate-card`, `.certificate-card__*` in [`src/index.css`](../../index.css)) — no SVG, no images, no extra fonts. Faux foil seal is a `radial-gradient` + `repeating-conic-gradient`. Keep it that way.

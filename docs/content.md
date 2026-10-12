@@ -112,6 +112,7 @@ Per-category accent dot: methodology `#a78bfa` · architecture `#38bdf8` · proc
 
 | Date    | Certification                                                       |
 | ------- | ------------------------------------------------------------------- |
+| 10/2026 | iSAQB CPSA-Advanced Level module SWARC4AI (Software Architecture for AI Systems) — training from ITech Progress GmbH |
 | 02/2026 | iSAQB Certified Professional for Software Architecture — Foundation |
 | 09/2025 | ITIL 4 Foundation                                                   |
 | 08/2025 | ISTQB Certified Tester — Foundation                                 |

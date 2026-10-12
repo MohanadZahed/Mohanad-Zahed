@@ -7,6 +7,12 @@ export interface Certificate {
 
 export const CERTIFICATES: readonly Certificate[] = [
   {
+    id: 'isaqb-swarc4ai',
+    name: 'CPSA-Advanced Level Module SWARC4AI Training — Software Architecture for AI Systems',
+    issuer: 'iSAQB · ITech Progress',
+    date: '10/2026',
+  },
+  {
     id: 'isaqb-cpsa-f',
     name: 'Certified Professional for Software Architecture — Foundation',
     issuer: 'iSAQB',

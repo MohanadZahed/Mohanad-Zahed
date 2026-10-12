@@ -134,7 +134,7 @@ Section-local sub-phases (constants in [src/sections/knowledge/knowledge.constan
 
 **Certificates (global 0.392–0.488, section-local `certificatesProgress` 0.00–1.00)** — A 3×viewport-tall horizontal-scroll interlude that surfaces the professional certifications in [docs/content.md](content.md). The 3D canvas is silent (the avatar is still pinned off-screen above with About); the section is HTML/CSS only. Source data lives in [src/sections/certificates/certificates.data.ts](../src/sections/certificates/certificates.data.ts).
 
-Structure: an outer section of `SECTION_VH = 300vh` contains a sticky stage (`position: sticky; top: 0; height: 100vh; overflow: hidden`). Inside the stage, a single horizontal `certificates-strip` lays out `[header block | cert 1 | cert 2 | cert 3 | cert 4 | cert 5]` left-to-right. The strip translates left as `certificatesProgress` advances. Cards alternate ±8° rotation (`index % 2 === 0 ? −8 : +8`) so the row reads like a stack of paper certificates.
+Structure: an outer section of `SECTION_VH = 300vh` contains a sticky stage (`position: sticky; top: 0; height: 100vh; overflow: hidden`). Inside the stage, a single horizontal `certificates-strip` lays out `[header block | cert 1 | cert 2 | … | cert N]` left-to-right (one card per `CERTIFICATES` entry). The strip translates left as `certificatesProgress` advances. Cards alternate ±8° rotation (`index % 2 === 0 ? −8 : +8`) so the row reads like a stack of paper certificates.
 
 | Sub-progress | What happens |
 | --- | --- |
