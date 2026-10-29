@@ -112,6 +112,7 @@ Per-category accent dot: methodology `#a78bfa` · architecture `#38bdf8` · proc
 
 | Date    | Certification                                                       |
 | ------- | ------------------------------------------------------------------- |
+| 10/2026 | iSAQB CPSA-Advanced Level module DDD (Domain-Driven Design) — training from ITech Progress GmbH |
 | 10/2026 | iSAQB CPSA-Advanced Level module SWARC4AI (Software Architecture for AI Systems) — training from ITech Progress GmbH |
 | 02/2026 | iSAQB Certified Professional for Software Architecture — Foundation |
 | 09/2025 | ITIL 4 Foundation                                                   |
@@ -127,7 +128,7 @@ The section also renders the B.Sc. Informatik (03/2014, Al-Ahliyya Amman Univers
 **Nürnberg · Jul 2025 – present**
 
 - **OMEGAone — DGUV** (05/2026–present, public sector / social insurance, team 14/30). Senior Frontend Architect on the German Social Accident Insurance's central platform for exposure measurements — replacing the OMEGAclassic legacy system with digital workflows for measurement planning, data collection, lab analyses, QA, and reporting. Stack: Angular 22, TypeScript, SCSS, Spring Boot, Java, Maven, Oracle SQL, OpenAPI, Microsoft Entra ID, Jest, Bitbucket. Frontend architecture (modularization, layering, component decoupling), best practices, code reviews, BITV/WCAG accessibility.
-- **STEP — Bundesagentur für Arbeit** (11/2025–02/2026, public sector). Fullstack on the federal employment agency's central master-data system. Stack: Angular 20, NgRx, Spring Boot, Java, Maven, Kafka, Oracle SQL, Docker, OpenAPI, GitLab CI/CD, Jasmine/Karma, Selenium. Team 12/80. Implemented REST endpoints + Kafka event flows, evolved GUI components, code reviews, accessibility.
+- **Bundesagentur für Arbeit** (11/2025–02/2026, public sector; project name intentionally not shown). Fullstack on a business-critical enterprise application processing and providing structured data via standardized interfaces and event-driven communication. Stack: Angular 20, NgRx, Spring Boot, Java, Maven, Kafka, Oracle SQL, Docker, OpenAPI, GitLab CI/CD, Jasmine/Karma, Selenium. Team 12/80. Implemented REST endpoints + Kafka event flows, evolved GUI components, code reviews, accessibility.
 
 ### Medienwerft GmbH — Senior Frontend Engineer
 

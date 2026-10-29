@@ -101,9 +101,11 @@ export function ProjectCard({
         >
           <div className='min-w-0'>
             <p className='font-mono text-xs uppercase tracking-[0.18em] text-zinc-500'>{role}</p>
-            <h3 className='mt-2 font-mono text-2xl font-semibold leading-tight text-zinc-900 md:text-3xl'>
-              {name}
-            </h3>
+            {name && (
+              <h3 className='mt-2 font-mono text-2xl font-semibold leading-tight text-zinc-900 md:text-3xl'>
+                {name}
+              </h3>
+            )}
 
             <dl className='mt-6 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 font-mono text-sm'>
               <dt className='text-zinc-500'>{t('experience.labels.customer')}</dt>

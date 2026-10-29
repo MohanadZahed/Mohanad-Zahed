@@ -37,6 +37,7 @@ SOFTSKILLS Adaptability | Continuous Learning | Strong Organizational Skills | D
 Competence | Technical Team Leadership | Flexibility | Ability to Accept Feedback |  
 Customer Orientation | Solution-Oriented Thinking | Strategic Thinking | Team Spirit | Training  
 / Knowledge Transfer | Sense of Responsibility | Time Management | CoachingC E R T I F I C A T E S  
+1 0 / 2 0 2 6 iSAQB CPSA-Advanced Level module DDD (Domain-Driven Design) training from ITech Progress GmbH  
 1 0 / 2 0 2 6 iSAQB CPSA-Advanced Level module SWARC4AI (Software Architecture for AI Systems) training from ITech Progress GmbH  
 0 2 / 2 0 2 6 iSAQB Certified Professional for  
 Software Architecture Foundation Level  
@@ -86,7 +87,7 @@ code quality
 ▪ Ensuring accessibility (BITV/WCAG), responsive design, and compliance with UX/UI guidelines  
 ▪ Localization, analysis, and resolution of software defects  
 ▪ Working in agile development teams using agile methodologies (e.g., Scrum or Kanban)  
-Fullstack Developer | STEP | 11/2025 – 02/2026  
+Fullstack Developer | 11/2025 – 02/2026  
 Customer Bundesagentur für Arbeit, Nuremberg  
 Industry Public Sector  
 Team / Project size 12/80  
@@ -94,17 +95,8 @@ Environment Scrum | Agile | Spring boot | Java | Maven | Micro Services | Kafka 
 OpenAPI | Swagger | Angular 20 | Eslint | NgRx | Typescript | HTML | SCSS | Github | GitLab  
 CI/CD | Git | REST | JWT | Jasmine/Karma | Selenium | Silk Central | IntelliJ IDEA | Code  
 Analyse | CleanCode | Jira | Confluence  
-STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal  
-Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and  
-personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill  
-their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka  
-events, file interfaces, service interfaces, and client applications.  
-In addition, STEP is responsible for the management and maintenance of company data for reporting purposes in  
-the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number  
-Service team, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is  
-MAZ (proof and reporting of non-contributory periods for the pension insurance system).As part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also  
-made to ensure compliance with data protection and information security requirements, as well as accessibility  
-regulations.  
+Further development and maintenance of a business-critical enterprise application in the public sector, focusing on the processing and provision of structured data. The application supports various business processes and provides data through standardized interfaces and event-driven communication mechanisms.  
+Development was carried out in compliance with established quality standards, data protection requirements, IT security guidelines, and accessibility requirements.  
 RESPONSIBILITIES  
 ▪ Locating, analyzing, and fixing software defects  
 ▪ Supporting the creation of (functional) concepts and solution designs  

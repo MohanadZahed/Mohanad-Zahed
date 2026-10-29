@@ -37,6 +37,7 @@ SOFTSKILLS Anpassungsfähigkeit | Continuous learning | Ausgeprägte Organisatio
 eidungskompetenz | Fachliche Teamführung | Flexibilität | Kritikfähigkeit | Kundenorientier-  
 ung | Lösungsorientiert | Strategisches Denken | Teamgeist | Unterweisung / Know-how  
 Transfer | Verantwortungsbewusstsein | Zeitmanagement | CoachingZ E R T I F I K A T E  
+1 0 / 2 0 2 6 iSAQB CPSA-Advanced Level Modul DDD (Domain-Driven Design) Schulung der ITech Progress GmbH  
 1 0 / 2 0 2 6 iSAQB CPSA-Advanced Level Modul SWARC4AI (Software Architecture for AI Systems) Schulung der ITech Progress GmbH  
 0 2 / 2 0 2 6 iSAQB Certified Professional for  
 0 9 / 2 0 2 5 ITIL 4 Foundation Certificate  
@@ -86,7 +87,7 @@ Schnittstellen
 Richtlinien  
 ▪ Lokalisierung, Analyse und Behebung von Softwarefehlern  
 ▪ Mitarbeit in agilen Entwicklungsteams unter Anwendung agiler Methoden (z. B. Scrum oder Kanban)  
-Fullstack Entwickler | STEP | 11/2025 – 02/2026  
+Fullstack Entwickler | 11/2025 – 02/2026  
 Kunde Bundesagentur für Arbeit, Nürnberg  
 Branche Öffentlicher Dienst  
 Team- /Projektgröße 12/80  
@@ -94,19 +95,8 @@ Umfeld Scrum | Agile | Spring boot | Java | Maven | Micro Services | Kafka | Ora
 OpenAPI | Swagger | Angular 20 | Eslint | NgRx | Typescript | HTML | SCSS | Github | GitLab  
 CI/CD | Git | REST | JWT | Jasmine/Karma | Selenium | Silk Central | IntelliJ IDEA | Code  
 Analyse | CleanCode | Jira | Confluence  
-STEP (Stammdatenerfassungs- und pflegesystem) ist das zentrale Stammdatensystem der  
-Bundesagentur für Arbeit (BA). Das beinhaltet die Erfassung und Pflege von Betriebs- und  
-Personendaten. STEP fungiert als zentrales System für fast alle BA-IT-Verfahren, die Stammdaten zu  
-ihrer Aufgabenerfüllung benötigen. Die Stammdaten werden für die unterschiedlichen fachlichen  
-Anwendungszwecke und Nutzergruppen über REST-Endpunkte, Kafka-Events, Datei-Schnittstellen,  
-Aufrufschnittstellen und per Client angeboten.  
-Des Weiteren obliegt STEP die Verwaltung und Pflege von Betriebsdaten für das Meldewesen in der  
-Sozialversicherung, die in der Zuständigkeit der Organisationseinheit BNS (Team Betriebsnummern-Service, organisatorisch der Agentur für Arbeit Saarbrücken zugeordnet) liegt. Ein weiterer Teil von  
-STEP ist die Komponente MAZ (Nachweis und Meldung beitragsfreier Zeiten für die  
-Rentenversicherung).  
-Im Rahmen der Realisierung werden neben den in der BA gängigen IT-Standards auch Anpassungen  
-zur Sicherstellung der datenschutzrechtlichen und datensicherheitsrechtlichen Auflagen mit  
-einbezogen, sowie Auflagen zur Barrierefreiheit.  
+Weiterentwicklung und Wartung einer unternehmenskritischen Enterprise-Anwendung im öffentlichen Sektor mit Fokus auf die Verarbeitung und Bereitstellung strukturierter Daten. Die Anwendung unterstützt verschiedene fachliche Prozesse und stellt Daten über standardisierte Schnittstellen sowie ereignisbasierte Kommunikationsmechanismen zur Verfügung.  
+Die Entwicklung erfolgte unter Berücksichtigung etablierter Qualitätsstandards, datenschutzrechtlicher Anforderungen, IT-Sicherheitsvorgaben und Anforderungen an die Barrierefreiheit.  
 AUFGABEN IM PROJEKT  
 ▪ Lokalisieren, Analysieren und Beseitigen von SW-Fehlern  
 ▪ Unterstützung bei der Erstellung von (Fach-) Konzepten und Lösungsentwürfen  

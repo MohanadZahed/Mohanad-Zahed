@@ -111,11 +111,11 @@
           "Working in agile development teams using agile methodologies (e.g., Scrum or Kanban)"
         ]
       },
-      "step": {
+      "ba-project": {
         "role": "Fullstack Developer",
-        "name": "STEP — Master Data Management System",
+        "name": "",
         "industry": "Public sector",
-        "description": "STEP (Master Data Capture and Maintenance System) is the central master data system of the Federal Employment Agency (Bundesagentur für Arbeit, BA). It includes the recording and maintenance of company and personal data. STEP serves as a central system for almost all BA IT applications that require master data to fulfill their tasks. The master data is provided for different business use cases and user groups via REST endpoints, Kafka events, file interfaces, service interfaces, and client applications.\n\nIn addition, STEP is responsible for the management and maintenance of company data for reporting purposes in the social insurance system, which falls under the responsibility of the organizational unit BNS (Business Number Service team, organizationally assigned to the Employment Agency Saarbrücken). Another component of STEP is MAZ (proof and reporting of non-contributory periods for the pension insurance system).\n\nAs part of its implementation, in addition to the IT standards commonly used within the BA, adjustments are also made to ensure compliance with data protection and information security requirements, as well as accessibility regulations.",
+        "description": "Further development and maintenance of a business-critical enterprise application in the public sector, focusing on the processing and provision of structured data. The application supports various business processes and provides data through standardized interfaces and event-driven communication mechanisms.\n\nDevelopment was carried out in compliance with established quality standards, data protection requirements, IT security guidelines, and accessibility requirements.",
         "tasks": [
           "Locating, analyzing, and fixing software defects",
           "Supporting the creation of (functional) concepts and solution designs",

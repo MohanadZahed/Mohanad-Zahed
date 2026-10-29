@@ -7,6 +7,12 @@ export interface Certificate {
 
 export const CERTIFICATES: readonly Certificate[] = [
   {
+    id: 'isaqb-ddd',
+    name: 'CPSA-Advanced Level Module DDD Training — Domain-Driven Design',
+    issuer: 'iSAQB · ITech Progress',
+    date: '10/2026',
+  },
+  {
     id: 'isaqb-swarc4ai',
     name: 'CPSA-Advanced Level Module SWARC4AI Training — Software Architecture for AI Systems',
     issuer: 'iSAQB · ITech Progress',

@@ -115,11 +115,11 @@
           "Mitarbeit in agilen Entwicklungsteams unter Anwendung agiler Methoden (z. B. Scrum oder Kanban)"
         ]
       },
-      "step": {
+      "ba-project": {
         "role": "Fullstack Entwickler",
-        "name": "STEP — Stammdatenerfassungs- und pflegesystem",
+        "name": "",
         "industry": "Öffentlicher Dienst",
-        "description": "STEP ist das zentrale Stammdatensystem der Bundesagentur für Arbeit (BA) — Erfassung und Pflege von Betriebs- und Personendaten. Es fungiert als zentrales System für nahezu alle BA-IT-Verfahren, die Stammdaten benötigen, und stellt diese über REST-Endpunkte, Kafka-Events, Datei-Schnittstellen und Aufrufschnittstellen bereit.\n\nSTEP verantwortet zudem die Verwaltung von Betriebsdaten für das Meldewesen in der Sozialversicherung sowie die MAZ-Komponente (Nachweis und Meldung beitragsfreier Zeiten für die Rentenversicherung). Im Rahmen der Realisierung werden BA-IT-Standards mit Datenschutz-, Datensicherheits- und Barrierefreiheits-Auflagen kombiniert.",
+        "description": "Weiterentwicklung und Wartung einer unternehmenskritischen Enterprise-Anwendung im öffentlichen Sektor mit Fokus auf die Verarbeitung und Bereitstellung strukturierter Daten. Die Anwendung unterstützt verschiedene fachliche Prozesse und stellt Daten über standardisierte Schnittstellen sowie ereignisbasierte Kommunikationsmechanismen zur Verfügung.\n\nDie Entwicklung erfolgte unter Berücksichtigung etablierter Qualitätsstandards, datenschutzrechtlicher Anforderungen, IT-Sicherheitsvorgaben und Anforderungen an die Barrierefreiheit.",
         "tasks": [
           "Lokalisieren, Analysieren und Beseitigen von SW-Fehlern",
           "Unterstützung bei der Erstellung von (Fach-) Konzepten und Lösungsentwürfen",

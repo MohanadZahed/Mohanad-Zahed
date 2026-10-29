@@ -27,8 +27,8 @@ const OMEGAONE: ExperienceProject = {
   ],
 };
 
-const STEP: ExperienceProject = {
-  id: 'step',
+const BA_PROJECT: ExperienceProject = {
+  id: 'ba-project',
   dateLabel: '11/2025 – 02/2026',
   customer: 'Bundesagentur für Arbeit, Nürnberg',
   teamSize: '12 / 80',
@@ -184,7 +184,7 @@ const LSW: ExperienceProject = {
 export const EXPERIENCE: readonly ExperienceCompany[] = [
   {
     id: 'iso-gruppe',
-    projects: [OMEGAONE, STEP],
+    projects: [OMEGAONE, BA_PROJECT],
   },
   {
     id: 'medienwerft',
